@@ -534,6 +534,628 @@ export default function DepartmentBlueprintCanvas({ deptCode, accentHex }: Props
       }
     };
 
+    // ── CIVIL ENGINEERING DRAWINGS (CE) ──
+    const drawCe = (c: CanvasRenderingContext2D, it: EngItem, px: number, py: number) => {
+      const prog = it.progress;
+      const size = it.size;
+
+      if (it.type === 0) {
+        // Building Scaffolding & Tower Crane
+        c.save();
+        c.translate(px, py);
+        const bW = size * 0.8 * Math.min(1, prog * 1.3);
+        const bH = size * 1.2;
+
+        c.beginPath();
+        c.strokeRect(-bW * 0.5, -bH * 0.4, bW * 0.55, bH * 0.85);
+        c.moveTo(-bW * 0.5, -bH * 0.1); c.lineTo(bW * 0.05, -bH * 0.1);
+        c.moveTo(-bW * 0.5, bH * 0.18); c.lineTo(bW * 0.05, bH * 0.18);
+        for (let f = -1; f <= 1; f++) {
+          const fy = f * (bH * 0.28);
+          c.moveTo(-bW * 0.5, fy); c.lineTo(bW * 0.05, fy + bH * 0.28);
+          c.moveTo(-bW * 0.5, fy + bH * 0.28); c.lineTo(bW * 0.05, fy);
+        }
+        c.stroke();
+
+        if (prog > 0.3) {
+          c.beginPath();
+          c.moveTo(bW * 0.2, bH * 0.45); c.lineTo(bW * 0.2, -bH * 0.65);
+          c.moveTo(bW * 0.28, bH * 0.45); c.lineTo(bW * 0.28, -bH * 0.65);
+          c.moveTo(-bW * 0.25, -bH * 0.6); c.lineTo(bW * 0.7, -bH * 0.6);
+          c.strokeRect(-bW * 0.28, -bH * 0.64, bW * 0.1, 8);
+          c.strokeRect(bW * 0.45, -bH * 0.6, 6, 4);
+          c.moveTo(bW * 0.48, -bH * 0.56); c.lineTo(bW * 0.48, -bH * 0.25);
+          c.strokeRect(bW * 0.35, -bH * 0.25, bW * 0.26, 4);
+          c.stroke();
+          c.font = '7px monospace';
+          c.fillText('CRANE // LVL +12', -bW * 0.5, -bH * 0.45);
+        }
+        c.restore();
+
+      } else if (it.type === 1) {
+        // Viaduct Highway Pier
+        c.save();
+        c.translate(px, py);
+        const iW = size * 1.3 * Math.min(1, prog * 1.3);
+        const iH = size * 0.8;
+
+        c.beginPath();
+        c.strokeRect(-iW / 2, -iH * 0.4, iW, 8);
+        c.moveTo(-iW / 2, -iH * 0.4 - 4); c.lineTo(iW / 2, -iH * 0.4 - 4);
+        c.moveTo(-10, -iH * 0.4 + 8); c.lineTo(-14, iH * 0.4);
+        c.moveTo(10, -iH * 0.4 + 8);  c.lineTo(14, iH * 0.4);
+        c.strokeRect(-24, iH * 0.4, 48, 8);
+        c.stroke();
+
+        if (prog > 0.4) {
+          c.font = '7px monospace';
+          c.textAlign = 'center';
+          c.fillText('INFRA // PIER-04', 0, iH * 0.4 + 16);
+          c.fillText('BM +45.20m', 0, -iH * 0.4 - 8);
+          c.textAlign = 'start';
+        }
+        c.restore();
+
+      } else if (it.type === 2) {
+        // Site Inspection Engineers & Hard Hats
+        c.save();
+        c.translate(px, py);
+        const scale = (size / 80) * Math.min(1, prog * 1.3);
+        c.scale(scale, scale);
+
+        c.beginPath();
+        c.arc(-22, -18, 7, 0, Math.PI * 2);
+        c.strokeRect(-25, -27, 14, 5);
+        c.moveTo(-22, -11); c.lineTo(-22, 16);
+        c.moveTo(-22, 16); c.lineTo(-30, 38);
+        c.moveTo(-22, 16); c.lineTo(-14, 38);
+        c.moveTo(-22, -5); c.lineTo(-10, 2);
+        c.moveTo(-22, -5); c.lineTo(-34, 2);
+        c.strokeRect(-34, 2, 24, 16);
+        c.stroke();
+
+        if (prog > 0.3) {
+          c.beginPath();
+          c.arc(18, -18, 7, 0, Math.PI * 2);
+          c.strokeRect(15, -27, 14, 5);
+          c.moveTo(18, -11); c.lineTo(18, 16);
+          c.moveTo(18, 16); c.lineTo(10, 38);
+          c.moveTo(18, 16); c.lineTo(26, 38);
+          c.moveTo(18, -5); c.lineTo(38, -26);
+          c.stroke();
+          c.font = '8px monospace';
+          c.fillText('SITE CAD-04', -35, 48);
+        }
+        c.restore();
+
+      } else if (it.type === 3) {
+        // Warren Bridge Structural Truss
+        c.save();
+        c.translate(px - size * 0.6, py);
+        const panels = 4;
+        const pW = ((size * 1.2) / panels) * Math.min(1, prog * 1.3);
+        const tH = size * 0.45;
+        c.beginPath();
+        c.moveTo(0, tH); c.lineTo(panels * pW, tH);
+        c.moveTo(pW * 0.5, 0); c.lineTo((panels - 0.5) * pW, 0);
+        for (let i = 0; i < panels; i++) {
+          const bx1 = i * pW;
+          const bx2 = (i + 1) * pW;
+          const tx = (i + 0.5) * pW;
+          c.moveTo(bx1, tH); c.lineTo(tx, 0);
+          c.lineTo(bx2, tH);
+        }
+        c.stroke();
+        if (prog > 0.5) {
+          c.font = '7px monospace';
+          c.fillText('TRUSS // BM & SF', 8, tH + 12);
+        }
+        c.restore();
+
+      } else if (it.type === 4) {
+        // Total Station Theodolite
+        c.save();
+        c.translate(px, py);
+        const tS = size * 0.5 * Math.min(1, prog * 1.3);
+        c.beginPath();
+        c.strokeRect(-tS * 0.4, -tS * 0.7, tS * 0.8, tS * 0.5);
+        c.moveTo(-tS * 0.8, -tS * 0.45); c.lineTo(tS * 0.8, -tS * 0.45);
+        c.moveTo(-tS * 0.5, -tS * 0.2); c.lineTo(tS * 0.5, -tS * 0.2);
+        c.moveTo(0, -tS * 0.2); c.lineTo(0, tS * 0.3);
+        c.moveTo(0, tS * 0.3); c.lineTo(-tS * 0.6, tS * 0.9);
+        c.moveTo(0, tS * 0.3); c.lineTo(0, tS * 0.9);
+        c.moveTo(0, tS * 0.3); c.lineTo(tS * 0.6, tS * 0.9);
+        c.stroke();
+        if (prog > 0.5) {
+          c.font = '7px monospace';
+          c.fillText('θ=42°18\'', 10, -tS * 0.6);
+        }
+        c.restore();
+
+      } else {
+        // Elevation Contours
+        c.save();
+        c.translate(px, py);
+        const cR = size * 0.5 * Math.min(1, prog * 1.3);
+        c.beginPath();
+        c.ellipse(0, 0, cR, cR * 0.6, 0.2, 0, Math.PI * 2);
+        c.ellipse(4, -2, cR * 0.65, cR * 0.4, 0.2, 0, Math.PI * 2);
+        c.ellipse(8, -4, cR * 0.35, cR * 0.22, 0.2, 0, Math.PI * 2);
+        c.stroke();
+        if (prog > 0.4) {
+          c.font = '7px monospace';
+          c.fillText('N ▲ +105m', -12, 4);
+        }
+        c.restore();
+      }
+    };
+
+    // ── ELECTRICAL ENGINEERING DRAWINGS (EE) ──
+    const drawEe = (c: CanvasRenderingContext2D, it: EngItem, px: number, py: number) => {
+      const prog = it.progress;
+      const size = it.size;
+
+      if (it.type === 0) {
+        // High-Voltage HVAC Tower
+        c.save();
+        c.translate(px, py);
+        const tH = size * 1.3 * Math.min(1, prog * 1.3);
+        const bW = size * 0.5;
+        c.beginPath();
+        c.moveTo(-bW / 2, tH * 0.5); c.lineTo(-bW * 0.12, -tH * 0.5);
+        c.moveTo(bW / 2, tH * 0.5);  c.lineTo(bW * 0.12, -tH * 0.5);
+        c.moveTo(0, -tH * 0.5 - 10); c.lineTo(0, -tH * 0.5);
+        c.moveTo(-bW * 0.6, -tH * 0.25); c.lineTo(bW * 0.6, -tH * 0.25);
+        c.moveTo(-bW * 0.75, -tH * 0.05); c.lineTo(bW * 0.75, -tH * 0.05);
+        c.moveTo(-bW * 0.35, tH * 0.25); c.lineTo(bW * 0.35, tH * 0.05);
+        c.moveTo(bW * 0.35, tH * 0.25); c.lineTo(-bW * 0.35, tH * 0.05);
+        c.stroke();
+        if (prog > 0.5) {
+          c.font = '7px monospace';
+          c.textAlign = 'center';
+          c.fillText('400 kV HVAC', 0, tH * 0.5 + 12);
+          c.textAlign = 'start';
+        }
+        c.restore();
+
+      } else if (it.type === 1) {
+        // Transmission Lines & Bulb
+        c.save();
+        c.translate(px, py);
+        const spanW = size * 1.2 * Math.min(1, prog * 1.3);
+        c.beginPath();
+        c.moveTo(-spanW * 0.6, -14);
+        c.quadraticCurveTo(0, -4, spanW * 0.2, -14);
+        c.moveTo(-spanW * 0.6, -2);
+        c.quadraticCurveTo(0, 8, spanW * 0.2, -2);
+        c.stroke();
+
+        const pulseX = (-spanW * 0.6) + ((Date.now() * 0.06) % (spanW * 0.8));
+        c.beginPath();
+        c.arc(pulseX, -9, 3, 0, Math.PI * 2);
+        c.stroke();
+
+        if (prog > 0.3) {
+          const bX = spanW * 0.35;
+          const bY = 4;
+          c.beginPath();
+          c.arc(bX, bY - 8, 12, 0, Math.PI * 2);
+          c.strokeRect(bX - 5, bY + 4, 10, 8);
+          c.moveTo(bX - 4, bY); c.lineTo(bX, bY - 8); c.lineTo(bX + 4, bY);
+          c.stroke();
+          c.font = '7px monospace';
+          c.fillText('POWER FLOW 50Hz', -spanW * 0.5, 24);
+        }
+        c.restore();
+
+      } else if (it.type === 2) {
+        // Wind Turbine
+        it.rotationAngle += 0.015;
+        c.save();
+        c.translate(px, py);
+        const towerH = size * 1.2 * Math.min(1, prog * 1.3);
+        c.beginPath();
+        c.moveTo(-6, towerH * 0.45); c.lineTo(-2, -towerH * 0.4);
+        c.moveTo(6, towerH * 0.45);  c.lineTo(2, -towerH * 0.4);
+        c.strokeRect(-6, -towerH * 0.4 - 4, 12, 8);
+        c.stroke();
+
+        c.save();
+        c.translate(0, -towerH * 0.4);
+        c.rotate(it.rotationAngle);
+        const bladeLen = size * 0.55;
+        for (let b = 0; b < 3; b++) {
+          const bAng = b * (Math.PI * 2 / 3);
+          c.save();
+          c.rotate(bAng);
+          c.beginPath();
+          c.moveTo(0, 0);
+          c.quadraticCurveTo(4, -bladeLen * 0.5, 2, -bladeLen);
+          c.quadraticCurveTo(-3, -bladeLen * 0.5, 0, 0);
+          c.stroke();
+          c.restore();
+        }
+        c.restore();
+        if (prog > 0.4) {
+          c.font = '7px monospace';
+          c.textAlign = 'center';
+          c.fillText('GEN // 2.5 MW', 0, towerH * 0.45 + 12);
+          c.textAlign = 'start';
+        }
+        c.restore();
+
+      } else if (it.type === 3) {
+        // Turbine Runner
+        it.rotationAngle += 0.02;
+        c.save();
+        c.translate(px, py);
+        const rW = size * 0.48 * Math.min(1, prog * 1.3);
+        c.beginPath();
+        c.arc(0, 0, rW, 0, Math.PI * 2);
+        c.stroke();
+        c.save();
+        c.rotate(it.rotationAngle);
+        for (let v = 0; v < 8; v++) {
+          const vAng = v * (Math.PI * 2 / 8);
+          c.beginPath();
+          c.moveTo(Math.cos(vAng) * rW * 0.3, Math.sin(vAng) * rW * 0.3);
+          c.quadraticCurveTo(Math.cos(vAng + 0.3) * rW * 0.7, Math.sin(vAng + 0.3) * rW * 0.7, Math.cos(vAng) * rW * 0.95, Math.sin(vAng) * rW * 0.95);
+          c.stroke();
+        }
+        c.arc(0, 0, rW * 0.3, 0, Math.PI * 2);
+        c.stroke();
+        c.restore();
+        if (prog > 0.4) {
+          c.font = '7px monospace';
+          c.fillText('3000 RPM', -rW, rW + 14);
+        }
+        c.restore();
+
+      } else if (it.type === 4) {
+        // AC Waveform
+        c.save();
+        c.translate(px - size * 0.5, py);
+        const waveW = size * 1.2 * Math.min(1, prog * 1.3);
+        c.beginPath();
+        c.moveTo(0, -size * 0.4); c.lineTo(0, size * 0.4);
+        c.moveTo(0, 0); c.lineTo(waveW, 0);
+        c.stroke();
+
+        c.beginPath();
+        const steps = Math.floor(40 * prog);
+        for (let i = 0; i <= steps; i++) {
+          const wx = (i / 40) * (size * 1.2);
+          const wy = -Math.sin((i / 40) * Math.PI * 4) * (size * 0.32);
+          if (i === 0) c.moveTo(wx, wy);
+          else c.lineTo(wx, wy);
+        }
+        c.stroke();
+        if (prog > 0.5) {
+          c.font = '7px monospace';
+          c.fillText('V(t)=Vm·sin(ωt)', 8, -size * 0.35);
+        }
+        c.restore();
+
+      } else {
+        // 3-Phase Phasor
+        it.rotationAngle += 0.01;
+        c.save();
+        c.translate(px, py);
+        c.rotate(it.rotationAngle);
+        const pR = size * 0.45 * Math.min(1, prog * 1.3);
+        c.beginPath();
+        for (let a = 0; a < 3; a++) {
+          const ang = a * (Math.PI * 2 / 3);
+          c.moveTo(0, 0);
+          c.lineTo(Math.cos(ang) * pR, Math.sin(ang) * pR);
+        }
+        c.stroke();
+        c.font = '7px monospace';
+        c.fillText('VR', pR + 2, 0);
+        c.fillText('VY', Math.cos(2.09) * pR - 10, Math.sin(2.09) * pR + 8);
+        c.fillText('VB', Math.cos(4.18) * pR - 10, Math.sin(4.18) * pR - 8);
+        c.restore();
+      }
+    };
+
+    // ── AUTOMOBILE ENGINEERING DRAWINGS (AE) ──
+    const drawAutomobile = (c: CanvasRenderingContext2D, it: EngItem, px: number, py: number) => {
+      const prog = it.progress;
+      const size = it.size;
+
+      if (it.type === 0) {
+        // Piston & Crank
+        c.save();
+        c.translate(px, py);
+        const cylW = size * 0.6 * Math.min(1, prog * 1.3);
+        const cylH = size * 1.1;
+        c.beginPath();
+        c.moveTo(-cylW / 2, -cylH * 0.45); c.lineTo(-cylW / 2, cylH * 0.25);
+        c.moveTo(cylW / 2, -cylH * 0.45);  c.lineTo(cylW / 2, cylH * 0.25);
+        c.moveTo(-cylW / 2, -cylH * 0.45); c.lineTo(cylW / 2, -cylH * 0.45);
+        c.stroke();
+
+        const pistY = -cylH * 0.2 + Math.sin(Date.now() * 0.005) * (cylH * 0.15);
+        c.beginPath();
+        c.strokeRect(-cylW * 0.44, pistY, cylW * 0.88, cylH * 0.2);
+        c.moveTo(0, pistY + cylH * 0.1);
+        c.lineTo(Math.cos(Date.now() * 0.005) * 10, cylH * 0.35);
+        c.arc(0, cylH * 0.35, 12, 0, Math.PI * 2);
+        c.stroke();
+
+        if (prog > 0.4) {
+          c.font = '7px monospace';
+          c.textAlign = 'center';
+          c.fillText('4-STROKE // TDC', 0, cylH * 0.45 + 12);
+          c.textAlign = 'start';
+        }
+        c.restore();
+
+      } else if (it.type === 1) {
+        // Cast Engine Block
+        c.save();
+        c.translate(px, py);
+        const bW = size * 1.1 * Math.min(1, prog * 1.3);
+        const bH = size * 0.75;
+        c.beginPath();
+        c.strokeRect(-bW / 2, -bH / 2, bW, bH);
+        const numBores = 4;
+        const boreW = bW / (numBores + 0.6);
+        for (let b = 0; b < numBores; b++) {
+          const bx = -bW * 0.42 + b * (boreW * 0.95);
+          c.strokeRect(bx, -bH * 0.35, boreW * 0.75, bH * 0.7);
+        }
+        c.stroke();
+        if (prog > 0.4) {
+          c.font = '7px monospace';
+          c.fillText('BLOCK 2.0L I-4', -bW * 0.45, -bH / 2 - 6);
+        }
+        c.restore();
+
+      } else if (it.type === 2) {
+        // Wheel & Rim
+        it.rotationAngle += 0.02;
+        c.save();
+        c.translate(px, py);
+        const wR = size * 0.46 * Math.min(1, prog * 1.3);
+        c.beginPath();
+        c.arc(0, 0, wR, 0, Math.PI * 2);
+        c.arc(0, 0, wR * 0.8, 0, Math.PI * 2);
+        c.stroke();
+        c.save();
+        c.rotate(it.rotationAngle);
+        c.beginPath();
+        c.arc(0, 0, wR * 0.35, 0, Math.PI * 2);
+        for (let s = 0; s < 5; s++) {
+          const sang = s * (Math.PI * 2 / 5);
+          c.moveTo(Math.cos(sang) * wR * 0.35, Math.sin(sang) * wR * 0.35);
+          c.lineTo(Math.cos(sang) * wR * 0.78, Math.sin(sang) * wR * 0.78);
+        }
+        c.stroke();
+        c.restore();
+        if (prog > 0.4) {
+          c.font = '7px monospace';
+          c.textAlign = 'center';
+          c.fillText('225/45 R18', 0, wR + 12);
+          c.textAlign = 'start';
+        }
+        c.restore();
+
+      } else if (it.type === 3) {
+        // Vehicle Silhouette Profile
+        c.save();
+        c.translate(px, py);
+        const vW = size * 1.3 * Math.min(1, prog * 1.3);
+        const vH = size * 0.45;
+        c.beginPath();
+        c.moveTo(-vW * 0.48, vH * 0.3);
+        c.lineTo(-vW * 0.48, 0);
+        c.quadraticCurveTo(-vW * 0.35, -vH * 0.2, -vW * 0.15, -vH * 0.2);
+        c.quadraticCurveTo(-vW * 0.05, -vH * 0.7, vW * 0.15, -vH * 0.7);
+        c.quadraticCurveTo(vW * 0.35, -vH * 0.4, vW * 0.48, 0);
+        c.lineTo(vW * 0.48, vH * 0.3);
+        c.arc(-vW * 0.28, vH * 0.3, 10, Math.PI, 0, true);
+        c.arc(vW * 0.28, vH * 0.3, 10, Math.PI, 0, true);
+        c.stroke();
+        c.beginPath();
+        c.arc(-vW * 0.28, vH * 0.3, 7, 0, Math.PI * 2);
+        c.arc(vW * 0.28, vH * 0.3, 7, 0, Math.PI * 2);
+        c.stroke();
+        if (prog > 0.4) {
+          c.font = '7px monospace';
+          c.fillText('AERO // 120km/h', -vW * 0.4, -vH * 0.8);
+        }
+        c.restore();
+
+      } else if (it.type === 4) {
+        // Disc Brake
+        c.save();
+        c.translate(px, py);
+        const dR = size * 0.45 * Math.min(1, prog * 1.3);
+        c.beginPath();
+        c.arc(0, 0, dR, 0, Math.PI * 2);
+        c.arc(0, 0, dR * 0.5, 0, Math.PI * 2);
+        c.stroke();
+        c.strokeRect(dR * 0.5, -dR * 0.7, dR * 0.6, dR * 0.8);
+        if (prog > 0.4) {
+          c.font = '7px monospace';
+          c.fillText('CALIPER // HYD', -dR, dR + 12);
+        }
+        c.restore();
+
+      } else {
+        // Rack & Pinion
+        c.save();
+        c.translate(px, py);
+        const rW = size * 1.1 * Math.min(1, prog * 1.3);
+        c.beginPath();
+        c.strokeRect(-rW / 2, -4, rW, 8);
+        c.strokeRect(-10, -22, 20, 18);
+        c.moveTo(0, -22); c.lineTo(0, -30);
+        c.stroke();
+        if (prog > 0.4) {
+          c.font = '7px monospace';
+          c.textAlign = 'center';
+          c.fillText('RACK & PINION', 0, 16);
+          c.textAlign = 'start';
+        }
+        c.restore();
+      }
+    };
+
+    // ── ELECTRONICS & TELECOMMUNICATION DRAWINGS (ETCE) ──
+    const drawEtce = (c: CanvasRenderingContext2D, it: EngItem, px: number, py: number) => {
+      const prog = it.progress;
+      const size = it.size;
+
+      if (it.type === 0) {
+        // Orbiting Satellite
+        c.save();
+        c.translate(px, py);
+        const satW = size * 1.2 * Math.min(1, prog * 1.3);
+        const satH = size * 0.35;
+        c.beginPath();
+        c.strokeRect(-satH * 0.6, -satH * 0.6, satH * 1.2, satH * 1.2);
+        const wingW = satW * 0.4;
+        c.strokeRect(-satW * 0.5, -satH * 0.4, wingW, satH * 0.8);
+        c.strokeRect(satW * 0.5 - wingW, -satH * 0.4, wingW, satH * 0.8);
+        c.arc(0, satH * 0.6 + 6, 9, Math.PI, 0, true);
+        c.moveTo(0, satH * 0.6); c.lineTo(0, satH * 0.6 + 6);
+        c.stroke();
+        if (prog > 0.3) {
+          for (let w = 1; w <= 3; w++) {
+            c.beginPath();
+            c.arc(0, satH * 0.6 + 6, 10 + w * 6, Math.PI * 0.3, Math.PI * 0.7);
+            c.stroke();
+          }
+          c.font = '7px monospace';
+          c.textAlign = 'center';
+          c.fillText('GEO-SAT // 36,000km', 0, -satH * 0.8);
+          c.textAlign = 'start';
+        }
+        c.restore();
+
+      } else if (it.type === 1) {
+        // 5G Cell Tower
+        c.save();
+        c.translate(px, py);
+        const towH = size * 1.25 * Math.min(1, prog * 1.3);
+        const towW = size * 0.35;
+        c.beginPath();
+        c.moveTo(-towW / 2, towH * 0.45); c.lineTo(-2, -towH * 0.45);
+        c.moveTo(towW / 2, towH * 0.45);  c.lineTo(2, -towH * 0.45);
+        c.strokeRect(-towW * 0.7, -towH * 0.45, 6, 14);
+        c.strokeRect(towW * 0.7 - 6, -towH * 0.45, 6, 14);
+        c.moveTo(-towW * 0.7, -towH * 0.38); c.lineTo(towW * 0.7, -towH * 0.38);
+        c.stroke();
+        if (prog > 0.3) {
+          c.font = '7px monospace';
+          c.fillText('5G NR // 3.5GHz', -towW * 0.4, -towH * 0.52);
+        }
+        c.restore();
+
+      } else if (it.type === 2) {
+        // Transistor & Op-Amp
+        c.save();
+        c.translate(px, py);
+        const cSize = size * 0.8 * Math.min(1, prog * 1.3);
+        c.beginPath();
+        c.arc(-cSize * 0.3, 0, 14, 0, Math.PI * 2);
+        c.moveTo(-cSize * 0.3 - 6, -8); c.lineTo(-cSize * 0.3 - 6, 8);
+        c.moveTo(-cSize * 0.3 - 14, 0); c.lineTo(-cSize * 0.3 - 6, 0);
+        c.moveTo(-cSize * 0.3 - 6, -4); c.lineTo(-cSize * 0.3 + 6, -10);
+        c.moveTo(-cSize * 0.3 - 6, 4);  c.lineTo(-cSize * 0.3 + 6, 10);
+        c.stroke();
+        if (prog > 0.4) {
+          const opX = cSize * 0.25;
+          c.beginPath();
+          c.moveTo(opX, -14); c.lineTo(opX + 22, 0); c.lineTo(opX, 14);
+          c.closePath();
+          c.moveTo(opX + 22, 0); c.lineTo(opX + 30, 0);
+          c.stroke();
+          c.font = '7px monospace';
+          c.fillText('NPN / OP-AMP', opX - 10, -18);
+        }
+        c.restore();
+
+      } else if (it.type === 3) {
+        // DIP IC Chip
+        c.save();
+        c.translate(px, py);
+        const icW = size * 0.85 * Math.min(1, prog * 1.3);
+        const icH = size * 0.45;
+        c.beginPath();
+        c.strokeRect(-icW / 2, -icH / 2, icW, icH);
+        c.arc(-icW / 2, 0, 4, -Math.PI / 2, Math.PI / 2);
+        c.stroke();
+        const pinCount = 6;
+        const pinSpacing = icW / (pinCount + 1);
+        for (let p = 1; p <= pinCount; p++) {
+          const pxPos = -icW / 2 + p * pinSpacing;
+          c.moveTo(pxPos, -icH / 2); c.lineTo(pxPos, -icH / 2 - 5);
+          c.moveTo(pxPos, icH / 2);  c.lineTo(pxPos, icH / 2 + 5);
+        }
+        c.stroke();
+        if (prog > 0.4) {
+          c.font = '7px monospace';
+          c.textAlign = 'center';
+          c.fillText('STM32 ARM', 0, 3);
+          c.textAlign = 'start';
+        }
+        c.restore();
+
+      } else if (it.type === 4) {
+        // RF Carrier Wave
+        c.save();
+        c.translate(px - size * 0.5, py);
+        const rfW = size * 1.2 * Math.min(1, prog * 1.3);
+        c.beginPath();
+        c.moveTo(0, 0); c.lineTo(rfW, 0);
+        c.stroke();
+        c.beginPath();
+        const rfSteps = Math.floor(45 * prog);
+        for (let i = 0; i <= rfSteps; i++) {
+          const rx = (i / 45) * rfW;
+          const env = 0.5 + 0.5 * Math.cos((i / 45) * Math.PI * 2);
+          const ry = -Math.sin((i / 45) * Math.PI * 18) * (size * 0.3 * env);
+          if (i === 0) c.moveTo(rx, ry);
+          else c.lineTo(rx, ry);
+        }
+        c.stroke();
+        if (prog > 0.5) {
+          c.font = '7px monospace';
+          c.fillText('fc ± fm', 4, -size * 0.35);
+        }
+        c.restore();
+
+      } else {
+        // Fiber Optic Core TIR
+        c.save();
+        c.translate(px - size * 0.55, py);
+        const fLen = size * 1.25 * Math.min(1, prog * 1.3);
+        const fH = 14;
+        c.beginPath();
+        c.strokeRect(0, -fH, fLen, fH * 2);
+        c.moveTo(0, -fH * 0.4); c.lineTo(fLen, -fH * 0.4);
+        c.moveTo(0, fH * 0.4);  c.lineTo(fLen, fH * 0.4);
+        c.stroke();
+        if (prog > 0.3) {
+          c.beginPath();
+          c.moveTo(0, 0);
+          const zPoints = Math.floor(7 * prog);
+          const zStep = fLen / 7;
+          for (let z = 1; z <= zPoints; z++) {
+            const zDir = (z % 2 === 1) ? -fH * 0.35 : fH * 0.35;
+            c.lineTo(z * zStep, zDir);
+          }
+          c.stroke();
+          c.font = '7px monospace';
+          c.fillText('FIBER // TIR', 6, fH + 12);
+        }
+        c.restore();
+      }
+    };
+
     // ── MAIN ANIMATION LOOP (DRAWING -> LINGER -> DISSOLVE) ──
     const render = () => {
       ctx.clearRect(0, 0, width, height);
@@ -575,6 +1197,14 @@ export default function DepartmentBlueprintCanvas({ deptCode, accentHex }: Props
 
         if (deptType === 'ME') {
           drawMechanical(ctx, it, px, py);
+        } else if (deptType === 'EE') {
+          drawEe(ctx, it, px, py);
+        } else if (deptType === 'CE') {
+          drawCe(ctx, it, px, py);
+        } else if (deptType === 'AE') {
+          drawAutomobile(ctx, it, px, py);
+        } else if (deptType === 'ETCE') {
+          drawEtce(ctx, it, px, py);
         } else {
           drawCst(ctx, it, px, py);
         }
