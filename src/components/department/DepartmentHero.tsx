@@ -22,7 +22,6 @@ export default function DepartmentHero({ dept }: Props) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isRadarHovered, setIsRadarHovered] = useState(false);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [orbitAngle, setOrbitAngle] = useState(0);
 
   const radarRef = useRef<HTMLDivElement | null>(null);
 
@@ -58,10 +57,6 @@ export default function DepartmentHero({ dept }: Props) {
     },
   ];
 
-  const [decodedTitles, setDecodedTitles] = useState<string[]>(
-    callouts.map((c) => c.title)
-  );
-
   // Auto-advance hero slides every 5.5s
   useEffect(() => {
     if (!dept.heroSlides || dept.heroSlides.length <= 1) return;
@@ -72,73 +67,24 @@ export default function DepartmentHero({ dept }: Props) {
   }, [dept.heroSlides]);
 
   const orbitAngleRef = useRef(0);
-  const rafRef = useRef<number | null>(null);
 
-  // ── Orbit Mode: Real-Time Instant 60fps Wheel Scroll with Zero Latency ──
+  // ── Orbit Mode: Real-Time Direct Hardware GPU CSS Variable with 0.0ms Latency ──
   useEffect(() => {
     const el = radarRef.current;
     if (!el) return;
 
     const handleWheel = (e: WheelEvent) => {
-      // Lock page scroll while mouse is over Key Specs so wheel scroll rotates the HUD in circular motion
+      // Lock page scroll while mouse is over Key Specs so wheel scroll rotates the HUD in real-time
       e.preventDefault();
-      // Accumulate wheel delta
-      orbitAngleRef.current += e.deltaY * 0.0035;
-
-      // Coalesce with requestAnimationFrame for instant 60fps real-time sync with zero delay
-      if (!rafRef.current) {
-        rafRef.current = requestAnimationFrame(() => {
-          setOrbitAngle(orbitAngleRef.current);
-          rafRef.current = null;
-        });
-      }
+      orbitAngleRef.current = (orbitAngleRef.current + e.deltaY * 0.16) % 360;
+      el.style.setProperty('--orbit-angle', `${orbitAngleRef.current.toFixed(2)}deg`);
     };
 
     el.addEventListener('wheel', handleWheel, { passive: false });
     return () => {
       el.removeEventListener('wheel', handleWheel);
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, []);
-
-  // ── Sci-Fi Matrix Typewriter Text Decoder ──
-  const triggerCyberDecode = () => {
-    callouts.forEach((callout, idx) => {
-      const original = callout.title;
-      const len = original.length;
-      let step = 0;
-      const maxSteps = len + 6;
-
-      const interval = setInterval(() => {
-        step++;
-        let output = '';
-        for (let i = 0; i < len; i++) {
-          if (i < step - 3) {
-            output += original[i];
-          } else if (original[i] === ' ') {
-            output += ' ';
-          } else {
-            output += glyphs[Math.floor(Math.random() * glyphs.length)];
-          }
-        }
-
-        setDecodedTitles((prev) => {
-          const next = [...prev];
-          next[idx] = output;
-          return next;
-        });
-
-        if (step >= maxSteps) {
-          clearInterval(interval);
-          setDecodedTitles((prev) => {
-            const next = [...prev];
-            next[idx] = original;
-            return next;
-          });
-        }
-      }, 22);
-    });
-  };
 
   // ── 3D Perspective Tilt on Mouse Movement ──
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -154,7 +100,6 @@ export default function DepartmentHero({ dept }: Props) {
 
   const handleMouseEnter = () => {
     setIsRadarHovered(true);
-    triggerCyberDecode();
   };
 
   const handleMouseLeave = () => {
@@ -162,44 +107,38 @@ export default function DepartmentHero({ dept }: Props) {
     setTilt({ x: 0, y: 0 });
   };
 
-  // ── Geometry: Exact 72° Polar Spread with Center at (0, 0) in 520x520 Space ──
-  const rHub = 65; // Central 130px button (radius 65)
-  const ROrbit = 195; // Orbit radius
-  const cardHalfW = 84; // Half width of callout card
-  const cardHalfH = 22; // Half height of callout card
+  // ── Geometry: 100% Responsive Percentage Lockstep (ViewBox 0 0 1000 1000) ──
+  // Hub radius = 130, Orbit radius = 355
   const N = callouts.length;
   const deltaAngle = (Math.PI * 2) / N; // 72 deg
 
   const nodes = callouts.map((c, i) => {
-    const angle = -Math.PI / 2 + i * deltaAngle + orbitAngle;
+    const angle = -Math.PI / 2 + i * deltaAngle;
     const cosA = Math.cos(angle);
     const sinA = Math.sin(angle);
 
-    // Center of card relative to (0, 0)
-    const cardX = ROrbit * cosA;
-    const cardY = ROrbit * sinA;
+    // Center of card: 500 + 355 * cosA
+    const cardCenterX = 500 + 355 * cosA;
+    const cardCenterY = 500 + 355 * sinA;
 
-    // Start of line at Hub perimeter
-    const startX = rHub * cosA;
-    const startY = rHub * sinA;
+    // Start of connecting line at central hub perimeter (radius 130)
+    const startX = 500 + 130 * cosA;
+    const startY = 500 + 130 * sinA;
 
-    // Exact ray-box intersection with card boundary facing the hub
-    const tx = cardHalfW / (Math.abs(cosA) || 0.001);
-    const ty = cardHalfH / (Math.abs(sinA) || 0.001);
-    const t = Math.min(tx, ty);
+    // End of line at the card's inner boundary (radius 265)
+    const endX = 500 + 265 * cosA;
+    const endY = 500 + 265 * sinA;
 
-    // End of line at the card's visible outer border (never hidden underneath)
-    const endX = cardX - t * cosA;
-    const endY = cardY - t * sinA;
-
-    // Smooth technical curved dogleg
-    const midX = startX + (endX - startX) * 0.5 - sinA * 8;
-    const midY = startY + (endY - startY) * 0.5 + cosA * 8;
+    // Subtle curved leader line
+    const midX = startX + (endX - startX) * 0.5 - sinA * 14;
+    const midY = startY + (endY - startY) * 0.5 + cosA * 14;
     const pathD = `M ${startX.toFixed(1)} ${startY.toFixed(1)} Q ${midX.toFixed(1)} ${midY.toFixed(1)} ${endX.toFixed(1)} ${endY.toFixed(1)}`;
 
     return {
-      cardX,
-      cardY,
+      cardCenterX,
+      cardCenterY,
+      percentLeft: (cardCenterX / 10).toFixed(2),
+      percentTop: (cardCenterY / 10).toFixed(2),
       startX,
       startY,
       endX,
@@ -357,52 +296,127 @@ export default function DepartmentHero({ dept }: Props) {
               onMouseMove={handleMouseMove}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
-              className="relative w-[520px] h-[520px] max-w-full aspect-square flex items-center justify-center cursor-pointer select-none"
-              style={{ perspective: '1000px' }}
+              className="relative w-[500px] h-[500px] max-w-full aspect-square flex items-center justify-center cursor-pointer select-none"
+              style={{ 
+                perspective: '1000px',
+                ['--orbit-angle' as any]: '0deg',
+              }}
             >
               
-              {/* Dynamic SVG Connecting Dotted Lines (Z-30: Placed in front, fully visible) */}
-              <svg 
-                viewBox="-260 -260 520 520"
-                className={`absolute inset-0 w-full h-full pointer-events-none z-[30] overflow-visible transition-opacity duration-150 ${
-                  isRadarHovered ? 'opacity-100' : 'opacity-0'
+              {/* Dynamic Orbiting Layer: Rotates 100% via GPU CSS Variable with 0.0ms Real-Time Latency */}
+              <div 
+                className={`absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-150 ${
+                  isRadarHovered ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
                 }`}
-                aria-hidden="true"
+                style={{
+                  transform: `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+                }}
               >
-                {nodes.map((n) => (
-                  <g key={n.idx}>
-                    {/* Glowing Cyan Dotted Connecting Line */}
-                    <path
-                      d={n.pathD}
-                      stroke="#00F0FF"
-                      strokeWidth="2.5"
-                      strokeDasharray="6 4"
-                      fill="none"
+                {/* SVG Connecting Dotted Lines */}
+                <svg 
+                  viewBox="0 0 1000 1000"
+                  className="absolute inset-0 w-full h-full pointer-events-none z-[30] overflow-visible"
+                  style={{
+                    transform: 'rotate(var(--orbit-angle, 0deg))',
+                    transformOrigin: '50% 50%',
+                  }}
+                  aria-hidden="true"
+                >
+                  {nodes.map((n) => (
+                    <g key={n.idx}>
+                      {/* Glowing Cyan Dotted Connecting Line */}
+                      <path
+                        d={n.pathD}
+                        stroke="#00F0FF"
+                        strokeWidth="5"
+                        strokeDasharray="12 8"
+                        fill="none"
+                        style={{
+                          filter: 'drop-shadow(0 0 6px #00F0FF) drop-shadow(0 0 12px rgba(0,240,255,0.4))',
+                          animation: 'dept-laser-dash 1.2s linear infinite',
+                        }}
+                      />
+                      {/* Hub Perimeter Anchor Node */}
+                      <circle
+                        cx={n.startX}
+                        cy={n.startY}
+                        r="7"
+                        fill="#0EA5E9"
+                      />
+                      {/* Glowing HUD Card Terminal Dot at Card Border */}
+                      <circle
+                        cx={n.endX}
+                        cy={n.endY}
+                        r="9"
+                        fill="#00F0FF"
+                        style={{
+                          filter: 'drop-shadow(0 0 10px #00F0FF)',
+                        }}
+                      />
+                    </g>
+                  ))}
+                </svg>
+
+                {/* Radiating Callout Badges (GPU CSS Orbit Counter-Rotation Keeps Text Level) */}
+                <div 
+                  className="absolute inset-0 w-full h-full pointer-events-none z-[20]"
+                  style={{
+                    transform: 'rotate(var(--orbit-angle, 0deg))',
+                    transformOrigin: '50% 50%',
+                  }}
+                >
+                  {nodes.map((n) => (
+                    <div
+                      key={n.idx}
+                      className="absolute"
                       style={{
-                        filter: 'drop-shadow(0 0 6px #00F0FF) drop-shadow(0 0 12px rgba(0,240,255,0.4))',
-                        animation: 'dept-laser-dash 1.2s linear infinite',
+                        left: `${n.percentLeft}%`,
+                        top: `${n.percentTop}%`,
+                        transform: 'translate(-50%, -50%) rotate(calc(0deg - var(--orbit-angle, 0deg)))',
+                        transformOrigin: 'center center',
+                        pointerEvents: isRadarHovered ? 'auto' : 'none',
                       }}
-                    />
-                    {/* Hub Perimeter Anchor Node */}
-                    <circle
-                      cx={n.startX}
-                      cy={n.startY}
-                      r="3.5"
-                      fill="#0EA5E9"
-                    />
-                    {/* Glowing HUD Card Terminal Dot at Card Border */}
-                    <circle
-                      cx={n.endX}
-                      cy={n.endY}
-                      r="5"
-                      fill="#00F0FF"
-                      style={{
-                        filter: 'drop-shadow(0 0 10px #00F0FF)',
-                      }}
-                    />
-                  </g>
-                ))}
-              </svg>
+                    >
+                      {/* Liquid Glass Frosted Bubble with HUD Corner Brackets */}
+                      <div 
+                        className="relative px-3.5 py-2 rounded-[9px] shadow-2xl flex items-center gap-2.5 text-white group/bubble"
+                        style={{
+                          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.06) 100%)',
+                          border: '1px solid rgba(255, 255, 255, 0.32)',
+                          borderTop: '1px solid rgba(255, 255, 255, 0.6)',
+                          backdropFilter: 'blur(20px) saturate(190%) contrast(105%)',
+                          WebkitBackdropFilter: 'blur(20px) saturate(190%) contrast(105%)',
+                          boxShadow: '0 10px 32px 0 rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.65)',
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        {/* Top-Left Corner Bracket */}
+                        <span 
+                          className="absolute -top-[2px] -left-[2px] w-[7px] h-[7px] border-t-2 border-l-2 pointer-events-none"
+                          style={{ borderColor: accent }}
+                        />
+                        {/* Bottom-Right Corner Bracket */}
+                        <span 
+                          className="absolute -bottom-[2px] -right-[2px] w-[7px] h-[7px] border-b-2 border-r-2 pointer-events-none"
+                          style={{ borderColor: accent }}
+                        />
+
+                        <span className="text-base select-none leading-none">
+                          {n.item.icon}
+                        </span>
+                        <div className="text-left">
+                          <strong className="block text-xs font-extrabold text-white tracking-wide font-sans leading-tight">
+                            {n.item.title}
+                          </strong>
+                          <div className="text-[10px] font-semibold text-slate-300 leading-tight mt-0.5">
+                            {n.item.subtitle}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
 
               {/* Concentric Encircling Radar Rings */}
               <div className="absolute w-[320px] h-[320px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-[2]">
@@ -450,66 +464,6 @@ export default function DepartmentHero({ dept }: Props) {
                 >
                   {isRadarHovered ? 'SCROLL ORBIT' : 'HOVER INFO'}
                 </div>
-              </div>
-
-              {/* Radiating Callout Badges (Z-20: Instant Zero-Latency 60fps Orbit on Wheel Scroll) */}
-              <div className="absolute inset-0 w-full h-full pointer-events-none z-[20]">
-                {nodes.map((n) => (
-                  <div
-                    key={n.idx}
-                    className="absolute"
-                    style={{
-                      left: '50%',
-                      top: '50%',
-                      transform: `translate(calc(-50% + ${n.cardX.toFixed(1)}px), calc(-50% + ${n.cardY.toFixed(1)}px)) perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${
-                        isRadarHovered ? 1 : 0.65
-                      })`,
-                      opacity: isRadarHovered ? 1 : 0,
-                      pointerEvents: isRadarHovered ? 'auto' : 'none',
-                      // Notice: Zero transform latency while hovered for instantaneous real-time wheel orbit!
-                      transition: isRadarHovered
-                        ? 'opacity 0.15s ease-out'
-                        : 'opacity 0.2s ease-out, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
-                    }}
-                  >
-                    {/* Liquid Glass Frosted Bubble with HUD Corner Brackets */}
-                    <div 
-                      className="relative px-3.5 py-2 rounded-[9px] shadow-2xl flex items-center gap-2.5 text-white group/bubble"
-                      style={{
-                        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.06) 100%)',
-                        border: '1px solid rgba(255, 255, 255, 0.32)',
-                        borderTop: '1px solid rgba(255, 255, 255, 0.6)',
-                        backdropFilter: 'blur(20px) saturate(190%) contrast(105%)',
-                        WebkitBackdropFilter: 'blur(20px) saturate(190%) contrast(105%)',
-                        boxShadow: '0 10px 32px 0 rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.65)',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {/* Top-Left Corner Bracket */}
-                      <span 
-                        className="absolute -top-[2px] -left-[2px] w-[7px] h-[7px] border-t-2 border-l-2 pointer-events-none"
-                        style={{ borderColor: accent }}
-                      />
-                      {/* Bottom-Right Corner Bracket */}
-                      <span 
-                        className="absolute -bottom-[2px] -right-[2px] w-[7px] h-[7px] border-b-2 border-r-2 pointer-events-none"
-                        style={{ borderColor: accent }}
-                      />
-
-                      <span className="text-base select-none leading-none">
-                        {n.item.icon}
-                      </span>
-                      <div className="text-left">
-                        <strong className="block text-xs font-extrabold text-white tracking-wide font-sans leading-tight">
-                          {decodedTitles[n.idx]}
-                        </strong>
-                        <div className="text-[10px] font-semibold text-slate-300 leading-tight mt-0.5">
-                          {n.item.subtitle}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
               </div>
 
             </div>
