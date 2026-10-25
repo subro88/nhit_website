@@ -63,40 +63,38 @@ export default function DepartmentFacultyRoster({ faculty, accentHex }: Props) {
 
   return (
     <section className="space-y-6">
-      {/* ── Section Header with Navigation Controls ── */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <span 
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider text-[#9e0b0f] bg-red-50 border border-red-100"
-          >
-            ACADEMIC DIRECTORY // NHIT FACULTY
-          </span>
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-[#9e0b0f] tracking-tight mt-1">
-            Our Faculties ({total})
-          </h3>
-          <p className="text-xs sm:text-sm text-slate-600 max-w-xl">
-            Experienced engineering educators, licensed technical instructors, and researchers guiding students across laboratory practice and theory.
-          </p>
-        </div>
+      {/* ── Section Header with Navigation Controls (Center Aligned) ── */}
+      <div className="text-center max-w-2xl mx-auto space-y-2">
+        <span 
+          className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider text-[#9e0b0f] bg-red-50 border border-red-100"
+        >
+          ACADEMIC DIRECTORY // NHIT FACULTY
+        </span>
+        <h3 className="text-2xl sm:text-3xl font-extrabold text-[#9e0b0f] tracking-tight mt-1.5">
+          Our Faculties ({total})
+        </h3>
+        <p className="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed">
+          Experienced engineering educators, licensed technical instructors, and researchers guiding students across laboratory practice and theory.
+        </p>
 
-        {/* Carousel Navigation Buttons & Counter */}
-        <div className="flex items-center gap-3 flex-shrink-0">
-          <span className="font-mono text-xs font-bold text-slate-500">
+        {/* Carousel Navigation Buttons & Counter Centered */}
+        <div className="flex items-center justify-center gap-3 pt-2">
+          <button
+            onClick={handlePrev}
+            className="w-9 h-9 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-700 hover:bg-[#9e0b0f] hover:text-white hover:border-[#9e0b0f] transition-all active:scale-95"
+            aria-label="Previous faculty member"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <span className="font-mono text-xs font-bold text-slate-500 px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200">
             {String(currentIndex + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
           </span>
           <button
-            onClick={handlePrev}
-            className="w-10 h-10 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-700 hover:bg-slate-900 hover:text-white transition-all active:scale-95"
-            aria-label="Previous faculty member"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
             onClick={handleNext}
-            className="w-10 h-10 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-700 hover:bg-slate-900 hover:text-white transition-all active:scale-95"
+            className="w-9 h-9 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-700 hover:bg-[#9e0b0f] hover:text-white hover:border-[#9e0b0f] transition-all active:scale-95"
             aria-label="Next faculty member"
           >
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="w-4 h-4" />
           </button>
         </div>
       </div>

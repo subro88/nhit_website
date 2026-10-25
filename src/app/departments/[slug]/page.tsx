@@ -261,39 +261,48 @@ export default function DepartmentDetailPage({ params }: Props) {
           </div>
         </div>
 
-        {/* ── Floating / Bottom Call to Action Strip ────────────────── */}
+        {/* ── Floating / Bottom Call to Action Strip (NHIT Signature Crimson) ── */}
         <div 
-          className="rounded-3xl p-8 sm:p-10 text-white text-center shadow-xl space-y-4"
+          className="rounded-3xl p-8 sm:p-10 text-white text-center shadow-2xl space-y-4 relative overflow-hidden"
           style={{
-            background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 100%)',
-            border: `2px solid ${accent}`,
+            background: 'linear-gradient(135deg, #9E0B0F 0%, #7B080B 100%)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
           }}
         >
+          {/* Subtle Decorative Ambient Glow */}
+          <div 
+            className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-white/10 blur-2xl pointer-events-none" 
+            aria-hidden="true" 
+          />
+          <div 
+            className="absolute -bottom-12 -left-12 w-48 h-48 rounded-full bg-black/20 blur-2xl pointer-events-none" 
+            aria-hidden="true" 
+          />
+
           <span 
-            className="inline-block px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider mb-1"
-            style={{ backgroundColor: `${accent}25`, color: accent }}
+            className="inline-block px-3.5 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider mb-1 bg-amber-400/20 text-amber-300 border border-amber-400/30 shadow-sm"
           >
             ADMISSIONS OPEN // ACADEMIC SESSION 2026–27
           </span>
-          <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+          <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white drop-shadow-sm">
             Ready to Begin Your Technical Career in {dept.title}?
           </h3>
-          <p className="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm text-red-100 max-w-2xl mx-auto leading-relaxed">
             Direct institutional seats and state merit counseling are now underway. Connect with our admission cell today to secure your counseling rank and hostel allocation.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
+          <div className="flex flex-wrap items-center justify-center gap-4 pt-2 relative z-10">
             <Link
               href="/admissions"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-bold bg-[#FF3115] hover:bg-[#e0260c] text-white transition-all shadow-lg active:scale-95"
+              className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-bold bg-white hover:bg-red-50 text-[#9E0B0F] transition-all shadow-lg active:scale-95"
             >
-              <Send className="w-4 h-4" />
+              <Send className="w-4 h-4 text-[#9E0B0F]" />
               Apply for Admission Online
             </Link>
             <a
               href="tel:03432542103"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all backdrop-blur-sm"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold bg-black/20 hover:bg-black/30 text-white border border-white/25 transition-all backdrop-blur-sm shadow-md"
             >
-              <PhoneCall className="w-4 h-4 text-emerald-400" />
+              <PhoneCall className="w-4 h-4 text-emerald-300" />
               Call Admissions: (0343) 2542103
             </a>
           </div>
