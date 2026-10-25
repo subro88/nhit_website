@@ -23,18 +23,18 @@ export default function DepartmentBlueprintCanvas({ deptCode, accentHex }: Props
     // Detect Department Archetype
     const codeUpper = (deptCode || 'CST_01').toUpperCase();
     let deptType = 'CST';
-    if (codeUpper.includes('CST') || codeUpper.includes('CS')) {
+    if (codeUpper.includes('ETC') || codeUpper.includes('ECE') || codeUpper.includes('TEL')) {
+      deptType = 'ETCE';
+    } else if (codeUpper.includes('CST') || codeUpper.includes('CS')) {
       deptType = 'CST';
     } else if (codeUpper.includes('EE') || codeUpper.includes('ELE')) {
       deptType = 'EE';
-    } else if (codeUpper.includes('CE') || codeUpper.includes('CIVIL')) {
-      deptType = 'CE';
-    } else if (codeUpper.includes('AE') || codeUpper.includes('AUTO')) {
-      deptType = 'AE';
-    } else if (codeUpper.includes('ETC') || codeUpper.includes('TEL')) {
-      deptType = 'ETCE';
     } else if (codeUpper.includes('ME') || codeUpper.includes('MECH')) {
       deptType = 'ME';
+    } else if (codeUpper.includes('AE') || codeUpper.includes('AUTO')) {
+      deptType = 'AE';
+    } else if (codeUpper.includes('CE') || codeUpper.includes('CIVIL')) {
+      deptType = 'CE';
     }
 
     const resizeCanvas = () => {
