@@ -6,6 +6,7 @@ import '@/styles/sections.css';
 import '@/styles/placement-radar.css';
 import '@/styles/nhit-journey.css';
 import '@/styles/institutional-home.css';
+import '@/styles/about-subpage.css';
 import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
