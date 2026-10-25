@@ -6,13 +6,11 @@ import Image from 'next/image';
 import { 
   FileText, 
   Send, 
-  Sparkles, 
   CheckCircle2, 
-  ArrowRight, 
   PhoneCall, 
   Award,
   Layers,
-  GraduationCap
+  Cpu
 } from 'lucide-react';
 import { DepartmentData } from '@/data/departmentsData';
 import DepartmentBlueprintCanvas from './DepartmentBlueprintCanvas';
@@ -25,13 +23,56 @@ export default function DepartmentHero({ dept }: Props) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isRadarHovered, setIsRadarHovered] = useState(false);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const [decodedTexts, setDecodedTexts] = useState<string[]>(
-    dept.hudSpecs.map((s) => s.val)
-  );
 
   const radarRef = useRef<HTMLDivElement | null>(null);
+  const hubRef = useRef<HTMLDivElement | null>(null);
+  const bubbleRefs = useRef<(HTMLDivElement | null)[]>([]);
+
   const accent = dept.accentHex || '#0EA5E9';
   const glyphs = '0123456789ABCDEF!@#$%&*<>{}[]~/+-=';
+
+  // The 5 authentic Key Specs callouts matching NHIT reference
+  const callouts = [
+    {
+      cls: 'top-[8%] right-[2%]',
+      icon: '🎓',
+      title: dept.duration.split('·')[0].trim() || '3-Year Diploma',
+      subtitle: '6 Semesters Full-Time',
+    },
+    {
+      cls: 'top-[30%] -right-[5%]',
+      icon: '🏛️',
+      title: 'AICTE Approved',
+      subtitle: 'Govt. of India, New Delhi',
+    },
+    {
+      cls: 'top-[48%] -left-[3%]',
+      icon: '⚡',
+      title: 'WBSCTVESD Affiliated',
+      subtitle: 'State Council Registered',
+    },
+    {
+      cls: 'bottom-[12%] left-[4%]',
+      icon: '👥',
+      title: `${dept.intake} Intake`,
+      subtitle: 'JEXPO / Direct Counseling',
+    },
+    {
+      cls: 'bottom-[6%] right-[0%]',
+      icon: '💼',
+      title: `${dept.stats.placementRate} Placement`,
+      subtitle: 'Top Industries & Lateral Entry',
+    },
+  ];
+
+  const [decodedTitles, setDecodedTitles] = useState<string[]>(
+    callouts.map((c) => c.title)
+  );
+
+  // Dynamic SVG HUD laser leader lines
+  const [laserPaths, setLaserPaths] = useState<
+    { d: string; cx: number; cy: number }[]
+  >([]);
 
   // Auto-advance hero slides every 5.5s for Ken Burns dynamic visual feel
   useEffect(() => {
@@ -42,13 +83,72 @@ export default function DepartmentHero({ dept }: Props) {
     return () => clearInterval(interval);
   }, [dept.heroSlides]);
 
-  // ── Cascading Cybernetic Decrypt Animation on Radar Hover ──
+  // ── Compute dynamic SVG curves from hub to bubbles ──
+  const updateLaserLines = () => {
+    if (!radarRef.current || !hubRef.current) return;
+    const wrapRect = radarRef.current.getBoundingClientRect();
+    const hubRect = hubRef.current.getBoundingClientRect();
+    if (wrapRect.width === 0 || hubRect.width === 0) return;
+
+    const hubCx = hubRect.left + hubRect.width / 2 - wrapRect.left;
+    const hubCy = hubRect.top + hubRect.height / 2 - wrapRect.top;
+    const hubRadius = hubRect.width / 2;
+
+    const newPaths = bubbleRefs.current.map((bubble) => {
+      if (!bubble) return { d: '', cx: 0, cy: 0 };
+      const bRect = bubble.getBoundingClientRect();
+      if (bRect.width === 0) return { d: '', cx: 0, cy: 0 };
+
+      const bCenterX = bRect.left + bRect.width / 2 - wrapRect.left;
+      const bCenterY = bRect.top + bRect.height / 2 - wrapRect.top;
+
+      const targetX =
+        bCenterX < hubCx
+          ? bRect.right - wrapRect.left
+          : bRect.left - wrapRect.left;
+      const targetY = bCenterY;
+
+      const angle = Math.atan2(targetY - hubCy, targetX - hubCx);
+      const startX = hubCx + Math.cos(angle) * (hubRadius + 6);
+      const startY = hubCy + Math.sin(angle) * (hubRadius + 6);
+
+      const midX = startX + (targetX - startX) * 0.45;
+      const midY = startY + (targetY - startY) * 0.15;
+
+      const d = `M ${startX.toFixed(1)} ${startY.toFixed(1)} Q ${midX.toFixed(
+        1
+      )} ${midY.toFixed(1)} ${targetX.toFixed(1)} ${targetY.toFixed(1)}`;
+      return { d, cx: targetX, cy: targetY };
+    });
+
+    setLaserPaths(newPaths);
+  };
+
+  // Run transition tracking when hover state changes
+  useEffect(() => {
+    if (!isRadarHovered) return;
+    let frames = 0;
+    let rafId: number;
+
+    const track = () => {
+      updateLaserLines();
+      frames++;
+      if (frames < 45) {
+        rafId = requestAnimationFrame(track);
+      }
+    };
+
+    rafId = requestAnimationFrame(track);
+    return () => cancelAnimationFrame(rafId);
+  }, [isRadarHovered]);
+
+  // ── Sci-Fi Matrix Typewriter Text Decoder ──
   const triggerCyberDecode = () => {
-    dept.hudSpecs.forEach((spec, specIdx) => {
-      const original = spec.val;
+    callouts.forEach((callout, idx) => {
+      const original = callout.title;
       const len = original.length;
       let step = 0;
-      const maxSteps = len + 10;
+      const maxSteps = len + 8;
 
       const interval = setInterval(() => {
         step++;
@@ -63,21 +163,21 @@ export default function DepartmentHero({ dept }: Props) {
           }
         }
 
-        setDecodedTexts((prev) => {
+        setDecodedTitles((prev) => {
           const next = [...prev];
-          next[specIdx] = output;
+          next[idx] = output;
           return next;
         });
 
         if (step >= maxSteps) {
           clearInterval(interval);
-          setDecodedTexts((prev) => {
+          setDecodedTitles((prev) => {
             const next = [...prev];
-            next[specIdx] = original;
+            next[idx] = original;
             return next;
           });
         }
-      }, 32);
+      }, 28);
     });
   };
 
@@ -88,9 +188,10 @@ export default function DepartmentHero({ dept }: Props) {
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
     setTilt({
-      x: y * -12,
-      y: x * 12,
+      x: y * -10,
+      y: x * 10,
     });
+    updateLaserLines();
   };
 
   const handleMouseEnter = () => {
@@ -105,7 +206,7 @@ export default function DepartmentHero({ dept }: Props) {
 
   return (
     <section 
-      className="relative overflow-hidden bg-slate-950 text-white min-h-[560px] md:min-h-[620px] lg:h-[74vh] lg:max-h-[760px] flex items-center"
+      className="relative overflow-hidden bg-slate-950 text-white min-h-[580px] md:min-h-[640px] lg:h-[76vh] lg:max-h-[780px] flex items-center"
       style={{ '--dept-accent': accent } as React.CSSProperties}
     >
       {/* ── Background Image Slideshow with Subtle Ken Burns Effect ── */}
@@ -137,11 +238,11 @@ export default function DepartmentHero({ dept }: Props) {
       <div 
         className="absolute inset-0 z-[1] pointer-events-none"
         style={{
-          background: 'linear-gradient(135deg, rgba(15,23,42,0.86) 0%, rgba(15,23,42,0.72) 55%, rgba(15,23,42,0.82) 100%)',
+          background: 'linear-gradient(135deg, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.70) 55%, rgba(15,23,42,0.82) 100%)',
         }}
       />
 
-      {/* ── Interactive High-DPI Engineering Blueprint Canvas ── */}
+      {/* ── High-DPI Engineering Blueprint Progressive Line Drawing & Dissolving Schematics ── */}
       <DepartmentBlueprintCanvas deptCode={dept.code} accentHex={accent} />
 
       {/* ── Ambient Radial Glow around Accent Color ── */}
@@ -224,7 +325,7 @@ export default function DepartmentHero({ dept }: Props) {
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg text-sm font-bold bg-[#FF3115] hover:bg-[#e0260c] text-white transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
               >
                 <Send className="w-4 h-4" />
-                Admission Counseling 2026–27
+                Admission Brochure
               </Link>
             </div>
 
@@ -250,199 +351,146 @@ export default function DepartmentHero({ dept }: Props) {
               onMouseMove={handleMouseMove}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
-              className="relative w-full max-w-[420px] aspect-square flex items-center justify-center cursor-pointer select-none group"
+              className="relative w-full max-w-[460px] min-h-[440px] flex items-center justify-center cursor-pointer select-none"
+              style={{ perspective: '1000px' }}
             >
               
-              {/* Concentric Animated Radar Rings */}
-              <div 
-                className="absolute inset-0 rounded-full border border-white/10 animate-ping opacity-20 pointer-events-none"
-                style={{ animationDuration: '4s' }}
-              />
-              <div className="absolute inset-6 rounded-full border border-white/10 pointer-events-none" />
-              <div className="absolute inset-16 rounded-full border border-dashed border-white/15 pointer-events-none" />
-              <div className="absolute inset-28 rounded-full border border-white/15 pointer-events-none" />
-
-              {/* Central Floating Circular Hub */}
-              <div 
-                className="relative z-10 w-32 h-32 rounded-full flex flex-col items-center justify-center text-center shadow-2xl border-2 backdrop-blur-xl transition-all duration-300 group-hover:scale-105"
-                style={{
-                  backgroundColor: 'rgba(15, 23, 42, 0.92)',
-                  borderColor: accent,
-                  boxShadow: isRadarHovered 
-                    ? `0 0 45px -2px ${accent}60` 
-                    : `0 0 25px -5px ${accent}30`,
-                }}
+              {/* Dynamic SVG Laser Leader Lines */}
+              <svg 
+                className={`absolute inset-0 w-full h-full pointer-events-none z-[4] overflow-visible transition-opacity duration-300 ${
+                  isRadarHovered ? 'opacity-100' : 'opacity-0'
+                }`}
+                aria-hidden="true"
               >
+                {laserPaths.map((p, idx) => (
+                  <g key={idx}>
+                    {p.d && (
+                      <path
+                        d={p.d}
+                        className="dept-laser-line"
+                        style={{
+                          animation: 'dept-laser-dash 1.2s linear infinite',
+                        }}
+                      />
+                    )}
+                    {p.cx > 0 && (
+                      <circle
+                        cx={p.cx}
+                        cy={p.cy}
+                        r="3.5"
+                        className="dept-laser-dot"
+                      />
+                    )}
+                  </g>
+                ))}
+              </svg>
+
+              {/* Concentric Encircling Radar Rings */}
+              <div className="absolute w-[320px] h-[320px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-[2]">
+                {/* Ring 1: Dashed rotating circle */}
                 <div 
-                  className="w-10 h-10 rounded-full flex items-center justify-center mb-1 text-white transition-transform group-hover:rotate-12 duration-300"
-                  style={{ backgroundColor: `${accent}25` }}
-                >
-                  <GraduationCap className="w-5 h-5" style={{ color: accent }} />
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[170px] h-[170px] rounded-full border border-dashed border-white/45"
+                  style={{ animation: 'dept-ring-spin 30s linear infinite' }}
+                />
+                {/* Ring 2: Solid outer circle */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[250px] h-[250px] rounded-full border border-white/25" />
+                {/* Ring 3: Concentric outer boundary */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[320px] h-[320px] rounded-full border border-white/15" />
+                {/* Radar pulse wave */}
+                <div 
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2"
+                  style={{
+                    borderColor: accent,
+                    animation: 'dept-radar-pulse 2.8s cubic-bezier(0.1, 0.8, 0.3, 1) infinite',
+                  }}
+                />
+              </div>
+
+              {/* Central Floating Circular Button (130px) */}
+              <div 
+                ref={hubRef}
+                className="relative z-10 w-[130px] h-[130px] rounded-full flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300"
+                style={{
+                  background: 'radial-gradient(circle at 35% 35%, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98))',
+                  border: isRadarHovered ? '2px solid #ffffff' : '2px solid rgba(255, 255, 255, 0.75)',
+                  boxShadow: isRadarHovered 
+                    ? `0 0 40px ${accent}A0, 0 15px 35px rgba(0, 0, 0, 0.6)` 
+                    : `0 0 25px ${accent}50, inset 0 0 20px rgba(255, 255, 255, 0.1), 0 10px 30px rgba(0, 0, 0, 0.5)`,
+                  transform: isRadarHovered ? 'scale(1.08) translateY(-4px)' : 'none',
+                  animation: !isRadarHovered ? 'dept-radar-float 4s ease-in-out infinite' : 'none',
+                }}
+              >
+                <div className="text-2xl leading-none mb-1 filter drop-shadow">
+                  ⚙️
                 </div>
-                <span className="text-xs font-black uppercase tracking-wider text-white">
+                <div className="font-extrabold text-[11px] tracking-wider text-white uppercase">
                   KEY SPECS
-                </span>
-                <span className="text-[10px] font-mono text-slate-300 uppercase">
-                  {isRadarHovered ? 'ACTIVE SPECS' : 'HOVER TO VIEW'}
-                </span>
-              </div>
-
-              {/* 5 Radiating HUD Callout Bubbles — Revealed Only on Mouse Hover with Staggered Kinetic Bloom */}
-              
-              {/* Callout 1: Approved Intake (Top Center) */}
-              <div 
-                className={`absolute -top-1 sm:top-1 left-1/2 -translate-x-1/2 z-20 transition-all duration-300 ease-out ${
-                  isRadarHovered 
-                    ? 'opacity-100 scale-100 pointer-events-auto translate-y-0' 
-                    : 'opacity-0 scale-75 pointer-events-none -translate-y-3'
-                }`}
-                style={{
-                  transform: isRadarHovered 
-                    ? `translate(-50%, 0) perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` 
-                    : 'translate(-50%, -12px) scale(0.75)',
-                }}
-              >
-                <div className="bg-slate-900/95 border border-slate-700/80 backdrop-blur-md px-3.5 py-2 rounded-xl shadow-2xl text-center hover:border-sky-400/60 transition-colors">
-                  <div className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">
-                    {dept.hudSpecs[0]?.label || 'Approved Intake'}
-                  </div>
-                  <div 
-                    className="text-sm font-extrabold transition-all"
-                    style={{ 
-                      color: accent,
-                      textShadow: isRadarHovered ? `0 0 8px ${accent}` : 'none',
-                    }}
-                  >
-                    {decodedTexts[0] || dept.hudSpecs[0]?.val}
-                  </div>
-                  <div className="text-[9px] text-slate-400">
-                    {dept.hudSpecs[0]?.sub || 'Annual Sanction'}
-                  </div>
+                </div>
+                <div 
+                  className="text-[9px] font-bold uppercase tracking-wide"
+                  style={{ color: accent }}
+                >
+                  {isRadarHovered ? 'DECODING...' : 'HOVER INFO'}
                 </div>
               </div>
 
-              {/* Callout 2: Program Duration (Top Right) */}
-              <div 
-                className={`absolute top-16 right-0 sm:-right-2 z-20 transition-all duration-300 ease-out delay-75 ${
-                  isRadarHovered 
-                    ? 'opacity-100 scale-100 pointer-events-auto' 
-                    : 'opacity-0 scale-75 pointer-events-none translate-x-3'
-                }`}
-                style={{
-                  transform: isRadarHovered 
-                    ? `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` 
-                    : 'scale(0.75) translateX(12px)',
-                }}
-              >
-                <div className="bg-slate-900/95 border border-slate-700/80 backdrop-blur-md px-3.5 py-2 rounded-xl shadow-2xl text-center hover:border-sky-400/60 transition-colors">
-                  <div className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">
-                    {dept.hudSpecs[1]?.label || 'Duration'}
-                  </div>
-                  <div 
-                    className="text-sm font-extrabold text-white transition-all"
+              {/* Radiating Callout Badges with Connecting Leader Lines */}
+              <div className="absolute inset-0 w-full h-full pointer-events-none z-[6]">
+                {callouts.map((c, idx) => (
+                  <div
+                    key={idx}
+                    ref={(el) => {
+                      bubbleRefs.current[idx] = el;
+                    }}
+                    className={`absolute flex items-center gap-2.5 transition-all duration-300 ${c.cls} ${
+                      isRadarHovered 
+                        ? 'opacity-100 scale-100 pointer-events-auto' 
+                        : 'opacity-0 scale-65 pointer-events-none'
+                    }`}
                     style={{
-                      textShadow: isRadarHovered ? '0 0 8px rgba(255,255,255,0.8)' : 'none',
+                      transitionDelay: isRadarHovered ? `${0.04 + idx * 0.06}s` : '0s',
+                      transform: isRadarHovered
+                        ? `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`
+                        : 'scale(0.65)',
                     }}
                   >
-                    {decodedTexts[1] || dept.hudSpecs[1]?.val}
-                  </div>
-                  <div className="text-[9px] text-slate-400">
-                    {dept.hudSpecs[1]?.sub || '6 Semesters'}
-                  </div>
-                </div>
-              </div>
+                    {/* Liquid Glass Frosted Bubble */}
+                    <div 
+                      className="relative px-4 py-2.5 rounded-[9px] shadow-2xl flex items-center gap-3 text-white transition-all group/bubble"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.05) 100%)',
+                        border: '1px solid rgba(255, 255, 255, 0.32)',
+                        borderTop: '1px solid rgba(255, 255, 255, 0.6)',
+                        backdropFilter: 'blur(20px) saturate(190%) contrast(105%)',
+                        WebkitBackdropFilter: 'blur(20px) saturate(190%) contrast(105%)',
+                        boxShadow: '0 10px 32px 0 rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.65)',
+                      }}
+                    >
+                      {/* Top-Left Corner Bracket */}
+                      <span 
+                        className="absolute -top-[2px] -left-[2px] w-[7px] h-[7px] border-t-2 border-l-2 pointer-events-none"
+                        style={{ borderColor: accent }}
+                      />
+                      {/* Bottom-Right Corner Bracket */}
+                      <span 
+                        className="absolute -bottom-[2px] -right-[2px] w-[7px] h-[7px] border-b-2 border-r-2 pointer-events-none"
+                        style={{ borderColor: accent }}
+                      />
 
-              {/* Callout 3: Hands-on Practical (Bottom Right) */}
-              <div 
-                className={`absolute bottom-12 right-0 sm:-right-2 z-20 transition-all duration-300 ease-out delay-100 ${
-                  isRadarHovered 
-                    ? 'opacity-100 scale-100 pointer-events-auto' 
-                    : 'opacity-0 scale-75 pointer-events-none translate-x-3'
-                }`}
-                style={{
-                  transform: isRadarHovered 
-                    ? `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` 
-                    : 'scale(0.75) translateX(12px)',
-                }}
-              >
-                <div className="bg-slate-900/95 border border-slate-700/80 backdrop-blur-md px-3.5 py-2 rounded-xl shadow-2xl text-center hover:border-sky-400/60 transition-colors">
-                  <div className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">
-                    {dept.hudSpecs[2]?.label || 'Practical Focus'}
+                      <span className="text-base select-none leading-none">
+                        {c.icon}
+                      </span>
+                      <div className="text-left">
+                        <strong className="block text-xs font-extrabold text-white tracking-wide font-sans">
+                          {decodedTitles[idx]}
+                        </strong>
+                        <div className="text-[10px] font-semibold text-slate-300">
+                          {c.subtitle}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div 
-                    className="text-sm font-extrabold text-sky-400 transition-all"
-                    style={{
-                      textShadow: isRadarHovered ? '0 0 8px #38BDF8' : 'none',
-                    }}
-                  >
-                    {decodedTexts[2] || dept.hudSpecs[2]?.val}
-                  </div>
-                  <div className="text-[9px] text-slate-400">
-                    {dept.hudSpecs[2]?.sub || 'Systems Practice'}
-                  </div>
-                </div>
-              </div>
-
-              {/* Callout 4: Placement Rate (Bottom Left) */}
-              <div 
-                className={`absolute bottom-12 left-0 sm:-left-2 z-20 transition-all duration-300 ease-out delay-150 ${
-                  isRadarHovered 
-                    ? 'opacity-100 scale-100 pointer-events-auto' 
-                    : 'opacity-0 scale-75 pointer-events-none -translate-x-3'
-                }`}
-                style={{
-                  transform: isRadarHovered 
-                    ? `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` 
-                    : 'scale(0.75) translateX(-12px)',
-                }}
-              >
-                <div className="bg-slate-900/95 border border-slate-700/80 backdrop-blur-md px-3.5 py-2 rounded-xl shadow-2xl text-center hover:border-emerald-400/60 transition-colors">
-                  <div className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">
-                    {dept.hudSpecs[3]?.label || 'Placement'}
-                  </div>
-                  <div 
-                    className="text-sm font-extrabold text-emerald-400 transition-all"
-                    style={{
-                      textShadow: isRadarHovered ? '0 0 8px #34D399' : 'none',
-                    }}
-                  >
-                    {decodedTexts[3] || dept.hudSpecs[3]?.val}
-                  </div>
-                  <div className="text-[9px] text-slate-400">
-                    {dept.hudSpecs[3]?.sub || 'Career Conversion'}
-                  </div>
-                </div>
-              </div>
-
-              {/* Callout 5: Highest CTC (Top Left) */}
-              <div 
-                className={`absolute top-16 left-0 sm:-left-2 z-20 transition-all duration-300 ease-out delay-200 ${
-                  isRadarHovered 
-                    ? 'opacity-100 scale-100 pointer-events-auto' 
-                    : 'opacity-0 scale-75 pointer-events-none -translate-x-3'
-                }`}
-                style={{
-                  transform: isRadarHovered 
-                    ? `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)` 
-                    : 'scale(0.75) translateX(-12px)',
-                }}
-              >
-                <div className="bg-slate-900/95 border border-slate-700/80 backdrop-blur-md px-3.5 py-2 rounded-xl shadow-2xl text-center hover:border-orange-400/60 transition-colors">
-                  <div className="text-[10px] font-bold text-slate-300 uppercase tracking-wider">
-                    {dept.hudSpecs[4]?.label || 'Highest Package'}
-                  </div>
-                  <div 
-                    className="text-sm font-extrabold text-orange-400 transition-all"
-                    style={{
-                      textShadow: isRadarHovered ? '0 0 8px #FB923C' : 'none',
-                    }}
-                  >
-                    {decodedTexts[4] || dept.hudSpecs[4]?.val}
-                  </div>
-                  <div className="text-[9px] text-slate-400">
-                    {dept.hudSpecs[4]?.sub || 'Industry CTC'}
-                  </div>
-                </div>
+                ))}
               </div>
 
             </div>
@@ -451,21 +499,6 @@ export default function DepartmentHero({ dept }: Props) {
         </div>
       </div>
 
-      {/* ── Slide Indicator Dots ── */}
-      {dept.heroSlides.length > 1 && (
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5">
-          {dept.heroSlides.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentSlide(i)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                i === currentSlide ? 'w-6 bg-white' : 'w-1.5 bg-white/40 hover:bg-white/70'
-              }`}
-              aria-label={`Go to hero slide ${i + 1}`}
-            />
-          ))}
-        </div>
-      )}
     </section>
   );
 }

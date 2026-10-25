@@ -48,3 +48,51 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
   border-color: rgba(193, 10, 12, 0.4);
 }
+
+/* ── Department Hero Sci-Fi HUD Radar & Laser Animations ── */
+.dept-laser-line {
+  fill: none !important;
+  stroke: var(--dept-accent, #38bdf8);
+  stroke-width: 2px;
+  stroke-dasharray: 7 5;
+  filter: drop-shadow(0 0 6px #00F0FF);
+}
+
+.dept-laser-dot {
+  fill: #00F0FF;
+  filter: drop-shadow(0 0 6px #00F0FF);
+}
+
+@keyframes dept-laser-dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+@keyframes dept-ring-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes dept-ring-spin-rev {
+  from { transform: translate(-50%, -50%) rotate(360deg); }
+  to { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+@keyframes dept-radar-pulse {
+  0% {
+    width: 120px;
+    height: 120px;
+    opacity: 0.8;
+  }
+  100% {
+    width: 360px;
+    height: 360px;
+    opacity: 0;
+  }
+}
+
+@keyframes dept-radar-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
