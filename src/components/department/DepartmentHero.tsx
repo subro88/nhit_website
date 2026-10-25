@@ -23,42 +23,38 @@ export default function DepartmentHero({ dept }: Props) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isRadarHovered, setIsRadarHovered] = useState(false);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [orbitAngle, setOrbitAngle] = useState(0);
 
+  const targetOrbitAngle = useRef(0);
+  const currentOrbitAngle = useRef(0);
   const radarRef = useRef<HTMLDivElement | null>(null);
-  const hubRef = useRef<HTMLDivElement | null>(null);
-  const bubbleRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const accent = dept.accentHex || '#0EA5E9';
   const glyphs = '0123456789ABCDEF!@#$%&*<>{}[]~/+-=';
 
-  // The 5 authentic Key Specs callouts matching NHIT reference
+  // The 5 authentic Key Specs callouts evenly spaced across 360 deg (72 deg intervals)
   const callouts = [
     {
-      cls: 'top-[8%] right-[2%]',
       icon: '🎓',
       title: dept.duration.split('·')[0].trim() || '3-Year Diploma',
       subtitle: '6 Semesters Full-Time',
     },
     {
-      cls: 'top-[30%] -right-[5%]',
       icon: '🏛️',
       title: 'AICTE Approved',
       subtitle: 'Govt. of India, New Delhi',
     },
     {
-      cls: 'top-[48%] -left-[3%]',
       icon: '⚡',
       title: 'WBSCTVESD Affiliated',
       subtitle: 'State Council Registered',
     },
     {
-      cls: 'bottom-[12%] left-[4%]',
       icon: '👥',
       title: `${dept.intake} Intake`,
       subtitle: 'JEXPO / Direct Counseling',
     },
     {
-      cls: 'bottom-[6%] right-[0%]',
       icon: '💼',
       title: `${dept.stats.placementRate} Placement`,
       subtitle: 'Top Industries & Lateral Entry',
@@ -69,12 +65,7 @@ export default function DepartmentHero({ dept }: Props) {
     callouts.map((c) => c.title)
   );
 
-  // Dynamic SVG HUD laser leader lines
-  const [laserPaths, setLaserPaths] = useState<
-    { d: string; cx: number; cy: number }[]
-  >([]);
-
-  // Auto-advance hero slides every 5.5s for Ken Burns dynamic visual feel
+  // Auto-advance hero slides every 5.5s
   useEffect(() => {
     if (!dept.heroSlides || dept.heroSlides.length <= 1) return;
     const interval = setInterval(() => {
@@ -83,64 +74,38 @@ export default function DepartmentHero({ dept }: Props) {
     return () => clearInterval(interval);
   }, [dept.heroSlides]);
 
-  // ── Compute dynamic SVG curves from hub to bubbles ──
-  const updateLaserLines = () => {
-    if (!radarRef.current || !hubRef.current) return;
-    const wrapRect = radarRef.current.getBoundingClientRect();
-    const hubRect = hubRef.current.getBoundingClientRect();
-    if (wrapRect.width === 0 || hubRect.width === 0) return;
-
-    const hubCx = hubRect.left + hubRect.width / 2 - wrapRect.left;
-    const hubCy = hubRect.top + hubRect.height / 2 - wrapRect.top;
-    const hubRadius = hubRect.width / 2;
-
-    const newPaths = bubbleRefs.current.map((bubble) => {
-      if (!bubble) return { d: '', cx: 0, cy: 0 };
-      const bRect = bubble.getBoundingClientRect();
-      if (bRect.width === 0) return { d: '', cx: 0, cy: 0 };
-
-      const bCenterX = bRect.left + bRect.width / 2 - wrapRect.left;
-      const bCenterY = bRect.top + bRect.height / 2 - wrapRect.top;
-
-      const targetX =
-        bCenterX < hubCx
-          ? bRect.right - wrapRect.left
-          : bRect.left - wrapRect.left;
-      const targetY = bCenterY;
-
-      const angle = Math.atan2(targetY - hubCy, targetX - hubCx);
-      const startX = hubCx + Math.cos(angle) * (hubRadius + 6);
-      const startY = hubCy + Math.sin(angle) * (hubRadius + 6);
-
-      const midX = startX + (targetX - startX) * 0.45;
-      const midY = startY + (targetY - startY) * 0.15;
-
-      const d = `M ${startX.toFixed(1)} ${startY.toFixed(1)} Q ${midX.toFixed(
-        1
-      )} ${midY.toFixed(1)} ${targetX.toFixed(1)} ${targetY.toFixed(1)}`;
-      return { d, cx: targetX, cy: targetY };
-    });
-
-    setLaserPaths(newPaths);
-  };
-
-  // Run transition tracking when hover state changes
+  // ── Orbit Mode: Wheel Scroll with Page Lock & Inertia ──
   useEffect(() => {
-    if (!isRadarHovered) return;
-    let frames = 0;
-    let rafId: number;
+    const el = radarRef.current;
+    if (!el) return;
 
-    const track = () => {
-      updateLaserLines();
-      frames++;
-      if (frames < 45) {
-        rafId = requestAnimationFrame(track);
-      }
+    const handleWheel = (e: WheelEvent) => {
+      if (!isRadarHovered) return;
+      // Lock page scroll while mouse is over Key Specs so wheel scroll rotates the HUD in circular motion
+      e.preventDefault();
+      targetOrbitAngle.current += e.deltaY * 0.0028;
     };
 
-    rafId = requestAnimationFrame(track);
-    return () => cancelAnimationFrame(rafId);
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => el.removeEventListener('wheel', handleWheel);
   }, [isRadarHovered]);
+
+  // Inertia animation loop for smooth circular orbit
+  useEffect(() => {
+    let rafId: number;
+
+    const animateOrbit = () => {
+      const diff = targetOrbitAngle.current - currentOrbitAngle.current;
+      if (Math.abs(diff) > 0.0001) {
+        currentOrbitAngle.current += diff * 0.12;
+        setOrbitAngle(currentOrbitAngle.current);
+      }
+      rafId = requestAnimationFrame(animateOrbit);
+    };
+
+    rafId = requestAnimationFrame(animateOrbit);
+    return () => cancelAnimationFrame(rafId);
+  }, []);
 
   // ── Sci-Fi Matrix Typewriter Text Decoder ──
   const triggerCyberDecode = () => {
@@ -191,7 +156,6 @@ export default function DepartmentHero({ dept }: Props) {
       x: y * -10,
       y: x * 10,
     });
-    updateLaserLines();
   };
 
   const handleMouseEnter = () => {
@@ -203,6 +167,51 @@ export default function DepartmentHero({ dept }: Props) {
     setIsRadarHovered(false);
     setTilt({ x: 0, y: 0 });
   };
+
+  // ── Exact Polar Trigonometry for Even Distribution & Connecting Dotted Lines ──
+  // Canvas coordinate system: 480 x 480
+  const Cx = 240;
+  const Cy = 240;
+  const rHub = 65; // Hub diameter 130px
+  const ROrbit = 175; // Orbit radius
+  const N = callouts.length;
+  const deltaAngle = (Math.PI * 2) / N; // 72 deg evenly spaced
+
+  const nodes = callouts.map((c, i) => {
+    // Base angle starting from top (-90 deg), shifted by dynamic orbitAngle
+    const angle = -Math.PI / 2 + i * deltaAngle + orbitAngle;
+    const cosA = Math.cos(angle);
+    const sinA = Math.sin(angle);
+
+    // Card Center
+    const cardX = Cx + ROrbit * cosA;
+    const cardY = Cy + ROrbit * sinA;
+
+    // Dotted Line Start (on Hub border)
+    const startX = Cx + rHub * cosA;
+    const startY = Cy + rHub * sinA;
+
+    // Dotted Line End (connecting directly to the card node)
+    const endX = Cx + (ROrbit - 24) * cosA;
+    const endY = Cy + (ROrbit - 24) * sinA;
+
+    // Subtle technical curved dogleg
+    const midX = startX + (endX - startX) * 0.5 - sinA * 10;
+    const midY = startY + (endY - startY) * 0.5 + cosA * 10;
+    const pathD = `M ${startX.toFixed(1)} ${startY.toFixed(1)} Q ${midX.toFixed(1)} ${midY.toFixed(1)} ${endX.toFixed(1)} ${endY.toFixed(1)}`;
+
+    return {
+      cardX,
+      cardY,
+      startX,
+      startY,
+      endX,
+      endY,
+      pathD,
+      item: c,
+      idx: i,
+    };
+  });
 
   return (
     <section 
@@ -344,43 +353,53 @@ export default function DepartmentHero({ dept }: Props) {
 
           </div>
 
-          {/* Right Column: Floating Circular Radar Telemetry Hub (5 Cols) */}
+          {/* Right Column: Floating Circular Radar Telemetry Hub with Wheel Orbit (5 Cols) */}
           <div className="lg:col-span-5 flex justify-center lg:justify-end">
             <div 
               ref={radarRef}
               onMouseMove={handleMouseMove}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
-              className="relative w-full max-w-[460px] min-h-[440px] flex items-center justify-center cursor-pointer select-none"
+              className="relative w-full max-w-[480px] aspect-square flex items-center justify-center cursor-pointer select-none"
               style={{ perspective: '1000px' }}
             >
               
-              {/* Dynamic SVG Laser Leader Lines */}
+              {/* Dynamic SVG Connecting Dotted Lines with Dash Animation & Glowing Terminal Dots */}
               <svg 
+                viewBox="0 0 480 480"
                 className={`absolute inset-0 w-full h-full pointer-events-none z-[4] overflow-visible transition-opacity duration-300 ${
                   isRadarHovered ? 'opacity-100' : 'opacity-0'
                 }`}
                 aria-hidden="true"
               >
-                {laserPaths.map((p, idx) => (
-                  <g key={idx}>
-                    {p.d && (
-                      <path
-                        d={p.d}
-                        className="dept-laser-line"
-                        style={{
-                          animation: 'dept-laser-dash 1.2s linear infinite',
-                        }}
-                      />
-                    )}
-                    {p.cx > 0 && (
-                      <circle
-                        cx={p.cx}
-                        cy={p.cy}
-                        r="3.5"
-                        className="dept-laser-dot"
-                      />
-                    )}
+                {nodes.map((n) => (
+                  <g key={n.idx}>
+                    {/* Dotted Connecting Line */}
+                    <path
+                      d={n.pathD}
+                      className="dept-laser-line"
+                      stroke={accent}
+                      strokeWidth="2"
+                      strokeDasharray="6 4"
+                      fill="none"
+                      style={{
+                        animation: 'dept-laser-dash 1.2s linear infinite',
+                      }}
+                    />
+                    {/* Hub Perimeter Anchor Node */}
+                    <circle
+                      cx={n.startX}
+                      cy={n.startY}
+                      r="2.5"
+                      fill={accent}
+                    />
+                    {/* Glowing HUD Card Terminal Dot */}
+                    <circle
+                      cx={n.endX}
+                      cy={n.endY}
+                      r="4"
+                      className="dept-laser-dot"
+                    />
                   </g>
                 ))}
               </svg>
@@ -408,13 +427,12 @@ export default function DepartmentHero({ dept }: Props) {
 
               {/* Central Floating Circular Button (130px) */}
               <div 
-                ref={hubRef}
                 className="relative z-10 w-[130px] h-[130px] rounded-full flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-300"
                 style={{
                   background: 'radial-gradient(circle at 35% 35%, rgba(30, 41, 59, 0.95), rgba(15, 23, 42, 0.98))',
                   border: isRadarHovered ? '2px solid #ffffff' : '2px solid rgba(255, 255, 255, 0.75)',
                   boxShadow: isRadarHovered 
-                    ? `0 0 40px ${accent}A0, 0 15px 35px rgba(0, 0, 0, 0.6)` 
+                    ? `0 0 45px ${accent}B0, 0 15px 35px rgba(0, 0, 0, 0.6)` 
                     : `0 0 25px ${accent}50, inset 0 0 20px rgba(255, 255, 255, 0.1), 0 10px 30px rgba(0, 0, 0, 0.5)`,
                   transform: isRadarHovered ? 'scale(1.08) translateY(-4px)' : 'none',
                   animation: !isRadarHovered ? 'dept-radar-float 4s ease-in-out infinite' : 'none',
@@ -427,43 +445,41 @@ export default function DepartmentHero({ dept }: Props) {
                   KEY SPECS
                 </div>
                 <div 
-                  className="text-[9px] font-bold uppercase tracking-wide"
-                  style={{ color: accent }}
+                  className="text-[9px] font-bold uppercase tracking-wide transition-colors"
+                  style={{ color: isRadarHovered ? '#00F0FF' : accent }}
                 >
-                  {isRadarHovered ? 'DECODING...' : 'HOVER INFO'}
+                  {isRadarHovered ? 'SCROLL ORBIT' : 'HOVER INFO'}
                 </div>
               </div>
 
-              {/* Radiating Callout Badges with Connecting Leader Lines */}
+              {/* Radiating Callout Badges — Evenly Spread at 72 deg, Rotating Smoothly on Wheel Scroll */}
               <div className="absolute inset-0 w-full h-full pointer-events-none z-[6]">
-                {callouts.map((c, idx) => (
+                {nodes.map((n) => (
                   <div
-                    key={idx}
-                    ref={(el) => {
-                      bubbleRefs.current[idx] = el;
-                    }}
-                    className={`absolute flex items-center gap-2.5 transition-all duration-300 ${c.cls} ${
-                      isRadarHovered 
-                        ? 'opacity-100 scale-100 pointer-events-auto' 
-                        : 'opacity-0 scale-65 pointer-events-none'
-                    }`}
+                    key={n.idx}
+                    className="absolute transition-all ease-out"
                     style={{
-                      transitionDelay: isRadarHovered ? `${0.04 + idx * 0.06}s` : '0s',
-                      transform: isRadarHovered
-                        ? `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`
-                        : 'scale(0.65)',
+                      left: `${(n.cardX / 480) * 100}%`,
+                      top: `${(n.cardY / 480) * 100}%`,
+                      transform: `translate(-50%, -50%) perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) scale(${
+                        isRadarHovered ? 1 : 0.65
+                      })`,
+                      opacity: isRadarHovered ? 1 : 0,
+                      pointerEvents: isRadarHovered ? 'auto' : 'none',
+                      transitionDuration: isRadarHovered ? '300ms' : '200ms',
                     }}
                   >
-                    {/* Liquid Glass Frosted Bubble */}
+                    {/* Liquid Glass Frosted Bubble with HUD Corner Brackets */}
                     <div 
-                      className="relative px-4 py-2.5 rounded-[9px] shadow-2xl flex items-center gap-3 text-white transition-all group/bubble"
+                      className="relative px-3.5 py-2 rounded-[9px] shadow-2xl flex items-center gap-2.5 text-white transition-all group/bubble"
                       style={{
-                        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.05) 100%)',
+                        background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.06) 100%)',
                         border: '1px solid rgba(255, 255, 255, 0.32)',
                         borderTop: '1px solid rgba(255, 255, 255, 0.6)',
                         backdropFilter: 'blur(20px) saturate(190%) contrast(105%)',
                         WebkitBackdropFilter: 'blur(20px) saturate(190%) contrast(105%)',
                         boxShadow: '0 10px 32px 0 rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.65)',
+                        whiteSpace: 'nowrap',
                       }}
                     >
                       {/* Top-Left Corner Bracket */}
@@ -478,14 +494,14 @@ export default function DepartmentHero({ dept }: Props) {
                       />
 
                       <span className="text-base select-none leading-none">
-                        {c.icon}
+                        {n.item.icon}
                       </span>
                       <div className="text-left">
-                        <strong className="block text-xs font-extrabold text-white tracking-wide font-sans">
-                          {decodedTitles[idx]}
+                        <strong className="block text-xs font-extrabold text-white tracking-wide font-sans leading-tight">
+                          {decodedTitles[n.idx]}
                         </strong>
-                        <div className="text-[10px] font-semibold text-slate-300">
-                          {c.subtitle}
+                        <div className="text-[10px] font-semibold text-slate-300 leading-tight mt-0.5">
+                          {n.item.subtitle}
                         </div>
                       </div>
                     </div>
