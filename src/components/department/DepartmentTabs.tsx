@@ -24,8 +24,6 @@ interface Props {
 
 export default function DepartmentTabs({ dept }: Props) {
   const [activeTab, setActiveTab] = useState<'curriculum' | 'labs' | 'eligibility' | 'hod'>('curriculum');
-  const [openSem, setOpenSem] = useState<string>('1');
-
   const accent = dept.accentHex || '#0EA5E9';
 
   const tabs = [
@@ -37,8 +35,8 @@ export default function DepartmentTabs({ dept }: Props) {
 
   return (
     <section className="space-y-6">
-      {/* ── Tab Navigation Bar ── */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200/90 p-2 flex flex-wrap gap-2 sticky top-20 z-20">
+      {/* ── Tab Navigation Bar with Smooth Active Pill ── */}
+      <div className="bg-white rounded-2xl shadow-sm border border-slate-200/90 p-2 flex flex-wrap gap-2 sticky top-20 z-20 backdrop-blur-md bg-white/95">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -46,28 +44,34 @@ export default function DepartmentTabs({ dept }: Props) {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all min-h-[44px] ${
+              className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 min-h-[44px] ${
                 isActive
-                  ? 'bg-slate-900 text-white shadow-md'
+                  ? 'bg-slate-900 text-white shadow-md scale-[1.02]'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80'
               }`}
             >
               <Icon 
-                className="w-4 h-4 flex-shrink-0" 
+                className="w-4 h-4 flex-shrink-0 transition-transform duration-300 group-hover:scale-110" 
                 style={{ color: isActive ? accent : undefined }} 
               />
               <span>{tab.label}</span>
+              {isActive && (
+                <span 
+                  className="absolute bottom-1 left-4 right-4 h-0.5 rounded-full"
+                  style={{ backgroundColor: accent }}
+                />
+              )}
             </button>
           );
         })}
       </div>
 
-      {/* ── Tab Content Panels ── */}
-      <div className="transition-opacity duration-200">
+      {/* ── Tab Content Panels with Smooth Fade-In ── */}
+      <div className="transition-all duration-300 ease-out">
         
         {/* PANEL 1: CURRICULUM */}
         {activeTab === 'curriculum' && (
-          <div className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/90 shadow-sm space-y-6">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/90 shadow-sm space-y-6 animate-fadeIn">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
               <div>
                 <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900">
@@ -83,7 +87,7 @@ export default function DepartmentTabs({ dept }: Props) {
                   href={dept.syllabusPdf}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white transition-all shadow hover:brightness-110 flex-shrink-0"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white transition-all shadow hover:brightness-110 flex-shrink-0 active:scale-95"
                   style={{ backgroundColor: accent }}
                 >
                   <Download className="w-4 h-4" />
@@ -99,7 +103,7 @@ export default function DepartmentTabs({ dept }: Props) {
                 return (
                   <div
                     key={semKey}
-                    className="bg-slate-50/80 rounded-2xl p-5 border border-slate-200/80 flex flex-col justify-between"
+                    className="bg-slate-50/80 rounded-2xl p-5 border border-slate-200/80 flex flex-col justify-between hover:shadow-md transition-shadow"
                     style={{ borderTop: `3px solid ${accent}` }}
                   >
                     <div>
@@ -137,7 +141,7 @@ export default function DepartmentTabs({ dept }: Props) {
 
         {/* PANEL 2: LABS & WORKSHOPS */}
         {activeTab === 'labs' && (
-          <div className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/90 shadow-sm space-y-6">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/90 shadow-sm space-y-6 animate-fadeIn">
             <div className="pb-6 border-b border-slate-100">
               <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900">
                 Departmental Laboratories, Workshops & Tooling
@@ -151,7 +155,7 @@ export default function DepartmentTabs({ dept }: Props) {
               {dept.labs.map((lab, lIdx) => (
                 <div
                   key={lIdx}
-                  className="group bg-slate-50/80 rounded-2xl overflow-hidden border border-slate-200/80 hover:shadow-md transition-all flex flex-col justify-between"
+                  className="group bg-slate-50/80 rounded-2xl overflow-hidden border border-slate-200/80 hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
                 >
                   {lab.img && (
                     <div className="relative h-44 w-full bg-slate-900 overflow-hidden">
@@ -194,7 +198,7 @@ export default function DepartmentTabs({ dept }: Props) {
 
         {/* PANEL 3: ADMISSION ELIGIBILITY */}
         {activeTab === 'eligibility' && (
-          <div className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/90 shadow-sm space-y-6">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/90 shadow-sm space-y-6 animate-fadeIn">
             <div className="pb-6 border-b border-slate-100">
               <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900">
                 Admission Eligibility & Counseling Framework
@@ -208,7 +212,7 @@ export default function DepartmentTabs({ dept }: Props) {
               
               {/* 1st Year Entry */}
               <div 
-                className="bg-slate-50/80 rounded-2xl p-6 border border-slate-200/80 space-y-4"
+                className="bg-slate-50/80 rounded-2xl p-6 border border-slate-200/80 space-y-4 hover:shadow-md transition-shadow"
                 style={{ borderTop: `4px solid ${accent}` }}
               >
                 <div className="flex items-center justify-between gap-2">
@@ -242,7 +246,7 @@ export default function DepartmentTabs({ dept }: Props) {
 
               {/* 2nd Year Lateral Entry */}
               <div 
-                className="bg-slate-50/80 rounded-2xl p-6 border border-slate-200/80 space-y-4"
+                className="bg-slate-50/80 rounded-2xl p-6 border border-slate-200/80 space-y-4 hover:shadow-md transition-shadow"
                 style={{ borderTop: '4px solid #10B981' }}
               >
                 <div className="flex items-center justify-between gap-2">
@@ -280,13 +284,13 @@ export default function DepartmentTabs({ dept }: Props) {
 
         {/* PANEL 4: HOD DESK */}
         {activeTab === 'hod' && (
-          <div className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/90 shadow-sm space-y-6">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 md:p-10 border border-slate-200/90 shadow-sm space-y-6 animate-fadeIn">
             <div className="flex flex-col md:flex-row gap-8 items-start">
               
               {/* HOD Photo & Credentials */}
               <div className="flex flex-col items-center text-center flex-shrink-0 mx-auto md:mx-0">
                 <div 
-                  className="relative w-44 h-44 rounded-full overflow-hidden border-4 shadow-lg mb-4"
+                  className="relative w-44 h-44 rounded-full overflow-hidden border-4 shadow-lg mb-4 group hover:scale-105 transition-transform duration-300"
                   style={{ borderColor: accent }}
                 >
                   <Image
