@@ -41,8 +41,9 @@ export default function DepartmentFacultyRoster({ faculty, accentHex }: Props) {
   }, [currentIndex, isPaused, total]);
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % total);
-    scrollToCard((currentIndex + 1) % total);
+    const next = (currentIndex + 1) % total;
+    setCurrentIndex(next);
+    scrollToCard(next);
   };
 
   const handlePrev = () => {
@@ -59,6 +60,17 @@ export default function DepartmentFacultyRoster({ faculty, accentHex }: Props) {
       left: index * (cardWidth + gap),
       behavior: 'smooth',
     });
+  };
+
+  const handleScroll = () => {
+    if (!trackRef.current) return;
+    const scrollLeft = trackRef.current.scrollLeft;
+    const cardWidth = trackRef.current.firstElementChild?.clientWidth || 320;
+    const gap = 24;
+    const newIdx = Math.round(scrollLeft / (cardWidth + gap));
+    if (newIdx !== currentIndex && newIdx >= 0 && newIdx < total) {
+      setCurrentIndex(newIdx);
+    }
   };
 
   return (
@@ -107,6 +119,7 @@ export default function DepartmentFacultyRoster({ faculty, accentHex }: Props) {
       >
         <div
           ref={trackRef}
+          onScroll={handleScroll}
           className="flex gap-6 overflow-x-auto scrollbar-none scroll-smooth pb-4 pt-1 snap-x snap-mandatory"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
