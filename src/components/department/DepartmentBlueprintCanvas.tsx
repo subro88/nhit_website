@@ -306,6 +306,234 @@ export default function DepartmentBlueprintCanvas({ deptCode, accentHex }: Props
       }
     };
 
+    // ── DRAW MECHANICAL ENGINEERING SCHEMATICS ──
+    const drawMechanical = (c: CanvasRenderingContext2D, it: EngItem, px: number, py: number) => {
+      const prog = it.progress;
+      const size = it.size;
+
+      if (it.type === 0) {
+        // UTM (Universal Testing Machine - Tensile Load Frame)
+        c.save();
+        c.translate(px, py);
+        const frameW = size * 0.85 * Math.min(1, prog * 1.3);
+        const frameH = size * 1.1;
+
+        // Base & Top Crosshead
+        c.beginPath();
+        c.strokeRect(-frameW / 2, frameH * 0.35, frameW, frameH * 0.15);
+        c.strokeRect(-frameW / 2, -frameH * 0.5, frameW, frameH * 0.12);
+        // Twin Vertical Columns / Lead Screws
+        c.moveTo(-frameW * 0.38, -frameH * 0.5); c.lineTo(-frameW * 0.38, frameH * 0.35);
+        c.moveTo(frameW * 0.38, -frameH * 0.5);  c.lineTo(frameW * 0.38, frameH * 0.35);
+        // Moving Crosshead
+        const moveY = -frameH * 0.1 + Math.sin(Date.now() * 0.002) * 4;
+        c.strokeRect(-frameW * 0.34, moveY, frameW * 0.68, frameH * 0.1);
+        // Specimen
+        c.moveTo(-4, moveY + frameH * 0.1); c.lineTo(-4, frameH * 0.35);
+        c.moveTo(4, moveY + frameH * 0.1);  c.lineTo(4, frameH * 0.35);
+        c.stroke();
+
+        if (prog > 0.4) {
+          c.beginPath();
+          c.moveTo(0, moveY - 12); c.lineTo(0, moveY - 2);
+          c.lineTo(-3, -7); c.moveTo(0, moveY - 2); c.lineTo(3, -7);
+          c.moveTo(0, frameH * 0.25); c.lineTo(0, frameH * 0.15);
+          c.lineTo(-3, frameH * 0.2); c.moveTo(0, frameH * 0.15); c.lineTo(3, frameH * 0.2);
+          c.stroke();
+          c.font = '8px monospace';
+          c.textAlign = 'center';
+          c.fillText('UTM // 100 kN [TENSILE]', 0, -frameH * 0.5 - 6);
+          c.textAlign = 'start';
+        }
+        c.restore();
+
+      } else if (it.type === 1) {
+        // Pulley Hoist with Suspended Weight
+        it.rotationAngle += 0.02;
+        c.save();
+        c.translate(px, py);
+        const pR = size * 0.34;
+
+        c.beginPath();
+        c.strokeRect(-pR * 0.8, -size * 0.55, pR * 1.6, 6);
+        c.moveTo(0, -size * 0.55 + 6); c.lineTo(0, -size * 0.25);
+        c.stroke();
+
+        c.beginPath();
+        c.arc(0, -size * 0.25, pR, 0, Math.PI * 2);
+        c.arc(0, -size * 0.25, pR * 0.3, 0, Math.PI * 2);
+        c.stroke();
+
+        c.save();
+        c.translate(0, -size * 0.25);
+        c.rotate(it.rotationAngle);
+        c.beginPath();
+        c.moveTo(0, 0); c.lineTo(pR * 0.9, 0);
+        c.moveTo(0, 0); c.lineTo(-pR * 0.9, 0);
+        c.stroke();
+        c.restore();
+
+        if (prog > 0.3) {
+          const ropeProg = Math.min(1, (prog - 0.3) * 1.5);
+          c.beginPath();
+          c.moveTo(-pR, -size * 0.25); c.lineTo(-pR, size * 0.35 * ropeProg);
+          c.moveTo(pR, -size * 0.25);  c.lineTo(pR, size * 0.15 * ropeProg);
+          c.stroke();
+
+          const wBoxW = size * 0.5;
+          const wBoxH = size * 0.35;
+          const wY = size * 0.35 * ropeProg;
+          c.beginPath();
+          c.arc(-pR, wY + 6, 6, 0, Math.PI);
+          c.strokeRect(-pR - wBoxW / 2, wY + 12, wBoxW, wBoxH);
+          c.stroke();
+
+          c.font = '8px monospace';
+          c.textAlign = 'center';
+          c.fillText('W [500 kg]', -pR, wY + 24);
+          c.fillText('T [CABLE]', -pR - 18, wY - 4);
+          c.fillText('F [PULL]', pR + 18, size * 0.1);
+          c.textAlign = 'start';
+        }
+        c.restore();
+
+      } else if (it.type === 2) {
+        // Continuously Rotating Involute Cog
+        it.rotationAngle += 0.012;
+        const teeth = 12;
+        const toothDepth = 7;
+        const radius = size * 0.46;
+        const fullSteps = Math.floor(teeth * 4 * prog);
+
+        c.save();
+        c.translate(px, py);
+        c.rotate(it.rotationAngle);
+
+        c.beginPath();
+        for (let i = 0; i <= fullSteps; i++) {
+          const angle = (i / (teeth * 4)) * (Math.PI * 2);
+          const r = (i % 4 === 1 || i % 4 === 2) ? radius + toothDepth : radius;
+          const lx = Math.cos(angle) * r;
+          const ly = Math.sin(angle) * r;
+          if (i === 0) c.moveTo(lx, ly);
+          else c.lineTo(lx, ly);
+        }
+        c.stroke();
+
+        if (prog > 0.3) {
+          c.beginPath();
+          c.arc(0, 0, radius * 0.35, 0, Math.PI * 2);
+          c.rect(-3, -radius * 0.35 - 3, 6, 4);
+          c.stroke();
+        }
+        c.restore();
+
+      } else if (it.type === 3) {
+        // Dual Pulley and Belt Transmission
+        it.rotationAngle += 0.02;
+        const r1 = size * 0.38;
+        const r2 = size * 0.22;
+        const dist = size * 1.35 * Math.min(1, prog * 1.3);
+
+        c.save();
+        c.translate(px - dist * 0.45, py);
+
+        c.beginPath();
+        c.arc(0, 0, r1 * Math.min(1, prog * 1.5), 0, Math.PI * 2);
+        c.arc(0, 0, r1 * 0.3, 0, Math.PI * 2);
+        c.stroke();
+
+        c.save();
+        c.rotate(it.rotationAngle);
+        c.beginPath();
+        c.moveTo(0, 0); c.lineTo(r1 * 0.85, 0);
+        c.stroke();
+        c.restore();
+
+        if (prog > 0.3) {
+          c.beginPath();
+          c.arc(dist, 0, r2, 0, Math.PI * 2);
+          c.arc(dist, 0, r2 * 0.35, 0, Math.PI * 2);
+          c.stroke();
+
+          c.save();
+          c.translate(dist, 0);
+          c.rotate(-it.rotationAngle * (r1 / r2));
+          c.beginPath();
+          c.moveTo(0, 0); c.lineTo(r2 * 0.85, 0);
+          c.stroke();
+          c.restore();
+        }
+
+        if (prog > 0.6) {
+          const beltProg = Math.min(1, (prog - 0.6) * 2.5);
+          c.beginPath();
+          c.moveTo(0, -r1); c.lineTo(dist * beltProg, -r2);
+          c.moveTo(0, r1);  c.lineTo(dist * beltProg, r2);
+          c.stroke();
+        }
+        c.restore();
+
+      } else if (it.type === 4) {
+        // Compression Helical Spring Under Dynamic Load
+        const coils = 7;
+        const springW = size * 0.44;
+        const maxH = size * 1.15;
+        const compressFactor = 1 - 0.16 * Math.sin(Date.now() * 0.0035);
+        const springH = maxH * compressFactor * Math.min(1, prog * 1.3);
+
+        c.save();
+        c.translate(px, py - springH / 2);
+
+        c.beginPath();
+        c.rect(-springW * 0.7, -6, springW * 1.4, 6);
+        c.stroke();
+
+        if (prog > 0.3) {
+          c.beginPath();
+          c.moveTo(0, -26); c.lineTo(0, -8);
+          c.lineTo(-4, -13); c.moveTo(0, -8); c.lineTo(4, -13);
+          c.stroke();
+          c.font = '8px monospace';
+          c.fillText('F [LOAD]', 7, -14);
+        }
+
+        const stepY = springH / coils;
+        c.beginPath();
+        c.moveTo(0, 0);
+        for (let s = 0; s < coils; s++) {
+          const sy = s * stepY;
+          const dir = (s % 2 === 0) ? 1 : -1;
+          c.lineTo(dir * (springW / 2), sy + stepY * 0.5);
+          c.lineTo(0, sy + stepY);
+        }
+        c.stroke();
+
+        c.beginPath();
+        c.rect(-springW * 0.7, springH, springW * 1.4, 6);
+        c.stroke();
+        c.restore();
+
+      } else {
+        // Precision Stepped Shaft with Fit Tolerances
+        const shaftW = size * 1.25 * Math.min(1, prog * 1.3);
+        const shaftH = 16;
+        c.save();
+        c.translate(px, py);
+        c.beginPath();
+        c.strokeRect(-shaftW / 2, -shaftH / 2, shaftW, shaftH);
+        c.strokeRect(-shaftW / 4, -shaftH * 0.75, shaftW / 2, shaftH * 1.5);
+        c.stroke();
+
+        if (prog > 0.4) {
+          c.font = '7px monospace';
+          c.fillText('Ø45 h7 // ISO 286', -shaftW * 0.35, -shaftH - 4);
+          c.fillText('Ra 0.8 [GROUND]', -shaftW * 0.35, shaftH + 12);
+        }
+        c.restore();
+      }
+    };
+
     // ── MAIN ANIMATION LOOP (DRAWING -> LINGER -> DISSOLVE) ──
     const render = () => {
       ctx.clearRect(0, 0, width, height);
@@ -345,7 +573,11 @@ export default function DepartmentBlueprintCanvas({ deptCode, accentHex }: Props
         ctx.shadowColor = accentHex;
         ctx.shadowBlur = 6;
 
-        drawCst(ctx, it, px, py);
+        if (deptType === 'ME') {
+          drawMechanical(ctx, it, px, py);
+        } else {
+          drawCst(ctx, it, px, py);
+        }
 
         ctx.restore();
       });
