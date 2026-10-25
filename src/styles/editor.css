@@ -1,0 +1,6 @@
+/* NHIT EduLearn — editor styles (iframe). Pulls in the design system. */
+@import url("./base.css");
+@import url("./sections.css");
+@import url("./shared.css");
+
+.editor-styles-wrapper .edu-reveal { opacity: 1; transform: none; }

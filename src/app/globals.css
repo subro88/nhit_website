@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --nhit-crimson: #C10A0C;
+  --nhit-heading: #9E0B0F;
+  --edu-primary: #FF3115;
+  --edu-ink: #0F172A;
+  --edu-body: #334155;
+  --edu-muted: #64748B;
+  --edu-surface: #F8FAFC;
+}
+
+body {
+  color: var(--edu-body);
+  background-color: #FFFFFF;
+  font-family: var(--font-roboto), sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-montserrat), sans-serif;
+  color: var(--edu-ink);
+}
+
+/* Blueprint Dot Matrix Pattern */
+.bg-blueprint-grid {
+  background-color: #ffffff;
+  background-image: 
+    radial-gradient(#cbd5e1 1.2px, transparent 1.2px),
+    radial-gradient(circle at 10% 20%, rgba(217, 4, 41, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.03) 0%, transparent 40%);
+  background-size: 24px 24px, 100% 100%, 100% 100%;
+}
+
+/* Stadium Card Styling for Faculty Directory */
+.card-stadium {
+  background-color: #FFFFFF;
+  border-radius: 60px;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 6px 22px rgba(15, 23, 42, 0.06);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-stadium:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+  border-color: rgba(193, 10, 12, 0.4);
+}
