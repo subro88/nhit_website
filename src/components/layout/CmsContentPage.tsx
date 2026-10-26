@@ -3,19 +3,36 @@ import Image from 'next/image';
 import Link from 'next/link';
 import SubpageHero from './SubpageHero';
 import SidebarNav from './SidebarNav';
-import { CheckCircle, Award } from 'lucide-react';
-import { readJson, PAGES_FILE } from '@/lib/cmsStore';
+import { CheckCircle, Award, Download, ShieldCheck, FileText } from 'lucide-react';
+import { readJson, PAGES_FILE, HOMEPAGE_FILE } from '@/lib/cmsStore';
 import type { PageContent, PageSection, StatTile } from '@/lib/pageTypes';
 import { iconFor } from './iconMap';
+import InquiryForm from './InquiryForm';
+import PlacementRadar from '@/components/home/PlacementRadar';
+import type { HomepageData } from '@/lib/homeTypes';
 
 /*
- * Renders **bold** markers inside CMS strings.
+ * Renders **bold** markers and [text](href) links inside CMS strings.
  */
 function renderInline(text: string): React.ReactNode[] {
-  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  const parts = text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^\s)]+\))/g);
   return parts.map((part, i) => {
     if (part.startsWith('**') && part.endsWith('**') && part.length > 4) {
       return <strong key={i}>{part.slice(2, -2)}</strong>;
+    }
+    const md = part.match(/^\[([^\]]+)\]\(([^\s)]+)\)$/);
+    if (md) {
+      return (
+        <a
+          key={i}
+          href={md[2]}
+          target={md[2].startsWith('http') ? '_blank' : undefined}
+          rel={md[2].startsWith('http') ? 'noopener noreferrer' : undefined}
+          className="text-[#ff3115] hover:underline"
+        >
+          {md[1]}
+        </a>
+      );
     }
     return <React.Fragment key={i}>{part}</React.Fragment>;
   });
@@ -138,17 +155,196 @@ function SectionHeader({ tag, heading, h2 }: { tag?: string; heading?: string; h
   );
 }
 
+/* One rich line inside a contactCards card: optional kicker/sub/link/divider. */
+function renderLine(ln: Record<string, unknown>): React.ReactNode {
+  if (ln.kicker) {
+    return (
+      <span className="text-[10px] text-gray-400 uppercase font-bold block">{String(ln.text ?? '')}</span>
+    );
+  }
+  const text = String(ln.text ?? '');
+  const body = renderInline(text);
+  return (
+    <>
+      {ln.href ? (
+        <a
+          href={String(ln.href)}
+          target={String(ln.href).startsWith('http') ? '_blank' : undefined}
+          rel={String(ln.href).startsWith('http') ? 'noopener noreferrer' : undefined}
+          className="font-bold text-sm text-gray-900 hover:text-[#ff3115] transition-colors"
+        >
+          {body}
+        </a>
+      ) : (
+        <span className={ln.bold ? 'font-bold text-gray-900 text-sm' : 'text-gray-600'}>{body}</span>
+      )}
+      {ln.sub ? <span className="text-gray-400 text-[10px]">{String(ln.sub)}</span> : null}
+    </>
+  );
+}
+
+/* One card inside a checkCards section (pathways / committees). */
+function renderCheckCard(raw: unknown, idx: number): React.ReactNode {
+  const it = (typeof raw === 'string' ? { title: raw } : raw) as Record<string, string> & { bullets?: string[] };
+  const tone = it.tone;
+  return (
+    <div
+      key={idx}
+      className={`rounded-xl space-y-3 flex flex-col justify-between ${
+        tone
+          ? `p-4 sm:p-5 bg-gray-50 border-l-4 ${
+              tone === 'blue'
+                ? 'border-blue-600'
+                : tone === 'green'
+                  ? 'border-green-600'
+                  : tone === 'purple'
+                    ? 'border-purple-600'
+                    : 'border-[#ff3115]'
+            }`
+          : 'p-8 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow'
+      }`}
+    >
+      <div>
+        {it.badge && (
+          <div
+            className={`inline-block px-3 py-1 rounded font-bold text-xs font-mono mb-3 ${
+              it.badgeTone === 'amber' ? 'bg-amber-50 text-amber-700' : 'bg-blue-50 text-blue-700'
+            }`}
+          >
+            {it.badge}
+          </div>
+        )}
+        <h3 className={`font-bold text-gray-900 ${it.badge ? 'text-2xl font-black mb-3' : 'text-base mb-2'}`}>
+          {it.title}
+        </h3>
+        {it.desc && <p className="text-xs text-gray-600 leading-relaxed mb-4">{renderInline(it.desc)}</p>}
+        {!!it.bullets?.length && (
+          <div className="space-y-3 bg-gray-50 p-4 rounded-xl border border-gray-200">
+            {it.bullets.map((b: string, j: number) => (
+              <div key={j} className="flex items-start gap-2.5 text-xs text-gray-700">
+                <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                <span>{renderInline(b)}</span>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      {(it.linkText || it.btnText) && (
+        <div className="pt-4 border-t border-gray-100">
+          {it.btnText && it.btnHref ? (
+            <a
+              href={it.btnHref}
+              target={it.btnHref.startsWith('http') ? '_blank' : undefined}
+              rel={it.btnHref.startsWith('http') ? 'noopener noreferrer' : undefined}
+              className={`w-full py-3 px-4 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-colors shadow-sm ${
+                it.btnTone === 'red'
+                  ? 'bg-[#ff3115] hover:bg-[#e0260c]'
+                  : 'bg-gray-900 hover:bg-[#ff3115]'
+              }`}
+            >
+              {it.btnText}
+            </a>
+          ) : (
+            it.linkText &&
+            it.linkHref && (
+              <Link href={it.linkHref} className="text-xs font-semibold text-[#ff3115] hover:underline">
+                {it.linkText}
+              </Link>
+            )
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function Section({ s }: { s: PageSection }) {
   switch (s.type) {
-    case 'text':
+    case 'text': {
+      const paras = s.paragraphs ?? [];
+      const calloutAt = s.callout ? (s.calloutPos ?? paras.length) : -1;
       return (
         <article className="bg-white rounded-2xl p-7 sm:p-9 border border-neutral-200/80 shadow-sm space-y-6">
+          {(s.pill || s.pillNote) && (
+            <div className="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-neutral-100">
+              {s.pill && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-100 text-[#ff3115]">
+                  <ShieldCheck className="w-4 h-4" /> {s.pill}
+                </span>
+              )}
+              {s.pillNote && <span className="text-xs font-semibold text-neutral-500">{s.pillNote}</span>}
+            </div>
+          )}
           <SectionHeader tag={s.tag} heading={s.heading} h2 />
           <div className="text-neutral-700 text-sm leading-relaxed space-y-4 font-roboto">
-            {(s.paragraphs ?? []).map((p, i) => (
+            {paras.slice(0, calloutAt < 0 ? paras.length : calloutAt).map((p, i) => (
               <p key={i}>{renderInline(p)}</p>
             ))}
           </div>
+          {s.callout && (
+            <div
+              className={`p-5 rounded-xl border-l-4 text-neutral-800 text-xs sm:text-sm leading-relaxed italic space-y-2 ${
+                s.calloutTone === 'amber'
+                  ? 'bg-amber-50/80 border-amber-500 not-italic'
+                  : 'bg-[#FFF0ED] border-[#FF3115]'
+              }`}
+            >
+              {s.calloutTitle && (
+                <h4 className="font-bold text-neutral-900 text-sm mb-1 flex items-center gap-2 not-italic">
+                  {(() => {
+                    const NIcon = iconFor(s.calloutIcon);
+                    return <NIcon className="w-4 h-4 text-amber-600" />;
+                  })()}
+                  {s.calloutTitle}
+                </h4>
+              )}
+              <div className={s.calloutTone === 'amber' ? 'not-italic' : ''}>{renderInline(s.callout)}</div>
+            </div>
+          )}
+          <div className="text-neutral-700 text-sm leading-relaxed space-y-4 font-roboto">
+            {(calloutAt >= 0 ? paras.slice(calloutAt) : []).map((p, i) => (
+              <p key={i}>{renderInline(p)}</p>
+            ))}
+          </div>
+          {!!s.kv?.length && (
+            <div className="overflow-x-auto">
+              <table className="w-full text-xs text-left text-neutral-700 border border-neutral-200 rounded-lg">
+                <tbody className="divide-y divide-neutral-200">
+                  {s.kv.map((row, i) => (
+                    <tr key={i} className={i % 2 === 0 ? 'bg-neutral-50' : ''}>
+                      <td className="px-4 py-3 font-bold text-neutral-900 w-1/3">{row.label}</td>
+                      <td
+                        className={`px-4 py-3 ${
+                          row.highlight ? 'font-mono font-bold text-[#FF3115]' : ''
+                        }`}
+                      >
+                        {renderInline(row.value ?? '')}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+          {(s.note || s.noteTitle) && (
+            <div
+              className={`p-4 rounded-r-lg border-l-4 ${
+                s.noteTone === 'amber'
+                  ? 'bg-amber-50/80 border-amber-500'
+                  : 'bg-[#FFF0ED] border-[#FF3115]'
+              }`}>
+              {s.noteTitle && (
+                <h4 className="font-bold text-neutral-900 text-sm mb-1 flex items-center gap-2">
+                  {(() => {
+                    const NIcon2 = iconFor(s.noteIcon);
+                    return <NIcon2 className="w-4 h-4 text-amber-600" />;
+                  })()}
+                  {s.noteTitle}
+                </h4>
+              )}
+              {s.note && <p className="text-xs text-neutral-700 leading-relaxed">{renderInline(s.note)}</p>}
+            </div>
+          )}
           {!!s.photos?.length && (
             <div className="pt-2">
               <PhotoStrip photos={s.photos} style={s.photoStyle ?? 'card'} columns={3} />
@@ -157,6 +353,7 @@ function Section({ s }: { s: PageSection }) {
           {!!s.stats?.length && <StatBar stats={s.stats} />}
         </article>
       );
+    }
 
     case 'quote':
       return (
@@ -216,33 +413,82 @@ function Section({ s }: { s: PageSection }) {
       return (
         <article className="bg-white rounded-2xl p-7 sm:p-9 border border-neutral-200/80 shadow-sm space-y-6">
           <SectionHeader tag={s.tag} heading={s.heading} />
-          <div className="overflow-x-auto">
-            <table className="w-full text-xs text-left text-neutral-700 border border-neutral-200 rounded-lg">
-              <thead className="bg-neutral-100 text-neutral-900 font-bold uppercase tracking-wider text-[11px]">
-                <tr>
-                  {(s.columns ?? []).map((col, i) => (
-                    <th key={i} className="px-4 py-3">
-                      {col}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-neutral-200">
-                {(s.rows ?? []).map((row, idx) => (
-                  <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-neutral-50/50'}>
-                    <td className="px-4 py-3">
-                      <div className="font-bold text-neutral-900">{row.main}</div>
-                      {row.sub && <div className="text-[11px] text-neutral-500">{row.sub}</div>}
-                    </td>
-                    {(row.cells ?? []).map((cell, j) => (
-                      <td key={j} className="px-4 py-3 font-mono text-neutral-600">
-                        {cell}
-                      </td>
+          {!!s.paragraphs?.length && (
+            <div className="text-sm text-neutral-600 leading-relaxed font-roboto space-y-3">
+              {s.paragraphs.map((p, i) => (
+                <p key={i}>{renderInline(p)}</p>
+              ))}
+            </div>
+          )}
+          <div className={`grid gap-6 items-start ${s.photoSrc ? 'grid-cols-1 lg:grid-cols-12' : ''}`}>
+            <div className={s.photoSrc ? 'lg:col-span-7' : ''}>
+              <div className="overflow-x-auto">
+                <table className="w-full text-xs text-left text-neutral-700 border border-neutral-200 rounded-lg">
+                  <thead className="bg-neutral-100 text-neutral-900 font-bold uppercase tracking-wider text-[11px]">
+                    <tr>
+                      {(s.columns ?? []).map((col, i) => (
+                        <th key={i} className="px-4 py-3">
+                          {col}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-neutral-200">
+                    {(s.rows ?? []).map((row, idx) => (
+                      <tr key={idx} className={idx % 2 === 0 ? 'bg-white' : 'bg-neutral-50/50'}>
+                        <td className="px-4 py-3">
+                          <div className="font-bold text-neutral-900">{row.main}</div>
+                          {row.sub && <div className="text-[11px] text-neutral-500">{row.sub}</div>}
+                        </td>
+                        {(row.cells ?? []).map((cell, j) => (
+                          <td key={j} className="px-4 py-3 font-mono text-neutral-600">
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
                     ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                    {s.foot && (
+                      <tr className="bg-orange-50/60 font-bold border-t-2 border-[#ff3115]">
+                        <td className="px-4 py-3 text-neutral-900">{s.foot.main}</td>
+                        {(s.foot.cells ?? []).map((cell, j) => (
+                          <td key={j} className="px-4 py-3 text-neutral-700">{cell}</td>
+                        ))}
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              {s.note && (
+                <div className="mt-3 p-3 bg-neutral-50 border border-neutral-200 rounded-lg text-[11px] text-neutral-500 font-mono">
+                  {s.note}
+                </div>
+              )}
+            </div>
+            {s.photoSrc && (
+              <div className="lg:col-span-5 bg-neutral-50 rounded-xl p-5 border border-neutral-200 text-center">
+                {s.photoTitle && <h4 className="font-bold text-sm text-neutral-900 mb-1">{s.photoTitle}</h4>}
+                {s.photoSub && <p className="text-xs text-neutral-500 mb-4">{s.photoSub}</p>}
+                <div className="relative h-64 rounded-lg overflow-hidden border border-neutral-300 bg-white">
+                  <Image
+                    src={s.photoSrc}
+                    alt={s.photoTitle || 'Document'}
+                    fill
+                    className="object-contain p-2"
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                  />
+                </div>
+                {s.photoLinkText && s.photoLinkHref && (
+                  <a
+                    href={s.photoLinkHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-[#ff3115] hover:underline"
+                  >
+                    <span>{s.photoLinkText}</span> →
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         </article>
       );
@@ -363,13 +609,31 @@ function Section({ s }: { s: PageSection }) {
             {s.note && <div className="text-[11px] font-mono text-neutral-400">{s.note}</div>}
           </div>
           {s.btnText && s.btnHref && (
-            <Link
-              href={s.btnHref}
-              className="shrink-0 px-6 py-3.5 bg-[#ff3115] hover:bg-[#e0260c] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2"
-            >
-              <span>{s.btnText}</span>
-              <Award className="w-4 h-4" />
-            </Link>
+            <div className="shrink-0 flex flex-col sm:flex-row gap-3">
+              <Link
+                href={s.btnHref}
+                className="px-6 py-3.5 bg-[#ff3115] hover:bg-[#e0260c] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2"
+              >
+                <span>{s.btnText}</span>
+                <Award className="w-4 h-4" />
+              </Link>
+              {s.btn2Text && s.btn2Href && (
+                <a
+                  href={s.btn2Href}
+                  target={s.btn2Href.startsWith('http') ? '_blank' : undefined}
+                  rel={s.btn2Href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  className={`px-6 py-3.5 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2 ${
+                    s.btn2Tone === 'emerald'
+                      ? 'bg-emerald-600 hover:bg-emerald-500'
+                      : s.btn2Tone === 'red'
+                        ? 'bg-[#ff3115] hover:bg-[#e0260c]'
+                        : 'bg-gray-800 hover:bg-gray-700'
+                  }`}
+                >
+                  <span>{s.btn2Text}</span>
+                </a>
+              )}
+            </div>
           )}
         </section>
       );
@@ -666,6 +930,289 @@ function Section({ s }: { s: PageSection }) {
           </div>
         </article>
       );
+
+    case 'stepCards': {
+      const cols =
+        (s.columnsCount as number) === 5
+          ? 'md:grid-cols-5'
+          : (s.columnsCount as number) === 4
+            ? 'sm:grid-cols-2 lg:grid-cols-4'
+            : 'sm:grid-cols-2 lg:grid-cols-3';
+      return (
+        <section className="space-y-6">
+          {(s.tag || s.heading) && (
+            <div className={s.centered ? 'text-center max-w-2xl mx-auto' : ''}>
+              {s.tag && (
+                <span className="text-xs font-bold uppercase tracking-wider text-[#ff3115]">{s.tag}</span>
+              )}
+              {s.heading && <h2 className="text-2xl sm:text-3xl font-black font-heading text-gray-900 mt-1">{s.heading}</h2>}
+              {s.sub && <p className="text-xs sm:text-sm text-gray-600 mt-2">{renderInline(s.sub)}</p>}
+            </div>
+          )}
+          <div className={`grid grid-cols-1 ${cols} gap-4`}>
+            {(s.items ?? []).map((raw, idx) => {
+              const it = (typeof raw === 'string' ? { title: raw } : raw) as Record<string, string>;
+              return (
+                <div
+                  key={idx}
+                  className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm flex flex-col justify-between hover:border-[#ff3115] transition-colors"
+                >
+                  <div>
+                    {it.num && <div className="text-2xl font-black text-[#ff3115]/30 mb-2 font-mono">{it.num}</div>}
+                    {it.badge && (
+                      <span
+                        className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded uppercase ${
+                          it.badgeTone === 'green'
+                            ? 'bg-emerald-100 text-emerald-800'
+                            : it.badgeTone === 'blue'
+                              ? 'bg-blue-50 text-blue-700'
+                              : 'bg-amber-50 text-amber-700'
+                        }`}
+                      >
+                        {it.badge}
+                      </span>
+                    )}
+                    <h3 className={`font-bold text-gray-900 text-sm ${it.num ? 'mb-2' : 'mt-3 mb-1'}`}>{it.title}</h3>
+                    {it.sub && <p className="text-[11px] text-gray-400 font-medium mb-3">{it.sub}</p>}
+                    <p className="text-xs text-gray-600 leading-relaxed">{renderInline(it.desc ?? '')}</p>
+                  </div>
+                  {it.footer && (
+                    <div
+                      className={`mt-4 pt-3 border-t border-gray-100 text-[11px] font-semibold ${
+                        it.footerTone === 'green' ? 'text-emerald-600' : 'text-[#ff3115]'
+                      }`}
+                    >
+                      {it.footer}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      );
+    }
+
+    case 'checkCards':
+      {const header = s.tag || s.heading || s.sub;
+      return header ? (
+        <article className="bg-white rounded-2xl p-7 sm:p-9 border border-neutral-200/80 shadow-sm space-y-6">
+          <SectionHeader tag={s.tag} heading={s.heading} />
+          {!!s.paragraphs?.length && (
+            <div className="text-sm text-neutral-600 leading-relaxed font-roboto space-y-3">
+              {s.paragraphs.map((p, i) => (
+                <p key={i}>{renderInline(p)}</p>
+              ))}
+            </div>
+          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {(s.items ?? []).map((raw, idx) => renderCheckCard(raw, idx))}
+          </div>
+        </article>
+      ) : (
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {(s.items ?? []).map((raw, idx) => renderCheckCard(raw, idx))}
+        </section>
+      );}
+
+    case 'logoWall':
+      return (
+        <section className="bg-white rounded-2xl p-8 md:p-12 border border-gray-200 shadow-sm space-y-8">
+          <div className="text-center max-w-2xl mx-auto">
+            {s.tag && <span className="text-xs font-bold uppercase tracking-wider text-[#ff3115]">{s.tag}</span>}
+            {s.heading && <h2 className="text-3xl font-black font-heading text-gray-900 mt-1">{s.heading}</h2>}
+            {s.sub && <p className="text-xs sm:text-sm text-gray-600 mt-2">{renderInline(s.sub)}</p>}
+          </div>
+          <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-5 gap-4">
+            {(s.items ?? []).map((raw, idx) => {
+              const it = (typeof raw === 'string' ? { name: raw } : raw) as Record<string, string>;
+              return it.src ? (
+                <div
+                  key={idx}
+                  className="h-24 bg-gray-50 rounded-xl border border-gray-200 flex items-center justify-center p-3 hover:border-gray-400 transition-colors"
+                >
+                  <div className="relative w-full h-full">
+                    <Image
+                      src={it.src}
+                      alt={it.alt || it.name || 'Recruiter'}
+                      fill
+                      className="object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                      sizes="(max-width: 768px) 33vw, 20vw"
+                    />
+                  </div>
+                </div>
+              ) : (
+                <div
+                  key={idx}
+                  className="h-24 bg-gray-50 rounded-xl border border-gray-200 flex flex-col items-center justify-center p-3 text-center hover:border-gray-400 transition-colors"
+                >
+                  <span className="font-black text-xs sm:text-sm text-gray-800 tracking-tight">{it.name}</span>
+                  {it.cat && <span className="text-[10px] text-gray-500 font-medium uppercase mt-0.5">{it.cat}</span>}
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      );
+
+    case 'contactCards':
+      return (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {(s.items ?? []).map((raw, idx) => {
+            const card = (typeof raw === 'string' ? { title: raw } : raw) as Record<string, unknown>;
+            const Icon = iconFor(card.icon as string);
+            const lines = (card.lines ?? []) as Array<Record<string, unknown>>;
+            const tone = (card.iconTone as string) ?? 'red';
+            const cLabel = (card.label as string) ?? '';
+            const cTitle = (card.title as string) ?? '';
+            const cBtnText = (card.btnText as string) ?? '';
+            return (
+              <div
+                key={idx}
+                className={`bg-white rounded-2xl p-6 md:p-8 border border-gray-200 shadow-sm flex flex-col justify-between hover:border-${
+                  tone === 'blue' ? 'blue-600' : tone === 'purple' ? 'purple-600' : '[#ff3115]'
+                } transition-colors`}
+              >
+                <div>
+                  <div
+                    className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${
+                      tone === 'blue'
+                        ? 'bg-blue-100 text-blue-600'
+                        : tone === 'purple'
+                          ? 'bg-purple-100 text-purple-600'
+                          : 'bg-orange-100 text-[#ff3115]'
+                    }`}
+                  >
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  {cLabel && (
+                    <span className="text-[11px] font-mono font-bold text-gray-500 uppercase">{cLabel}</span>
+                  )}
+                  <h3 className="text-xl font-bold text-gray-900 mt-1 mb-4">{cTitle}</h3>
+                  <div className="space-y-2 text-xs text-gray-700">
+                    {lines.map((ln, j) => {
+                      if (ln.dividerBefore) {
+                        return (
+                          <div key={j} className="pt-2 border-t border-gray-100 space-y-1">
+                            {renderLine(ln)}
+                          </div>
+                        );
+                      }
+                      return <div key={j}>{renderLine(ln)}</div>;
+                    })}
+                  </div>
+                </div>
+                {cBtnText && !!card.btnHref && (
+                  <div className="mt-6 pt-4 border-t border-gray-100">
+                    <a
+                      href={card.btnHref as string}
+                      target={(card.btnHref as string).startsWith('http') ? '_blank' : undefined}
+                      rel={(card.btnHref as string).startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className={`w-full py-2.5 px-4 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-colors shadow-sm ${
+                        card.btnTone === 'emerald'
+                          ? 'bg-emerald-600 hover:bg-emerald-500'
+                          : card.btnTone === 'light'
+                            ? 'bg-gray-100 hover:bg-gray-200 text-gray-800'
+                            : 'bg-gray-900 hover:bg-gray-800'
+                      }`}
+                    >
+                      <span>{cBtnText}</span> →
+                    </a>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      );
+
+    case 'inquiryForm':
+      return <InquiryForm s={s} />;
+
+    case 'mapEmbed':
+      return (
+        <div className="bg-white rounded-2xl p-4 border border-gray-200 shadow-sm overflow-hidden">
+          <div className="relative h-80 md:h-96 w-full rounded-xl overflow-hidden">
+            <iframe
+              title={s.heading || 'Campus Location Map'}
+              src={s.embedUrl ?? ''}
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen={false}
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+        </div>
+      );
+
+    case 'docCards':
+      {const dHead = s.tag || s.heading;
+      return (
+        <article className="bg-white rounded-2xl p-7 sm:p-9 border border-neutral-200/80 shadow-sm space-y-6">
+          {dHead && <SectionHeader tag={s.tag} heading={s.heading} />}
+          {!!s.paragraphs?.length && (
+            <div className="text-sm text-neutral-600 leading-relaxed font-roboto space-y-3">
+              {s.paragraphs.map((p, i) => (
+                <p key={i}>{renderInline(p)}</p>
+              ))}
+            </div>
+          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {(s.items ?? []).map((raw, idx) => {
+              const d = (typeof raw === 'string' ? { title: raw } : raw) as Record<string, string>;
+              const DIcon = iconFor(d.icon);
+              return (
+                <div
+                  key={idx}
+                  className={`p-5 border border-gray-200 rounded-xl flex flex-col justify-between hover:border-${
+                    d.iconTone === 'blue' ? 'gray-900' : '[#ff3115]'
+                  } transition-colors`}
+                >
+                  <div className="flex items-start gap-3">
+                    <DIcon className={`w-8 h-8 shrink-0 ${d.iconTone === 'blue' ? 'text-blue-600' : 'text-[#ff3115]'}`} />
+                    <div>
+                      <h4 className="font-bold text-gray-900 text-sm">{d.title}</h4>
+                      {d.sub && <p className="text-xs text-gray-500 mt-1">{d.sub}</p>}
+                    </div>
+                  </div>
+                  {d.btnText && d.btnHref && (
+                    <a
+                      href={d.btnHref}
+                      target={d.btnHref.startsWith('http') ? '_blank' : undefined}
+                      rel={d.btnHref.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      className={`mt-4 inline-flex items-center justify-center gap-2 px-4 py-2 text-white text-xs font-bold rounded-lg transition-colors ${
+                        d.btnTone === 'dark' ? 'bg-gray-900 hover:bg-gray-800' : 'bg-[#ff3115] hover:bg-[#e0260c]'
+                      }`}
+                    >
+                      {d.iconTone === 'blue' ? <ShieldCheck className="w-4 h-4" /> : <Download className="w-4 h-4" />}
+                      {d.btnText}
+                    </a>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          {s.note && <div className="text-[11px] font-mono text-neutral-400">{s.note}</div>}
+        </article>
+      );}
+
+    case 'placementRadar': {
+      const hp = readJson<HomepageData>(HOMEPAGE_FILE, {} as HomepageData);
+      return (
+        <section>
+          {(s.tag || s.heading) && (
+            <div className="text-center max-w-2xl mx-auto mb-6">
+              {s.tag && <span className="text-xs font-bold uppercase tracking-wider text-[#ff3115]">{s.tag}</span>}
+              {s.heading && <h2 className="text-3xl font-black font-heading text-gray-900 mt-1">{s.heading}</h2>}
+              {s.sub && <p className="text-xs sm:text-sm text-gray-600 mt-2">{renderInline(s.sub)}</p>}
+            </div>
+          )}
+          <PlacementRadar data={hp.placementRadar} />
+        </section>
+      );
+    }
 
     default:
       return null;

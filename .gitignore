@@ -47,3 +47,6 @@ next-env.d.ts
 /cms-users.json
 /cms-secret.txt
 /cms-backups/
+
+/tool-results/
+/err.txt

@@ -76,4 +76,49 @@ Work Log:
 Stage Summary:
 - All CMS work (auth, dept editors, notices, blog, users, photo upload, image library, home page editor, message pages, info pages, full department deep-dive) is now on github.com/subro88/nhit_website main branch.
 
+---
+Task ID: 6
+Agent: main (Z.ai)
+Task: Push pending commits + bring about-society, admissions, placements, contact, mandatory-disclosure into the CMS
+
+Work Log:
+- Pushed 2 pending commits to GitHub: fa47ee6..c3dbbd5 (Infrastructure/Student Life/About/ITI CMS work).
+- Audited all 5 hardcoded pages field-by-field (164–359 lines each) and mapped every element to CMS types.
+- pageTypes.ts: added 8 new section types (stepCards, checkCards, logoWall, contactCards, inquiryForm, mapEmbed, docCards, placementRadar) + text extras (pill/pillNote top badge, callout with calloutPos mid-paragraph insert, kv label/value table with highlight, amber note box) + table extras (intro paragraphs, highlighted total foot row, side photo card with title/link, note line) + banner second button (btn2 with tone) + PageContent.meta for SEO + layout switcher field.
+- CmsContentPage: renderInline now supports [text](url) links; upgraded text/table/banner renderers; 8 new section renderers incl. renderLine (kicker/link/sub/divider rich lines) and renderCheckCard (white pathway cards vs gray tone-border committee cards); placementRadar reads homepage.json server-side.
+- New src/components/layout/InquiryForm.tsx — client island for contact form (all labels/placeholders/options/hours/transit from CMS, {name}/{phone}/{branch} templated success message).
+- iconMap: +11 icons (PhoneCall, MapPin, Mail, Clock, FileText, Building, ShieldCheck, Download, Navigation, Send, CircleDot).
+- scripts/seed-cms-pages2.py seeded all 5 pages verbatim into pages.json (13 pages total); 100% content extraction incl. brochure PDF links, fee graphic, recruiter logos (9 images + 8 text brands), Google Maps embed, AICTE tables.
+- 5 page.tsx files rewritten as thin CmsContentPage wrappers with generateMetadata reading page.meta.
+- PagesEditor: 5 new page tabs (13 total), 8 new section type forms (incl. nested MiniList for contact card lines with kicker/bold/divider checkboxes), text form gains pill/callout/kv/note editors, table form gains foot/photo/note, banner gains button 2, Page Banner panel gains layout switcher + SEO title/description; fixed pre-existing duplicate case 'banner' (badge/button fields were dead code).
+- API unchanged (/api/admin/pages GET/PUT already super-admin-only).
+- Tests: tsc clean; 17 public routes 200; 45/45 content strings verified identical on the 5 new pages; old 8 CMS pages regression-checked (no content loss); dept user (hod.me) GET+PUT /api/admin/pages → 403; super-admin UI edit (Admissions roadmap heading via browser form) → live instantly → reverted clean (JSON + live verified); SEO meta edit → <title> reflects → reverted; /admin/pages editor 200 with all 13 tabs and new section options in browser.
+- Gitignore: /tool-results/ + /err.txt added to root .gitignore.
+- Commit 50a5a70 on local main — NOT pushed (waiting for user "push").
+
+Stage Summary:
+- All 13 info/content pages now CMS-editable in one Info Pages editor: About, Infrastructure, Student Life, ITI Courses, About Society, Admissions, Placements, Contact, Mandatory Disclosure, RTI, Anti-Ragging, Quality Policy, Approvals.
+- Contact page inquiry form is fully CMS-driven (labels, dropdown options, office hours, success message) though submissions stay front-end-only (no email/backend storage).
+- Remaining non-CMS pages: iti trade detail pages (/iti-courses/[slug]), circulars, notices detail — candidates for a future pass.
+
+---
+Task ID: 5
+Agent: main
+Task: Bring Infrastructure, Student Life, About and ITI Courses pages into the CMS
+
+Work Log:
+- Audited pageTypes.ts + CmsContentPage + PagesEditor and all 4 hardcoded page components.
+- pageTypes.ts: added 7 new section types (iconCards, photoGrid, hubCards, tradeCards, milestones, visionMission, linkCards), extended text (optional stats bar + photo strip) and banner (optional badge + button), helplines now 5 colors.
+- New src/components/layout/iconMap.ts: 23 lucide icons addressable by name from the CMS.
+- CmsContentPage: new section renderers + layout prop — 'sidebar' (with SidebarNav, as before) and 'full' (wide, no nav — for student-life / iti-courses).
+- 4 page components (about, our-infrastructure, student-life, iti-courses) are now thin wrappers over CmsContentPage reading src/data/pages.json (scripts/seed-more-pages.py extracted 100% of original content incl. photos, hubs, trades, milestones, partnerships).
+- PagesEditor: 4 new page tabs + form builders for every new section type with ImagePicker on all photos and icon dropdowns.
+- Tests: tsc clean; all 4 pages 200 with identical content (spot-checked 16 strings); per-page API edit (one field each) reflected live instantly → reverted clean; old info pages (RTI/anti-ragging/quality-policy/approvals) still 200 with banner intact; dept user pages PUT still 403.
+- Cleanup: removed accidentally committed tool-results temp file; gitignored folder. Commits c36b0a5 + c3dbbd5 on local main — NOT pushed (waiting for user "push").
+
+Stage Summary:
+- 8 info/content pages now CMS-editable in one editor (Info Pages: About, Infrastructure, Student Life, ITI Courses, RTI, Anti-Ragging, Quality Policy, Approvals).
+- Remaining hardcoded pages: about-society, admissions, placements, contact, mandatory-disclosure, iti trade detail pages, message pages (already CMS), home (already CMS).
+
+
 

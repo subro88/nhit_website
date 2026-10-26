@@ -33,7 +33,16 @@ export interface PageSection {
     | 'tradeCards'  // ITI trade showcase cards (photo, highlights, workshop line)
     | 'milestones'  // year timeline rows
     | 'visionMission' // two-column vision + mission checklist
-    | 'linkCards';  // emoji link cards (e.g. leadership messages)
+    | 'linkCards'   // emoji link cards (e.g. leadership messages)
+    // ——— admissions / placements / contact / society / disclosure ———
+    | 'stepCards'   // numbered or badged card grid (roadmap, scholarships, training)
+    | 'checkCards'  // big cards with check-list bullets + optional button (pathways, committees)
+    | 'logoWall'    // recruiter logo images + text brand tiles
+    | 'contactCards'// contact info cards (icon, label, rich lines, footer button)
+    | 'inquiryForm' // inquiry form + office hours + transit note (client island)
+    | 'mapEmbed'    // google maps iframe
+    | 'docCards'    // download / document cards with icon + button
+    | 'placementRadar'; // embeds the home-page PlacementRadar chart
   tag?: string;
   heading?: string;
   sub?: string;
@@ -41,6 +50,25 @@ export interface PageSection {
 
   // text extras
   stats?: StatTile[];
+
+  // text: top pill row (e.g. AICTE compliance badge)
+  pill?: string;
+  pillNote?: string;
+
+  // text: red/amber callout quote inserted between paragraphs
+  callout?: string;
+  calloutPos?: number; // paragraph index after which the callout renders
+  calloutTitle?: string;
+  calloutTone?: 'red' | 'amber';
+  calloutIcon?: string;
+
+  // text: label/value mini table (registration details, profiles)
+  kv?: Array<{ label?: string; value?: string; highlight?: boolean }>;
+
+  // text: tinted note box at the end (amber = warning style)
+  noteTitle?: string;
+  noteTone?: 'red' | 'amber';
+  noteIcon?: string;
 
   // iconCards / hubCards / linkCards / tradeCards items
   items?: Array<Record<string, unknown> | string>;
@@ -51,10 +79,17 @@ export interface PageSection {
   // table
   columns?: string[];
   rows?: Array<{ main?: string; sub?: string; cells?: string[] }>;
+  foot?: { main?: string; cells?: string[] }; // highlighted total row
+  photoSrc?: string;   // optional side photo card next to the table
+  photoTitle?: string;
+  photoSub?: string;
+  photoLinkText?: string;
+  photoLinkHref?: string;
 
   // helplines / stat strips
   boxes?: Array<{ title?: string; value?: string; note?: string; color?: string }>;
-  columnsCount?: 2 | 4;
+  columnsCount?: 2 | 4 | 5;
+  centered?: boolean;
 
   // photoGrid
   photos?: PhotoItem[];
@@ -75,6 +110,32 @@ export interface PageSection {
   badge?: string;
   btnText?: string;
   btnHref?: string;
+  btn2Text?: string;   // second optional button
+  btn2Href?: string;
+  btn2Tone?: 'red' | 'dark' | 'emerald';
+
+  // inquiryForm
+  nameLabel?: string;
+  namePh?: string;
+  phoneLabel?: string;
+  phonePh?: string;
+  emailLabel?: string;
+  emailPh?: string;
+  branchLabel?: string;
+  options?: string[];
+  queryLabel?: string;
+  queryPh?: string;
+  submitLabel?: string;
+  successTitle?: string;
+  successText?: string;
+  resendLabel?: string;
+  hoursTitle?: string;
+  hoursRows?: Array<{ day?: string; time?: string; danger?: boolean }>;
+  transitTitle?: string;
+  transitText?: string;
+
+  // mapEmbed
+  embedUrl?: string;
 
   signedBy?: string;
   signedOrg?: string;
@@ -89,6 +150,7 @@ export interface PageContent {
   subtitle?: string;
   layout?: 'sidebar' | 'full'; // sidebar = narrow main + left nav, full = wide no nav
   sections?: PageSection[];
+  meta?: { title?: string; description?: string }; // browser tab SEO
 }
 
 export type PagesFileData = Record<string, PageContent>;

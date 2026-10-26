@@ -29,6 +29,11 @@ const PAGE_LIST = [
   { key: 'our-infrastructure', label: 'Infrastructure', href: '/our-infrastructure' },
   { key: 'student-life', label: 'Student Life', href: '/student-life' },
   { key: 'iti-courses', label: 'ITI Courses', href: '/iti-courses' },
+  { key: 'about-society', label: 'About Society', href: '/about-society' },
+  { key: 'admissions', label: 'Admissions', href: '/admissions' },
+  { key: 'placements', label: 'Placements', href: '/placements' },
+  { key: 'contact', label: 'Contact', href: '/contact' },
+  { key: 'mandatory-disclosure', label: 'Mandatory Disclosure', href: '/mandatory-disclosure' },
   { key: 'rti-process-officer', label: 'RTI Process & Officer', href: '/rti-process-officer' },
   { key: 'anti-ragging-committee', label: 'Anti-Ragging', href: '/anti-ragging-committee' },
   { key: 'quality-policy-iso-certification', label: 'Quality Policy & ISO', href: '/quality-policy-iso-certification' },
@@ -53,6 +58,14 @@ const SECTION_TYPES: Array<{ value: string; label: string }> = [
   { value: 'milestones', label: 'Year Timeline' },
   { value: 'visionMission', label: 'Vision + Mission Block' },
   { value: 'linkCards', label: 'Emoji Link Cards' },
+  { value: 'stepCards', label: 'Numbered / Badged Card Grid' },
+  { value: 'checkCards', label: 'Big Cards + Checklist (pathways)' },
+  { value: 'logoWall', label: 'Recruiter Logo Wall' },
+  { value: 'contactCards', label: 'Contact Info Cards' },
+  { value: 'inquiryForm', label: 'Inquiry Form + Office Hours' },
+  { value: 'mapEmbed', label: 'Google Map Embed' },
+  { value: 'docCards', label: 'Document / Download Cards' },
+  { value: 'placementRadar', label: 'Placement Radar (from Home)' },
 ];
 
 function defaultSection(type: string): any {
@@ -105,6 +118,44 @@ function defaultSection(type: string): any {
       };
     case 'linkCards':
       return { type, tag: '', heading: '', items: [{ emoji: '📄', title: '', desc: '', href: '' }] };
+    case 'stepCards':
+      return { type, tag: '', heading: '', sub: '', centered: true, columnsCount: 4, items: [{ num: '01', badge: '', badgeTone: 'blue', title: '', sub: '', desc: '', footer: '', footerTone: 'green' }] };
+    case 'checkCards':
+      return { type, tag: '', heading: '', paragraphs: [], items: [{ badge: '', badgeTone: 'blue', title: '', desc: '', bullets: [''], btnText: '', btnHref: '', btnTone: 'dark', tone: '', linkText: '', linkHref: '' }] };
+    case 'logoWall':
+      return { type, tag: '', heading: '', sub: '', items: [{ src: '', alt: '', name: '', cat: '' }] };
+    case 'contactCards':
+      return {
+        type,
+        items: [{
+          icon: 'PhoneCall', iconTone: 'red', label: '', title: '',
+          lines: [{ text: '', href: '', sub: '', kicker: false, bold: false, dividerBefore: false }],
+          btnText: '', btnHref: '', btnTone: 'dark',
+        }],
+      };
+    case 'inquiryForm':
+      return {
+        type,
+        tag: '', heading: '', sub: '',
+        nameLabel: 'Student Full Name *', namePh: '',
+        phoneLabel: 'Mobile / WhatsApp No. *', phonePh: '',
+        emailLabel: 'Email Address', emailPh: '',
+        branchLabel: 'Course / Branch of Interest *', options: [''],
+        queryLabel: 'Questions or Specific Queries', queryPh: '',
+        submitLabel: 'Submit Inquiry',
+        successTitle: 'Inquiry Received Successfully!',
+        successText: 'Thank you for reaching out, {name}. We will contact you at {phone} regarding the {branch} program.',
+        resendLabel: 'Send Another Inquiry',
+        hoursTitle: 'Administrative Hours',
+        hoursRows: [{ day: '', time: '', danger: false }],
+        transitTitle: '', transitText: '',
+      };
+    case 'mapEmbed':
+      return { type, heading: 'Campus Location', embedUrl: '' };
+    case 'docCards':
+      return { type, heading: '', paragraphs: [], items: [{ icon: 'FileText', iconTone: 'red', title: '', sub: '', btnText: '', btnHref: '', btnTone: 'red' }] };
+    case 'placementRadar':
+      return { type, tag: '', heading: '', sub: '' };
     default:
       return { type };
   }
@@ -240,7 +291,59 @@ function SectionForm({ section, onChange }: { section: any; onChange: (s: any) =
             <Field label="Small Tag"><input className={inputCls} value={section.tag ?? ''} onChange={(e) => set({ tag: e.target.value })} /></Field>
             <Field label="Heading"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
           </div>
-          <LinesField label="Paragraphs" value={section.paragraphs ?? []} onChange={(v) => set({ paragraphs: v })} hint="One paragraph per line. **double stars** = bold." />
+          <LinesField label="Paragraphs" value={section.paragraphs ?? []} onChange={(v) => set({ paragraphs: v })} hint="One paragraph per line. **double stars** = bold. [text](url) = link." />
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Top Pill Badge (optional)" hint="e.g. AICTE Statutory Compliance"><input className={inputCls} value={section.pill ?? ''} onChange={(e) => set({ pill: e.target.value })} /></Field>
+            <Field label="Top Pill Right Note"><input className={inputCls} value={section.pillNote ?? ''} onChange={(e) => set({ pillNote: e.target.value })} /></Field>
+          </div>
+          <Field label="Callout Box (optional)"><textarea rows={3} className={inputCls} value={section.callout ?? ''} onChange={(e) => set({ callout: e.target.value })} /></Field>
+          {section.callout ? (
+            <div className="grid sm:grid-cols-4 gap-4">
+              <Field label="After Paragraph #"><input type="number" min={0} className={inputCls} value={section.calloutPos ?? 0} onChange={(e) => set({ calloutPos: Number(e.target.value) })} /></Field>
+              <Field label="Callout Title"><input className={inputCls} value={section.calloutTitle ?? ''} onChange={(e) => set({ calloutTitle: e.target.value })} /></Field>
+              <Field label="Callout Tone">
+                <select className={inputCls} value={section.calloutTone ?? 'red'} onChange={(e) => set({ calloutTone: e.target.value })}>
+                  <option value="red">Red quote style</option>
+                  <option value="amber">Amber note style</option>
+                </select>
+              </Field>
+              <Field label="Callout Icon"><IconSelect value={section.calloutIcon ?? ''} onChange={(v) => set({ calloutIcon: v })} /></Field>
+            </div>
+          ) : null}
+          <MiniList
+            label="Label / Value Rows (optional table)"
+            items={section.kv ?? []}
+            def={{ label: '', value: '', highlight: false }}
+            onChange={(v) => set({ kv: v })}
+            titleOf={(r) => r.label || ''}
+            renderFields={(kv, setKv) => (
+              <>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Label (left)"><input className={inputCls} value={kv.label ?? ''} onChange={(e) => setKv({ label: e.target.value })} /></Field>
+                  <Field label="Value (right)"><input className={inputCls} value={kv.value ?? ''} onChange={(e) => setKv({ value: e.target.value })} /></Field>
+                </div>
+                <label className="inline-flex items-center gap-2 text-xs font-bold text-slate-600">
+                  <input type="checkbox" checked={!!kv.highlight} onChange={(e) => setKv({ highlight: e.target.checked })} />
+                  Highlight value in red mono (e.g. registration number)
+                </label>
+              </>
+            )}
+          />
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Note Box Title (optional)"><input className={inputCls} value={section.noteTitle ?? ''} onChange={(e) => set({ noteTitle: e.target.value })} /></Field>
+            <Field label="Note Box Tone">
+              <select className={inputCls} value={section.noteTone ?? 'amber'} onChange={(e) => set({ noteTone: e.target.value })}>
+                <option value="amber">Amber</option>
+                <option value="red">Red</option>
+              </select>
+            </Field>
+          </div>
+          {section.noteTitle ? (
+            <>
+              <Field label="Note Icon"><IconSelect value={section.noteIcon ?? ''} onChange={(v) => set({ noteIcon: v })} /></Field>
+              <Field label="Note Box Text"><textarea rows={3} className={inputCls} value={section.note ?? ''} onChange={(e) => set({ note: e.target.value })} /></Field>
+            </>
+          ) : null}
           <MiniList
             label="Stat Tiles (optional)"
             items={section.stats ?? []}
@@ -340,6 +443,7 @@ function SectionForm({ section, onChange }: { section: any; onChange: (s: any) =
             <Field label="Small Tag"><input className={inputCls} value={section.tag ?? ''} onChange={(e) => set({ tag: e.target.value })} /></Field>
             <Field label="Heading"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
           </div>
+          <LinesField label="Intro Paragraphs (optional)" value={section.paragraphs ?? []} onChange={(v) => set({ paragraphs: v })} rows={2} hint="**double stars** = bold." />
           <LinesField label="Column Headers" value={section.columns ?? []} onChange={(v) => set({ columns: v })} rows={3} hint="First column shows Name (bold) + Sub-line. Remaining columns map to the row cells." />
           <MiniList
             label="Rows"
@@ -357,6 +461,26 @@ function SectionForm({ section, onChange }: { section: any; onChange: (s: any) =
               </>
             )}
           />
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Total Row — First Cell (optional)"><input className={inputCls} value={section.foot?.main ?? ''} onChange={(e) => set({ foot: { ...(section.foot ?? {}), main: e.target.value } })} /></Field>
+            <Field label="Small Note Under Table (optional)"><input className={inputCls} value={section.note ?? ''} onChange={(e) => set({ note: e.target.value })} /></Field>
+          </div>
+          {section.foot?.main ? (
+            <LinesField label="Total Row — Other Cells" value={section.foot?.cells ?? []} onChange={(v) => set({ foot: { ...(section.foot ?? {}), cells: v } })} rows={2} />
+          ) : null}
+          <ImagePicker label="Side Photo (optional, e.g. fee document)" value={section.photoSrc ?? ''} onChange={(url) => set({ photoSrc: url })} />
+          {section.photoSrc ? (
+            <>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <Field label="Side Photo Title"><input className={inputCls} value={section.photoTitle ?? ''} onChange={(e) => set({ photoTitle: e.target.value })} /></Field>
+                <Field label="Side Photo Sub Line"><input className={inputCls} value={section.photoSub ?? ''} onChange={(e) => set({ photoSub: e.target.value })} /></Field>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <Field label="Side Photo Link Text"><input className={inputCls} value={section.photoLinkText ?? ''} onChange={(e) => set({ photoLinkText: e.target.value })} /></Field>
+                <Field label="Side Photo Link URL"><input className={inputCls} value={section.photoLinkHref ?? ''} onChange={(e) => set({ photoLinkHref: e.target.value })} /></Field>
+              </div>
+            </>
+          ) : null}
         </>
       );
 
@@ -469,15 +593,6 @@ function SectionForm({ section, onChange }: { section: any; onChange: (s: any) =
     case 'banner':
       return (
         <>
-          <Field label="Banner Heading"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
-          <LinesField label="Banner Text" value={section.paragraphs ?? []} onChange={(v) => set({ paragraphs: v })} rows={3} />
-          <Field label="Small Note"><input className={inputCls} value={section.note ?? ''} onChange={(e) => set({ note: e.target.value })} /></Field>
-        </>
-      );
-
-    case 'banner':
-      return (
-        <>
           <div className="grid sm:grid-cols-2 gap-4">
             <Field label="Badge (optional)" hint="Replaces the round icon with a small orange pill."><input className={inputCls} value={section.badge ?? ''} onChange={(e) => set({ badge: e.target.value })} /></Field>
             <Field label="Banner Heading"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
@@ -485,8 +600,19 @@ function SectionForm({ section, onChange }: { section: any; onChange: (s: any) =
           <LinesField label="Banner Text" value={section.paragraphs ?? []} onChange={(v) => set({ paragraphs: v })} rows={3} />
           <Field label="Small Note"><input className={inputCls} value={section.note ?? ''} onChange={(e) => set({ note: e.target.value })} /></Field>
           <div className="grid sm:grid-cols-2 gap-4">
-            <Field label="Button Text (optional)"><input className={inputCls} value={section.btnText ?? ''} onChange={(e) => set({ btnText: e.target.value })} /></Field>
-            <Field label="Button Link (optional)" hint="e.g. /circulars"><input className={inputCls} value={section.btnHref ?? ''} onChange={(e) => set({ btnHref: e.target.value })} /></Field>
+            <Field label="Button 1 Text (optional)"><input className={inputCls} value={section.btnText ?? ''} onChange={(e) => set({ btnText: e.target.value })} /></Field>
+            <Field label="Button 1 Link" hint="e.g. tel:+919800571423 or /circulars"><input className={inputCls} value={section.btnHref ?? ''} onChange={(e) => set({ btnHref: e.target.value })} /></Field>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-4">
+            <Field label="Button 2 Text (optional)"><input className={inputCls} value={section.btn2Text ?? ''} onChange={(e) => set({ btn2Text: e.target.value })} /></Field>
+            <Field label="Button 2 Link"><input className={inputCls} value={section.btn2Href ?? ''} onChange={(e) => set({ btn2Href: e.target.value })} /></Field>
+            <Field label="Button 2 Color">
+              <select className={inputCls} value={section.btn2Tone ?? 'dark'} onChange={(e) => set({ btn2Tone: e.target.value })}>
+                <option value="dark">Dark</option>
+                <option value="red">Red</option>
+                <option value="emerald">Green (WhatsApp)</option>
+              </select>
+            </Field>
           </div>
         </>
       );
@@ -718,6 +844,274 @@ function SectionForm({ section, onChange }: { section: any; onChange: (s: any) =
         </>
       );
 
+    case 'stepCards':
+      return (
+        <>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Small Tag"><input className={inputCls} value={section.tag ?? ''} onChange={(e) => set({ tag: e.target.value })} /></Field>
+            <Field label="Heading"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
+          </div>
+          <Field label="Sub Text"><textarea rows={2} className={inputCls} value={section.sub ?? ''} onChange={(e) => set({ sub: e.target.value })} /></Field>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Center Header?">
+              <select className={inputCls} value={section.centered ? 'yes' : 'no'} onChange={(e) => set({ centered: e.target.value === 'yes' })}>
+                <option value="yes">Yes — centered</option>
+                <option value="no">No — left aligned</option>
+              </select>
+            </Field>
+            <Field label="Cards Per Row">
+              <select className={inputCls} value={String(section.columnsCount ?? 4)} onChange={(e) => set({ columnsCount: Number(e.target.value) })}>
+                <option value="5">5</option>
+                <option value="4">4</option>
+                <option value="3">3</option>
+                <option value="2">2</option>
+              </select>
+            </Field>
+          </div>
+          <MiniList
+            label="Cards"
+            items={section.items ?? []}
+            def={{ num: '', badge: '', badgeTone: 'green', title: '', sub: '', desc: '', footer: '', footerTone: 'green' }}
+            onChange={(v) => set({ items: v })}
+            titleOf={(it) => it.title || ''}
+            renderFields={(it, setIt) => (
+              <>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Number (01, 02… optional)"><input className={inputCls} value={it.num ?? ''} onChange={(e) => setIt({ num: e.target.value })} /></Field>
+                  <Field label="OR Badge Text (optional)"><input className={inputCls} value={it.badge ?? ''} onChange={(e) => setIt({ badge: e.target.value })} /></Field>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Badge Color"><select className={inputCls} value={it.badgeTone ?? 'green'} onChange={(e) => setIt({ badgeTone: e.target.value })}><option value="green">Green</option><option value="blue">Blue</option><option value="amber">Amber</option></select></Field>
+                  <Field label="Title"><input className={inputCls} value={it.title ?? ''} onChange={(e) => setIt({ title: e.target.value })} /></Field>
+                </div>
+                <Field label="Small Line Under Title (optional)"><input className={inputCls} value={it.sub ?? ''} onChange={(e) => setIt({ sub: e.target.value })} /></Field>
+                <Field label="Description"><textarea rows={3} className={inputCls} value={it.desc ?? ''} onChange={(e) => setIt({ desc: e.target.value })} /></Field>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Footer Line (optional)"><input className={inputCls} value={it.footer ?? ''} onChange={(e) => setIt({ footer: e.target.value })} /></Field>
+                  <Field label="Footer Color"><select className={inputCls} value={it.footerTone ?? 'green'} onChange={(e) => setIt({ footerTone: e.target.value })}><option value="green">Green</option><option value="red">Red</option></select></Field>
+                </div>
+              </>
+            )}
+          />
+        </>
+      );
+
+    case 'checkCards':
+      return (
+        <>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Small Tag (optional)"><input className={inputCls} value={section.tag ?? ''} onChange={(e) => set({ tag: e.target.value })} /></Field>
+            <Field label="Heading (optional)"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
+          </div>
+          <LinesField label="Intro Paragraphs (optional)" value={section.paragraphs ?? []} onChange={(v) => set({ paragraphs: v })} rows={2} />
+          <MiniList
+            label="Cards"
+            items={section.items ?? []}
+            def={{ badge: '', badgeTone: 'blue', title: '', desc: '', bullets: [''], btnText: '', btnHref: '', btnTone: 'dark', tone: '', linkText: '', linkHref: '' }}
+            onChange={(v) => set({ items: v })}
+            titleOf={(it) => it.title || ''}
+            renderFields={(it, setIt) => (
+              <>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Badge (optional)"><input className={inputCls} value={it.badge ?? ''} onChange={(e) => setIt({ badge: e.target.value })} /></Field>
+                  <Field label="Badge Color"><select className={inputCls} value={it.badgeTone ?? 'blue'} onChange={(e) => setIt({ badgeTone: e.target.value })}><option value="blue">Blue</option><option value="amber">Amber</option></select></Field>
+                </div>
+                <Field label="Title"><input className={inputCls} value={it.title ?? ''} onChange={(e) => setIt({ title: e.target.value })} /></Field>
+                <Field label="Description"><textarea rows={3} className={inputCls} value={it.desc ?? ''} onChange={(e) => setIt({ desc: e.target.value })} /></Field>
+                <LinesField label="Check-list Bullets (optional)" value={it.bullets ?? []} onChange={(v) => setIt({ bullets: v })} rows={4} />
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Left Border Color (optional)" hint="Gray card with colored border, e.g. committees"><select className={inputCls} value={it.tone ?? ''} onChange={(e) => setIt({ tone: e.target.value })}><option value="">None (white card)</option><option value="red">Red</option><option value="blue">Blue</option><option value="green">Green</option><option value="purple">Purple</option></select></Field>
+                  <Field label="Button Color"><select className={inputCls} value={it.btnTone ?? 'dark'} onChange={(e) => setIt({ btnTone: e.target.value })}><option value="dark">Dark</option><option value="red">Red</option></select></Field>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Button Text (optional)"><input className={inputCls} value={it.btnText ?? ''} onChange={(e) => setIt({ btnText: e.target.value })} /></Field>
+                  <Field label="Button Link"><input className={inputCls} value={it.btnHref ?? ''} onChange={(e) => setIt({ btnHref: e.target.value })} /></Field>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="OR Small Link Text"><input className={inputCls} value={it.linkText ?? ''} onChange={(e) => setIt({ linkText: e.target.value })} /></Field>
+                  <Field label="Small Link URL"><input className={inputCls} value={it.linkHref ?? ''} onChange={(e) => setIt({ linkHref: e.target.value })} /></Field>
+                </div>
+              </>
+            )}
+          />
+        </>
+      );
+
+    case 'logoWall':
+      return (
+        <>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Small Tag"><input className={inputCls} value={section.tag ?? ''} onChange={(e) => set({ tag: e.target.value })} /></Field>
+            <Field label="Heading"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
+          </div>
+          <Field label="Sub Text"><textarea rows={2} className={inputCls} value={section.sub ?? ''} onChange={(e) => set({ sub: e.target.value })} /></Field>
+          <MiniList
+            label="Logo & Brand Tiles"
+            items={section.items ?? []}
+            def={{ src: '', alt: '', name: '', cat: '' }}
+            onChange={(v) => set({ items: v })}
+            titleOf={(it) => it.alt || it.name || it.src || ''}
+            renderFields={(it, setIt) => (
+              <>
+                <ImagePicker label="Logo Image (optional)" value={it.src ?? ''} onChange={(url) => setIt({ src: url })} />
+                <Field label="Logo Alt Text"><input className={inputCls} value={it.alt ?? ''} onChange={(e) => setIt({ alt: e.target.value })} /></Field>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="OR Brand Name (text tile)"><input className={inputCls} value={it.name ?? ''} onChange={(e) => setIt({ name: e.target.value })} /></Field>
+                  <Field label="Brand Category"><input className={inputCls} value={it.cat ?? ''} onChange={(e) => setIt({ cat: e.target.value })} /></Field>
+                </div>
+              </>
+            )}
+          />
+        </>
+      );
+
+    case 'contactCards':
+      return (
+        <MiniList
+          label="Contact Cards"
+          items={section.items ?? []}
+          def={{ icon: 'PhoneCall', iconTone: 'red', label: '', title: '', lines: [{ text: '' }], btnText: '', btnHref: '', btnTone: 'dark' }}
+          onChange={(v) => set({ items: v })}
+          titleOf={(c) => c.title || ''}
+          renderFields={(card, setCard) => (
+            <>
+              <div className="grid sm:grid-cols-3 gap-4">
+                <Field label="Icon"><IconSelect value={card.icon ?? ''} onChange={(v) => setCard({ icon: v })} /></Field>
+                <Field label="Icon Color"><select className={inputCls} value={card.iconTone ?? 'red'} onChange={(e) => setCard({ iconTone: e.target.value })}><option value="red">Red</option><option value="blue">Blue</option><option value="purple">Purple</option></select></Field>
+                <Field label="Mono Label (// Admissions Desk)"><input className={inputCls} value={card.label ?? ''} onChange={(e) => setCard({ label: e.target.value })} /></Field>
+              </div>
+              <Field label="Card Title"><input className={inputCls} value={card.title ?? ''} onChange={(e) => setCard({ title: e.target.value })} /></Field>
+              <MiniList
+                label="Detail Lines"
+                items={card.lines ?? []}
+                def={{ text: '' }}
+                onChange={(v) => setCard({ ...card, lines: v })}
+                titleOf={(ln) => String(ln.text ?? '').slice(0, 40)}
+                renderFields={(ln, setLn) => (
+                  <>
+                    <Field label="Line Text" hint="**bold** and [text](url) links work"><input className={inputCls} value={ln.text ?? ''} onChange={(e) => setLn({ text: e.target.value })} /></Field>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <Field label="Make Whole Line a Link"><input className={inputCls} value={ln.href ?? ''} onChange={(e) => setLn({ href: e.target.value })} /></Field>
+                      <Field label="Small Caption Under Line"><input className={inputCls} value={ln.sub ?? ''} onChange={(e) => setLn({ sub: e.target.value })} /></Field>
+                    </div>
+                    <div className="flex flex-wrap gap-4">
+                      <label className="inline-flex items-center gap-2 text-xs font-bold text-slate-600"><input type="checkbox" checked={!!ln.kicker} onChange={(e) => setLn({ kicker: e.target.checked })} /> Tiny uppercase label</label>
+                      <label className="inline-flex items-center gap-2 text-xs font-bold text-slate-600"><input type="checkbox" checked={!!ln.bold} onChange={(e) => setLn({ bold: e.target.checked })} /> Bold</label>
+                      <label className="inline-flex items-center gap-2 text-xs font-bold text-slate-600"><input type="checkbox" checked={!!ln.dividerBefore} onChange={(e) => setLn({ dividerBefore: e.target.checked })} /> Divider above</label>
+                    </div>
+                  </>
+                )}
+              />
+              <div className="grid sm:grid-cols-3 gap-4">
+                <Field label="Button Text"><input className={inputCls} value={card.btnText ?? ''} onChange={(e) => setCard({ btnText: e.target.value })} /></Field>
+                <Field label="Button Link"><input className={inputCls} value={card.btnHref ?? ''} onChange={(e) => setCard({ btnHref: e.target.value })} /></Field>
+                <Field label="Button Color"><select className={inputCls} value={card.btnTone ?? 'dark'} onChange={(e) => setCard({ btnTone: e.target.value })}><option value="dark">Dark</option><option value="emerald">Green</option><option value="light">Light gray</option></select></Field>
+              </div>
+            </>
+          )}
+        />
+      );
+
+    case 'inquiryForm':
+      return (
+        <>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Small Tag"><input className={inputCls} value={section.tag ?? ''} onChange={(e) => set({ tag: e.target.value })} /></Field>
+            <Field label="Heading"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
+          </div>
+          <Field label="Sub Text"><textarea rows={2} className={inputCls} value={section.sub ?? ''} onChange={(e) => set({ sub: e.target.value })} /></Field>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Name Field Label"><input className={inputCls} value={section.nameLabel ?? ''} onChange={(e) => set({ nameLabel: e.target.value })} /></Field>
+            <Field label="Name Placeholder"><input className={inputCls} value={section.namePh ?? ''} onChange={(e) => set({ namePh: e.target.value })} /></Field>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Phone Field Label"><input className={inputCls} value={section.phoneLabel ?? ''} onChange={(e) => set({ phoneLabel: e.target.value })} /></Field>
+            <Field label="Phone Placeholder"><input className={inputCls} value={section.phonePh ?? ''} onChange={(e) => set({ phonePh: e.target.value })} /></Field>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Email Field Label"><input className={inputCls} value={section.emailLabel ?? ''} onChange={(e) => set({ emailLabel: e.target.value })} /></Field>
+            <Field label="Email Placeholder"><input className={inputCls} value={section.emailPh ?? ''} onChange={(e) => set({ emailPh: e.target.value })} /></Field>
+          </div>
+          <Field label="Course Field Label"><input className={inputCls} value={section.branchLabel ?? ''} onChange={(e) => set({ branchLabel: e.target.value })} /></Field>
+          <LinesField label="Course Dropdown Options" value={section.options ?? []} onChange={(v) => set({ options: v })} rows={5} hint="One option per line." />
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Questions Field Label"><input className={inputCls} value={section.queryLabel ?? ''} onChange={(e) => set({ queryLabel: e.target.value })} /></Field>
+            <Field label="Questions Placeholder"><input className={inputCls} value={section.queryPh ?? ''} onChange={(e) => set({ queryPh: e.target.value })} /></Field>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Submit Button Label"><input className={inputCls} value={section.submitLabel ?? ''} onChange={(e) => set({ submitLabel: e.target.value })} /></Field>
+            <Field label="Reset Button Label"><input className={inputCls} value={section.resendLabel ?? ''} onChange={(e) => set({ resendLabel: e.target.value })} /></Field>
+          </div>
+          <Field label="Success Title"><input className={inputCls} value={section.successTitle ?? ''} onChange={(e) => set({ successTitle: e.target.value })} /></Field>
+          <Field label="Success Message" hint="{name}, {phone}, {branch} are replaced with the visitor's inputs"><textarea rows={2} className={inputCls} value={section.successText ?? ''} onChange={(e) => set({ successText: e.target.value })} /></Field>
+          <Field label="Office Hours Title"><input className={inputCls} value={section.hoursTitle ?? ''} onChange={(e) => set({ hoursTitle: e.target.value })} /></Field>
+          <MiniList
+            label="Office Hours Rows"
+            items={section.hoursRows ?? []}
+            def={{ day: '', time: '', danger: false }}
+            onChange={(v) => set({ hoursRows: v })}
+            titleOf={(r) => r.day || ''}
+            renderFields={(r, setR) => (
+              <>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Days"><input className={inputCls} value={r.day ?? ''} onChange={(e) => setR({ day: e.target.value })} /></Field>
+                  <Field label="Time"><input className={inputCls} value={r.time ?? ''} onChange={(e) => setR({ time: e.target.value })} /></Field>
+                </div>
+                <label className="inline-flex items-center gap-2 text-xs font-bold text-slate-600"><input type="checkbox" checked={!!r.danger} onChange={(e) => setR({ danger: e.target.checked })} /> Show in red (closed)</label>
+              </>
+            )}
+          />
+          <Field label="Transit Note Title"><input className={inputCls} value={section.transitTitle ?? ''} onChange={(e) => set({ transitTitle: e.target.value })} /></Field>
+          <Field label="Transit Note Text"><textarea rows={3} className={inputCls} value={section.transitText ?? ''} onChange={(e) => set({ transitText: e.target.value })} /></Field>
+        </>
+      );
+
+    case 'mapEmbed':
+      return (
+        <>
+          <Field label="Map Title (accessibility)"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
+          <Field label="Google Maps Embed URL" hint="Google Maps → Share → Embed a map → copy the src link"><textarea rows={3} className={inputCls} value={section.embedUrl ?? ''} onChange={(e) => set({ embedUrl: e.target.value })} /></Field>
+        </>
+      );
+
+    case 'docCards':
+      return (
+        <>
+          <Field label="Heading"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
+          <LinesField label="Intro Paragraphs (optional)" value={section.paragraphs ?? []} onChange={(v) => set({ paragraphs: v })} rows={2} />
+          <MiniList
+            label="Document Cards"
+            items={section.items ?? []}
+            def={{ icon: 'FileText', iconTone: 'red', title: '', sub: '', btnText: '', btnHref: '', btnTone: 'red' }}
+            onChange={(v) => set({ items: v })}
+            titleOf={(d) => d.title || ''}
+            renderFields={(d, setD) => (
+              <>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Icon"><IconSelect value={d.icon ?? ''} onChange={(v) => setD({ icon: v })} /></Field>
+                  <Field label="Icon Color"><select className={inputCls} value={d.iconTone ?? 'red'} onChange={(e) => setD({ iconTone: e.target.value })}><option value="red">Red</option><option value="blue">Blue</option></select></Field>
+                </div>
+                <Field label="Title"><input className={inputCls} value={d.title ?? ''} onChange={(e) => setD({ title: e.target.value })} /></Field>
+                <Field label="Small Sub Line"><input className={inputCls} value={d.sub ?? ''} onChange={(e) => setD({ sub: e.target.value })} /></Field>
+                <div className="grid sm:grid-cols-3 gap-4">
+                  <Field label="Button Text"><input className={inputCls} value={d.btnText ?? ''} onChange={(e) => setD({ btnText: e.target.value })} /></Field>
+                  <Field label="Button Link"><input className={inputCls} value={d.btnHref ?? ''} onChange={(e) => setD({ btnHref: e.target.value })} /></Field>
+                  <Field label="Button Color"><select className={inputCls} value={d.btnTone ?? 'red'} onChange={(e) => setD({ btnTone: e.target.value })}><option value="red">Red</option><option value="dark">Dark</option></select></Field>
+                </div>
+              </>
+            )}
+          />
+        </>
+      );
+
+    case 'placementRadar':
+      return (
+        <div className="space-y-2 text-xs text-slate-500 bg-slate-50 rounded-xl border border-slate-200 p-4">
+          <p className="font-bold text-slate-700">Placement Radar Chart</p>
+          <p>Shows the same branch-wise placement chart that appears on the Home page. Edit its data in the <span className="font-bold">Home Page</span> editor (Placement Radar tab). Optional heading lines below.</p>
+        </div>
+      );
+
     default:
       return <p className="text-xs text-slate-400">Unknown section type.</p>;
   }
@@ -915,6 +1309,27 @@ export default function PagesEditor() {
             <Field label="Banner Subtitle">
               <textarea rows={2} className={inputCls} value={page.subtitle ?? ''} onChange={(e) => setHero('subtitle', e.target.value)} />
             </Field>
+            <Field label="Page Layout">
+              <select
+                className={inputCls}
+                value={page.layout ?? 'sidebar'}
+                onChange={(e) => setHero('layout', e.target.value)}
+              >
+                <option value="sidebar">Sidebar — narrow content + institutional link menu</option>
+                <option value="full">Full width — wide content, no side menu</option>
+              </select>
+            </Field>
+            <div className="pt-2 border-t border-slate-100">
+              <h4 className="text-xs font-extrabold text-slate-500 uppercase tracking-wider mb-3">Browser Tab (SEO)</h4>
+              <div className="space-y-4">
+                <Field label="SEO Title">
+                  <input className={inputCls} value={page.meta?.title ?? ''} onChange={(e) => setPage({ ...page, meta: { ...(page.meta ?? {}), title: e.target.value } })} />
+                </Field>
+                <Field label="SEO Description">
+                  <textarea rows={2} className={inputCls} value={page.meta?.description ?? ''} onChange={(e) => setPage({ ...page, meta: { ...(page.meta ?? {}), description: e.target.value } })} />
+                </Field>
+              </div>
+            </div>
           </section>
 
           {/* Sections */}
