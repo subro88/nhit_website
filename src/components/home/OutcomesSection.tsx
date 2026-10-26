@@ -9,10 +9,11 @@ import type { OutcomesData } from '@/lib/homeTypes';
  * panel below shows the full T&P breakdown (total, opted, placed,
  * higher studies). Bars grow in staggered on load.
  *
- * The section plays the campus-tour YouTube video as its background with a
- * dark overlay and a gentle parallax drift. The iframe is only injected when
- * the section comes near the viewport, and a YouTube poster frame is shown
- * behind the overlay until then — so the page stays fast.
+ * The section plays the campus-tour YouTube video as a FIXED background
+ * (it stays still while the page scrolls over it) under a dark overlay,
+ * with an extra glass panel behind the text and chart. The iframe is only
+ * injected when the section comes near the viewport, and a YouTube poster
+ * frame is shown behind the overlay until then — so the page stays fast.
  *
  * All content is CMS-editable: Admin → Home Page Editor → Outcomes
  * (including the background video on/off switch and its YouTube ID).
@@ -20,7 +21,6 @@ import type { OutcomesData } from '@/lib/homeTypes';
 
 function BackgroundVideo({ videoId }: { videoId: string }) {
   const bgRef = useRef<HTMLDivElement | null>(null);
-  const mediaRef = useRef<HTMLDivElement | null>(null);
   const [near, setNear] = useState(false); // true once the section approaches the viewport
   const [poster, setPoster] = useState(`https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`);
 
@@ -44,37 +44,6 @@ function BackgroundVideo({ videoId }: { videoId: string }) {
     return () => io.disconnect();
   }, []);
 
-  // Parallax: the background drifts a little slower than the page scroll.
-  useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    let ticking = false;
-    const update = () => {
-      ticking = false;
-      const bg = bgRef.current;
-      const media = mediaRef.current;
-      if (!bg || !media) return;
-      // .edu-outcomes__bg covers the section exactly (inset:0).
-      const rect = bg.getBoundingClientRect();
-      const vh = window.innerHeight || 1;
-      // Distance of the section centre from the viewport centre.
-      const delta = rect.top + rect.height / 2 - vh / 2;
-      const y = Math.max(-160, Math.min(160, delta * -0.12));
-      media.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
-    };
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-    };
-  }, []);
-
   const embedSrc = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(
     videoId
   )}?autoplay=1&mute=1&loop=1&playlist=${encodeURIComponent(
@@ -83,7 +52,7 @@ function BackgroundVideo({ videoId }: { videoId: string }) {
 
   return (
     <div className="edu-outcomes__bg" aria-hidden="true" ref={bgRef}>
-      <div className="edu-outcomes__bg-media" ref={mediaRef}>
+      <div className="edu-outcomes__bg-media">
         {/* Poster frame shown until the video loads (and if it never does). */}
         <img
           src={poster}
@@ -143,8 +112,8 @@ export default function OutcomesSection({ data }: { data: OutcomesData }) {
                     style={
                       {
                         '--h': bar.heightPct || '60%',
-                        '--c': bar.color || 'var(--edu-primary)',
-                        '--cd': bar.colorDark || 'var(--edu-primary-dark)',
+                        '--c': bar.color || 'color-mix(in srgb, var(--edu-primary) 45%, #fff)',
+                        '--cd': bar.colorDark || 'color-mix(in srgb, var(--edu-primary) 82%, #fff)',
                       } as React.CSSProperties
                     }
                   />

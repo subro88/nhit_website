@@ -371,3 +371,19 @@ Work Log:
 Stage Summary:
 - Outcomes section now plays the campus tour as a parallax video background with dark overlay; lazy-loaded, reduced-motion safe, fully CMS-controllable (on/off + any YouTube ID)
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 17
+Agent: main (Z.ai)
+Task: Outcomes video — fixed instead of parallax + extra glass overlay behind content + light bars (user request)
+
+Work Log:
+- Removed the parallax JS (scroll/rAF listeners + transform) from BackgroundVideo; kept IntersectionObserver lazy-load and poster fallback.
+- sections.css: .edu-outcomes__bg gains clip-path:inset(0); __bg-media switched to position:fixed top:0 height:100vh/100svh => video stands still in the viewport while the page scrolls over it. Tried sticky first but section (875px) is shorter than viewport so sticky had no travel — fixed+clip is the correct technique. Verified: media rect.top stays 0 across 470px of scroll.
+- Extra overlay behind text+chart: .edu-outcomes__grid now renders as a glass panel (padding clamp 1.75-3.25rem, rgba(14,14,17,.62->.48) gradient, backdrop-filter blur(14px) saturate(120%), 1px rgba(255,255,255,.09) border, radius 20, deep shadow) => content lifted off the moving video.
+- Light bars: 7 red bars in homepage.json switched from var(--edu-primary) to color-mix(in srgb, var(--edu-primary) 45%/82%, #fff) (theme-aware light tint); TSX fallback updated to the same; HomeEditor bar def colors cleared to empty + hints updated so new bars default light. Cyan ongoing bar unchanged.
+- QA: page top screenshot shows hero unchanged (fixed layer fully clipped, no bleed outside section); desktop + mobile section screenshots show glass panel + light bars; iframe injected near section only; tsc clean; / and /admissions 200.
+
+Stage Summary:
+- Outcomes video background is now FIXED (cinematic, no parallax), content sits on a frosted glass panel, bars use a light theme tint
+- Committed locally, NOT pushed (waiting for user "push")
