@@ -85,7 +85,7 @@
   border-radius: 999px;
   background: rgba(var(--edu-primary-rgb), 0.14);
   border: 1px solid rgba(var(--edu-primary-rgb), 0.35);
-  color: #ff624d;
+  color: color-mix(in srgb, var(--edu-primary) 62%, white);
   font-family: var(--nhit-font-head);
   font-size: 0.78rem;
   font-weight: 700;
@@ -759,7 +759,7 @@
 }
 
 .nhit-radar-btn-primary:hover {
-  background: #ff4d36;
+  background: var(--edu-primary-dark);
   transform: translateY(-2px);
   box-shadow: 0 6px 24px rgba(var(--edu-primary-rgb), 0.5);
   color: #ffffff;

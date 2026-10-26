@@ -561,7 +561,7 @@ header.wp-block-template-part,
   font-size: 0.95rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--edu-primary);
+  color: var(--edu-primary-text, var(--edu-primary));
   display: inline-flex;
   align-items: center;
   gap: 0.7em;

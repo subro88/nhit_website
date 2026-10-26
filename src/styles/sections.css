@@ -43,7 +43,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(100deg, rgba(21, 21, 21, 0.85) 8%, rgba(21, 21, 21, 0.55) 48%, rgba(var(--edu-primary-rgb), 0.30) 100%);
+  background: linear-gradient(100deg, rgba(15, 15, 15, 0.9) 8%, rgba(15, 15, 15, 0.62) 48%, rgba(var(--edu-primary-rgb), 0.38) 100%);
 }
 
 .edu-slide__inner {
@@ -123,9 +123,25 @@
   border: 0;
   padding: 0;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
   transition: background 0.3s var(--edu-ease), width 0.3s var(--edu-ease);
 }
-.edu-slider__dot.is-active { background: var(--edu-primary); width: 46px; }
+.edu-slider__dot.is-active { background: rgba(255, 255, 255, 0.3); width: 46px; }
+.edu-slider__dot.is-active::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--edu-primary);
+  transform-origin: left center;
+  animation: edu-dot-fill 6.2s linear forwards;
+}
+@keyframes edu-dot-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.edu-slider[data-paused="true"] .edu-slider__dot.is-active::before { animation-play-state: paused; }
 
 .edu-slider__arrow {
   position: absolute;
@@ -359,7 +375,7 @@
    WELCOME / ABOUT
    -------------------------------------------------------------------------- */
 
-.edu-about { padding-block: clamp(4rem, 8vw, 6.5rem); }
+.edu-about { padding-block: clamp(4rem, 8vw, 6.5rem); background: var(--edu-cloud); }
 .edu-about__grid {
   display: grid;
   grid-template-columns: 1.05fr 1fr;
@@ -712,7 +728,24 @@
    COUNTERS
    -------------------------------------------------------------------------- */
 
-.edu-counters { padding-block: clamp(2.5rem, 5vw, 3.6rem); background: var(--edu-primary); color: #fff; }
+.edu-counters {
+  padding-block: clamp(2.5rem, 5vw, 3.6rem);
+  background: linear-gradient(120deg, #0f172a 0%, #1e293b 55%, #0f172a 100%);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.edu-counters::before,
+.edu-counters::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--edu-primary), transparent);
+}
+.edu-counters::before { top: 0; }
+.edu-counters::after { bottom: 0; }
 .edu-counters__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.4rem; text-align: center; }
 @media (max-width: 860px) { .edu-counters__grid { grid-template-columns: repeat(2, 1fr); } }
 
@@ -876,7 +909,11 @@
   overflow: hidden;
   aspect-ratio: 4 / 3;
   display: block;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: var(--edu-shadow-sm);
+  transition: box-shadow 0.35s var(--edu-ease), transform 0.35s var(--edu-ease);
 }
+.edu-gallery__item:hover { box-shadow: var(--edu-shadow-lg); transform: translateY(-4px); }
 .edu-gallery__item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s var(--edu-ease); }
 .edu-gallery__item::after {
   content: "";
@@ -3128,3 +3165,182 @@
 
 
 
+
+/* --------------------------------------------------------------------------
+   HERO — ESTD SEMICIRCLE BADGE (right edge, expands on hover)
+   -------------------------------------------------------------------------- */
+
+.edu-estd {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  z-index: 30;
+  height: 208px;
+  width: 88px;
+  display: flex;
+  align-items: center;
+  border-radius: 999px 0 0 999px;
+  background: linear-gradient(135deg, var(--edu-primary) 0%, var(--edu-primary-dark) 100%);
+  box-shadow: -14px 12px 42px -14px rgba(var(--edu-primary-rgb), 0.65);
+  color: #fff;
+  cursor: pointer;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  transform: translateY(calc(-50% + var(--estd-parallax, 0px)));
+  transition: width 0.55s var(--edu-ease), height 0.55s var(--edu-ease), box-shadow 0.4s var(--edu-ease),
+    transform 0.45s var(--edu-ease), opacity 0.45s var(--edu-ease);
+  animation: edu-estd-in 0.9s var(--edu-ease) 0.7s both;
+}
+@keyframes edu-estd-in {
+  from { transform: translateY(-50%) translateX(110%); }
+  to { transform: translateY(-50%) translateX(0); }
+}
+.edu-estd.is-tucked {
+  transform: translateY(-50%) translateX(105%);
+  opacity: 0.4;
+}
+.edu-estd:hover,
+.edu-estd.is-open {
+  width: min(356px, 86vw);
+  height: 348px;
+  box-shadow: -18px 16px 52px -14px rgba(var(--edu-primary-rgb), 0.75);
+}
+
+/* Vertical "Estd: 2007" label inside the semicircle */
+.edu-estd__estd {
+  flex-shrink: 0;
+  width: 62px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--edu-cond);
+  font-weight: 700;
+  font-size: 0.98rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: nowrap;
+  padding-block: 16px;
+  background: rgba(0, 0, 0, 0.14);
+}
+
+/* Feature list revealed on hover */
+.edu-estd__list {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 12px 18px 12px 14px;
+}
+.edu-estd__item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  opacity: 0;
+  transform: translateX(18px);
+  transition: opacity 0.4s var(--edu-ease), transform 0.4s var(--edu-ease);
+}
+.edu-estd__icon {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  font-size: 0.78rem;
+}
+.edu-estd__text { min-width: 0; line-height: 1.2; }
+.edu-estd__label {
+  display: block;
+  font-family: var(--edu-cond);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.92);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.edu-estd__value {
+  display: block;
+  font-family: var(--edu-heading);
+  font-weight: 800;
+  font-size: 0.86rem;
+  color: #fff;
+}
+.edu-estd:hover .edu-estd__item,
+.edu-estd.is-open .edu-estd__item {
+  opacity: 1;
+  transform: translateX(0);
+}
+.edu-estd:hover .edu-estd__item:nth-child(1),
+.edu-estd.is-open .edu-estd__item:nth-child(1) { transition-delay: 0.08s; }
+.edu-estd:hover .edu-estd__item:nth-child(2),
+.edu-estd.is-open .edu-estd__item:nth-child(2) { transition-delay: 0.16s; }
+.edu-estd:hover .edu-estd__item:nth-child(3),
+.edu-estd.is-open .edu-estd__item:nth-child(3) { transition-delay: 0.24s; }
+.edu-estd:hover .edu-estd__item:nth-child(4),
+.edu-estd.is-open .edu-estd__item:nth-child(4) { transition-delay: 0.32s; }
+.edu-estd:hover .edu-estd__item:nth-child(5),
+.edu-estd.is-open .edu-estd__item:nth-child(5) { transition-delay: 0.4s; }
+.edu-estd:hover .edu-estd__item:nth-child(6),
+.edu-estd.is-open .edu-estd__item:nth-child(6) { transition-delay: 0.48s; }
+
+@media (max-width: 768px) {
+  .edu-estd { height: 150px; width: 64px; }
+  .edu-estd__estd { width: 46px; font-size: 0.8rem; }
+  .edu-estd:hover, .edu-estd.is-open { width: min(300px, 80vw); height: 236px; }
+  .edu-estd__item:nth-child(n + 5) { display: none; }
+  .edu-estd:hover .edu-estd__item:nth-child(n + 5),
+  .edu-estd.is-open .edu-estd__item:nth-child(n + 5) { display: none; }
+}
+
+/* --------------------------------------------------------------------------
+   TESTIMONIALS — unified section header on dark photo background
+   -------------------------------------------------------------------------- */
+.rs-testimonial .edu-sec-head__kicker { color: #fff; }
+.rs-testimonial .edu-sec-head__kicker::before,
+.rs-testimonial .edu-sec-head--center .edu-sec-head__kicker::after { background: var(--edu-primary); }
+.rs-testimonial .edu-sec-head__title { color: #fff; }
+.rs-testimonial .edu-sec-head__sub { color: rgba(255, 255, 255, 0.82); }
+
+/* CTA band wrapper — slim accent strip before the footer */
+.edu-ctaband-wrap { padding-block: clamp(2.2rem, 4vw, 3.2rem); background: var(--edu-paper); }
+.edu-ctaband-wrap .edu-cta-band { border-radius: var(--edu-radius-lg, 18px); }
+
+/* Hero with Estd badge: keep the next-arrow clear of the badge,
+   and give slide text breathing room on the right */
+.edu-hero--estd .edu-slider__arrow--next { right: 104px; }
+.edu-hero--estd .edu-slide__inner { padding-right: clamp(96px, 9vw, 140px); }
+@media (max-width: 860px) {
+  .edu-hero--estd .edu-slider__arrow--next { right: 22px; } /* arrows hidden anyway */
+  .edu-hero--estd .edu-slide__inner { padding-right: 1.25rem; }
+}
+
+/* CTA band: navy variant so it does not merge with the footer's red contact strip */
+.edu-ctaband-wrap .edu-cta-band {
+  background: linear-gradient(120deg, #0f172a 0%, #1e293b 60%, #0f172a 100%);
+  box-shadow: var(--edu-shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+.edu-ctaband-wrap .edu-cta-band::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--edu-primary), transparent);
+}
+.edu-ctaband-wrap .edu-cta-band .edu-btn--light { color: var(--edu-primary-text) !important; }

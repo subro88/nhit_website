@@ -145,3 +145,28 @@ Stage Summary:
 - End-to-end tested: login > save royal-blue > live data-theme=royal-blue > revert nhit-red OK
 - All 11 key pages 200, tsc --noEmit clean, 8 theme blocks confirmed in served CSS
 - Visual improvement suggestions delivered in chat (user to pick which to implement)
+
+---
+Task ID: 7
+Agent: main (Z.ai)
+Task: Push + implement all 10 visual improvements + hero Estd semicircle badge
+
+Work Log:
+- Fixed git push: /home/z/my-project/.git is a platform auto-repo (orphan history); real repo is nhit_website/.git (core.worktree -> workspace root, PAT remote). Pushed via it: c3dbbd5..982f6a3 (includes earlier pending page-CMS commits 4d418cb etc. + palette system)
+- Imp 1: TestimonialsSection converted to unified edu-sec-head pattern (+kicker field in CMS, default "Voices Of NHIT"); radar kicker hardcoded #ff624d -> color-mix of primary
+- Imp 2: Alternating backgrounds - .edu-about -> cloud, .nhit-inst-lead-section -> cloud (dark card pops on light bg)
+- Imp 3: Button DNA unified - radar primary hover #ff4d36 -> var(--edu-primary-dark); verified edu-btn/radar/submit all share translateY lift + accent shadow
+- Imp 4: Gallery cards get border+shadow+hover lift; services/courses/testimonials already had lift
+- Imp 5: Counters band -> navy gradient (#0f172a->#1e293b) with accent gradient edge lines top+bottom
+- Imp 6: Hero - darker overlay (0.9/0.62/0.38); active slide dot is now a progress fill bar (6.2s, pauses with data-paused); interval restarts on manual nav
+- Imp 7: Recruiter logos grayscale->color on hover (already existed, verified)
+- Imp 8: Gallery uniform 4/3 aspect + shadow polish (already existed + enhanced)
+- Imp 9: NEW CtaBand component + ctaBand CMS section (tab 14 "Apply CTA Band"); navy variant so it separates from footer red strip; rendered after leadForm
+- Imp 10: --edu-primary-text (contrast-safe) added to root + all 8 palettes; applied to .edu-sec-head__kicker + CTA light button text
+- Hero Estd badge: NEW HeroEstdBadge.tsx - semicircle docked right edge (88px, radius 999 left), vertical "Estd: 2007", hover/tap expands to 356px revealing 6 CMS features staggered; scroll parallax + tucks away past 260px; mobile 64px/4 items; CMS fields in Hero tab (estdBadge.visible/text/features); hero--estd class offsets next-arrow + protects text zone
+- Visual QA via agent-browser screenshots: badge collapsed/expanded/scroll-tuck, counters navy band, CTA band, full page - all confirmed good
+
+Stage Summary:
+- All 10 improvements + Estd badge live and verified, 11 pages 200, tsc clean
+- New CMS-editable: hero.estdBadge (badge + 6 features), ctaBand section, testimonials.kicker
+- NOT pushed yet - waiting for user "push"

@@ -7,10 +7,11 @@ export default function TestimonialsSection({ data }: { data: TestimonialsData }
   return (
     <section id="rs-testimonial" className="wp-block-group rs-testimonial bg5 sec-spacer">
       <div className="container edu-container">
-        {/* Section Title */}
-        <div className="sec-title mb-50 text-center">
-          <h2 className="white-color">{data.heading}</h2>
-          <p className="white-color">{data.sub}</p>
+        {/* Section Title — unified header pattern */}
+        <div className="wp-block-group edu-sec-head edu-sec-head--center">
+          <p className="edu-sec-head__kicker">{data.kicker || 'Voices Of NHIT'}</p>
+          <h2 className="edu-sec-head__title">{data.heading}</h2>
+          <p className="edu-sec-head__sub">{data.sub}</p>
         </div>
 
         {/* 2x2 Testimonials Grid */}

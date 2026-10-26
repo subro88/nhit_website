@@ -58,7 +58,43 @@
         "value": "CSIR-CMERI",
         "tone": "plain"
       }
-    ]
+    ],
+    "estdBadge": {
+      "visible": true,
+      "text": "Estd: 2007",
+      "features": [
+        {
+          "icon": "fa-trophy",
+          "label": "Placement Record",
+          "value": "80-85% Consistent"
+        },
+        {
+          "icon": "fa-handshake-o",
+          "label": "MOUs Signed",
+          "value": "25+ Industry Partners"
+        },
+        {
+          "icon": "fa-flask",
+          "label": "Modern Labs",
+          "value": "40+ Labs & Workshops"
+        },
+        {
+          "icon": "fa-certificate",
+          "label": "AICTE Approved",
+          "value": "WBSCTVESD Affiliated"
+        },
+        {
+          "icon": "fa-users",
+          "label": "Expert Faculty",
+          "value": "60+ Experienced"
+        },
+        {
+          "icon": "fa-graduation-cap",
+          "label": "Alumni Network",
+          "value": "5000+ Members"
+        }
+      ]
+    }
   },
   "features": {
     "visible": true,
@@ -1149,7 +1185,8 @@
         "image": "/images/campus-07.jpg",
         "quote": "Live vehicle chassis test benches and industry visit exposure at NHIT Durgapur prepared me with real manufacturing skills that auto giants demand."
       }
-    ]
+    ],
+    "kicker": "Voices Of NHIT"
   },
   "gallery": {
     "visible": true,
@@ -1232,5 +1269,14 @@
     "submitText": "Register Admission Inquiry & Download Brochure ↘",
     "successNote": "Thank you! Your inquiry has been registered. The admissions desk will reach out on WhatsApp.",
     "brochureUrl": "https://nhit.in/wp-content/uploads/2024/06/Brochure-Final-2_compressed-1.pdf"
+  },
+  "ctaBand": {
+    "visible": true,
+    "title": "Ready To Build Your Career With NHIT?",
+    "note": "Admissions open for the new session. Limited seats per branch - talk to our admission cell today.",
+    "btn1Text": "Apply Now",
+    "btn1Href": "/admissions",
+    "btn2Text": "Call The Admission Cell",
+    "btn2Href": "/contact"
   }
 }

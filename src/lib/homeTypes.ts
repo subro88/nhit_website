@@ -27,6 +27,29 @@ export interface HeroData {
   visible?: boolean;
   slides: HeroSlide[];
   chips?: HeroChip[];
+  estdBadge?: EstdBadgeData;
+}
+
+export interface EstdFeature {
+  icon: string;
+  label: string;
+  value: string;
+}
+
+export interface EstdBadgeData {
+  visible?: boolean;
+  text?: string;
+  features?: EstdFeature[];
+}
+
+export interface CtaBandData {
+  visible?: boolean;
+  title?: string;
+  note?: string;
+  btn1Text?: string;
+  btn1Href?: string;
+  btn2Text?: string;
+  btn2Href?: string;
 }
 
 export interface FeatureItem {
@@ -231,6 +254,7 @@ export interface TestimonialItem {
 
 export interface TestimonialsData {
   visible?: boolean;
+  kicker?: string;
   heading?: string;
   sub?: string;
   items: TestimonialItem[];
@@ -286,6 +310,7 @@ export interface MessagesFileData {
 }
 
 export interface HomepageData {
+  theme?: { palette?: string };
   hero: HeroData;
   features: FeaturesData;
   about: AboutData;
@@ -299,4 +324,5 @@ export interface HomepageData {
   testimonials: TestimonialsData;
   gallery: GalleryData;
   leadForm: LeadFormData;
+  ctaBand?: CtaBandData;
 }

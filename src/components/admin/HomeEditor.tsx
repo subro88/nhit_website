@@ -80,6 +80,20 @@ const SECTIONS: SectionDef[] = [
           { t: 'text', k: 'tone', label: 'Style', hint: "Type 'red' for the red value, or leave empty" },
         ],
       },
+      { t: 'bool', k: 'estdBadge.visible', label: 'Show "Estd" Semicircle Badge' },
+      { t: 'text', k: 'estdBadge.text', label: 'Badge Text', hint: 'e.g. Estd: 2007' },
+      {
+        t: 'list',
+        k: 'estdBadge.features',
+        label: 'Badge Hover Features',
+        titleField: 'label',
+        def: { icon: 'fa-check', label: '', value: '' },
+        fields: [
+          { t: 'text', k: 'icon', label: 'Icon Class', hint: 'Font Awesome, e.g. fa-trophy, fa-handshake-o, fa-flask' },
+          { t: 'text', k: 'label', label: 'Feature Name' },
+          { t: 'text', k: 'value', label: 'Feature Value' },
+        ],
+      },
     ],
   },
   {
@@ -400,6 +414,7 @@ const SECTIONS: SectionDef[] = [
     label: '11 · Testimonials',
     desc: '“What People Say” — alumni and parent cards with photos.',
     fields: [
+      { t: 'text', k: 'kicker', label: 'Small Line Above Title' },
       { t: 'text', k: 'heading', label: 'Heading' },
       { t: 'area', k: 'sub', label: 'Sub Text', rows: 2 },
       {
@@ -450,6 +465,19 @@ const SECTIONS: SectionDef[] = [
       { t: 'text', k: 'submitText', label: 'Submit Button Text' },
       { t: 'area', k: 'successNote', label: 'Success Message', rows: 2 },
       { t: 'text', k: 'brochureUrl', label: 'Brochure PDF Link' },
+    ],
+  },
+  {
+    key: 'ctaBand',
+    label: '14 · Apply CTA Band',
+    desc: 'The slim color band just before the footer with the Apply Now button and call link.',
+    fields: [
+      { t: 'text', k: 'title', label: 'Band Heading' },
+      { t: 'area', k: 'note', label: 'Small Note Under Heading', rows: 2 },
+      { t: 'text', k: 'btn1Text', label: 'Button 1 Text (white button)' },
+      { t: 'text', k: 'btn1Href', label: 'Button 1 Link', hint: 'e.g. /admissions' },
+      { t: 'text', k: 'btn2Text', label: 'Button 2 Text (glass button)' },
+      { t: 'text', k: 'btn2Href', label: 'Button 2 Link', hint: 'e.g. /contact or tel:+919999999999' },
     ],
   },
 ];

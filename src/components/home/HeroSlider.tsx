@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import type { HeroData } from '@/lib/homeTypes';
+import HeroEstdBadge from './HeroEstdBadge';
 
 export default function HeroSlider({ data }: { data: HeroData }) {
   const slides = data.slides ?? [];
@@ -13,6 +14,8 @@ export default function HeroSlider({ data }: { data: HeroData }) {
 
   useEffect(() => {
     if (isPaused || slides.length <= 1) return;
+    /* depends on `current` too so manual navigation restarts both the
+       timer and the dot fill animation together */
     timerRef.current = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
     }, 6200);
@@ -20,16 +23,18 @@ export default function HeroSlider({ data }: { data: HeroData }) {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isPaused, slides.length]);
+  }, [isPaused, slides.length, current]);
 
   return (
     <section
       id="hero"
-      className="wp-block-group edu-hero relative overflow-hidden"
+      className={`wp-block-group edu-hero relative overflow-hidden ${
+        data.estdBadge?.visible !== false ? 'edu-hero--estd' : ''
+      }`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="edu-slider" data-edu-slider>
+      <div className="edu-slider" data-edu-slider data-paused={isPaused ? 'true' : 'false'}>
         {slides.map((slide, index) => {
           const isActive = index === current;
           return (
@@ -109,6 +114,9 @@ export default function HeroSlider({ data }: { data: HeroData }) {
           <span className={`edu-chip3d__value ${chip.tone === 'red' ? 'is-red' : ''}`}>{chip.value}</span>
         </div>
       ))}
+
+      {/* Estd semicircle badge — expands on hover to show key features */}
+      {data.estdBadge?.visible !== false && <HeroEstdBadge data={data.estdBadge || {}} />}
     </section>
   );
 }

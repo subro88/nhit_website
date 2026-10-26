@@ -11,6 +11,7 @@ import CareerJourney from '@/components/journey/CareerJourney';
 import TestimonialsSection from '@/components/home/TestimonialsSection';
 import CampusGallery from '@/components/home/CampusGallery';
 import LeadCaptureSection from '@/components/home/LeadCaptureSection';
+import CtaBand from '@/components/home/CtaBand';
 import { readJson, HOMEPAGE_FILE } from '@/lib/cmsStore';
 import type { HomepageData } from '@/lib/homeTypes';
 
@@ -61,6 +62,9 @@ export default function HomePage() {
 
       {/* 12. Admission Inquiry Lead Capture Form */}
       {show(data.leadForm) && <LeadCaptureSection data={data.leadForm} />}
+
+      {/* 13. Apply CTA Band — accent strip just before the footer */}
+      {show(data.ctaBand) && data.ctaBand && <CtaBand data={data.ctaBand} />}
     </div>
   );
 }
