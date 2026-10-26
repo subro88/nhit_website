@@ -1,4 +1,7 @@
 {
+  "theme": {
+    "palette": "crimson"
+  },
   "hero": {
     "visible": true,
     "slides": [

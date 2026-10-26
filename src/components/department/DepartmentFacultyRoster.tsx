@@ -78,11 +78,11 @@ export default function DepartmentFacultyRoster({ faculty, accentHex }: Props) {
       {/* ── Section Header with Navigation Controls (Center Aligned) ── */}
       <div className="text-center max-w-2xl mx-auto space-y-2">
         <span 
-          className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider text-[#9e0b0f] bg-red-50 border border-red-100"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider text-[color:var(--edu-primary-dark)] bg-red-50 border border-red-100"
         >
           ACADEMIC DIRECTORY // NHIT FACULTY
         </span>
-        <h3 className="text-2xl sm:text-3xl font-extrabold text-[#9e0b0f] tracking-tight mt-1.5">
+        <h3 className="text-2xl sm:text-3xl font-extrabold text-[color:var(--edu-primary-dark)] tracking-tight mt-1.5">
           Our Faculties ({total})
         </h3>
         <p className="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed">
@@ -93,7 +93,7 @@ export default function DepartmentFacultyRoster({ faculty, accentHex }: Props) {
         <div className="flex items-center justify-center gap-3 pt-2">
           <button
             onClick={handlePrev}
-            className="w-9 h-9 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-700 hover:bg-[#9e0b0f] hover:text-white hover:border-[#9e0b0f] transition-all active:scale-95"
+            className="w-9 h-9 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-700 hover:bg-[color:var(--edu-primary-dark)] hover:text-white hover:border-[color:var(--edu-primary-dark)] transition-all active:scale-95"
             aria-label="Previous faculty member"
           >
             <ChevronLeft className="w-4 h-4" />
@@ -103,7 +103,7 @@ export default function DepartmentFacultyRoster({ faculty, accentHex }: Props) {
           </span>
           <button
             onClick={handleNext}
-            className="w-9 h-9 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-700 hover:bg-[#9e0b0f] hover:text-white hover:border-[#9e0b0f] transition-all active:scale-95"
+            className="w-9 h-9 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-700 hover:bg-[color:var(--edu-primary-dark)] hover:text-white hover:border-[color:var(--edu-primary-dark)] transition-all active:scale-95"
             aria-label="Next faculty member"
           >
             <ChevronRight className="w-4 h-4" />
@@ -163,7 +163,7 @@ export default function DepartmentFacultyRoster({ faculty, accentHex }: Props) {
                     {/* 3-Item Meta Row (Role, Qualification, Experience) */}
                     <div className="w-full space-y-1.5 py-3 border-y border-slate-100 text-xs text-slate-600">
                       <div className="flex items-center justify-center gap-1.5 font-bold text-slate-800">
-                        <UserCheck className="w-3.5 h-3.5 text-[#FF3115]" />
+                        <UserCheck className="w-3.5 h-3.5 text-[color:var(--edu-primary)]" />
                         <span>{f.desig || f.role || 'Lecturer'}</span>
                       </div>
                       {f.qual && (
@@ -198,7 +198,7 @@ export default function DepartmentFacultyRoster({ faculty, accentHex }: Props) {
                       href="tel:03432542103"
                       className="inline-flex items-center gap-1 font-semibold hover:text-slate-900 transition-colors"
                     >
-                      <Phone className="w-3.5 h-3.5 text-[#FF3115]" />
+                      <Phone className="w-3.5 h-3.5 text-[color:var(--edu-primary)]" />
                       (0343) 2542103
                     </a>
                     <span className="text-slate-300">·</span>

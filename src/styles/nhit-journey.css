@@ -14,9 +14,9 @@
   --jrn-text-head:        #0f172a;
   --jrn-text-body:        #475569;
   --jrn-text-muted:       #64748b;
-  --jrn-crimson:          #d90429;
-  --jrn-crimson-light:    rgba(217, 4, 41, 0.08);
-  --jrn-crimson-glow:     rgba(217, 4, 41, 0.25);
+  --jrn-crimson:          var(--edu-primary);
+  --jrn-crimson-light:    rgba(var(--edu-primary-rgb), 0.08);
+  --jrn-crimson-glow:     rgba(var(--edu-primary-rgb), 0.25);
   --jrn-navy:             #1e293b;
   --jrn-radius:           20px;
   --jrn-shadow-sm:        0 2px 4px -1px rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.03);

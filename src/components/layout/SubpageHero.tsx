@@ -29,7 +29,7 @@ export default function SubpageHero({
         className="absolute inset-0 opacity-15"
         style={{
           backgroundImage:
-            'radial-gradient(circle at 20% 30%, #FF3115 0%, transparent 40%), radial-gradient(circle at 80% 70%, #00d2ff 0%, transparent 40%)',
+            'radial-gradient(circle at 20% 30%, var(--edu-primary) 0%, transparent 40%), radial-gradient(circle at 80% 70%, #00d2ff 0%, transparent 40%)',
         }}
       />
       <div
@@ -51,7 +51,7 @@ export default function SubpageHero({
             href="/"
             className="flex items-center gap-1 hover:text-white transition-colors"
           >
-            <Home className="w-3.5 h-3.5 text-[#FF3115]" />
+            <Home className="w-3.5 h-3.5 text-[color:var(--edu-primary)]" />
             <span>Home</span>
           </Link>
           {breadcrumbs.map((crumb, idx) => (
@@ -76,10 +76,10 @@ export default function SubpageHero({
         {/* Title & Kicker */}
         <div className="max-w-3xl">
           {kicker && (
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 text-xs font-bold text-[#FF6A4F] uppercase tracking-wider mb-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 text-xs font-bold text-[color:color-mix(in_srgb,var(--edu-primary)_60%,white)] uppercase tracking-wider mb-4">
               <span>{kicker}</span>
               {badge && (
-                <span className="px-1.5 py-0.2 bg-[#FF3115] text-white rounded text-[10px]">
+                <span className="px-1.5 py-0.2 bg-[color:var(--edu-primary)] text-white rounded text-[10px]">
                   {badge}
                 </span>
               )}

@@ -331,7 +331,7 @@ export default function DepartmentTabs({ dept }: Props) {
                 </div>
                 <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-slate-600">
                   <span className="flex items-center gap-1.5">
-                    <PhoneCall className="w-3.5 h-3.5 text-[#FF3115]" />
+                    <PhoneCall className="w-3.5 h-3.5 text-[color:var(--edu-primary)]" />
                     Office Desk: (0343) 2542103
                   </span>
                   <span className="flex items-center gap-1.5">

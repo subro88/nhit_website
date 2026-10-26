@@ -19,7 +19,7 @@ export default function OutcomesSection({ data }: { data: OutcomesData }) {
                   style={
                     {
                       '--bar-h': bar.heightPct || '60%',
-                      '--bar-color': bar.color || '#ff3115',
+                      '--bar-color': bar.color || 'var(--edu-primary)',
                       '--bar-color-dark': bar.colorDark || '#c92810',
                     } as React.CSSProperties
                   }

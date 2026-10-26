@@ -110,7 +110,7 @@ export default function PlacementRadar({ data }: { data: PlacementRadarData }) {
               <div className="nhit-metric-box nhit-metric-box--orange">
                 <div className="nhit-metric-label">
                   <span>Highest Package</span>
-                  <i className="fa fa-trophy" aria-hidden="true" style={{ color: '#ff3115' }} />
+                  <i className="fa fa-trophy" aria-hidden="true" style={{ color: 'var(--edu-primary)' }} />
                 </div>
                 <div className="nhit-metric-value-wrap">
                   <span className="nhit-metric-value">
@@ -164,7 +164,7 @@ export default function PlacementRadar({ data }: { data: PlacementRadarData }) {
             <div className="nhit-trajectory-panel">
               <div className="nhit-trajectory-panel__head">
                 <h4 className="nhit-trajectory-panel__title">
-                  <i className="fa fa-code-fork" aria-hidden="true" style={{ color: '#ff3115' }} />
+                  <i className="fa fa-code-fork" aria-hidden="true" style={{ color: 'var(--edu-primary)' }} />
                   {data.pipelineTitle}
                 </h4>
                 <span className="nhit-trajectory-panel__badge">{data.pipelineBadge}</span>
@@ -180,8 +180,8 @@ export default function PlacementRadar({ data }: { data: PlacementRadarData }) {
                 >
                   <defs>
                     <linearGradient id="nhitGlowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#ff3115" />
-                      <stop offset="50%" stopColor="#ff8342" />
+                      <stop offset="0%" style={{ stopColor: 'var(--edu-primary)' }} />
+                      <stop offset="50%" style={{ stopColor: 'color-mix(in srgb, var(--edu-primary) 55%, white)' }} />
                       <stop offset="100%" stopColor="#00d2ff" />
                     </linearGradient>
                   </defs>
@@ -228,7 +228,7 @@ export default function PlacementRadar({ data }: { data: PlacementRadarData }) {
                   <div
                     key={idx}
                     className={`nhit-milestone-card cursor-pointer transition-all ${
-                      idx === activeMilestone ? 'is-current ring-2 ring-[#ff3115]' : ''
+                      idx === activeMilestone ? 'is-current ring-2 ring-[color:var(--edu-primary)]' : ''
                     }`}
                     onClick={() => setActiveMilestone(idx)}
                   >

@@ -39,7 +39,7 @@ export default function SidebarNav({
       <div className="bg-white rounded-xl border border-neutral-200 overflow-hidden shadow-sm">
         <div className="bg-[#151515] px-5 py-4 border-b border-neutral-800">
           <h3 className="text-white font-bold text-sm tracking-wide flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#FF3115]" />
+            <span className="w-2 h-2 rounded-full bg-[color:var(--edu-primary)]" />
             {title}
           </h3>
         </div>
@@ -52,14 +52,14 @@ export default function SidebarNav({
                 href={item.href}
                 className={`flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all ${
                   isActive
-                    ? 'bg-[#FFF0ED] text-[#FF3115] font-bold shadow-xs'
+                    ? 'bg-[color:rgba(var(--edu-primary-rgb),0.08)] text-[color:var(--edu-primary)] font-bold shadow-xs'
                     : 'text-neutral-700 hover:bg-neutral-50 hover:text-neutral-900'
                 }`}
               >
                 <span>{item.label}</span>
                 <ChevronRight
                   className={`w-3.5 h-3.5 transition-transform ${
-                    isActive ? 'text-[#FF3115] translate-x-0.5' : 'text-neutral-400'
+                    isActive ? 'text-[color:var(--edu-primary)] translate-x-0.5' : 'text-neutral-400'
                   }`}
                 />
               </Link>
@@ -70,7 +70,7 @@ export default function SidebarNav({
 
       {/* Quick Prospectus Download Card */}
       <div className="p-5 rounded-xl bg-gradient-to-br from-[#151515] to-[#262626] text-white shadow-md">
-        <div className="w-9 h-9 rounded-lg bg-[#FF3115] flex items-center justify-center text-white mb-3">
+        <div className="w-9 h-9 rounded-lg bg-[color:var(--edu-primary)] flex items-center justify-center text-white mb-3">
           <Download className="w-4 h-4" />
         </div>
         <h4 className="font-bold text-sm mb-1">Official Prospectus 2026</h4>
@@ -81,7 +81,7 @@ export default function SidebarNav({
           href="https://nhit.in/wp-content/uploads/2024/06/Brochure-Final-2_compressed-1.pdf"
           target="_blank"
           rel="noopener"
-          className="inline-flex items-center justify-center gap-1.5 w-full py-2.5 px-3 rounded-lg bg-[#FF3115] hover:bg-[#E41F05] text-white font-bold text-xs shadow-sm transition-colors"
+          className="inline-flex items-center justify-center gap-1.5 w-full py-2.5 px-3 rounded-lg bg-[color:var(--edu-primary)] hover:bg-[color:var(--edu-primary-dark)] text-white font-bold text-xs shadow-sm transition-colors"
         >
           <span>Download PDF Brochure</span>
         </a>
@@ -90,7 +90,7 @@ export default function SidebarNav({
       {/* Helpdesk Contacts */}
       <div className="p-4 rounded-xl bg-neutral-50 border border-neutral-200 text-xs space-y-2">
         <div className="font-bold text-neutral-800 flex items-center gap-2">
-          <PhoneCall className="w-3.5 h-3.5 text-[#FF3115]" />
+          <PhoneCall className="w-3.5 h-3.5 text-[color:var(--edu-primary)]" />
           <span>Admission Helpline</span>
         </div>
         <p className="text-neutral-600">
@@ -99,7 +99,7 @@ export default function SidebarNav({
         <div className="pt-2 border-t border-neutral-200">
           <a
             href="tel:+919800571423"
-            className="block text-[#FF3115] font-bold hover:underline"
+            className="block text-[color:var(--edu-primary)] font-bold hover:underline"
           >
             +91 98005 71423 / +91 74072 94943
           </a>

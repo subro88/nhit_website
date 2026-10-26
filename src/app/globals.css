@@ -6,6 +6,8 @@
   --nhit-crimson: #C10A0C;
   --nhit-heading: #9E0B0F;
   --edu-primary: #FF3115;
+  --edu-primary-dark: #E41F05;
+  --edu-primary-rgb: 255, 49, 21;
   --edu-ink: #0F172A;
   --edu-body: #334155;
   --edu-muted: #64748B;
@@ -95,4 +97,75 @@ h1, h2, h3, h4, h5, h6 {
 @keyframes dept-radar-float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-7px); }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   SITE COLOR THEMES
+   Pick a palette in: Admin → Home Page Editor → "Theme Colors" tab.
+   The chosen palette is stored in src/data/homepage.json (theme.palette)
+   and applied as data-theme on <html>. Each block overrides the shared
+   accent variables; everything else (inks, surfaces, neutrals) stays.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* 2 · Classic Crimson */
+[data-theme="crimson"] {
+  --edu-primary: #dc2626;
+  --edu-primary-dark: #b91c1c;
+  --edu-primary-rgb: 220, 38, 38;
+  --nhit-crimson: #b91c1c;
+  --nhit-heading: #7f1d1d;
+}
+
+/* 3 · Royal Blue */
+[data-theme="royal-blue"] {
+  --edu-primary: #1d4ed8;
+  --edu-primary-dark: #1e3a8a;
+  --edu-primary-rgb: 29, 78, 216;
+  --nhit-crimson: #1e40af;
+  --nhit-heading: #172554;
+}
+
+/* 4 · Emerald Green */
+[data-theme="emerald"] {
+  --edu-primary: #059669;
+  --edu-primary-dark: #047857;
+  --edu-primary-rgb: 5, 150, 105;
+  --nhit-crimson: #047857;
+  --nhit-heading: #064e3b;
+}
+
+/* 5 · Ocean Teal */
+[data-theme="teal"] {
+  --edu-primary: #0d9488;
+  --edu-primary-dark: #0f766e;
+  --edu-primary-rgb: 13, 148, 136;
+  --nhit-crimson: #0f766e;
+  --nhit-heading: #134e4a;
+}
+
+/* 6 · Royal Purple */
+[data-theme="royal-purple"] {
+  --edu-primary: #7c3aed;
+  --edu-primary-dark: #6d28d9;
+  --edu-primary-rgb: 124, 58, 237;
+  --nhit-crimson: #6d28d9;
+  --nhit-heading: #4c1d95;
+}
+
+/* 7 · Saffron Orange */
+[data-theme="saffron"] {
+  --edu-primary: #ea580c;
+  --edu-primary-dark: #c2410c;
+  --edu-primary-rgb: 234, 88, 12;
+  --nhit-crimson: #c2410c;
+  --nhit-heading: #7c2d12;
+}
+
+/* 8 · Sun Gold */
+[data-theme="sun-gold"] {
+  --edu-primary: #d97706;
+  --edu-primary-dark: #b45309;
+  --edu-primary-rgb: 217, 119, 6;
+  --nhit-crimson: #b45309;
+  --nhit-heading: #78350f;
 }

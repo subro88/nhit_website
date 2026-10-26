@@ -1,12 +1,13 @@
 /* ==========================================================================
    NHIT EduLearn — base.css
    EduLearn-inspired classic education chrome: topbar, header, navigation,
-   footer, buttons, section titles, utilities. Palette: #ff3115 / #212121.
+   footer, buttons, section titles, utilities. Palette: var(--edu-primary) / #212121.
    ========================================================================== */
 
 :root {
   --edu-primary: #ff3115;
   --edu-primary-dark: #e41f05;
+  --edu-primary-rgb: 255, 49, 21;
   --edu-ink: #212121;
   --edu-body: #505050;
   --edu-muted: #8a8a8a;
@@ -26,7 +27,7 @@
   --edu-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
   --edu-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
   --edu-shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.12);
-  --edu-shadow-red: 0 20px 40px -10px rgba(255, 49, 21, 0.32);
+  --edu-shadow-red: 0 20px 40px -10px rgba(var(--edu-primary-rgb), 0.32);
   --edu-glass-bg: rgba(255, 255, 255, 0.88);
   --edu-glass-border: rgba(255, 255, 255, 0.65);
   --edu-radius-sm: 6px;
@@ -61,7 +62,7 @@ h1, h2, h3, h4, h5, h6, .wp-block-heading {
 a { color: var(--edu-primary); text-decoration: none; transition: color 0.2s var(--edu-ease); }
 a:hover { color: var(--edu-primary-dark); }
 
-::selection { background: rgba(255, 49, 21, 0.22); color: var(--edu-ink); }
+::selection { background: rgba(var(--edu-primary-rgb), 0.22); color: var(--edu-ink); }
 
 :focus-visible { outline: 2px solid var(--edu-primary); outline-offset: 2px; border-radius: 2px; }
 
@@ -523,7 +524,7 @@ header.wp-block-template-part,
 .edu-btn--primary {
   background: var(--edu-primary);
   color: #fff !important;
-  box-shadow: 0 8px 20px -6px rgba(255, 49, 21, 0.45);
+  box-shadow: 0 8px 20px -6px rgba(var(--edu-primary-rgb), 0.45);
 }
 .edu-btn--primary:hover {
   background: var(--edu-primary-dark);
@@ -685,7 +686,7 @@ input[type="text"], input[type="email"], input[type="tel"], input[type="search"]
 input:focus, select:focus, textarea:focus {
   outline: none;
   border-color: var(--edu-primary);
-  box-shadow: 0 0 0 3px rgba(255, 49, 21, 0.14);
+  box-shadow: 0 0 0 3px rgba(var(--edu-primary-rgb), 0.14);
 }
 
 @media (prefers-reduced-motion: reduce) {

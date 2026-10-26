@@ -28,7 +28,7 @@ function renderInline(text: string): React.ReactNode[] {
           href={md[2]}
           target={md[2].startsWith('http') ? '_blank' : undefined}
           rel={md[2].startsWith('http') ? 'noopener noreferrer' : undefined}
-          className="text-[#ff3115] hover:underline"
+          className="text-[color:var(--edu-primary)] hover:underline"
         >
           {md[1]}
         </a>
@@ -48,7 +48,7 @@ const STATUS_COLORS: Record<string, string> = {
 };
 
 const TILE_COLORS: Record<string, string> = {
-  red: 'text-[#FF3115]',
+  red: 'text-[color:var(--edu-primary)]',
   green: 'text-[#10B981]',
   cyan: 'text-[#00bcd4]',
   blue: 'text-blue-600',
@@ -140,7 +140,7 @@ function SectionHeader({ tag, heading, h2 }: { tag?: string; heading?: string; h
   return (
     <div className="border-b border-neutral-100 pb-5">
       {tag && (
-        <span className="text-xs font-bold text-[#FF3115] uppercase tracking-wider">{tag}</span>
+        <span className="text-xs font-bold text-[color:var(--edu-primary)] uppercase tracking-wider">{tag}</span>
       )}
       {heading && (
         <h2
@@ -171,7 +171,7 @@ function renderLine(ln: Record<string, unknown>): React.ReactNode {
           href={String(ln.href)}
           target={String(ln.href).startsWith('http') ? '_blank' : undefined}
           rel={String(ln.href).startsWith('http') ? 'noopener noreferrer' : undefined}
-          className="font-bold text-sm text-gray-900 hover:text-[#ff3115] transition-colors"
+          className="font-bold text-sm text-gray-900 hover:text-[color:var(--edu-primary)] transition-colors"
         >
           {body}
         </a>
@@ -199,7 +199,7 @@ function renderCheckCard(raw: unknown, idx: number): React.ReactNode {
                   ? 'border-green-600'
                   : tone === 'purple'
                     ? 'border-purple-600'
-                    : 'border-[#ff3115]'
+                    : 'border-[color:var(--edu-primary)]'
             }`
           : 'p-8 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow'
       }`}
@@ -238,8 +238,8 @@ function renderCheckCard(raw: unknown, idx: number): React.ReactNode {
               rel={it.btnHref.startsWith('http') ? 'noopener noreferrer' : undefined}
               className={`w-full py-3 px-4 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 transition-colors shadow-sm ${
                 it.btnTone === 'red'
-                  ? 'bg-[#ff3115] hover:bg-[#e0260c]'
-                  : 'bg-gray-900 hover:bg-[#ff3115]'
+                  ? 'bg-[color:var(--edu-primary)] hover:bg-[color:var(--edu-primary-dark)]'
+                  : 'bg-gray-900 hover:bg-[color:var(--edu-primary)]'
               }`}
             >
               {it.btnText}
@@ -247,7 +247,7 @@ function renderCheckCard(raw: unknown, idx: number): React.ReactNode {
           ) : (
             it.linkText &&
             it.linkHref && (
-              <Link href={it.linkHref} className="text-xs font-semibold text-[#ff3115] hover:underline">
+              <Link href={it.linkHref} className="text-xs font-semibold text-[color:var(--edu-primary)] hover:underline">
                 {it.linkText}
               </Link>
             )
@@ -268,7 +268,7 @@ function Section({ s }: { s: PageSection }) {
           {(s.pill || s.pillNote) && (
             <div className="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-neutral-100">
               {s.pill && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-100 text-[#ff3115]">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-100 text-[color:var(--edu-primary)]">
                   <ShieldCheck className="w-4 h-4" /> {s.pill}
                 </span>
               )}
@@ -286,7 +286,7 @@ function Section({ s }: { s: PageSection }) {
               className={`p-5 rounded-xl border-l-4 text-neutral-800 text-xs sm:text-sm leading-relaxed italic space-y-2 ${
                 s.calloutTone === 'amber'
                   ? 'bg-amber-50/80 border-amber-500 not-italic'
-                  : 'bg-[#FFF0ED] border-[#FF3115]'
+                  : 'bg-[color:rgba(var(--edu-primary-rgb),0.08)] border-[color:var(--edu-primary)]'
               }`}
             >
               {s.calloutTitle && (
@@ -315,7 +315,7 @@ function Section({ s }: { s: PageSection }) {
                       <td className="px-4 py-3 font-bold text-neutral-900 w-1/3">{row.label}</td>
                       <td
                         className={`px-4 py-3 ${
-                          row.highlight ? 'font-mono font-bold text-[#FF3115]' : ''
+                          row.highlight ? 'font-mono font-bold text-[color:var(--edu-primary)]' : ''
                         }`}
                       >
                         {renderInline(row.value ?? '')}
@@ -331,7 +331,7 @@ function Section({ s }: { s: PageSection }) {
               className={`p-4 rounded-r-lg border-l-4 ${
                 s.noteTone === 'amber'
                   ? 'bg-amber-50/80 border-amber-500'
-                  : 'bg-[#FFF0ED] border-[#FF3115]'
+                  : 'bg-[color:rgba(var(--edu-primary-rgb),0.08)] border-[color:var(--edu-primary)]'
               }`}>
               {s.noteTitle && (
                 <h4 className="font-bold text-neutral-900 text-sm mb-1 flex items-center gap-2">
@@ -359,7 +359,7 @@ function Section({ s }: { s: PageSection }) {
       return (
         <article className="bg-white rounded-2xl p-7 sm:p-9 border border-neutral-200/80 shadow-sm space-y-6">
           <SectionHeader tag={s.tag} heading={s.heading} h2 />
-          <div className="p-6 rounded-2xl bg-[#FFF0ED] border-l-4 border-[#FF3115] text-neutral-800 text-sm leading-relaxed space-y-3 font-roboto">
+          <div className="p-6 rounded-2xl bg-[color:rgba(var(--edu-primary-rgb),0.08)] border-l-4 border-[color:var(--edu-primary)] text-neutral-800 text-sm leading-relaxed space-y-3 font-roboto">
             {(s.paragraphs ?? []).map((p, i) => (
               <p key={i}>{renderInline(p)}</p>
             ))}
@@ -380,7 +380,7 @@ function Section({ s }: { s: PageSection }) {
             <div key={i} className="p-5 rounded-xl border border-neutral-200 bg-neutral-50/80 space-y-2">
               <span
                 className={`text-[11px] font-bold uppercase tracking-wider ${
-                  card.labelColor === 'green' ? 'text-[#10B981]' : 'text-[#FF3115]'
+                  card.labelColor === 'green' ? 'text-[#10B981]' : 'text-[color:var(--edu-primary)]'
                 }`}
               >
                 {card.label}
@@ -448,7 +448,7 @@ function Section({ s }: { s: PageSection }) {
                       </tr>
                     ))}
                     {s.foot && (
-                      <tr className="bg-orange-50/60 font-bold border-t-2 border-[#ff3115]">
+                      <tr className="bg-orange-50/60 font-bold border-t-2 border-[color:var(--edu-primary)]">
                         <td className="px-4 py-3 text-neutral-900">{s.foot.main}</td>
                         {(s.foot.cells ?? []).map((cell, j) => (
                           <td key={j} className="px-4 py-3 text-neutral-700">{cell}</td>
@@ -482,7 +482,7 @@ function Section({ s }: { s: PageSection }) {
                     href={s.photoLinkHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-[#ff3115] hover:underline"
+                    className="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-[color:var(--edu-primary)] hover:underline"
                   >
                     <span>{s.photoLinkText}</span> →
                   </a>
@@ -525,7 +525,7 @@ function Section({ s }: { s: PageSection }) {
               <div key={idx} className="p-5 rounded-xl border border-neutral-200/80 bg-white space-y-2">
                 <div className="flex justify-between items-start gap-2 mb-1">
                   <h4 className="font-bold text-sm text-neutral-900 font-montserrat">{mou.title}</h4>
-                  <span className="text-[10px] font-bold text-[#FF3115] bg-[#FFF0ED] px-2 py-0.5 rounded shrink-0">
+                  <span className="text-[10px] font-bold text-[color:var(--edu-primary)] bg-[color:rgba(var(--edu-primary-rgb),0.08)] px-2 py-0.5 rounded shrink-0">
                     {mou.type}
                   </span>
                 </div>
@@ -575,7 +575,7 @@ function Section({ s }: { s: PageSection }) {
               <div className="text-xs font-bold text-neutral-900">{box.title}</div>
               <div
                 className={`text-lg font-black font-mono ${
-                  TILE_COLORS[box.color ?? 'red'] ?? 'text-[#FF3115]'
+                  TILE_COLORS[box.color ?? 'red'] ?? 'text-[color:var(--edu-primary)]'
                 }`}
               >
                 {box.value}
@@ -590,13 +590,13 @@ function Section({ s }: { s: PageSection }) {
       return (
         <section className="bg-gradient-to-r from-gray-900 via-neutral-900 to-gray-900 text-white rounded-2xl p-7 sm:p-9 md:p-12 border border-gray-800 shadow-xl flex flex-col sm:flex-row items-center gap-6">
           {!s.badge && (
-            <div className="w-20 h-20 rounded-2xl bg-[#FF3115] flex items-center justify-center text-white shrink-0 shadow-lg">
+            <div className="w-20 h-20 rounded-2xl bg-[color:var(--edu-primary)] flex items-center justify-center text-white shrink-0 shadow-lg">
               <Award className="w-10 h-10" />
             </div>
           )}
           <div className={`space-y-2 text-center sm:text-left ${s.btnText ? 'flex-1' : ''}`}>
             {s.badge && (
-              <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-500/20 text-[#ff3115] border border-[#ff3115]/30 mb-1">
+              <span className="inline-block px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-orange-500/20 text-[color:var(--edu-primary)] border border-[color:var(--edu-primary)]/30 mb-1">
                 {s.badge}
               </span>
             )}
@@ -612,7 +612,7 @@ function Section({ s }: { s: PageSection }) {
             <div className="shrink-0 flex flex-col sm:flex-row gap-3">
               <Link
                 href={s.btnHref}
-                className="px-6 py-3.5 bg-[#ff3115] hover:bg-[#e0260c] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2"
+                className="px-6 py-3.5 bg-[color:var(--edu-primary)] hover:bg-[color:var(--edu-primary-dark)] text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2"
               >
                 <span>{s.btnText}</span>
                 <Award className="w-4 h-4" />
@@ -626,7 +626,7 @@ function Section({ s }: { s: PageSection }) {
                     s.btn2Tone === 'emerald'
                       ? 'bg-emerald-600 hover:bg-emerald-500'
                       : s.btn2Tone === 'red'
-                        ? 'bg-[#ff3115] hover:bg-[#e0260c]'
+                        ? 'bg-[color:var(--edu-primary)] hover:bg-[color:var(--edu-primary-dark)]'
                         : 'bg-gray-800 hover:bg-gray-700'
                   }`}
                 >
@@ -658,7 +658,7 @@ function Section({ s }: { s: PageSection }) {
                   ? 'bg-blue-100 text-blue-600'
                   : it.tone === 'green'
                     ? 'bg-emerald-100 text-emerald-600'
-                    : 'bg-[#FFF0ED] text-[#FF3115]';
+                    : 'bg-[color:rgba(var(--edu-primary-rgb),0.08)] text-[color:var(--edu-primary)]';
               return (
                 <div key={idx} className="p-5 rounded-xl border border-neutral-200/80 bg-neutral-50/50 hover:bg-neutral-50 transition-colors space-y-2.5">
                   <div className="flex items-center gap-3">
@@ -683,13 +683,13 @@ function Section({ s }: { s: PageSection }) {
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
                 {s.tag && (
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#ff3115]">{s.tag}</span>
+                  <span className="text-xs font-bold uppercase tracking-wider text-[color:var(--edu-primary)]">{s.tag}</span>
                 )}
                 {s.heading && <h2 className="text-2xl font-bold font-heading text-gray-900 mt-1">{s.heading}</h2>}
                 {s.sub && <p className="text-xs text-gray-500 mt-1">{s.sub}</p>}
               </div>
               {s.linkText && s.linkHref && (
-                <Link href={s.linkHref} className="text-xs font-bold text-[#ff3115] hover:underline">
+                <Link href={s.linkHref} className="text-xs font-bold text-[color:var(--edu-primary)] hover:underline">
                   {s.linkText}
                 </Link>
               )}
@@ -708,7 +708,7 @@ function Section({ s }: { s: PageSection }) {
       return (
         <section className="space-y-6">
           <div className="text-center max-w-2xl mx-auto">
-            {s.tag && <span className="text-xs font-bold uppercase tracking-wider text-[#ff3115]">{s.tag}</span>}
+            {s.tag && <span className="text-xs font-bold uppercase tracking-wider text-[color:var(--edu-primary)]">{s.tag}</span>}
             {s.heading && <h2 className="text-3xl font-black font-heading text-gray-900 mt-1">{s.heading}</h2>}
             {s.sub && <p className="text-xs sm:text-sm text-gray-600 mt-2">{renderInline(s.sub)}</p>}
           </div>
@@ -720,7 +720,7 @@ function Section({ s }: { s: PageSection }) {
                 <div
                   key={idx}
                   className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
-                  style={{ borderTop: `4px solid ${h.accent || '#ff3115'}` }}
+                  style={{ borderTop: `4px solid ${h.accent || 'var(--edu-primary)'}` }}
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
@@ -734,7 +734,7 @@ function Section({ s }: { s: PageSection }) {
                     <div className="flex items-center gap-3 mb-3">
                       <div
                         className="w-10 h-10 rounded-xl flex items-center justify-center text-white shrink-0"
-                        style={{ backgroundColor: h.accent || '#ff3115' }}
+                        style={{ backgroundColor: h.accent || 'var(--edu-primary)' }}
                       >
                         <Icon className="w-5 h-5" />
                       </div>
@@ -785,7 +785,7 @@ function Section({ s }: { s: PageSection }) {
                       <div className="absolute top-4 left-4 flex gap-2">
                         <span
                           className="px-3 py-1 rounded-md text-xs font-bold text-white shadow-sm flex items-center gap-1.5"
-                          style={{ backgroundColor: t.accent || '#ff3115' }}
+                          style={{ backgroundColor: t.accent || 'var(--edu-primary)' }}
                         >
                           <Icon className="w-3.5 h-3.5" />
                           {t.badge}
@@ -830,14 +830,14 @@ function Section({ s }: { s: PageSection }) {
                 <div className="p-6 md:p-8 pt-0 flex flex-wrap gap-3">
                   <Link
                     href={`/iti-courses/${t.slug || ''}`}
-                    className="flex-1 py-3 px-4 rounded-xl bg-gray-900 hover:bg-[#ff3115] text-white text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-sm"
+                    className="flex-1 py-3 px-4 rounded-xl bg-gray-900 hover:bg-[color:var(--edu-primary)] text-white text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-sm"
                   >
                     <span>View Trade Details &amp; Syllabus</span>
                     <Award className="w-4 h-4" />
                   </Link>
                   <Link
                     href="/admissions"
-                    className="py-3 px-5 rounded-xl bg-orange-50 hover:bg-orange-100 text-[#ff3115] text-xs font-bold transition-colors"
+                    className="py-3 px-5 rounded-xl bg-orange-50 hover:bg-orange-100 text-[color:var(--edu-primary)] text-xs font-bold transition-colors"
                   >
                     Apply Now
                   </Link>
@@ -860,7 +860,7 @@ function Section({ s }: { s: PageSection }) {
                   key={idx}
                   className="flex flex-col sm:flex-row sm:items-center gap-4 p-4 rounded-xl bg-neutral-50/80 border border-neutral-200/70 hover:bg-neutral-50 transition-colors"
                 >
-                  <div className="w-16 h-10 rounded-lg bg-[#FF3115] text-white flex items-center justify-center font-black text-sm tracking-wide shrink-0">
+                  <div className="w-16 h-10 rounded-lg bg-[color:var(--edu-primary)] text-white flex items-center justify-center font-black text-sm tracking-wide shrink-0">
                     {m.year}
                   </div>
                   <div className="flex-1">
@@ -879,7 +879,7 @@ function Section({ s }: { s: PageSection }) {
         <section className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <div className="bg-white p-7 rounded-2xl border border-neutral-200/80 shadow-sm flex flex-col justify-between">
             <div>
-              <div className="w-10 h-10 rounded-xl bg-[#FFF0ED] text-[#FF3115] flex items-center justify-center font-bold text-xl mb-4">
+              <div className="w-10 h-10 rounded-xl bg-[color:rgba(var(--edu-primary-rgb),0.08)] text-[color:var(--edu-primary)] flex items-center justify-center font-bold text-xl mb-4">
                 {s.visionEmoji || '🎯'}
               </div>
               <h3 className="text-lg font-bold text-[#0F172A] font-montserrat mb-2">{s.visionTitle || 'Our Vision'}</h3>
@@ -916,14 +916,14 @@ function Section({ s }: { s: PageSection }) {
                 <Link
                   key={idx}
                   href={l.href || '#'}
-                  className="group p-5 rounded-xl border border-neutral-200 hover:border-[#FF3115] hover:shadow-md transition-all flex flex-col justify-between"
+                  className="group p-5 rounded-xl border border-neutral-200 hover:border-[color:var(--edu-primary)] hover:shadow-md transition-all flex flex-col justify-between"
                 >
                   <div>
                     <div className="text-2xl mb-2">{l.emoji || '📄'}</div>
-                    <h4 className="font-bold text-sm text-neutral-900 group-hover:text-[#FF3115] transition-colors">{l.title}</h4>
+                    <h4 className="font-bold text-sm text-neutral-900 group-hover:text-[color:var(--edu-primary)] transition-colors">{l.title}</h4>
                     <p className="text-xs text-neutral-500 mt-1">{renderInline(l.desc ?? '')}</p>
                   </div>
-                  <span className="text-xs font-bold text-[#FF3115] mt-4 flex items-center gap-1">Read Message →</span>
+                  <span className="text-xs font-bold text-[color:var(--edu-primary)] mt-4 flex items-center gap-1">Read Message →</span>
                 </Link>
               );
             })}
@@ -943,7 +943,7 @@ function Section({ s }: { s: PageSection }) {
           {(s.tag || s.heading) && (
             <div className={s.centered ? 'text-center max-w-2xl mx-auto' : ''}>
               {s.tag && (
-                <span className="text-xs font-bold uppercase tracking-wider text-[#ff3115]">{s.tag}</span>
+                <span className="text-xs font-bold uppercase tracking-wider text-[color:var(--edu-primary)]">{s.tag}</span>
               )}
               {s.heading && <h2 className="text-2xl sm:text-3xl font-black font-heading text-gray-900 mt-1">{s.heading}</h2>}
               {s.sub && <p className="text-xs sm:text-sm text-gray-600 mt-2">{renderInline(s.sub)}</p>}
@@ -955,10 +955,10 @@ function Section({ s }: { s: PageSection }) {
               return (
                 <div
                   key={idx}
-                  className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm flex flex-col justify-between hover:border-[#ff3115] transition-colors"
+                  className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm flex flex-col justify-between hover:border-[color:var(--edu-primary)] transition-colors"
                 >
                   <div>
-                    {it.num && <div className="text-2xl font-black text-[#ff3115]/30 mb-2 font-mono">{it.num}</div>}
+                    {it.num && <div className="text-2xl font-black text-[color:var(--edu-primary)]/30 mb-2 font-mono">{it.num}</div>}
                     {it.badge && (
                       <span
                         className={`inline-block text-[10px] font-bold px-2 py-0.5 rounded uppercase ${
@@ -979,7 +979,7 @@ function Section({ s }: { s: PageSection }) {
                   {it.footer && (
                     <div
                       className={`mt-4 pt-3 border-t border-gray-100 text-[11px] font-semibold ${
-                        it.footerTone === 'green' ? 'text-emerald-600' : 'text-[#ff3115]'
+                        it.footerTone === 'green' ? 'text-emerald-600' : 'text-[color:var(--edu-primary)]'
                       }`}
                     >
                       {it.footer}
@@ -1019,7 +1019,7 @@ function Section({ s }: { s: PageSection }) {
       return (
         <section className="bg-white rounded-2xl p-8 md:p-12 border border-gray-200 shadow-sm space-y-8">
           <div className="text-center max-w-2xl mx-auto">
-            {s.tag && <span className="text-xs font-bold uppercase tracking-wider text-[#ff3115]">{s.tag}</span>}
+            {s.tag && <span className="text-xs font-bold uppercase tracking-wider text-[color:var(--edu-primary)]">{s.tag}</span>}
             {s.heading && <h2 className="text-3xl font-black font-heading text-gray-900 mt-1">{s.heading}</h2>}
             {s.sub && <p className="text-xs sm:text-sm text-gray-600 mt-2">{renderInline(s.sub)}</p>}
           </div>
@@ -1070,7 +1070,7 @@ function Section({ s }: { s: PageSection }) {
               <div
                 key={idx}
                 className={`bg-white rounded-2xl p-6 md:p-8 border border-gray-200 shadow-sm flex flex-col justify-between hover:border-${
-                  tone === 'blue' ? 'blue-600' : tone === 'purple' ? 'purple-600' : '[#ff3115]'
+                  tone === 'blue' ? 'blue-600' : tone === 'purple' ? 'purple-600' : '[color:var(--edu-primary)]'
                 } transition-colors`}
               >
                 <div>
@@ -1080,7 +1080,7 @@ function Section({ s }: { s: PageSection }) {
                         ? 'bg-blue-100 text-blue-600'
                         : tone === 'purple'
                           ? 'bg-purple-100 text-purple-600'
-                          : 'bg-orange-100 text-[#ff3115]'
+                          : 'bg-orange-100 text-[color:var(--edu-primary)]'
                     }`}
                   >
                     <Icon className="w-5 h-5" />
@@ -1167,11 +1167,11 @@ function Section({ s }: { s: PageSection }) {
                 <div
                   key={idx}
                   className={`p-5 border border-gray-200 rounded-xl flex flex-col justify-between hover:border-${
-                    d.iconTone === 'blue' ? 'gray-900' : '[#ff3115]'
+                    d.iconTone === 'blue' ? 'gray-900' : '[color:var(--edu-primary)]'
                   } transition-colors`}
                 >
                   <div className="flex items-start gap-3">
-                    <DIcon className={`w-8 h-8 shrink-0 ${d.iconTone === 'blue' ? 'text-blue-600' : 'text-[#ff3115]'}`} />
+                    <DIcon className={`w-8 h-8 shrink-0 ${d.iconTone === 'blue' ? 'text-blue-600' : 'text-[color:var(--edu-primary)]'}`} />
                     <div>
                       <h4 className="font-bold text-gray-900 text-sm">{d.title}</h4>
                       {d.sub && <p className="text-xs text-gray-500 mt-1">{d.sub}</p>}
@@ -1183,7 +1183,7 @@ function Section({ s }: { s: PageSection }) {
                       target={d.btnHref.startsWith('http') ? '_blank' : undefined}
                       rel={d.btnHref.startsWith('http') ? 'noopener noreferrer' : undefined}
                       className={`mt-4 inline-flex items-center justify-center gap-2 px-4 py-2 text-white text-xs font-bold rounded-lg transition-colors ${
-                        d.btnTone === 'dark' ? 'bg-gray-900 hover:bg-gray-800' : 'bg-[#ff3115] hover:bg-[#e0260c]'
+                        d.btnTone === 'dark' ? 'bg-gray-900 hover:bg-gray-800' : 'bg-[color:var(--edu-primary)] hover:bg-[color:var(--edu-primary-dark)]'
                       }`}
                     >
                       {d.iconTone === 'blue' ? <ShieldCheck className="w-4 h-4" /> : <Download className="w-4 h-4" />}
@@ -1204,7 +1204,7 @@ function Section({ s }: { s: PageSection }) {
         <section>
           {(s.tag || s.heading) && (
             <div className="text-center max-w-2xl mx-auto mb-6">
-              {s.tag && <span className="text-xs font-bold uppercase tracking-wider text-[#ff3115]">{s.tag}</span>}
+              {s.tag && <span className="text-xs font-bold uppercase tracking-wider text-[color:var(--edu-primary)]">{s.tag}</span>}
               {s.heading && <h2 className="text-3xl font-black font-heading text-gray-900 mt-1">{s.heading}</h2>}
               {s.sub && <p className="text-xs sm:text-sm text-gray-600 mt-2">{renderInline(s.sub)}</p>}
             </div>

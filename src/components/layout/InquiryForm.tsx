@@ -26,7 +26,7 @@ export default function InquiryForm({ s }: { s: PageSection }) {
     .replace('{branch}', formData.branch || opts[0] || '—');
 
   const inputCls =
-    'w-full px-4 py-2.5 text-xs rounded-xl border border-gray-200 focus:outline-none focus:border-[#ff3115] bg-gray-50 focus:bg-white transition-colors';
+    'w-full px-4 py-2.5 text-xs rounded-xl border border-gray-200 focus:outline-none focus:border-[color:var(--edu-primary)] bg-gray-50 focus:bg-white transition-colors';
   const labelCls = 'block text-xs font-bold text-gray-700 mb-1';
 
   return (
@@ -34,7 +34,7 @@ export default function InquiryForm({ s }: { s: PageSection }) {
       {/* Form card */}
       <div className="lg:col-span-8 bg-white rounded-2xl p-8 md:p-10 border border-gray-200 shadow-sm">
         {s.tag && (
-          <span className="text-xs font-bold uppercase tracking-wider text-[#ff3115]">{s.tag}</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-[color:var(--edu-primary)]">{s.tag}</span>
         )}
         {s.heading && <h2 className="text-2xl font-bold font-heading text-gray-900 mt-1 mb-2">{s.heading}</h2>}
         {s.sub && <p className="text-xs text-gray-500 mb-6">{s.sub}</p>}
@@ -122,7 +122,7 @@ export default function InquiryForm({ s }: { s: PageSection }) {
 
             <button
               type="submit"
-              className="px-8 py-3 rounded-xl bg-[#ff3115] hover:bg-[#e0260c] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors shadow-sm"
+              className="px-8 py-3 rounded-xl bg-[color:var(--edu-primary)] hover:bg-[color:var(--edu-primary-dark)] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors shadow-sm"
             >
               <Send className="w-3.5 h-3.5" />
               {s.submitLabel ?? 'Submit Inquiry'}
@@ -136,7 +136,7 @@ export default function InquiryForm({ s }: { s: PageSection }) {
         {!!s.hoursRows?.length && (
           <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm space-y-4">
             <h3 className="font-bold text-sm text-gray-900 flex items-center gap-2">
-              <Clock className="w-4 h-4 text-[#ff3115]" />
+              <Clock className="w-4 h-4 text-[color:var(--edu-primary)]" />
               {s.hoursTitle ?? 'Administrative Hours'}
             </h3>
             <div className="space-y-2 text-xs text-gray-600">

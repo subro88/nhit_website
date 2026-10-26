@@ -43,7 +43,7 @@ export function MessageArticle({ message }: { message: MessageData }) {
           )}
           <div>
             {message.roleTag && (
-              <span className="text-xs font-bold text-[#FF3115] uppercase tracking-wider">
+              <span className="text-xs font-bold text-[color:var(--edu-primary)] uppercase tracking-wider">
                 {message.roleTag}
               </span>
             )}
@@ -63,7 +63,7 @@ export function MessageArticle({ message }: { message: MessageData }) {
       )}
 
       {message.quoteStyle ? (
-        <div className="p-6 rounded-2xl bg-[#FFF0ED] border-l-4 border-[#FF3115] text-neutral-800 text-sm leading-relaxed space-y-4 font-roboto italic">
+        <div className="p-6 rounded-2xl bg-[color:rgba(var(--edu-primary-rgb),0.08)] border-l-4 border-[color:var(--edu-primary)] text-neutral-800 text-sm leading-relaxed space-y-4 font-roboto italic">
           {paragraphs.map((p, i) => (
             <p key={i}>{renderInline(p)}</p>
           ))}

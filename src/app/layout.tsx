@@ -10,6 +10,7 @@ import '@/styles/about-subpage.css';
 import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import { readJson, HOMEPAGE_FILE } from '@/lib/cmsStore';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -33,14 +34,19 @@ export const metadata: Metadata = {
     'NHIT, Durgapur, Polytechnic, Diploma Engineering, JEXPO, VOCLET, AICTE, WBSCTVESD',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  /* Site-wide accent palette, chosen in Admin → Home Page Editor → Theme Colors. */
+  const homeData = readJson<{ theme?: { palette?: string } }>(HOMEPAGE_FILE, {});
+  const palette = homeData?.theme?.palette || 'nhit-red';
+
   return (
     <html
       lang="en"
+      data-theme={palette}
       className={`${montserrat.variable} ${robotoCondensed.variable} edu-js`}
     >
       <body className="antialiased min-h-screen flex flex-col justify-between">

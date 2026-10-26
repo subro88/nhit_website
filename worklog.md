@@ -122,3 +122,26 @@ Stage Summary:
 
 
 
+
+---
+Task ID: 6
+Agent: main (Z.ai)
+Task: Remove counters tilt SVG + add site-wide color variants with admin picker
+
+Work Log:
+- Removed edu-counters__tilt SVG from src/components/home/CountersSection.tsx (user request)
+- Replaced ~107 hardcoded #ff3115/#E41F05/rgba(255,49,21,...) refs across src/styles/*.css with var(--edu-primary), var(--edu-primary-dark), rgba(var(--edu-primary-rgb), x)
+- Added --edu-primary-rgb triplet to :root in base.css + globals.css
+- Appended 7 new [data-theme] palette blocks to globals.css: crimson, royal-blue, emerald, teal, royal-purple, saffron, sun-gold (nhit-red = default, no block needed)
+- Converted Tailwind arbitrary color classes in Header/Footer/home/department/layout components to var-based syntax (text-[color:var(--edu-primary)] etc.)
+- Fixed inline styles: SubpageHero gradient, Footer buttons, PlacementRadar trophy/fork icons + SVG gradient stops (via style prop), OutcomesSection bar fallback, CmsContentPage accent fallbacks
+- layout.tsx: now async server component, reads theme.palette from homepage.json, sets data-theme on <html>
+- homepage.json: added theme.palette field (default nhit-red)
+- HomeEditor: new "0 · Theme Colors" tab with visual palette picker (8 swatch cards + button preview), visibility toggle hidden for theme tab
+- Pointed --jrn-crimson* fallbacks and --accent-ink/--nhit-accent-orange at shared vars
+
+Stage Summary:
+- 8 site-wide color palettes switchable in Admin > Home Page Editor > Theme Colors tab
+- End-to-end tested: login > save royal-blue > live data-theme=royal-blue > revert nhit-red OK
+- All 11 key pages 200, tsc --noEmit clean, 8 theme blocks confirmed in served CSS
+- Visual improvement suggestions delivered in chat (user to pick which to implement)

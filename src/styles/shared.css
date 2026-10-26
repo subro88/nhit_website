@@ -115,7 +115,7 @@
   font-weight: 700;
   color: var(--edu-primary);
   background: #fff3f0;
-  border: 2px solid var(--nhit-fac-accent, rgba(255, 49, 21, 0.5));
+  border: 2px solid var(--nhit-fac-accent, rgba(var(--edu-primary-rgb), 0.5));
 }
 .nhit-fac__name { color: var(--edu-ink); font-weight: 700; font-size: 0.95rem; }
 .nhit-fac__role { font-family: var(--edu-cond); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--edu-primary); margin-top: 0.15rem; }
@@ -135,7 +135,7 @@
   text-decoration: none !important;
   transition: transform 0.25s var(--edu-ease), box-shadow 0.25s var(--edu-ease), border-color 0.25s var(--edu-ease);
 }
-.nhit-feed__item:hover { transform: translateY(-4px); box-shadow: var(--edu-shadow); border-color: rgba(255, 49, 21, 0.4); }
+.nhit-feed__item:hover { transform: translateY(-4px); box-shadow: var(--edu-shadow); border-color: rgba(var(--edu-primary-rgb), 0.4); }
 .nhit-feed__date { font-family: var(--edu-cond); font-size: 0.78rem; color: var(--edu-muted); text-transform: uppercase; }
 .nhit-feed__date b { display: block; font-family: var(--edu-heading); font-size: 1.3rem; font-weight: 800; color: var(--edu-primary); }
 .nhit-feed__title { color: var(--edu-ink); font-weight: 600; font-size: 0.98rem; line-height: 1.45; }

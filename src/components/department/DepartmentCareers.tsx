@@ -138,7 +138,7 @@ export default function DepartmentCareersSection({ careers, accentHex, placement
       <div className="bg-slate-50/90 border border-slate-200/80 rounded-2xl p-6 space-y-4">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pb-3 border-b border-slate-200/70">
           <h5 className="text-xs sm:text-sm font-extrabold text-slate-900 uppercase tracking-wider flex items-center gap-2">
-            <Building2 className="w-4 h-4 text-[#FF3115]" />
+            <Building2 className="w-4 h-4 text-[color:var(--edu-primary)]" />
             Key Campus Recruiting Partners
           </h5>
           <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-emerald-700 bg-emerald-100/70">

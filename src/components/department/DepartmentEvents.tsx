@@ -54,7 +54,7 @@ export default function DepartmentEvents({ events, accentHex, deptCode }: Props)
                 {/* Date Badge */}
                 <div className="absolute bottom-3 left-3">
                   <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-bold bg-white text-slate-900 shadow-sm">
-                    <Calendar className="w-3 h-3 text-[#FF3115]" />
+                    <Calendar className="w-3 h-3 text-[color:var(--edu-primary)]" />
                     {event.date_badge}
                   </span>
                 </div>

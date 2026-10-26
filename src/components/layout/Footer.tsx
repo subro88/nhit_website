@@ -342,7 +342,7 @@ export default function Footer() {
           onClick={() => setModalOpen(true)}
           type="button"
           style={{
-            background: '#FF3115',
+            background: 'var(--edu-primary)',
             color: '#FFFFFF',
             border: 'none',
             padding: '12px 18px',
@@ -400,7 +400,7 @@ export default function Footer() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                borderBottom: '3px solid #FF3115',
+                borderBottom: '3px solid var(--edu-primary)',
               }}
             >
               <h3 style={{ margin: 0, fontSize: '18px', fontWeight: 700, color: '#FFFFFF' }}>
@@ -524,7 +524,7 @@ export default function Footer() {
                 type="submit"
                 style={{
                   width: '100%',
-                  background: '#FF3115',
+                  background: 'var(--edu-primary)',
                   color: '#FFFFFF',
                   border: 'none',
                   padding: '12px',

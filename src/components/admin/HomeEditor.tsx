@@ -11,13 +11,35 @@ import {
   RotateCcw,
   Eye,
   EyeOff,
+  Palette,
 } from 'lucide-react';
 import { SpecFields, SectionDef } from './editorKit';
+
+/* ────────────────────────────────────────────────────────────────────────
+ * Site color palettes — applied site-wide via data-theme on <html>.
+ * Values here mirror the [data-theme] blocks in src/app/globals.css.
+ *──────────────────────────────────────────────────────────────────────── */
+const PALETTES = [
+  { key: 'nhit-red', name: 'NHIT Red', hint: 'Current brand — bold & energetic', primary: '#ff3115', dark: '#e41f05', tint: 'rgba(255, 49, 21, 0.08)' },
+  { key: 'crimson', name: 'Classic Crimson', hint: 'Deep academic red', primary: '#dc2626', dark: '#b91c1c', tint: 'rgba(220, 38, 38, 0.08)' },
+  { key: 'royal-blue', name: 'Royal Blue', hint: 'Trust & professionalism', primary: '#1d4ed8', dark: '#1e3a8a', tint: 'rgba(29, 78, 216, 0.08)' },
+  { key: 'emerald', name: 'Emerald Green', hint: 'Growth & freshness', primary: '#059669', dark: '#047857', tint: 'rgba(5, 150, 105, 0.08)' },
+  { key: 'teal', name: 'Ocean Teal', hint: 'Calm & technical', primary: '#0d9488', dark: '#0f766e', tint: 'rgba(13, 148, 136, 0.08)' },
+  { key: 'royal-purple', name: 'Royal Purple', hint: 'Premium & creative', primary: '#7c3aed', dark: '#6d28d9', tint: 'rgba(124, 58, 237, 0.08)' },
+  { key: 'saffron', name: 'Saffron Orange', hint: 'Warm & festive', primary: '#ea580c', dark: '#c2410c', tint: 'rgba(234, 88, 12, 0.08)' },
+  { key: 'sun-gold', name: 'Sun Gold', hint: 'Bright & optimistic', primary: '#d97706', dark: '#b45309', tint: 'rgba(217, 119, 6, 0.08)' },
+] as const;
 
 /* ────────────────────────────────────────────────────────────────────────
  * Section definitions — one tab per home page section.
  *──────────────────────────────────────────────────────────────────────── */
 const SECTIONS: SectionDef[] = [
+  {
+    key: 'theme',
+    label: '0 · Theme Colors',
+    desc: 'Pick the main accent color used across the whole website — buttons, links, highlights, section accents.',
+    fields: [],
+  },
   {
     key: 'hero',
     label: '1 · Hero Slider',
@@ -479,6 +501,13 @@ export default function HomeEditor() {
     }));
   }
 
+  function setPalette(key: string) {
+    setData((prev: any) => ({
+      ...prev,
+      theme: { ...(prev.theme ?? {}), palette: key },
+    }));
+  }
+
   async function save() {
     setMsg(null);
     let payload = data;
@@ -577,17 +606,19 @@ export default function HomeEditor() {
             </button>
           </div>
 
-          <button
-            onClick={toggleVisible}
-            className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold border transition ${
-              isVisible
-                ? 'bg-white text-slate-600 border-slate-200 hover:border-slate-400'
-                : 'bg-amber-50 text-amber-700 border-amber-300'
-            }`}
-          >
-            {isVisible ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
-            {isVisible ? 'Section Visible' : 'Section Hidden'}
-          </button>
+          {activeSection.key !== 'theme' && (
+            <button
+              onClick={toggleVisible}
+              className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold border transition ${
+                isVisible
+                  ? 'bg-white text-slate-600 border-slate-200 hover:border-slate-400'
+                  : 'bg-amber-50 text-amber-700 border-amber-300'
+              }`}
+            >
+              {isVisible ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+              {isVisible ? 'Section Visible' : 'Section Hidden'}
+            </button>
+          )}
         </div>
 
         <div className="flex items-center gap-2">
@@ -627,12 +658,57 @@ export default function HomeEditor() {
       <p className="text-xs text-slate-500">{activeSection.desc}</p>
 
       {mode === 'form' ? (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 space-y-5">
-          <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">
-            {activeSection.label}
-          </h3>
-          <SpecFields spec={activeSection.fields} value={sectionData} onChange={setSectionValue} />
-        </div>
+        activeKey === 'theme' ? (
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 space-y-5">
+            <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider flex items-center gap-2">
+              <Palette className="w-4 h-4" /> Website Color Palette
+            </h3>
+            <p className="text-xs text-slate-500">
+              Click a palette, then press <b>Save Changes</b> to apply it to the whole website — header, footer,
+              buttons, links and every page section.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              {PALETTES.map((p) => {
+                const selected = (data.theme?.palette || 'nhit-red') === p.key;
+                return (
+                  <button
+                    key={p.key}
+                    onClick={() => setPalette(p.key)}
+                    className={`text-left rounded-xl border-2 p-4 transition shadow-sm hover:shadow-md ${
+                      selected ? 'border-slate-900 bg-slate-50' : 'border-slate-200 bg-white hover:border-slate-400'
+                    }`}
+                  >
+                    <div className="flex items-center gap-1.5 mb-3">
+                      <span className="w-7 h-7 rounded-full border border-black/5" style={{ backgroundColor: p.primary }} />
+                      <span className="w-5 h-5 rounded-full border border-black/5" style={{ backgroundColor: p.dark }} />
+                      <span className="w-3.5 h-3.5 rounded-full border border-black/5" style={{ backgroundColor: p.tint }} />
+                      {selected && (
+                        <span className="ml-auto inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-slate-900">
+                          <CheckCircle2 className="w-3.5 h-3.5" /> Active
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-sm font-extrabold text-slate-900">{p.name}</div>
+                    <div className="text-[11px] text-slate-500 mt-0.5">{p.hint}</div>
+                    <div
+                      className="mt-3 text-center text-[11px] font-bold text-white rounded-lg py-1.5"
+                      style={{ backgroundColor: p.primary }}
+                    >
+                      Button Preview
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ) : (
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 space-y-5">
+            <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">
+              {activeSection.label}
+            </h3>
+            <SpecFields spec={activeSection.fields} value={sectionData} onChange={setSectionValue} />
+          </div>
+        )
       ) : (
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
           <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100 bg-slate-50">

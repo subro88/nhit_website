@@ -267,7 +267,7 @@ export default function DepartmentHero({ dept }: Props) {
 
               <Link
                 href="/admissions"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg text-sm font-bold bg-[#FF3115] hover:bg-[#e0260c] text-white transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg text-sm font-bold bg-[color:var(--edu-primary)] hover:bg-[color:var(--edu-primary-dark)] text-white transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
               >
                 <Send className="w-4 h-4" />
                 Admission Brochure

@@ -1,7 +1,7 @@
 /**
  * NHIT Institutional Subpage Stylesheet — EduLearn Design System Baseline
  * Baseline Reference: Keen IT Solutions EduLearn HTML5 Template
- * Palette: Primary Red-Orange (#FF3115), Deep Ink (#212121), Body (#505050), Cloud (#F9F9F9), Border (#E1E1E1)
+ * Palette: Primary Red-Orange (var(--edu-primary)), Deep Ink (#212121), Body (#505050), Cloud (#F9F9F9), Border (#E1E1E1)
  * Fonts: Roboto Condensed (Headings), Montserrat (Body, Navigation, Badges, Buttons)
  */
 
@@ -22,7 +22,7 @@
 	left: 0;
 	right: 0;
 	height: 3px;
-	background: var(--edu-primary, #FF3115);
+	background: var(--edu-primary, var(--edu-primary));
 }
 
 .nhit-subpage-hero-inner {
@@ -51,7 +51,7 @@
 }
 
 .nhit-subpage-breadcrumbs a:hover {
-	color: var(--edu-primary, #FF3115);
+	color: var(--edu-primary, var(--edu-primary));
 }
 
 .nhit-subpage-breadcrumbs-sep {
@@ -59,7 +59,7 @@
 }
 
 .nhit-subpage-breadcrumbs-current {
-	color: var(--edu-primary, #FF3115);
+	color: var(--edu-primary, var(--edu-primary));
 }
 
 .nhit-subpage-kicker {
@@ -75,7 +75,7 @@
 	font-weight: 700;
 	letter-spacing: 0.05em;
 	text-transform: uppercase;
-	color: var(--edu-primary, #FF3115);
+	color: var(--edu-primary, var(--edu-primary));
 	margin-bottom: 12px;
 }
 
@@ -83,7 +83,7 @@
 	width: 6px;
 	height: 6px;
 	border-radius: 50%;
-	background: var(--edu-primary, #FF3115);
+	background: var(--edu-primary, var(--edu-primary));
 }
 
 .nhit-subpage-hero-title {
@@ -148,7 +148,7 @@
 	left: 0;
 	width: 48px;
 	height: 2px;
-	background: var(--edu-primary, #FF3115);
+	background: var(--edu-primary, var(--edu-primary));
 }
 
 .nhit-card-title {
@@ -169,7 +169,7 @@
 /* Callout Box */
 .nhit-callout {
 	background: #F9F9F9;
-	border-left: 4px solid var(--edu-primary, #FF3115);
+	border-left: 4px solid var(--edu-primary, var(--edu-primary));
 	padding: 20px 24px;
 	border-radius: 0 6px 6px 0;
 	margin: 24px 0;
@@ -240,7 +240,7 @@
 	font-family: var(--edu-font-nav, 'Montserrat', sans-serif);
 	font-size: 12.5px;
 	font-weight: 600;
-	color: var(--edu-primary, #FF3115);
+	color: var(--edu-primary, var(--edu-primary));
 	margin-bottom: 16px;
 }
 
@@ -272,7 +272,7 @@
 }
 
 .nhit-leader-contact a:hover {
-	color: var(--edu-primary, #FF3115);
+	color: var(--edu-primary, var(--edu-primary));
 }
 
 /* Institutional Tables */
@@ -334,9 +334,9 @@
 }
 
 .nhit-doc-card:hover {
-	border-color: var(--edu-primary, #FF3115);
+	border-color: var(--edu-primary, var(--edu-primary));
 	background: #FFFFFF;
-	box-shadow: 0 4px 12px rgba(255, 49, 21, 0.08);
+	box-shadow: 0 4px 12px rgba(var(--edu-primary-rgb), 0.08);
 }
 
 .nhit-doc-info {
@@ -372,7 +372,7 @@
 }
 
 .nhit-doc-btn {
-	background: var(--edu-primary, #FF3115);
+	background: var(--edu-primary, var(--edu-primary));
 	color: #FFFFFF !important;
 	font-family: var(--edu-font-nav, 'Montserrat', sans-serif);
 	font-size: 12px;
@@ -387,9 +387,9 @@
 }
 
 .nhit-doc-btn:hover {
-	background: #E41F05;
+	background: var(--edu-primary-dark);
 	transform: translateY(-1px);
-	box-shadow: 0 4px 12px rgba(255, 49, 21, 0.3);
+	box-shadow: 0 4px 12px rgba(var(--edu-primary-rgb), 0.3);
 }
 
 /* ==========================================================================
@@ -427,7 +427,7 @@
 	left: 0;
 	width: 32px;
 	height: 2px;
-	background: var(--edu-primary, #FF3115);
+	background: var(--edu-primary, var(--edu-primary));
 }
 
 .nhit-sidebar-nav-list {
@@ -456,18 +456,18 @@
 
 .nhit-sidebar-nav-link:hover {
 	background: #FFF0ED;
-	color: var(--edu-primary, #FF3115);
+	color: var(--edu-primary, var(--edu-primary));
 	padding-left: 16px;
 }
 
 .nhit-sidebar-nav-link.is-active {
-	background: var(--edu-primary, #FF3115);
+	background: var(--edu-primary, var(--edu-primary));
 	color: #FFFFFF;
 	font-weight: 700;
 }
 
 .nhit-sidebar-nav-link.is-active:hover {
-	background: #E41F05;
+	background: var(--edu-primary-dark);
 	color: #FFFFFF;
 }
 
@@ -516,7 +516,7 @@
 }
 
 .nhit-help-item:hover {
-	background: rgba(255, 49, 21, 0.2);
+	background: rgba(var(--edu-primary-rgb), 0.2);
 	color: #FFFFFF;
 }
 
@@ -527,7 +527,7 @@
 .nhit-help-btn {
 	display: block;
 	text-align: center;
-	background: var(--edu-primary, #FF3115);
+	background: var(--edu-primary, var(--edu-primary));
 	color: #FFFFFF !important;
 	font-family: var(--edu-font-nav, 'Montserrat', sans-serif);
 	font-size: 12.5px;
@@ -541,8 +541,8 @@
 }
 
 .nhit-help-btn:hover {
-	background: #E41F05;
-	box-shadow: 0 4px 14px rgba(255, 49, 21, 0.4);
+	background: var(--edu-primary-dark);
+	box-shadow: 0 4px 14px rgba(var(--edu-primary-rgb), 0.4);
 }
 
 /* Accreditations Widget */
@@ -565,7 +565,7 @@
 	font-family: var(--edu-font-heading, 'Roboto Condensed', sans-serif);
 	font-size: 16px;
 	font-weight: 700;
-	color: var(--edu-primary, #FF3115);
+	color: var(--edu-primary, var(--edu-primary));
 	margin-bottom: 2px;
 }
 
