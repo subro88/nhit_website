@@ -242,6 +242,8 @@ export interface OutcomesData {
   visible?: boolean;
   kicker?: string;
   title?: string;
+  videoOn?: boolean;
+  videoId?: string;
   bars: OutcomeBar[];
   outcomes: OutcomeItem[];
   footnote?: string;

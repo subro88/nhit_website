@@ -229,10 +229,12 @@ const SECTIONS: SectionDef[] = [
   {
     key: 'outcomes',
     label: '7 · Outcomes',
-    desc: 'Dark section with the interactive placement bar chart and outcome highlights. Hover a bar on the live site to show that session\u2019s numbers.',
+    desc: 'Dark section with the interactive placement bar chart and outcome highlights. Hover a bar on the live site to show that session\u2019s numbers. The campus-tour video plays softly in the background with a dark overlay.',
     fields: [
       { t: 'text', k: 'kicker', label: 'Small Line Above Title' },
       { t: 'text', k: 'title', label: 'Heading' },
+      { t: 'bool', k: 'videoOn', label: 'Play Campus Tour Video in Background' },
+      { t: 'text', k: 'videoId', label: 'Background Video — YouTube ID', hint: 'Only the ID, e.g. xcXh2vLC7VU. Leave empty to hide the background video.' },
       {
         t: 'list',
         k: 'bars',

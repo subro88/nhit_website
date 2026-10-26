@@ -306,6 +306,8 @@
     "visible": true,
     "kicker": "Outcomes Infographic",
     "title": "Where an NHIT Diploma Takes You",
+    "videoOn": true,
+    "videoId": "xcXh2vLC7VU",
     "bars": [
       {
         "value": "98.5%",

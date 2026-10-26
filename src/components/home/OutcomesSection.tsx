@@ -1,15 +1,111 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { OutcomesData } from '@/lib/homeTypes';
 
 /*
  * Outcomes — simple interactive bar chart (flat design, no 3D).
  * Hover / tap / keyboard-focus a bar to select that session; a detail
  * panel below shows the full T&P breakdown (total, opted, placed,
- * higher studies). Bars grow in staggered on load. All content is
- * CMS-editable: Admin → Home Page Editor → Outcomes.
+ * higher studies). Bars grow in staggered on load.
+ *
+ * The section plays the campus-tour YouTube video as its background with a
+ * dark overlay and a gentle parallax drift. The iframe is only injected when
+ * the section comes near the viewport, and a YouTube poster frame is shown
+ * behind the overlay until then — so the page stays fast.
+ *
+ * All content is CMS-editable: Admin → Home Page Editor → Outcomes
+ * (including the background video on/off switch and its YouTube ID).
  */
+
+function BackgroundVideo({ videoId }: { videoId: string }) {
+  const bgRef = useRef<HTMLDivElement | null>(null);
+  const mediaRef = useRef<HTMLDivElement | null>(null);
+  const [near, setNear] = useState(false); // true once the section approaches the viewport
+  const [poster, setPoster] = useState(`https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`);
+
+  // Lazy-load the video: inject the iframe only when the section is close.
+  useEffect(() => {
+    const el = bgRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setNear(true);
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setNear(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: '300px' }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  // Parallax: the background drifts a little slower than the page scroll.
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const bg = bgRef.current;
+      const media = mediaRef.current;
+      if (!bg || !media) return;
+      // .edu-outcomes__bg covers the section exactly (inset:0).
+      const rect = bg.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      // Distance of the section centre from the viewport centre.
+      const delta = rect.top + rect.height / 2 - vh / 2;
+      const y = Math.max(-160, Math.min(160, delta * -0.12));
+      media.style.transform = `translate3d(0, ${y.toFixed(1)}px, 0)`;
+    };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
+
+  const embedSrc = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(
+    videoId
+  )}?autoplay=1&mute=1&loop=1&playlist=${encodeURIComponent(
+    videoId
+  )}&controls=0&rel=0&playsinline=1&modestbranding=1&iv_load_policy=3&disablekb=1&fs=0`;
+
+  return (
+    <div className="edu-outcomes__bg" aria-hidden="true" ref={bgRef}>
+      <div className="edu-outcomes__bg-media" ref={mediaRef}>
+        {/* Poster frame shown until the video loads (and if it never does). */}
+        <img
+          src={poster}
+          alt=""
+          loading="lazy"
+          onError={() => setPoster(`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`)}
+        />
+        {near && (
+          <iframe
+            src={embedSrc}
+            title="Campus tour background video"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            tabIndex={-1}
+            scrolling="no"
+          />
+        )}
+      </div>
+      <div className="edu-outcomes__bg-overlay" />
+    </div>
+  );
+}
+
 export default function OutcomesSection({ data }: { data: OutcomesData }) {
   const bars = data.bars ?? [];
   const outcomes = data.outcomes ?? [];
@@ -18,8 +114,12 @@ export default function OutcomesSection({ data }: { data: OutcomesData }) {
   const sel = useMemo(() => bars[active] ?? bars[bars.length - 1], [active, bars]);
   const hasDetails = !!(sel && (sel.total || sel.opted || sel.placed || sel.higher));
 
+  const showVideo = data.videoOn !== false && !!data.videoId;
+  const sectionRef = useRef<HTMLElement | null>(null);
+
   return (
-    <section className="wp-block-group edu-outcomes">
+    <section className="wp-block-group edu-outcomes" ref={sectionRef}>
+      {showVideo && <BackgroundVideo videoId={data.videoId as string} />}
       <div className="wp-block-group edu-container edu-outcomes__grid">
         {/* Interactive bar chart */}
         <div className="edu-barchart edu-reveal is-inview">

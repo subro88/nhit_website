@@ -609,11 +609,49 @@
    3D OUTCOME INFOGRAPHIC — isometric bar chart
    -------------------------------------------------------------------------- */
 
-.edu-outcomes { padding-block: clamp(4rem, 8vw, 6.5rem); background: var(--edu-ink); color: #cfcfcf; overflow: hidden; }
+.edu-outcomes { position: relative; padding-block: clamp(4rem, 8vw, 6.5rem); background: var(--edu-ink); color: #cfcfcf; overflow: hidden; }
 .edu-outcomes .edu-sec-head__title { color: #fff; }
 .edu-outcomes .edu-sec-head__sub { color: #a9a9a9; }
 
+/* BACKGROUND VIDEO — the campus-tour film plays behind the section with a
+   dark overlay and a gentle parallax drift. The media layer is oversized
+   (140% height) so the parallax can never reveal its edges. */
+.edu-outcomes__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.edu-outcomes__bg-media {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -20%;
+  height: 140%;
+  will-change: transform;
+}
+.edu-outcomes__bg-media img,
+.edu-outcomes__bg-media iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
+  display: block;
+}
+.edu-outcomes__bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 12, 0.92),
+    rgba(10, 10, 12, 0.85) 45%,
+    rgba(10, 10, 12, 0.94)
+  );
+}
+@media (prefers-reduced-motion: reduce) {
+  .edu-outcomes__bg-media { transform: none !important; }
+}
+
 .edu-outcomes__grid {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: clamp(2rem, 5vw, 4rem);
