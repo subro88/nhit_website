@@ -8,6 +8,21 @@ import type { CtaBandData } from '@/lib/homeTypes';
  * Content comes from the CMS: ctaBand in homepage.json.
  */
 export default function CtaBand({ data }: { data: CtaBandData }) {
+  /* tel: and http(s) links must use a plain <a> — next/link is for routes. */
+  const isExternal = (href?: string) =>
+    !!href && (href.startsWith('tel:') || href.startsWith('http') || href.startsWith('mailto:'));
+
+  const Btn2 = ({ className }: { className: string }) =>
+    isExternal(data.btn2Href) ? (
+      <a className={className} href={data.btn2Href}>
+        {data.btn2Text}
+      </a>
+    ) : (
+      <Link className={className} href={data.btn2Href || '#'}>
+        {data.btn2Text}
+      </Link>
+    );
+
   return (
     <section className="wp-block-group edu-ctaband-wrap" id="apply-cta">
       <div className="wp-block-group edu-container">
@@ -22,11 +37,7 @@ export default function CtaBand({ data }: { data: CtaBandData }) {
                 {data.btn1Text}
               </Link>
             ) : null}
-            {data.btn2Text ? (
-              <Link className="edu-btn edu-btn--ghost" href={data.btn2Href || '#'}>
-                {data.btn2Text}
-              </Link>
-            ) : null}
+            {data.btn2Text ? <Btn2 className="edu-btn edu-btn--ghost" /> : null}
           </div>
         </div>
       </div>

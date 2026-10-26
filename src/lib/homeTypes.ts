@@ -28,6 +28,8 @@ export interface HeroData {
   slides: HeroSlide[];
   chips?: HeroChip[];
   estdBadge?: EstdBadgeData;
+  tourLabel?: string;
+  tourVideo?: string;
 }
 
 export interface EstdFeature {
@@ -40,6 +42,86 @@ export interface EstdBadgeData {
   visible?: boolean;
   text?: string;
   features?: EstdFeature[];
+}
+
+export interface AchievementItem {
+  icon?: string;
+  text: string;
+}
+
+export interface AchievementsData {
+  visible?: boolean;
+  heading?: string;
+  items: AchievementItem[];
+}
+
+export interface VideoCardItem {
+  youtubeId: string;
+  title: string;
+  note?: string;
+}
+
+export interface VideoStripData {
+  visible?: boolean;
+  kicker?: string;
+  title?: string;
+  sub?: string;
+  videos: VideoCardItem[];
+  ctaText?: string;
+  ctaHref?: string;
+}
+
+export interface PlacementBar {
+  label: string;
+  pct: string;
+  show?: boolean;
+}
+
+export interface TrustChip {
+  icon?: string;
+  text: string;
+}
+
+export interface PlacementBarsData {
+  visible?: boolean;
+  kicker?: string;
+  title?: string;
+  sub?: string;
+  bars: PlacementBar[];
+  trust: TrustChip[];
+  footnote?: string;
+}
+
+export interface SocialCard {
+  icon: string;
+  name: string;
+  handle: string;
+  stat: string;
+  url: string;
+  note?: string;
+}
+
+export interface SocialWallData {
+  visible?: boolean;
+  kicker?: string;
+  title?: string;
+  sub?: string;
+  cards: SocialCard[];
+}
+
+export interface AlumniVoice {
+  youtubeId: string;
+  name: string;
+  role: string;
+  quote: string;
+}
+
+export interface AlumniVoicesData {
+  visible?: boolean;
+  kicker?: string;
+  title?: string;
+  sub?: string;
+  voices: AlumniVoice[];
 }
 
 export interface CtaBandData {
@@ -325,4 +407,9 @@ export interface HomepageData {
   gallery: GalleryData;
   leadForm: LeadFormData;
   ctaBand?: CtaBandData;
+  achievements?: AchievementsData;
+  videoStrip?: VideoStripData;
+  placementBars?: PlacementBarsData;
+  socialWall?: SocialWallData;
+  alumniVoices?: AlumniVoicesData;
 }

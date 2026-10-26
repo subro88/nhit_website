@@ -7,6 +7,7 @@ import '@/styles/placement-radar.css';
 import '@/styles/nhit-journey.css';
 import '@/styles/institutional-home.css';
 import '@/styles/about-subpage.css';
+import '@/styles/home-enrich.css';
 import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -27,11 +28,11 @@ const robotoCondensed = Roboto_Condensed({
 });
 
 export const metadata: Metadata = {
-  title: 'The New Horizons Institute of Technology (NHIT) | Durgapur',
+  title: 'NHIT Durgapur — Best and Top Diploma College in Durgapur | Est. 2007',
   description:
-    'AICTE Approved & WBSCTVESD Affiliated premier diploma engineering institute in Durgapur, West Bengal. 6 Specialised Engineering Branches with 80-85% consistent placement record.',
+    'The New Horizons Institute of Technology (NHIT), Durgapur — AICTE-approved, WBSCT&VE&SD-affiliated diploma engineering college since 2007. First two-shift diploma college in Eastern India. Up to 94.7% branch-wise placement. Apply for Session 2026–27.',
   keywords:
-    'NHIT, Durgapur, Polytechnic, Diploma Engineering, JEXPO, VOCLET, AICTE, WBSCTVESD',
+    'NHIT, best diploma college in Durgapur, top diploma college, Durgapur, Polytechnic, Diploma Engineering, JEXPO, VOCLET, AICTE, WBSCTVESD',
 };
 
 export default async function RootLayout({

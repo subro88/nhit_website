@@ -237,7 +237,7 @@ export default function Footer() {
               <ul>
                 <li>
                   <a
-                    href="https://www.facebook.com/NHITDurgapur/"
+                    href="https://www.facebook.com/nhit.in"
                     target="_blank"
                     rel="noopener"
                     aria-label="Facebook"
@@ -267,7 +267,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <a
-                    href="https://www.youtube.com/@nhitdurgapur"
+                    href="https://www.youtube.com/@nhit_durgapur"
                     target="_blank"
                     rel="noopener"
                     aria-label="YouTube"

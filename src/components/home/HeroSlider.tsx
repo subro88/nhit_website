@@ -4,12 +4,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import type { HeroData } from '@/lib/homeTypes';
 import HeroEstdBadge from './HeroEstdBadge';
+import VideoTourModal from './VideoTourModal';
 
 export default function HeroSlider({ data }: { data: HeroData }) {
   const slides = data.slides ?? [];
   const chips = data.chips ?? [];
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [tourOpen, setTourOpen] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -115,8 +117,32 @@ export default function HeroSlider({ data }: { data: HeroData }) {
         </div>
       ))}
 
+      {/* Campus tour pill — opens the YouTube lightbox */}
+      {data.tourVideo ? (
+        <button
+          type="button"
+          className="edu-hero__tour"
+          onClick={() => setTourOpen(true)}
+          aria-haspopup="dialog"
+        >
+          <span className="edu-hero__tour-icon">
+            <i className="fa fa-play" aria-hidden="true" />
+          </span>
+          <span className="edu-hero__tour-text">{data.tourLabel || 'Watch Campus Tour'}</span>
+        </button>
+      ) : null}
+
       {/* Estd semicircle badge — expands on hover to show key features */}
       {data.estdBadge?.visible !== false && <HeroEstdBadge data={data.estdBadge || {}} />}
+
+      {/* Campus tour lightbox */}
+      {tourOpen && data.tourVideo ? (
+        <VideoTourModal
+          youtubeId={data.tourVideo}
+          title={data.tourLabel || 'NHIT Campus Tour'}
+          onClose={() => setTourOpen(false)}
+        />
+      ) : null}
     </section>
   );
 }

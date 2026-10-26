@@ -170,3 +170,46 @@ Stage Summary:
 - All 10 improvements + Estd badge live and verified, 11 pages 200, tsc clean
 - New CMS-editable: hero.estdBadge (badge + 6 features), ctaBand section, testimonials.kicker
 - NOT pushed yet - waiting for user "push"
+
+---
+Task ID: 8
+Agent: main (Z.ai)
+Task: Push improvements + research NHIT identity from old site & social media; deliver designer + content suggestions
+
+Work Log:
+- Pushed user-authorized work via nhit_website/.git (PAT remote): 982f6a3..19eebe6 main -> main (all 10 improvements + HeroEstdBadge + CtaBand, 14 files, 2077 insertions)
+- Note: /home/z/my-project/.git is platform auto-repo without origin; real repo = nhit_website/.git with core.worktree -> workspace root
+- Researched nhit.in (home/about/placement), Facebook (10K followers), LinkedIn (2,696, two-shift USP), YouTube (26 videos, 447 subs)
+- Key facts gathered: est. 16 Aug 2007, AICTE + WBSCT&VE&SD, 6 diploma branches + ITI (Electrician/Fitter), MoU CSIR-CMERI + NEN, IEI life member, first two-shift diploma college in Eastern India, dept placement % (AE 94.7 ME 92.6 EE 80), recruiters SIGMA/Cummins/Daikin/RDC/CMS IT Services, NSPCL joint program Sep 2026
+- Old site issues found: counters show 0+, "Ghandhi More" typo, "Labroratories" typo, overly long mission text
+- Delivered designer (10) + content-writer (10) suggestions in chat
+
+Stage Summary:
+- GitHub main = 19eebe6 (all approved work pushed)
+- Research summary + 20 suggestions delivered; awaiting user picks before implementing content/design changes beyond approved scope
+
+---
+Task ID: 9
+Agent: main (Z.ai)
+Task: Implement all approved designer + content-writer suggestions (tagline per user: "Best and Top Diploma College in Durgapur")
+
+Work Log:
+- Tagline applied: hero slide-0 kicker + layout.tsx metadata title/description/keywords (SEO)
+- Hero slide-0 text now leads with two-shift USP ("first two-shift diploma college in Eastern India")
+- Extracted real YouTube video IDs from @nhit_durgapur via agent-browser (xcXh2vLC7VU campus life, Bu83389zeWU LED lab, -_KILOcTx2k smart bridge, uzoxE63xukI podcast EP1, KBzRtl5-WfQ podcast EP2)
+- homepage.json: counters 19+/5000+/60+/6000+; ctaBand "Apply for 2026–27 Session" + tel:+919800571423; 5 NEW CMS sections seeded (achievements 7 items, videoStrip 3 videos, placementBars 7 bars + 6 trust chips, socialWall 3 cards, alumniVoices 2 podcast episodes)
+- NEW components: AchievementsStrip (marquee, pause-on-hover), VideoStrip (lite click-to-play embeds), PlacementBarsSection (animated bars + navy trust card), SocialWall, AlumniVoices, VideoTourModal (lightbox, ESC/backdrop close)
+- HeroSlider: "Watch Campus Tour" pill (bottom-left) opens VideoTourModal with hero.tourVideo
+- CtaBand: tel:/http hrefs now render plain <a> (next/link only for routes)
+- Footer: fixed wrong social URLs (FB → facebook.com/nhit.in, YT → @nhit_durgapur)
+- pages.json about: added "Career Outcomes" mission bullet
+- departments.json: all 6 depts' careers.roles.desc now name real recruiting partners (SIGMA/Cummins/Daikin/RDC/CMS from T&P records)
+- HomeEditor: tabs 15–19 added (Achievements Marquee, Placement Bars & Trust, Life at NHIT Videos, Alumni Voices, Social Wall) + tour fields in Hero tab
+- New CSS file src/styles/home-enrich.css (all var(--edu-primary) based)
+- Tests: tsc clean; 9 pages 200; content spot-checks pass (tagline, tour pill, marquee, bars, videos, social, tel link, dept partner lines, About mission bullet); browser QA: hero desktop+mobile, bars section, video strip, social wall, modal open/close; video iframe loads on click; CMS toggle test (achievements hide→gone, revert→back) PASS
+- NOT pushed - waiting for user "push"
+
+Stage Summary:
+- All 20 suggestions implemented except notice-title rewrites (user's real notices left untouched — editable in Notices admin)
+- Note: YouTube bot-check appears only in headless QA; real browsers play embeds normally
+- Placement bars: CE/ETCE/ITI-Fitter seeded hidden (lower rates) — one click in admin to show
