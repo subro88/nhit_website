@@ -163,14 +163,27 @@ export default function DepartmentDetailPage({ params }: Props) {
     ],
   };
 
-  const otherDepartments = [
-    { slug: 'computer-science-technology', name: 'Computer Science & Technology', code: 'CST' },
-    { slug: 'diploma-in-mechanical-engineering', name: 'Mechanical Engineering', code: 'ME' },
-    { slug: 'diploma-in-electrical-engineering', name: 'Electrical Engineering', code: 'EE' },
-    { slug: 'diploma-in-civil-engineering', name: 'Civil Engineering', code: 'CE' },
-    { slug: 'diploma-in-electronics-telecommunications-engineering', name: 'Electronics & Telecom', code: 'ETCE' },
-    { slug: 'diploma-in-automobile-engineering', name: 'Automobile Engineering', code: 'AE' },
-  ];
+  const otherDepartments = Object.values(departmentsData)
+    .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+    .map((d) => ({
+      slug: d.slug,
+      name: d.title,
+      code: (d.code || '').replace(/_\d+$/, ''),
+    }));
+
+  // Bottom admission CTA strip — editable per department via admin panel,
+  // with the site-wide defaults as fallback.
+  const cta = {
+    badge: dept.cta?.badge || 'ADMISSIONS OPEN // ACADEMIC SESSION 2026–27',
+    heading: dept.cta?.heading || `Ready to Begin Your Technical Career in ${dept.title}?`,
+    subtext:
+      dept.cta?.subtext ||
+      'Direct institutional seats and state merit counseling are now underway. Connect with our admission cell today to secure your counseling rank and hostel allocation.',
+    applyLabel: dept.cta?.applyLabel || 'Apply for Admission Online',
+    applyHref: dept.cta?.applyHref || '/admissions',
+    phoneLabel: dept.cta?.phoneLabel || 'Call Admissions: (0343) 2542103',
+    phone: dept.cta?.phone || '03432542103',
+  };
 
   return (
     <div className="bg-[#f8f9fa] min-h-screen text-[#212529]">
@@ -282,28 +295,28 @@ export default function DepartmentDetailPage({ params }: Props) {
           <span 
             className="inline-block px-3.5 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider mb-1 bg-amber-400/20 text-amber-300 border border-amber-400/30 shadow-sm"
           >
-            ADMISSIONS OPEN // ACADEMIC SESSION 2026–27
+            {cta.badge}
           </span>
           <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white drop-shadow-sm">
-            Ready to Begin Your Technical Career in {dept.title}?
+            {cta.heading}
           </h3>
           <p className="text-xs sm:text-sm text-red-100 max-w-2xl mx-auto leading-relaxed">
-            Direct institutional seats and state merit counseling are now underway. Connect with our admission cell today to secure your counseling rank and hostel allocation.
+            {cta.subtext}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 pt-2 relative z-10">
             <Link
-              href="/admissions"
+              href={cta.applyHref}
               className="inline-flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-bold bg-white hover:bg-red-50 text-[#9E0B0F] transition-all shadow-lg active:scale-95"
             >
               <Send className="w-4 h-4 text-[#9E0B0F]" />
-              Apply for Admission Online
+              {cta.applyLabel}
             </Link>
             <a
-              href="tel:03432542103"
+              href={`tel:${cta.phone}`}
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold bg-black/20 hover:bg-black/30 text-white border border-white/25 transition-all backdrop-blur-sm shadow-md"
             >
               <PhoneCall className="w-4 h-4 text-emerald-300" />
-              Call Admissions: (0343) 2542103
+              {cta.phoneLabel}
             </a>
           </div>
         </div>

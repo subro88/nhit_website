@@ -25,6 +25,7 @@ export const PAGES_FILE = 'src/data/pages.json';
 export const NOTICES_INDEX_FILE = 'content/circulars/notices-index.json';
 export const NOTICES_DIR = 'content/circulars';
 export const BLOG_FILE = 'content/blog/posts.json';
+export const FACULTY_FILE = 'content/faculty/faculty-roster.json';
 
 export function readJson<T>(relPath: string, fallback: T): T {
   try {

@@ -1,102 +1,53 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { 
-  Cpu, 
-  Cog, 
-  Zap, 
-  Hammer, 
-  Car, 
-  ArrowRight, 
-  BookOpen,
-  Sparkles,
+import {
+  Cpu,
+  Cog,
+  Zap,
+  Hammer,
+  Car,
+  ArrowRight,
   Award,
-  CheckCircle2,
   FlaskConical,
   Wrench,
-  GraduationCap
+  Layers,
 } from 'lucide-react';
 import SubpageHero from '@/components/layout/SubpageHero';
+import { departmentsData } from '@/data/departmentsData';
 
 export const metadata = {
   title: 'Engineering Departments & Disciplines | NHIT Durgapur',
-  description: 'Explore the 6 AICTE-approved 3-year diploma engineering disciplines at NHIT Durgapur: CST, Mechanical, Electrical, Civil, ETCE, and Automobile Engineering.',
+  description:
+    'Explore the 6 AICTE-approved 3-year diploma engineering disciplines at NHIT Durgapur: CST, Mechanical, Electrical, Civil, ETCE, and Automobile Engineering.',
 };
 
-const departments = [
-  {
-    slug: 'computer-science-technology',
-    title: 'Computer Science & Technology',
-    code: 'CST',
-    accent: '#0ea5e9',
-    icon: Cpu,
-    tagline: 'Software engineering, algorithmic systems, database architecture, and computer networking.',
-    intake: '60 Seats',
-    stats: '85–90% Placement • ₹4.8 LPA Highest',
-    labs: '7 Specialised Labs (Linux, DB, Networking)',
-    image: '/images/hero-cse.jpg'
-  },
-  {
-    slug: 'diploma-in-mechanical-engineering',
-    title: 'Mechanical Engineering',
-    code: 'ME',
-    accent: '#f97316',
-    icon: Cog,
-    tagline: 'Thermodynamics, machine design, CNC milling, precision lathe turning, and CAD/CAM.',
-    intake: '120 Seats',
-    stats: '80–85% Placement • ₹4.2 LPA Highest',
-    labs: 'Heavy Workshop Bays & UTM Testing Lab',
-    image: '/images/hero-me.jpg'
-  },
-  {
-    slug: 'diploma-in-electrical-engineering',
-    title: 'Electrical Engineering',
-    code: 'EE',
-    accent: '#f59e0b',
-    icon: Zap,
-    tagline: 'Power systems, rotating machines, industrial drives, PLC automation, and switchgear.',
-    intake: '120 Seats',
-    stats: '80–85% Placement • ₹4.0 LPA Highest',
-    labs: 'AC/DC Machine Testbeds & Control Systems',
-    image: '/images/hero-ee.jpg'
-  },
-  {
-    slug: 'diploma-in-civil-engineering',
-    title: 'Civil Engineering',
-    code: 'CE',
-    accent: '#0284c7',
-    icon: Hammer,
-    tagline: 'Structural engineering, surveying with Total Station, geotechnical soil testing, and concrete technology.',
-    intake: '60 Seats',
-    stats: '80–85% Placement • ₹3.6 LPA Highest',
-    labs: 'Surveying Field Lab & Soil Mechanics',
-    image: '/images/hero-civil.jpg'
-  },
-  {
-    slug: 'diploma-in-electronics-telecommunications-engineering',
-    title: 'Electronics & Telecommunication',
-    code: 'ETCE',
-    accent: '#8b5cf6',
-    icon: Zap,
-    tagline: 'Embedded IoT systems, digital microcontrollers, RF communication, and VLSI circuit design.',
-    intake: '60 Seats',
-    stats: '80–85% Placement • ₹3.8 LPA Highest',
-    labs: 'Microprocessor & Microwave Lab',
-    image: '/images/hero-etce.jpg'
-  },
-  {
-    slug: 'diploma-in-automobile-engineering',
-    title: 'Automobile Engineering',
-    code: 'AE',
-    accent: '#ef4444',
-    icon: Car,
-    tagline: 'Automotive chassis design, transmission systems, engine diagnostic rigs, and EV powertrains.',
-    intake: '60 Seats',
-    stats: '80–85% Placement • ₹4.2 LPA Highest',
-    labs: 'Engine Diagnostic & Vehicle Workshop',
-    image: '/images/hero-auto.jpg'
-  }
-];
+/* Icon per department short code — falls back to a layers icon. */
+const ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  CST: Cpu,
+  ME: Cog,
+  EE: Zap,
+  CE: Hammer,
+  ETCE: Zap,
+  AE: Car,
+};
+
+const cards = Object.values(departmentsData)
+  .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+  .map((d) => ({
+    slug: d.slug,
+    title: d.title,
+    code: (d.code || '').replace(/_\d+$/, ''),
+    accent: d.accentHex || '#0ea5e9',
+    icon: ICONS[(d.code || '').replace(/_\d+$/, '')] || Layers,
+    tagline: d.tagline,
+    intake: d.intake,
+    stats: `${d.stats?.placementRate ?? ''} Placement • ${d.stats?.highestCtc ?? ''} Highest`,
+    labs:
+      (d as any).cardLabs ||
+      `${d.labs?.length ?? 0} Specialised Labs`,
+    image: (d as any).cardImage || d.heroSlides?.[0] || '/images/hero-campus.jpg',
+  }));
 
 export default function DepartmentsIndexPage() {
   return (
@@ -113,7 +64,7 @@ export default function DepartmentsIndexPage() {
       <main className="max-w-7xl mx-auto px-4 py-12 md:py-16 space-y-12">
         {/* Disciplines Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {departments.map((dept, i) => {
+          {cards.map((dept, i) => {
             const Icon = dept.icon;
             return (
               <div
@@ -131,9 +82,9 @@ export default function DepartmentsIndexPage() {
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-                    
+
                     <div className="absolute top-4 left-4">
-                      <span 
+                      <span
                         className="px-2.5 py-1 rounded-md text-xs font-black text-white shadow-sm"
                         style={{ backgroundColor: dept.accent }}
                       >

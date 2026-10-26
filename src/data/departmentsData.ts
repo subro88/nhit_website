@@ -49,6 +49,17 @@ export interface DepartmentFaq {
   a: string;
 }
 
+// Bottom admission call-to-action strip on every department page.
+export interface DepartmentCta {
+  badge: string;
+  heading: string;
+  subtext: string;
+  applyLabel: string;
+  applyHref: string;
+  phoneLabel: string;
+  phone: string;
+}
+
 export interface DepartmentLab {
   name: string;
   spec: string;
@@ -99,6 +110,10 @@ export interface DepartmentData {
   testimonials: DepartmentTestimonial[];
   careers: DepartmentCareers;
   faqs: DepartmentFaq[];
+  cta?: DepartmentCta;
+  // Optional card overrides for the /departments listing page.
+  cardImage?: string;
+  cardLabs?: string;
 }
 
 // Department content is stored in departments.json so the CMS admin panel

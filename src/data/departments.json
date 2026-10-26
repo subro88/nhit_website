@@ -335,7 +335,8 @@
         "q": "7. Are separate hostel and Wi-Fi facilities available on campus for students?",
         "a": "Yes. NHIT maintains separate, secure in-campus hostels for boys and girls with 24/7 security, high-speed Wi-Fi internet access, hygienic dining halls serving balanced meals, round-the-clock water, and recreational rooms."
       }
-    ]
+    ],
+    "cardLabs": "7 Specialised Labs (Linux, DB, Networking)"
   },
   "diploma-in-mechanical-engineering": {
     "slug": "diploma-in-mechanical-engineering",
@@ -662,7 +663,8 @@
         "q": "7. How can diploma mechanical engineers pursue B.Tech through lateral entry?",
         "a": "Through the state JELET entrance examination, diploma holders enter directly into the 2nd Year (3rd Semester) of 4-year B.Tech in Mechanical Engineering at top colleges like Jadavpur University, KGEC Kalyani, and JGEC."
       }
-    ]
+    ],
+    "cardLabs": "Heavy Workshop Bays & UTM Testing Lab"
   },
   "diploma-in-electrical-engineering": {
     "slug": "diploma-in-electrical-engineering",
@@ -989,7 +991,8 @@
         "q": "7. What higher studies pathways are available through JELET lateral entry?",
         "a": "Students can appear for the JELET examination to enter directly into the 2nd Year (3rd Semester) of B.Tech in Electrical Engineering, Power Engineering, or Electrical & Electronics Engineering at prestigious institutions including Jadavpur University, KGEC, JGEC, and Heritage."
       }
-    ]
+    ],
+    "cardLabs": "AC/DC Machine Testbeds & Control Systems"
   },
   "diploma-in-civil-engineering": {
     "slug": "diploma-in-civil-engineering",
@@ -1315,7 +1318,8 @@
         "q": "7. How does lateral entry to B.Tech Civil Engineering work after diploma?",
         "a": "Through the state JELET entrance test, diploma holders secure direct lateral admission into the 2nd Year (3rd Semester) of 4-year B.Tech Civil Engineering at premier colleges such as Jadavpur University, IIEST Shibpur, Kalyani Govt. Engineering College, and Jalpaiguri Govt. Engineering College."
       }
-    ]
+    ],
+    "cardLabs": "Surveying Field Lab & Soil Mechanics"
   },
   "diploma-in-electronics-telecommunications-engineering": {
     "slug": "diploma-in-electronics-telecommunications-engineering",
@@ -1641,7 +1645,8 @@
         "q": "7. How can ETCE diploma holders pursue higher education (B.Tech)?",
         "a": "Through the state JELET entrance test, diploma holders secure direct lateral admission into the 2nd Year (3rd Semester) of 4-year B.Tech in Electronics & Communication Engineering (ECE) or ETCE at premier universities such as Jadavpur University, KGEC Kalyani, and JGEC."
       }
-    ]
+    ],
+    "cardLabs": "Microprocessor & Microwave Lab"
   },
   "diploma-in-automobile-engineering": {
     "slug": "diploma-in-automobile-engineering",
@@ -1967,6 +1972,7 @@
         "q": "7. Can diploma automobile engineers pursue B.Tech through lateral entry?",
         "a": "Yes. Through the state-level JELET examination, diploma holders gain direct admission into the 2nd Year (3rd Semester) of B.Tech in Automobile Engineering or Mechanical Engineering at institutions like Kalyani Government Engineering College (KGEC), Jadavpur University, and Heritage Institute of Technology."
       }
-    ]
+    ],
+    "cardLabs": "Engine Diagnostic & Vehicle Workshop"
   }
 }
