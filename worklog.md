@@ -307,3 +307,31 @@ Work Log:
 Stage Summary:
 - Outcomes chart is now simple + interactive, fully CMS-editable (Admin > Outcomes tab)
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 13-b
+Agent: main (Z.ai)
+Task: Push logo + real-data outcomes + interactive chart (user authorized)
+
+Work Log:
+- Pushed: 518ae02..f94a6b9 main -> main (3 commits: official emblem logo/favicon + CMS brand tab; real year-wise placement data; simple interactive bar chart with session detail panel)
+
+Stage Summary:
+- GitHub main = f94a6b9, working tree clean
+
+---
+Task ID: 14
+Agent: main (Z.ai)
+Task: Latest News box — richer design + gentle upward scroll (user request)
+
+Work Log:
+- ROOT CAUSE found: shared.css was never imported by layout.tsx — the entire .edu-news block (news card) rendered as raw text. This is why the user's paste showed the list twice with no styling: the two DOM copies for the scroll loop were fully visible.
+- Fix: layout.tsx now imports '@/styles/shared.css' (after base.css). Verified no CMS JSON (pages.json/departments.json) uses any other shared.css class family (nhit-feed/board/fac/badge/ticker all 0 component usage), so import is side-effect free; dept/about/circulars pages still 200.
+- Rewrote .edu-news CSS block in shared.css: gradient header with pulsing live dot; date tiles (52px, theme tint, lift + solid fill on hover); left accent bar + tinted hover row; title slide on hover; NEW tag as pill with glow pulse animation; footer link letter-spacing hover; radius 12.
+- Scroll: removed inline 30s override — now governed by --edu-news-speed 46s (gentle continuous upward loop, pause on hover, edge fade mask kept). Verified transform animating (-205px and moving).
+- Fixed self-introduced bug: background gradient painted body black — corrected to #fff.
+- Verified: desktop + mobile screenshots; scroll animating; tsc clean (layout/NewsTicker changes); 3 pages 200.
+
+Stage Summary:
+- Latest News card now styled, attractive and gently auto-scrolling upward; pause on hover; fully CMS-editable via existing ticker tab
+- Committed locally, NOT pushed (waiting for user "push")

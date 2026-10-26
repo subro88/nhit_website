@@ -14,7 +14,8 @@ export default function NewsTicker({ data }: { data: TickerData }) {
         {data.heading || 'Latest News'}
       </div>
       <div className="edu-news__body">
-        <div className="edu-news__track" style={{ animationDuration: '30s' }}>
+        {/* gentle continuous upward scroll — speed set by --edu-news-speed (46s), pauses on hover */}
+        <div className="edu-news__track">
           {[0, 1].map((setIndex) => (
             <ul
               key={setIndex}

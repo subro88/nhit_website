@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Montserrat, Roboto_Condensed } from 'next/font/google';
 import '@/styles/font-awesome.min.css';
 import '@/styles/base.css';
+import '@/styles/shared.css';
 import '@/styles/sections.css';
 import '@/styles/placement-radar.css';
 import '@/styles/nhit-journey.css';
