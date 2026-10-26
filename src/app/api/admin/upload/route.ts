@@ -19,7 +19,10 @@ const ROOT = process.cwd();
 const UPLOAD_DIR = path.join(ROOT, 'public', 'uploads');
 const BUNDLED_DIR = path.join(ROOT, 'public', 'images');
 
-const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
+// Photos are compressed in the browser before they arrive (WebP, max 1920px),
+// so the raw limit is generous — it mainly protects against GIF/SVG files that
+// skip compression and any browser that cannot compress.
+const MAX_SIZE = 15 * 1024 * 1024; // 15 MB
 const ALLOWED_MIME: Record<string, string> = {
   'image/jpeg': 'jpg',
   'image/jpg': 'jpg',
@@ -101,7 +104,7 @@ export async function POST(req: Request) {
   }
   if (blob.size > MAX_SIZE) {
     return Response.json(
-      { error: 'Image is larger than 5 MB. Please compress it first.' },
+      { error: 'Image is larger than 15 MB. Please use a smaller file.' },
       { status: 400 }
     );
   }

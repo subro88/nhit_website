@@ -2,6 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ImagePlus, X, Upload, Loader2, Trash2, Check } from 'lucide-react';
+import { optimizeImage } from './optimizeImage';
 
 export interface LibImage {
   name: string;
@@ -50,6 +51,7 @@ export default function ImagePicker({
   const [bundled, setBundled] = useState<LibImage[]>([]);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState('');
+  const [okNote, setOkNote] = useState('');
   const fileRef = useRef<HTMLInputElement>(null);
 
   const load = useCallback(async (force = false) => {
@@ -61,6 +63,7 @@ export default function ImagePicker({
   useEffect(() => {
     if (open) {
       setErr('');
+      setOkNote('');
       load(!!cache === false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -68,15 +71,21 @@ export default function ImagePicker({
 
   async function upload(file: File) {
     setErr('');
+    setOkNote('');
     setBusy(true);
     try {
+      // Compress in the browser first — big photos become small WebP files.
+      const opt = await optimizeImage(file);
       const fd = new FormData();
-      fd.append('file', file);
+      fd.append('file', opt.file);
       const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
       const data = await res.json();
       if (!res.ok) {
         setErr(data.error || 'Upload failed');
       } else {
+        if (opt.optimized) {
+          setOkNote(`Compressed ${formatBytes(opt.originalSize)} → ${formatBytes(opt.finalSize)} (${opt.savedPct}% smaller) — same look, faster pages.`);
+        }
         cache = null;
         await load(true);
         setTab('uploads');
@@ -182,6 +191,12 @@ export default function ImagePicker({
             {err && (
               <div className="mx-5 mt-3 text-xs font-semibold text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
                 {err}
+              </div>
+            )}
+
+            {okNote && (
+              <div className="mx-5 mt-3 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-3 py-2">
+                {okNote}
               </div>
             )}
 

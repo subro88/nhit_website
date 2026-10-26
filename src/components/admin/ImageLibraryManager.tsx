@@ -3,10 +3,13 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Upload, Loader2, Trash2, ImagePlus, RefreshCw } from 'lucide-react';
 import { fetchLibrary, formatBytes, type LibImage } from './ImagePicker';
+import { optimizeImage } from './optimizeImage';
 
 /*
  * ImageLibraryManager — full-screen photo manager for /admin/images.
  * Upload new photos, browse everything, delete uploads you no longer need.
+ * Every photo is auto-compressed in the browser (resize + WebP) before it is
+ * saved, so the site keeps loading fast even with big camera photos.
  */
 export default function ImageLibraryManager() {
   const [uploads, setUploads] = useState<LibImage[]>([]);
@@ -15,6 +18,7 @@ export default function ImageLibraryManager() {
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [err, setErr] = useState('');
+  const [notes, setNotes] = useState<string[]>([]);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const load = useCallback(async () => {
@@ -30,21 +34,32 @@ export default function ImageLibraryManager() {
 
   async function upload(files: FileList) {
     setErr('');
+    setNotes([]);
     setBusy(true);
     let okCount = 0;
+    const saved: string[] = [];
     for (const file of Array.from(files)) {
       try {
+        // Compress in the browser first — big photos become small WebP files.
+        const opt = await optimizeImage(file);
         const fd = new FormData();
-        fd.append('file', file);
+        fd.append('file', opt.file);
         const res = await fetch('/api/admin/upload', { method: 'POST', body: fd });
         const data = await res.json();
-        if (res.ok) okCount++;
-        else setErr(data.error || `Could not upload ${file.name}`);
+        if (res.ok) {
+          okCount++;
+          if (opt.optimized) {
+            saved.push(
+              `${opt.file.name} — ${formatBytes(opt.originalSize)} → ${formatBytes(opt.finalSize)} (${opt.savedPct}% smaller)`
+            );
+          }
+        } else setErr(data.error || `Could not upload ${file.name}`);
       } catch {
         setErr(`Could not upload ${file.name}`);
       }
     }
     if (okCount > 0) setTab('uploads');
+    setNotes(saved);
     setBusy(false);
     if (fileRef.current) fileRef.current.value = '';
     load();
@@ -116,6 +131,19 @@ export default function ImageLibraryManager() {
         </div>
       )}
 
+      {!busy && notes.length > 0 && (
+        <div className="bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3">
+          <p className="text-sm font-bold text-emerald-800">
+            Compressed automatically before saving — same sharp look, much faster pages:
+          </p>
+          <ul className="mt-1.5 space-y-0.5 text-xs font-semibold text-emerald-700 list-disc list-inside">
+            {notes.map((n, i) => (
+              <li key={i}>{n}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       {loading ? (
         <div className="bg-white rounded-2xl border border-slate-200 p-10 text-center text-sm text-slate-500">
           Loading photo library…
@@ -166,7 +194,8 @@ export default function ImageLibraryManager() {
       {tab === 'uploads' && (
         <p className="text-xs text-slate-400">
           Uploaded photos are stored in the website's <code>public/uploads</code> folder and are included
-          when the site is published to GitHub.
+          when the site is published to GitHub. Large photos are automatically resized to max 1920px and
+          compressed to WebP before saving — no visible quality loss, much faster loading.
         </p>
       )}
     </div>
