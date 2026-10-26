@@ -627,11 +627,15 @@
 }
 .edu-outcomes__bg-media {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  height: 100svh;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Full-bleed cover: the player box always matches a 16:9 film, so the
+     video fills the whole background with no black letterbox bars. */
+  width: max(100vw, 177.78vh);
+  height: max(100vh, 56.25vw);
+  width: max(100vw, 177.78svh);
+  height: max(100svh, 56.25vw);
 }
 .edu-outcomes__bg-media img,
 .edu-outcomes__bg-media iframe {

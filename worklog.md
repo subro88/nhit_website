@@ -387,3 +387,16 @@ Work Log:
 Stage Summary:
 - Outcomes video background is now FIXED (cinematic, no parallax), content sits on a frosted glass panel, bars use a light theme tint
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 17-b
+Agent: main (Z.ai)
+Task: Outcomes video — full width / full-bleed background (user request)
+
+Work Log:
+- YouTube players letterbox the film inside the player box, so a viewport-sized player showed dark bars. Fixed with a 16:9 cover box: __bg-media now fixed, centered (top/left 50% + translate(-50%,-50%)) and sized width:max(100vw, 177.78vh/svh), height:max(100vh/svh, 56.25vw) — the player box always matches the film's aspect ratio, so the video fills the whole background edge-to-edge on any screen, cropping the overflow. clip-path on .edu-outcomes__bg still clips it to the section.
+- Verified: desktop media box 1600x900 on 1440x900 viewport (coversFullWidth true), mobile 1500x844 on 390x844 (coversFullWidth true); desktop + mobile screenshots show full-bleed video region, glass panel and light bars unchanged.
+
+Stage Summary:
+- Video background is now truly full width / full bleed, still fixed in place, clipped to the section
+- Committed locally, NOT pushed (waiting for user "push")
