@@ -230,3 +230,17 @@ Work Log:
 Stage Summary:
 - GitHub main = 3571227 (all 20 suggestions live)
 - Marquee z-order fix committed locally but NOT pushed - waiting for user "push"
+
+---
+Task ID: 10-b
+Agent: main (Z.ai)
+Task: Fix features section — white cards invisible on white page background
+
+Work Log:
+- User report: features section background and card color identical (white-on-white).
+- Diagnosis: body --edu-paper #ffffff; .services-item background #ffffff; .edu-features has no own background; .edu-about directly below is var(--edu-cloud) #f9f9f9 (so a gray band there would merge two sections).
+- Fix: extended .edu-achv ~ .edu-features rule in home-enrich.css with padding-bottom:38px + theme-tinted background: linear-gradient(180deg, rgba(var(--edu-primary-rgb),0.055), rgba(var(--edu-primary-rgb),0.02)). Applies only when marquee present (sibling selector), so hero-overlap design still works when strip hidden; tint auto-adapts to all 8 admin palettes via --edu-primary-rgb.
+- Verified: desktop + mobile screenshots — white cards clearly pop, distinct from gray About band below; marquee still fully visible. tsc clean, home 200.
+
+Stage Summary:
+- Features band now tinted per active palette; committed locally, NOT pushed (waiting for user "push")

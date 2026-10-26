@@ -84,7 +84,14 @@
    the overlap; when the strip is hidden via CMS the selector stops
    matching and the original hero-overlap effect returns automatically.
    (Specificity 0,2,0 beats both .edu-features margins incl. media queries.) */
-.edu-achv ~ .edu-features { margin-top: 0; padding-top: 30px; }
+.edu-achv ~ .edu-features {
+  margin-top: 0;
+  padding-top: 30px;
+  padding-bottom: 38px;
+  /* Soft theme-tinted band so the white cards pop (page is pure white).
+     Distinct from the neutral gray .edu-about band that follows. */
+  background: linear-gradient(180deg, rgba(var(--edu-primary-rgb), 0.055), rgba(var(--edu-primary-rgb), 0.02));
+}
 
 /* ───────────────────────────────────────────────
  * 2. Hero campus-tour pill + video lightbox
