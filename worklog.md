@@ -335,3 +335,39 @@ Work Log:
 Stage Summary:
 - Latest News card now styled, attractive and gently auto-scrolling upward; pause on hover; fully CMS-editable via existing ticker tab
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 15
+Agent: main (Z.ai)
+Task: Admin Photo Library — auto-compress large images without visible quality loss (user request)
+
+Work Log:
+- New src/components/admin/optimizeImage.ts: browser-side optimizer used before every admin upload. Resizes to max 1920px longest side, re-encodes WebP q0.85 (PNG alpha preserved; JPEG fallback with white base if WebP unsupported; EXIF orientation respected via createImageBitmap). SVG/GIF and files <=250KB pass through untouched; result kept only if >=5% smaller; any decode error falls back to original.
+- ImageLibraryManager.tsx: upload loop now optimizes each file first; green summary box lists "name — 9.8 MB -> 350 KB (97% smaller)" per file; footer note explains auto WebP compression.
+- ImagePicker.tsx (used by every editor form): same optimizer wired; green note inside the picker modal after upload.
+- upload route: MAX_SIZE 5MB -> 15MB (files arrive small after client compression; higher limit mainly for GIF/SVG passthrough), message updated.
+- QA with agent-browser: generated 10.3MB 5000x3400 noisy JPEG + 5.1MB transparent PNG; uploaded via real UI. Results: 9.8MB -> 350KB webp (97% smaller, 1920x1306), 4.9MB -> 277KB webp (94% smaller, 1920x1440 RGBA, corner alpha=0 => transparency preserved). ImagePicker path verified too (same note shown). Desktop 1440x900 + mobile 390x844 screenshots clean; thumbnails render.
+- Cleanup: deleted 3 test uploads from public/uploads, removed public/tmp-qa + generator images; uploads dir empty again.
+- tsc clean; / , /admissions , /departments , /blog all 200 (/admin/images 307 via curl = login redirect, correct).
+
+Stage Summary:
+- Every admin upload path now auto-compresses: max 1920px + WebP q85 => typically 90-97% smaller, visually identical, faster site
+- Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 16
+Agent: main (Z.ai)
+Task: Outcomes section — campus-tour video background with dark overlay + parallax (user request)
+
+Work Log:
+- OutcomesSection.tsx: new BackgroundVideo component. YouTube nocookie iframe (autoplay+mute+loop+playlist, controls=0, modestbranding, playsinline) injected ONLY when the section comes within 300px of the viewport (IntersectionObserver); maxresdefault poster shown before/behind it (falls back to hqdefault on error). Parallax: rAF-throttled passive scroll listener moves the media layer by (section-centre vs viewport-centre) * -0.12, clamped to +/-160px; disabled under prefers-reduced-motion.
+- Fixed self-caught bug: BackgroundVideo's sectionRef was never attached, so IO fell into the no-element path and parallax had no rect — ref now attached to the .edu-outcomes__bg wrapper (inset:0 = section box). Verified transforms flip sign with scroll (-38.3px at y3300, +33.7px at y3900; -53.1px mobile).
+- sections.css: .edu-outcomes gets position:relative; new __bg (z0, pointer-events none), __bg-media (oversized 140% height so parallax never shows edges), __bg-overlay dark gradient rgba(10,10,12) 0.92/0.85/0.94 (deepened from 0.9/0.78/0.92 for text readability over moving video); __grid z-index:1; reduced-motion kills the transform.
+- Data/CMS: outcomes.videoOn=true + outcomes.videoId=xcXh2vLC7VU (campus tour, same ID as hero.tourVideo) in homepage.json (+3 lines only); OutcomesData type extended; HomeEditor Outcomes tab gains "Play Campus Tour Video in Background" bool + "Background Video — YouTube ID" text field.
+- QA: fresh load at top => iframe NOT injected, poster only (lazy verified). Near viewport => iframe present, parallax running. Desktop 1440x900 + mobile 390x844 screenshots: dark cinematic band, chart + detail panel + outcomes all readable, video faintly visible behind overlay. YouTube showed bot-check in sandbox (datacenter IP) — plays normally for real visitors; poster+overlay degrade gracefully.
+- CMS round-trip via API: PUT videoOn=false => 'edu-outcomes__bg-media' gone from live HTML; revert => back. SSR HTML contains no youtube iframe (client-side lazy only).
+- tsc clean; /, /admissions, /departments, /blog all 200.
+
+Stage Summary:
+- Outcomes section now plays the campus tour as a parallax video background with dark overlay; lazy-loaded, reduced-motion safe, fully CMS-controllable (on/off + any YouTube ID)
+- Committed locally, NOT pushed (waiting for user "push")
