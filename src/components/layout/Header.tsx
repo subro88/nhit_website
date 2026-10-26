@@ -4,8 +4,16 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Phone, Mail, ChevronDown, Download, ShieldCheck, Wrench, GraduationCap, Building } from 'lucide-react';
+import type { BrandData } from '@/lib/homeTypes';
 
-export default function Header() {
+export default function Header({ brand }: { brand?: BrandData }) {
+  /* Brand fields come from Admin → Home Page Editor → Header Brand (with safe fallbacks). */
+  const logoSrc = brand?.logo || '/images/logo-nhit.png';
+  const showLogo = brand?.visible !== false;
+  const fullName = brand?.name || 'NHIT Durgapur';
+  const nameEm = brand?.nameEm && fullName.endsWith(brand.nameEm) ? brand.nameEm : '';
+  const nameMain = nameEm ? fullName.slice(0, fullName.length - nameEm.length).trimEnd() : fullName;
+  const brandSub = brand?.sub || 'The New Horizons Institute of Technology';
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
@@ -74,15 +82,21 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-[color:var(--edu-primary)] flex items-center justify-center text-white font-black text-xl shadow-md">
-            N
-          </div>
+          {/* Official institute emblem — editable in Admin → Home Page Editor → Header Brand */}
+          {showLogo && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={logoSrc}
+              alt={brandSub || 'NHIT logo'}
+              className="w-11 h-11 object-contain shrink-0"
+            />
+          )}
           <div>
             <div className="font-extrabold text-lg leading-tight text-gray-900 tracking-tight">
-              NHIT <span className="text-[color:var(--edu-primary)]">Durgapur</span>
+              {nameMain} {nameEm && <span className="text-[color:var(--edu-primary)]">{nameEm}</span>}
             </div>
             <div className="text-[10px] text-gray-500 font-medium tracking-wide">
-              The New Horizons Institute of Technology
+              {brandSub}
             </div>
           </div>
         </Link>

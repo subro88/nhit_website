@@ -41,6 +41,17 @@ const SECTIONS: SectionDef[] = [
     fields: [],
   },
   {
+    key: 'brand',
+    label: '0b · Header Brand',
+    desc: 'The institute emblem + name shown in the top header bar, footer and browser favicon.',
+    fields: [
+      { t: 'img', k: 'logo', label: 'Institute Logo / Emblem' },
+      { t: 'text', k: 'name', label: 'Full Name (e.g. NHIT Durgapur)' },
+      { t: 'text', k: 'nameEm', label: 'Red Part of the Name (must match the ending of Full Name)' },
+      { t: 'text', k: 'sub', label: 'Small Line Under the Name' },
+    ],
+  },
+  {
     key: 'hero',
     label: '1 · Hero Slider',
     desc: 'The big rotating banner at the top of the site.',

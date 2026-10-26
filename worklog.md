@@ -244,3 +244,32 @@ Work Log:
 
 Stage Summary:
 - Features band now tinted per active palette; committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 10-c
+Agent: main (Z.ai)
+Task: Push marquee z-order fix + features tint fix (user authorized)
+
+Work Log:
+- Pushed: 3571227..518ae02 main -> main (2 commits: marquee behind-cards fix, features band theme tint)
+
+Stage Summary:
+- GitHub main = 518ae02, working tree clean, all user-reported issues resolved
+
+---
+Task ID: 11
+Agent: main (Z.ai)
+Task: Replace site logo with official NHIT emblem (user-uploaded)
+
+Work Log:
+- Copied upload/nhit-logo.png-updated.png (red gear-badge emblem, archer motif) to public/images/logo-nhit.png (footer auto-updates) and src/app/icon.png (browser favicon, Next auto-links /icon.png - verified 200 + link tag).
+- New CMS "brand" section in homepage.json: {visible, logo, name, nameEm, sub}; homeTypes.ts BrandData interface; homepage.json reordered with brand after theme.
+- layout.tsx reads brand and passes to Header + Footer.
+- Header: "N" circle replaced with emblem img (44px, object-contain) + CMS-driven name (red nameEm suffix matched by endsWith) + sub-line; showLogo follows brand.visible.
+- Footer: about-widget logo img now uses brand.logo + brand.alt; hidden when brand.visible false.
+- HomeEditor: new tab "0b · Header Brand" (logo ImagePicker, name, nameEm, sub) - visible toggle hides emblem.
+- Tests: tsc clean; home+admin 200; favicon link tag present; browser QA header/footer show emblem; CMS round-trip (login > PUT brand.name TEST > live header reflects > revert > original back) PASS; admin tab renders.
+
+Stage Summary:
+- Official emblem live in header + footer + favicon, all CMS-editable in Admin > Home Page Editor > 0b Header Brand
+- Committed locally, NOT pushed (waiting for user "push")

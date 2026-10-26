@@ -3,8 +3,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import type { BrandData } from '@/lib/homeTypes';
 
-export default function Footer() {
+export default function Footer({ brand }: { brand?: BrandData }) {
+  const footerLogo = brand?.logo || '/images/logo-nhit.png';
+  const footerLogoAlt = brand?.sub || 'The New Horizons Institute of Technology Logo';
   const [modalOpen, setModalOpen] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
   const [prospectusForm, setProspectusForm] = useState({
@@ -90,18 +93,20 @@ export default function Footer() {
             <div className="row">
               <div className="col-lg-3 col-md-12">
                 <div className="about-widget">
-                  <img
-                    src="/images/logo-nhit.png"
-                    alt="The New Horizons Institute of Technology Logo"
-                    style={{
-                      maxHeight: '56px',
-                      width: 'auto',
-                      marginBottom: '15px',
-                      background: '#ffffff',
-                      padding: '6px 10px',
-                      borderRadius: '4px',
-                    }}
-                  />
+                  {brand?.visible !== false && (
+                    <img
+                      src={footerLogo}
+                      alt={footerLogoAlt}
+                      style={{
+                        maxHeight: '56px',
+                        width: 'auto',
+                        marginBottom: '15px',
+                        background: '#ffffff',
+                        padding: '6px 10px',
+                        borderRadius: '4px',
+                      }}
+                    />
+                  )}
                   <p>
                     The New Horizons Institute of Technology is one of eastern India&apos;s premier
                     polytechnic institutions, imparting top-tier diploma engineering and technical

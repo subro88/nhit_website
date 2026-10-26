@@ -12,6 +12,7 @@ import './globals.css';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { readJson, HOMEPAGE_FILE } from '@/lib/cmsStore';
+import type { BrandData } from '@/lib/homeTypes';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
@@ -40,9 +41,10 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  /* Site-wide accent palette, chosen in Admin → Home Page Editor → Theme Colors. */
-  const homeData = readJson<{ theme?: { palette?: string } }>(HOMEPAGE_FILE, {});
+  /* Site-wide accent palette + header/footer brand, chosen in Admin → Home Page Editor. */
+  const homeData = readJson<{ theme?: { palette?: string }; brand?: BrandData }>(HOMEPAGE_FILE, {});
   const palette = homeData?.theme?.palette || 'nhit-red';
+  const brand = homeData?.brand;
 
   return (
     <html
@@ -51,9 +53,9 @@ export default async function RootLayout({
       className={`${montserrat.variable} ${robotoCondensed.variable} edu-js`}
     >
       <body className="antialiased min-h-screen flex flex-col justify-between">
-        <Header />
+        <Header brand={brand} />
         <main className="flex-1">{children}</main>
-        <Footer />
+        <Footer brand={brand} />
       </body>
     </html>
   );

@@ -391,8 +391,17 @@ export interface MessagesFileData {
   secretary: MessageData;
 }
 
+export interface BrandData {
+  visible?: boolean;
+  logo?: string;
+  name?: string;
+  nameEm?: string;
+  sub?: string;
+}
+
 export interface HomepageData {
   theme?: { palette?: string };
+  brand?: BrandData;
   hero: HeroData;
   features: FeaturesData;
   about: AboutData;

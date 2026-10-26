@@ -2,6 +2,13 @@
   "theme": {
     "palette": "crimson"
   },
+  "brand": {
+    "visible": true,
+    "logo": "/images/logo-nhit.png",
+    "name": "NHIT Durgapur",
+    "nameEm": "Durgapur",
+    "sub": "The New Horizons Institute of Technology"
+  },
   "hero": {
     "visible": true,
     "slides": [
