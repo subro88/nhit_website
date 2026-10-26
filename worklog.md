@@ -213,3 +213,20 @@ Stage Summary:
 - All 20 suggestions implemented except notice-title rewrites (user's real notices left untouched — editable in Notices admin)
 - Note: YouTube bot-check appears only in headless QA; real browsers play embeds normally
 - Placement bars: CE/ETCE/ITI-Fitter seeded hidden (lower rates) — one click in admin to show
+
+---
+Task ID: 10
+Agent: main (Z.ai)
+Task: Push pending 20-suggestions work + fix achievements marquee hidden behind feature cards
+
+Work Log:
+- Pushed user-authorized work: 19eebe6..3571227 main -> main (21 files: tagline/SEO, real counters, AchievementsStrip, PlacementBarsSection, VideoStrip, SocialWall, AlumniVoices, VideoTourModal, HomeEditor tabs 15-19, dept partner lines). QA screenshots excluded via .gitignore.
+- Bug report: red achievements marquee appeared BEHIND the feature cards.
+- Diagnosis: .edu-features has margin-top:-74px + z-index:10 (designed to float cards over the hero bottom). With the marquee now between hero and features, the pulled-up cards covered the strip (measured: features top y=774 vs marquee y=800-848; elementFromPoint on strip returned feature card column).
+- Fix in src/styles/home-enrich.css: .edu-achv ~ .edu-features { margin-top:0; padding-top:30px } - sibling selector (specificity 0,2,0) beats both desktop (-74px) and mobile (-56px) margins; when the strip is hidden via CMS toggle the selector stops matching and the original hero-overlap effect returns automatically.
+- Verified: elementFromPoint on strip now returns edu-achv__item; desktop + mobile (390px) screenshots confirmed strip fully visible with clean 30px gap above cards; features margin-top computed 0px on mobile.
+- tsc --noEmit clean; 5 key pages 200.
+
+Stage Summary:
+- GitHub main = 3571227 (all 20 suggestions live)
+- Marquee z-order fix committed locally but NOT pushed - waiting for user "push"
