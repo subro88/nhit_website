@@ -8,8 +8,11 @@ export default function OutcomesSection({ data }: { data: OutcomesData }) {
   return (
     <section className="wp-block-group edu-outcomes">
       <div className="wp-block-group edu-container edu-outcomes__grid">
-        {/* 3D Isometric Bar Chart */}
-        <div className="edu-chart3d edu-reveal is-inview is-live" data-edu-parallax="-0.06">
+        {/* 3D Isometric Bar Chart — dense mode when showing year-wise data (5+ bars) */}
+        <div
+          className={`edu-chart3d edu-reveal is-inview is-live${bars.length > 4 ? ' edu-chart3d--dense' : ''}`}
+          data-edu-parallax="-0.06"
+        >
           <div className="edu-chart3d__scene">
             {bars.map((bar, i) => (
               <div key={i} className="edu-bar3d">

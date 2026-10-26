@@ -308,37 +308,72 @@
     "title": "Where an NHIT Diploma Takes You",
     "bars": [
       {
-        "value": "80–85%",
-        "label": "Placed / B.Tech*",
-        "heightPct": "88%",
-        "color": "#ff3115",
-        "colorDark": "#c92810"
+        "value": "98.5%",
+        "label": "2015–18",
+        "heightPct": "98.5%",
+        "color": "var(--edu-primary)",
+        "colorDark": "var(--edu-primary-dark)"
       },
       {
-        "value": "15–20%",
-        "label": "Higher Studies",
-        "heightPct": "52%",
+        "value": "97.1%",
+        "label": "2016–19",
+        "heightPct": "97.1%",
+        "color": "var(--edu-primary)",
+        "colorDark": "var(--edu-primary-dark)"
+      },
+      {
+        "value": "71.3%",
+        "label": "2017–20",
+        "heightPct": "71.3%",
+        "color": "var(--edu-primary)",
+        "colorDark": "var(--edu-primary-dark)"
+      },
+      {
+        "value": "85.5%",
+        "label": "2018–21",
+        "heightPct": "85.5%",
+        "color": "var(--edu-primary)",
+        "colorDark": "var(--edu-primary-dark)"
+      },
+      {
+        "value": "93.1%",
+        "label": "2019–22",
+        "heightPct": "93.1%",
+        "color": "var(--edu-primary)",
+        "colorDark": "var(--edu-primary-dark)"
+      },
+      {
+        "value": "92.0%",
+        "label": "2020–23",
+        "heightPct": "92%",
+        "color": "var(--edu-primary)",
+        "colorDark": "var(--edu-primary-dark)"
+      },
+      {
+        "value": "98.2%",
+        "label": "2021–24",
+        "heightPct": "98.2%",
+        "color": "var(--edu-primary)",
+        "colorDark": "var(--edu-primary-dark)"
+      },
+      {
+        "value": "91.7%",
+        "label": "2022–25*",
+        "heightPct": "91.7%",
         "color": "#00bcd4",
         "colorDark": "#0097a7"
-      },
-      {
-        "value": "14+",
-        "label": "Batches Out",
-        "heightPct": "66%",
-        "color": "#92278f",
-        "colorDark": "#6e1d6c"
       }
     ],
     "outcomes": [
       {
         "icon": "💼",
-        "title": "Industry Placement — 80–85%*",
-        "text": "Of interested, eligible students — recruited by Tata Motors, L&T, John Deere, JBM, TIL India, Anand Group, Sharda Motors and more."
+        "title": "2,098 Students Placed — 90.9%",
+        "text": "Of the 2,307 students who opted for placement since 2015 — recruited by SIGMA, Cummins, Daikin, RDC Concrete, CMS IT Services and more."
       },
       {
         "icon": "🎓",
-        "title": "B.Tech Lateral Entry — 15–20%",
-        "text": "Diploma holders enter B.E./B.Tech second year directly — the classic diploma-to-degree ladder."
+        "title": "1,254 Moved to B.Tech",
+        "text": "Diploma-to-degree lateral entry into second-year B.E./B.Tech — 84 from the 2022–25 batch alone, and 283 in our best year (2015–18)."
       },
       {
         "icon": "🚀",
@@ -346,7 +381,7 @@
         "text": "A few alumni have launched auto-sector enterprises, backed by our National Entrepreneurship Network MoU."
       }
     ],
-    "footnote": "* As recorded by NHIT placement records (2022) — batch-wise figures available at the T&P cell."
+    "footnote": "Batch-wise diploma placement %, sessions 2015–2025, as recorded by the NHIT T&P cell. * 2022–25 batch — figures update as ongoing drives close."
   },
   "recruiters": {
     "visible": true,

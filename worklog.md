@@ -273,3 +273,20 @@ Work Log:
 Stage Summary:
 - Official emblem live in header + footer + favicon, all CMS-editable in Admin > Home Page Editor > 0b Header Brand
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 12
+Agent: main (Z.ai)
+Task: Replace estimated outcomes 3D chart with real year-wise placement data (user-uploaded T&P summary)
+
+Work Log:
+- User provided "Placement Synopsis Diploma" (sessions 2015-2025): per-batch placed % (98.51, 97.06, 71.34, 85.54, 93.05, 91.98, 98.15, 91.73), totals 3,561 students / 2,307 opted / 2,098 placed (90.9%) / 1,254 higher studies.
+- homepage.json outcomes.bars: 3 estimated bars replaced with 8 real bars (chronological 2015-18 ... 2022-25*), heightPct = real placed %, all bars theme-aware var(--edu-primary), ongoing 2022-25 batch highlighted cyan (#00bcd4).
+- outcomes bullets updated with real aggregates: "2,098 Students Placed - 90.9%" (+real recruiters SIGMA/Cummins/Daikin/RDC/CMS), "1,254 Moved to B.Tech", Foundership via NEN kept; footnote cites T&P records + ongoing-batch note. Replaced stale Tata Motors/L&T/John Deere claims.
+- OutcomesSection.tsx: auto "edu-chart3d--dense" modifier when bars.length > 4.
+- sections.css dense mode: narrower bars (10.4%), slim 3D depth faces (7px), smaller value/label type; mobile <=640px rotates year labels -52deg.
+- Verified: desktop + mobile screenshots (8 bars legible, dip 71.3% visible, cyan highlight); tsc clean; home 200; CMS round-trip (PUT test value > live > revert > real data back) PASS.
+
+Stage Summary:
+- Outcomes chart now shows real NHIT T&P data, fully editable in Admin > Home Page Editor > Outcomes tab (bars list)
+- Committed locally, NOT pushed (waiting for user "push")

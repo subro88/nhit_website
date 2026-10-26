@@ -708,6 +708,25 @@
   .edu-bar3d__shaft { transform: scaleY(1); }
 }
 
+/* DENSE MODE — year-wise data (5+ bars): slimmer bars, smaller type */
+.edu-chart3d--dense .edu-chart3d__scene { gap: 1.4%; padding-inline: 1.5%; }
+.edu-chart3d--dense .edu-bar3d { width: 10.4%; height: 250px; }
+.edu-chart3d--dense .edu-bar3d__shaft::before,
+.edu-chart3d--dense .edu-bar3d__shaft::after { width: 7px; top: 2px; }
+.edu-chart3d--dense .edu-bar3d__value { font-size: 0.92rem; bottom: calc(100% + 18px); }
+.edu-chart3d--dense .edu-bar3d__label { font-size: 0.62rem; letter-spacing: 0.03em; top: calc(100% + 26px); }
+@media (max-width: 640px) {
+  .edu-chart3d--dense .edu-chart3d__scene { min-height: 240px; }
+  .edu-chart3d--dense .edu-bar3d { height: 190px; }
+  .edu-chart3d--dense .edu-bar3d__value { font-size: 0.7rem; bottom: calc(100% + 12px); }
+  .edu-chart3d--dense .edu-bar3d__label {
+    top: calc(100% + 30px);
+    transform: translateX(-50%) rotate(-52deg);
+    transform-origin: top right;
+    font-size: 0.56rem;
+  }
+}
+
 .edu-outcome-list { display: grid; gap: 1.1rem; margin-top: 1.6rem; }
 .edu-outcome {
   display: flex;
