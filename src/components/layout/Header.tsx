@@ -2,13 +2,18 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Menu, X, Phone, Mail, ChevronDown, Download, ShieldCheck, Wrench, GraduationCap, Building } from 'lucide-react';
 
 export default function Header() {
+  const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [mobileDeptsOpen, setMobileDeptsOpen] = useState(false);
   const [mobileItiOpen, setMobileItiOpen] = useState(false);
+
+  // The admin panel renders its own shell — never show the site header there.
+  if (pathname?.startsWith('/admin')) return null;
 
   const institutionalLinks = [
     { title: 'About Society (DEMDS)', href: '/about-society' },

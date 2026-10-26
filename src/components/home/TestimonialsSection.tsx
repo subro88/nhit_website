@@ -1,47 +1,16 @@
 import React from 'react';
+import type { TestimonialsData } from '@/lib/homeTypes';
 
-const testimonials = [
-  {
-    name: 'Debjit Ghosh',
-    role: 'Alumnus, Mechanical Engineering (Tata Motors)',
-    image: '/images/campus-04.jpg',
-    quote:
-      'NHIT provided the ideal balance of workshop hands-on practice and rigorous theory. The state-of-the-art CNC lab made the campus interview process seamless.',
-  },
-  {
-    name: 'Sneha Mukherjee',
-    role: 'Alumna, Computer Science & Technology',
-    image: '/images/campus-05.jpg',
-    quote:
-      'The high-speed computing lab and faculty mentoring gave me the technical edge to excel in lateral entry B.Tech and subsequent software development career.',
-  },
-  {
-    name: 'Subhash Mondal',
-    role: 'Parent of EE Diploma Graduate',
-    image: '/images/campus-06.jpg',
-    quote:
-      'The academic discipline, anti-ragging security, and dedicated placement cell gave our family complete peace of mind. My son secured direct campus placement.',
-  },
-  {
-    name: 'Rajesh Karmakar',
-    role: 'Alumnus, Automobile Engineering (Anand Group)',
-    image: '/images/campus-07.jpg',
-    quote:
-      'Live vehicle chassis test benches and industry visit exposure at NHIT Durgapur prepared me with real manufacturing skills that auto giants demand.',
-  },
-];
+export default function TestimonialsSection({ data }: { data: TestimonialsData }) {
+  const testimonials = data.items ?? [];
 
-export default function TestimonialsSection() {
   return (
     <section id="rs-testimonial" className="wp-block-group rs-testimonial bg5 sec-spacer">
       <div className="container edu-container">
         {/* Section Title */}
         <div className="sec-title mb-50 text-center">
-          <h2 className="white-color">WHAT PEOPLE SAY</h2>
-          <p className="white-color">
-            Voices of our alumni, industry recruiters, and parents reflecting 18+ years of technical
-            excellence at NHIT Durgapur.
-          </p>
+          <h2 className="white-color">{data.heading}</h2>
+          <p className="white-color">{data.sub}</p>
         </div>
 
         {/* 2x2 Testimonials Grid */}

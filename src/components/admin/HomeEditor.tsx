@@ -1,0 +1,968 @@
+'use client';
+
+import React, { useEffect, useMemo, useState } from 'react';
+import {
+  Save,
+  CheckCircle2,
+  AlertCircle,
+  FileJson,
+  FormInput,
+  ExternalLink,
+  RotateCcw,
+  ChevronUp,
+  ChevronDown,
+  Copy,
+  Trash2,
+  Plus,
+  Eye,
+  EyeOff,
+  ChevronRight,
+} from 'lucide-react';
+import ImagePicker from './ImagePicker';
+
+/* ────────────────────────────────────────────────────────────────────────
+ * Field spec — drives the whole editor UI from a small schema.
+ *──────────────────────────────────────────────────────────────────────── */
+type Spec =
+  | { t: 'text'; k: string; label: string; hint?: string }
+  | { t: 'area'; k: string; label: string; rows?: number; hint?: string }
+  | { t: 'img'; k: string; label: string; hint?: string }
+  | { t: 'num'; k: string; label: string; hint?: string }
+  | { t: 'bool'; k: string; label: string; hint?: string }
+  | { t: 'strlist'; k: string; label: string; hint?: string }
+  | {
+      t: 'list';
+      k: string;
+      label: string;
+      hint?: string;
+      titleField?: string;
+      def: Record<string, unknown>;
+      fields: Spec[];
+    };
+
+interface SectionDef {
+  key: string;
+  label: string;
+  desc: string;
+  fields: Spec[];
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+ * Deep get/set helpers for dotted paths ("stats.highest").
+ *──────────────────────────────────────────────────────────────────────── */
+function deepGet(obj: any, path: string): any {
+  return path.split('.').reduce<any>((o, k) => (o == null ? o : o[k]), obj);
+}
+
+function deepSet(obj: any, path: string, value: any): any {
+  const parts = path.split('.');
+  const clone = Array.isArray(obj) ? [...obj] : { ...obj };
+  let cur = clone;
+  for (let i = 0; i < parts.length - 1; i++) {
+    const key = parts[i];
+    cur[key] = cur[key] != null ? (Array.isArray(cur[key]) ? [...cur[key]] : { ...cur[key] }) : {};
+    cur = cur[key];
+  }
+  cur[parts[parts.length - 1]] = value;
+  return clone;
+}
+
+const inputCls =
+  'w-full px-4 py-2.5 text-sm rounded-xl border border-slate-200 focus:outline-none focus:border-[#9E0B0F] bg-slate-50 focus:bg-white transition';
+
+/* ────────────────────────────────────────────────────────────────────────
+ * Recursive field renderer.
+ *──────────────────────────────────────────────────────────────────────── */
+function SpecFields({
+  spec,
+  value,
+  onChange,
+}: {
+  spec: Spec[];
+  value: any;
+  onChange: (next: any) => void;
+}) {
+  return (
+    <>
+      {spec.map((f) => {
+        if (f.t === 'list') {
+          const arr: any[] = Array.isArray(deepGet(value, f.k)) ? deepGet(value, f.k) : [];
+          const update = (next: any[]) => onChange(deepSet(value, f.k, next));
+          return (
+            <ListEditor
+              key={f.k}
+              spec={f}
+              items={arr}
+              onChange={update}
+            />
+          );
+        }
+        if (f.t === 'strlist') {
+          const arr: string[] = Array.isArray(deepGet(value, f.k)) ? deepGet(value, f.k) : [];
+          const update = (next: string[]) => onChange(deepSet(value, f.k, next));
+          return (
+            <div key={f.k} className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-600">
+                  {f.label} ({arr.length})
+                </span>
+                <button
+                  type="button"
+                  onClick={() => update([...arr, ''])}
+                  className="inline-flex items-center gap-1 text-xs font-bold text-[#9E0B0F] hover:underline"
+                >
+                  <Plus className="w-3.5 h-3.5" /> Add Line
+                </button>
+              </div>
+              <div className="space-y-2">
+                {arr.map((line, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <input
+                      className={inputCls}
+                      value={line ?? ''}
+                      onChange={(e) => {
+                        const next = [...arr];
+                        next[i] = e.target.value;
+                        update(next);
+                      }}
+                    />
+                    <button
+                      type="button"
+                      title="Remove line"
+                      onClick={() => update(arr.filter((_, j) => j !== i))}
+                      className="p-2 text-slate-300 hover:text-red-600 transition"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+              {f.hint && <span className="block text-[11px] text-slate-400">{f.hint}</span>}
+            </div>
+          );
+        }
+
+        const v = deepGet(value, f.k);
+        const set = (nv: any) => onChange(deepSet(value, f.k, nv));
+
+        if (f.t === 'img') {
+          return (
+            <div key={f.k}>
+              <ImagePicker label={f.label} hint={f.hint} value={v ?? ''} onChange={(url) => set(url)} />
+            </div>
+          );
+        }
+        if (f.t === 'area') {
+          return (
+            <label key={f.k} className="block space-y-1.5">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-600">{f.label}</span>
+              <textarea rows={f.rows ?? 3} className={inputCls} value={v ?? ''} onChange={(e) => set(e.target.value)} />
+              {f.hint && <span className="block text-[11px] text-slate-400">{f.hint}</span>}
+            </label>
+          );
+        }
+        if (f.t === 'num') {
+          return (
+            <label key={f.k} className="block space-y-1.5">
+              <span className="text-xs font-bold uppercase tracking-wider text-slate-600">{f.label}</span>
+              <input
+                type="number"
+                step="any"
+                className={inputCls}
+                value={v ?? 0}
+                onChange={(e) => {
+                  const n = Number(e.target.value);
+                  set(Number.isFinite(n) ? n : 0);
+                }}
+              />
+              {f.hint && <span className="block text-[11px] text-slate-400">{f.hint}</span>}
+            </label>
+          );
+        }
+        if (f.t === 'bool') {
+          return (
+            <label key={f.k} className="flex items-center gap-2.5 py-1.5">
+              <input
+                type="checkbox"
+                className="w-4 h-4 accent-[#9E0B0F]"
+                checked={v === true}
+                onChange={(e) => set(e.target.checked)}
+              />
+              <span className="text-sm font-semibold text-slate-700">{f.label}</span>
+              {f.hint && <span className="text-[11px] text-slate-400">{f.hint}</span>}
+            </label>
+          );
+        }
+        return (
+          <label key={f.k} className="block space-y-1.5">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-600">{f.label}</span>
+            <input className={inputCls} value={v ?? ''} onChange={(e) => set(e.target.value)} />
+            {f.hint && <span className="block text-[11px] text-slate-400">{f.hint}</span>}
+          </label>
+        );
+      })}
+    </>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+ * Repeatable object list editor (add / remove / move / duplicate).
+ *──────────────────────────────────────────────────────────────────────── */
+function ListEditor({
+  spec,
+  items,
+  onChange,
+}: {
+  spec: Extract<Spec, { t: 'list' }>;
+  items: any[];
+  onChange: (next: any[]) => void;
+}) {
+  const [openIdx, setOpenIdx] = useState<number | null>(0);
+
+  const titleOf = (item: any, i: number) => {
+    if (spec.titleField) {
+      const v = deepGet(item, spec.titleField);
+      if (v) return String(v);
+    }
+    return `${spec.label.replace(/s$/, '')} ${i + 1}`;
+  };
+
+  function move(i: number, dir: -1 | 1) {
+    const j = i + dir;
+    if (j < 0 || j >= items.length) return;
+    const next = [...items];
+    [next[i], next[j]] = [next[j], next[i]];
+    onChange(next);
+    setOpenIdx(j);
+  }
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-center justify-between">
+        <span className="text-xs font-bold uppercase tracking-wider text-slate-600">
+          {spec.label} ({items.length})
+        </span>
+        <button
+          type="button"
+          onClick={() => {
+            onChange([...items, JSON.parse(JSON.stringify(spec.def))]);
+            setOpenIdx(items.length);
+          }}
+          className="inline-flex items-center gap-1 text-xs font-bold text-[#9E0B0F] hover:underline"
+        >
+          <Plus className="w-3.5 h-3.5" /> Add {spec.label.replace(/s$/, '')}
+        </button>
+      </div>
+      {spec.hint && <span className="block text-[11px] text-slate-400">{spec.hint}</span>}
+
+      <div className="space-y-2">
+        {items.map((item, i) => {
+          const open = openIdx === i;
+          return (
+            <div key={i} className="rounded-xl border border-slate-200 bg-slate-50/60 overflow-hidden">
+              <div className="flex items-center gap-1 px-3 py-2">
+                <button
+                  type="button"
+                  onClick={() => setOpenIdx(open ? null : i)}
+                  className="flex items-center gap-2 flex-1 min-w-0 text-left"
+                >
+                  <ChevronRight className={`w-4 h-4 text-slate-400 transition-transform ${open ? 'rotate-90' : ''}`} />
+                  <span className="text-sm font-bold text-slate-700 truncate">{titleOf(item, i)}</span>
+                </button>
+                <button type="button" title="Move up" onClick={() => move(i, -1)} className="p-1.5 text-slate-400 hover:text-slate-800 disabled:opacity-30" disabled={i === 0}>
+                  <ChevronUp className="w-4 h-4" />
+                </button>
+                <button type="button" title="Move down" onClick={() => move(i, 1)} className="p-1.5 text-slate-400 hover:text-slate-800 disabled:opacity-30" disabled={i === items.length - 1}>
+                  <ChevronDown className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  title="Duplicate"
+                  onClick={() => {
+                    const copy = JSON.parse(JSON.stringify(item));
+                    const next = [...items];
+                    next.splice(i + 1, 0, copy);
+                    onChange(next);
+                    setOpenIdx(i + 1);
+                  }}
+                  className="p-1.5 text-slate-400 hover:text-slate-800"
+                >
+                  <Copy className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
+                  title="Remove"
+                  onClick={() => {
+                    if (!confirm(`Remove this ${spec.label.replace(/s$/, '')}?`)) return;
+                    onChange(items.filter((_, j) => j !== i));
+                    setOpenIdx(null);
+                  }}
+                  className="p-1.5 text-slate-300 hover:text-red-600"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+              {open && (
+                <div className="px-4 pb-4 pt-1 space-y-3 border-t border-slate-100 bg-white">
+                  <SpecFields
+                    spec={spec.fields}
+                    value={item}
+                    onChange={(nextItem) => {
+                      const next = [...items];
+                      next[i] = nextItem;
+                      onChange(next);
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────────────────
+ * Section definitions — one tab per home page section.
+ *──────────────────────────────────────────────────────────────────────── */
+const SECTIONS: SectionDef[] = [
+  {
+    key: 'hero',
+    label: '1 · Hero Slider',
+    desc: 'The big rotating banner at the top of the site.',
+    fields: [
+      {
+        t: 'list',
+        k: 'slides',
+        label: 'Slides',
+        titleField: 'kicker',
+        def: {
+          bg: '', kicker: '', title: '', titleEm: '', titleAfter: '', text: '',
+          btnPrimaryText: 'Apply Now →', btnPrimaryHref: '/admissions',
+          btnGhostText: 'Explore Departments', btnGhostHref: '/departments',
+        },
+        fields: [
+          { t: 'img', k: 'bg', label: 'Background Photo' },
+          { t: 'text', k: 'kicker', label: 'Small Line Above Title' },
+          { t: 'text', k: 'title', label: 'Title (before red word)' },
+          { t: 'text', k: 'titleEm', label: 'Title — Red Word' },
+          { t: 'text', k: 'titleAfter', label: 'Title (after red word)' },
+          { t: 'area', k: 'text', label: 'Description' },
+          { t: 'text', k: 'btnPrimaryText', label: 'Primary Button Text' },
+          { t: 'text', k: 'btnPrimaryHref', label: 'Primary Button Link' },
+          { t: 'text', k: 'btnGhostText', label: 'Second Button Text' },
+          { t: 'text', k: 'btnGhostHref', label: 'Second Button Link' },
+        ],
+      },
+      {
+        t: 'list',
+        k: 'chips',
+        label: 'Floating Chips',
+        titleField: 'label',
+        def: { label: '', value: '', tone: '' },
+        fields: [
+          { t: 'text', k: 'label', label: 'Chip Label' },
+          { t: 'text', k: 'value', label: 'Chip Value' },
+          { t: 'text', k: 'tone', label: 'Style', hint: "Type 'red' for the red value, or leave empty" },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'features',
+    label: '2 · Features Grid',
+    desc: 'The four highlight cards under the hero (Est. 2007, Affiliation…).',
+    fields: [
+      {
+        t: 'list',
+        k: 'items',
+        label: 'Feature Cards',
+        titleField: 'title',
+        def: { icon: 'fa-star', title: '', desc: '' },
+        fields: [
+          { t: 'text', k: 'icon', label: 'Icon Class', hint: 'Font Awesome class, e.g. fa-graduation-cap, fa-flask' },
+          { t: 'text', k: 'title', label: 'Title' },
+          { t: 'area', k: 'desc', label: 'Description' },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'about',
+    label: '3 · About Block',
+    desc: 'About NHIT text, checklist and buttons in the third section.',
+    fields: [
+      { t: 'img', k: 'image', label: 'Photo' },
+      { t: 'text', k: 'imageAlt', label: 'Photo Alt Text' },
+      { t: 'text', k: 'badgeYear', label: 'Badge Year' },
+      { t: 'text', k: 'badgeLabel', label: 'Badge Label' },
+      { t: 'text', k: 'title', label: 'Heading' },
+      { t: 'area', k: 'text', label: 'Paragraph' },
+      { t: 'text', k: 'textBold', label: 'Bold Ending Of Paragraph' },
+      { t: 'strlist', k: 'checklist', label: 'Checklist Lines' },
+      { t: 'text', k: 'btnPrimaryText', label: 'Primary Button Text' },
+      { t: 'text', k: 'btnPrimaryHref', label: 'Primary Button Link' },
+      { t: 'text', k: 'btnOutlineText', label: 'Outline Button Text' },
+      { t: 'text', k: 'btnOutlineHref', label: 'Outline Button Link' },
+    ],
+  },
+  {
+    key: 'ticker',
+    label: '4 · News Ticker',
+    desc: 'The scrolling “Latest News” strip next to the About block.',
+    fields: [
+      { t: 'text', k: 'heading', label: 'Heading' },
+      { t: 'text', k: 'footText', label: 'Bottom Link Text' },
+      { t: 'text', k: 'footHref', label: 'Bottom Link URL' },
+      {
+        t: 'list',
+        k: 'items',
+        label: 'Ticker Items',
+        titleField: 'title',
+        def: { day: '01', mon: 'JAN', title: '', link: '/circulars', isNew: false },
+        fields: [
+          { t: 'text', k: 'day', label: 'Day', hint: 'Two digits, e.g. 07' },
+          { t: 'text', k: 'mon', label: 'Month', hint: 'Three letters, e.g. SEP' },
+          { t: 'text', k: 'title', label: 'Notice Title' },
+          { t: 'text', k: 'link', label: 'Link' },
+          { t: 'bool', k: 'isNew', label: 'Show NEW badge' },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'counters',
+    label: '5 · Counter Numbers',
+    desc: 'The animated numbers strip (Years, Placements, Recruiters…).',
+    fields: [
+      {
+        t: 'list',
+        k: 'items',
+        label: 'Counters',
+        titleField: 'label',
+        def: { target: 100, prefix: '', suffix: '+', label: '' },
+        fields: [
+          { t: 'num', k: 'target', label: 'Number' },
+          { t: 'text', k: 'prefix', label: 'Before Number' },
+          { t: 'text', k: 'suffix', label: 'After Number', hint: 'e.g. +' },
+          { t: 'text', k: 'label', label: 'Label Under Number' },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'courses',
+    label: '6 · Course Cards',
+    desc: 'The six diploma course cards and the ITI banner below them.',
+    fields: [
+      { t: 'text', k: 'kicker', label: 'Small Line Above Title' },
+      { t: 'text', k: 'title', label: 'Heading' },
+      { t: 'text', k: 'sub', label: 'Sub Heading' },
+      {
+        t: 'list',
+        k: 'items',
+        label: 'Course Cards',
+        titleField: 'title',
+        def: { slug: '', code: '', title: '', tagline: '', image: '', labs: '07 LABS', intake: '60 SEATS' },
+        fields: [
+          { t: 'text', k: 'slug', label: 'Department Link Slug', hint: 'e.g. computer-science-technology' },
+          { t: 'text', k: 'code', label: 'Short Code', hint: 'e.g. CST' },
+          { t: 'text', k: 'title', label: 'Course Title' },
+          { t: 'area', k: 'tagline', label: 'Card Text' },
+          { t: 'img', k: 'image', label: 'Card Photo' },
+          { t: 'text', k: 'labs', label: 'Labs Text' },
+          { t: 'text', k: 'intake', label: 'Seats Text' },
+        ],
+      },
+      { t: 'text', k: 'itiHub.badge', label: 'ITI Banner — Small Badge' },
+      { t: 'text', k: 'itiHub.title', label: 'ITI Banner — Title' },
+      { t: 'area', k: 'itiHub.text', label: 'ITI Banner — Text' },
+      { t: 'text', k: 'itiHub.btn1Text', label: 'ITI Button 1 Text' },
+      { t: 'text', k: 'itiHub.btn1Href', label: 'ITI Button 1 Link' },
+      { t: 'text', k: 'itiHub.btn2Text', label: 'ITI Button 2 Text' },
+      { t: 'text', k: 'itiHub.btn2Href', label: 'ITI Button 2 Link' },
+      { t: 'text', k: 'itiHub.btn3Text', label: 'ITI Button 3 Text' },
+      { t: 'text', k: 'itiHub.btn3Href', label: 'ITI Button 3 Link' },
+    ],
+  },
+  {
+    key: 'outcomes',
+    label: '7 · Outcomes',
+    desc: 'Dark section with the 3D bar chart and outcome highlights.',
+    fields: [
+      { t: 'text', k: 'kicker', label: 'Small Line Above Title' },
+      { t: 'text', k: 'title', label: 'Heading' },
+      {
+        t: 'list',
+        k: 'bars',
+        label: 'Chart Bars',
+        titleField: 'label',
+        def: { value: '', label: '', heightPct: '60%', color: '#ff3115', colorDark: '#c92810' },
+        fields: [
+          { t: 'text', k: 'value', label: 'Value Shown' },
+          { t: 'text', k: 'label', label: 'Label Under Bar' },
+          { t: 'text', k: 'heightPct', label: 'Bar Height', hint: 'Percentage, e.g. 80%' },
+          { t: 'text', k: 'color', label: 'Bar Color (hex)' },
+          { t: 'text', k: 'colorDark', label: 'Bar Dark Color (hex)' },
+        ],
+      },
+      {
+        t: 'list',
+        k: 'outcomes',
+        label: 'Outcome Highlights',
+        titleField: 'title',
+        def: { icon: '💼', title: '', text: '' },
+        fields: [
+          { t: 'text', k: 'icon', label: 'Emoji Icon' },
+          { t: 'text', k: 'title', label: 'Title' },
+          { t: 'area', k: 'text', label: 'Text' },
+        ],
+      },
+      { t: 'area', k: 'footnote', label: 'Footnote', rows: 2 },
+    ],
+  },
+  {
+    key: 'recruiters',
+    label: '8 · Recruiters Wall',
+    desc: 'Recruiter logos and name plates.',
+    fields: [
+      { t: 'text', k: 'kicker', label: 'Small Line Above Title' },
+      { t: 'text', k: 'title', label: 'Heading' },
+      { t: 'text', k: 'sub', label: 'Sub Heading' },
+      {
+        t: 'list',
+        k: 'logos',
+        label: 'Logo Cells',
+        titleField: 'alt',
+        def: { src: '', alt: '' },
+        fields: [
+          { t: 'img', k: 'src', label: 'Logo Image' },
+          { t: 'text', k: 'alt', label: 'Company Name (alt)' },
+        ],
+      },
+      {
+        t: 'list',
+        k: 'marks',
+        label: 'Name Plates',
+        titleField: 'name',
+        def: { name: '', sub: '' },
+        fields: [
+          { t: 'text', k: 'name', label: 'Company Name' },
+          { t: 'text', k: 'sub', label: 'Small Line Under Name' },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'placementRadar',
+    label: '9 · Placement Radar',
+    desc: 'The dark cockpit console with branch tabs, milestones and job roles.',
+    fields: [
+      { t: 'text', k: 'kicker', label: 'Small Line Above Title' },
+      { t: 'text', k: 'title', label: 'Heading (before red part)' },
+      { t: 'text', k: 'titleEm', label: 'Heading — Red Part' },
+      { t: 'text', k: 'titleAfter', label: 'Heading (after red part)' },
+      { t: 'area', k: 'sub', label: 'Sub Heading' },
+      { t: 'text', k: 'pipelineTitle', label: 'Pipeline Panel Title' },
+      { t: 'text', k: 'pipelineBadge', label: 'Pipeline Panel Badge' },
+      { t: 'text', k: 'deckHeading', label: 'Recruiter Deck Heading' },
+      { t: 'text', k: 'deckLegend', label: 'Deck Small Note' },
+      { t: 'text', k: 'ctaTitle', label: 'Bottom Banner Title' },
+      { t: 'area', k: 'ctaText', label: 'Bottom Banner Text', rows: 2 },
+      { t: 'text', k: 'ctaBtn1Text', label: 'Banner Button 1 Text' },
+      { t: 'text', k: 'ctaBtn1Href', label: 'Banner Button 1 Link' },
+      { t: 'text', k: 'ctaBtn2Text', label: 'Banner Button 2 Text' },
+      { t: 'text', k: 'ctaBtn2Href', label: 'Banner Button 2 Link' },
+      {
+        t: 'list',
+        k: 'branches',
+        label: 'Branch Tabs',
+        titleField: 'tabLabel',
+        def: {
+          id: '', tabLabel: '', tabTag: '', title: '', icon: '🎓', desc: '',
+          stats: { highest: 4, avg: 2.5, rate: 90, recruiters: 40 },
+          milestones: [], roles: [],
+        },
+        fields: [
+          { t: 'text', k: 'id', label: 'Branch Key', hint: 'Short unique key, e.g. me — used internally' },
+          { t: 'text', k: 'tabLabel', label: 'Tab Label' },
+          { t: 'text', k: 'tabTag', label: 'Tab Small Tag' },
+          { t: 'text', k: 'title', label: 'Console Title' },
+          { t: 'text', k: 'icon', label: 'Console Emoji' },
+          { t: 'area', k: 'desc', label: 'Console Subtitle', rows: 2 },
+          { t: 'num', k: 'stats.highest', label: 'Highest CTC (LPA)' },
+          { t: 'num', k: 'stats.avg', label: 'Average CTC (LPA)' },
+          { t: 'num', k: 'stats.rate', label: 'Placement Rate (%)' },
+          { t: 'num', k: 'stats.recruiters', label: 'Recruiters Count' },
+          {
+            t: 'list',
+            k: 'milestones',
+            label: 'Milestones',
+            titleField: 'title',
+            def: { step: '', title: '', desc: '' },
+            fields: [
+              { t: 'text', k: 'step', label: 'Phase Label' },
+              { t: 'text', k: 'title', label: 'Milestone Title' },
+              { t: 'area', k: 'desc', label: 'Milestone Text', rows: 2 },
+            ],
+          },
+          {
+            t: 'list',
+            k: 'roles',
+            label: 'Job Role Cards',
+            titleField: 'company',
+            def: { company: '', tag: '', tagClass: 'nhit-tag--auto', title: '', scope: '', salary: '' },
+            fields: [
+              { t: 'text', k: 'company', label: 'Company' },
+              { t: 'text', k: 'tag', label: 'Tag Text' },
+              { t: 'text', k: 'tagClass', label: 'Tag Style', hint: 'nhit-tag--auto, nhit-tag--infra or nhit-tag--tech' },
+              { t: 'text', k: 'title', label: 'Job Title' },
+              { t: 'area', k: 'scope', label: 'Job Scope', rows: 2 },
+              { t: 'text', k: 'salary', label: 'Package Range' },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'careerJourney',
+    label: '10 · Career Journey',
+    desc: 'The pinned, scroll-driven student transformation track.',
+    fields: [
+      { t: 'text', k: 'kicker', label: 'Small Line Above Title' },
+      { t: 'text', k: 'title', label: 'Heading (before red part)' },
+      { t: 'text', k: 'titleEm', label: 'Heading — Red Part' },
+      { t: 'area', k: 'sub', label: 'Sub Heading' },
+      { t: 'text', k: 'ctaTitle', label: 'Bottom Banner Title' },
+      { t: 'area', k: 'ctaText', label: 'Bottom Banner Text', rows: 2 },
+      { t: 'text', k: 'ctaBtn1Text', label: 'Banner Button 1 Text' },
+      { t: 'text', k: 'ctaBtn1Href', label: 'Banner Button 1 Link' },
+      { t: 'text', k: 'ctaBtn2Text', label: 'Banner Button 2 Text' },
+      { t: 'text', k: 'ctaBtn2Href', label: 'Banner Button 2 Link' },
+      {
+        t: 'list',
+        k: 'stages',
+        label: 'Journey Stages',
+        titleField: 'title',
+        def: {
+          id: 0, phase: '', title: '', desc: '', tag: '', pin: '🎒',
+          accent: '#d90429', glow: 'rgba(217, 4, 41, 0.28)', image: '',
+          pills: [],
+          metric1: { label: '', value: '' },
+          metric2: { label: '', value: '' },
+        },
+        fields: [
+          { t: 'num', k: 'id', label: 'Stage Number' },
+          { t: 'text', k: 'phase', label: 'Phase Label' },
+          { t: 'text', k: 'title', label: 'Stage Title' },
+          { t: 'area', k: 'desc', label: 'Stage Text', rows: 4 },
+          { t: 'text', k: 'tag', label: 'Card Tag Line' },
+          { t: 'text', k: 'pin', label: 'Map Pin Emoji' },
+          { t: 'text', k: 'accent', label: 'Theme Color (hex)' },
+          { t: 'text', k: 'glow', label: 'Glow Color (rgba)' },
+          { t: 'img', k: 'image', label: 'Stage Photo' },
+          {
+            t: 'list',
+            k: 'pills',
+            label: 'Pills',
+            titleField: 'text',
+            def: { icon: 'CheckCircle', text: '' },
+            fields: [
+              { t: 'text', k: 'icon', label: 'Icon Name', hint: 'CheckCircle, Book, Compass, Network, Building, Users, Wifi, IdCard, Cog, Cpu, Car, Code, MessageSquare, UserCheck, FileText, Video, Briefcase, Award, Rocket, GraduationCap' },
+              { t: 'text', k: 'text', label: 'Pill Text' },
+            ],
+          },
+          { t: 'text', k: 'metric1.label', label: 'Metric 1 Label' },
+          { t: 'text', k: 'metric1.value', label: 'Metric 1 Value' },
+          { t: 'text', k: 'metric2.label', label: 'Metric 2 Label' },
+          { t: 'text', k: 'metric2.value', label: 'Metric 2 Value' },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'testimonials',
+    label: '11 · Testimonials',
+    desc: '“What People Say” — alumni and parent cards with photos.',
+    fields: [
+      { t: 'text', k: 'heading', label: 'Heading' },
+      { t: 'area', k: 'sub', label: 'Sub Text', rows: 2 },
+      {
+        t: 'list',
+        k: 'items',
+        label: 'Testimonials',
+        titleField: 'name',
+        def: { name: '', role: '', image: '', quote: '' },
+        fields: [
+          { t: 'text', k: 'name', label: 'Person Name' },
+          { t: 'text', k: 'role', label: 'Role / Batch Line' },
+          { t: 'img', k: 'image', label: 'Person Photo' },
+          { t: 'area', k: 'quote', label: 'Quote', rows: 4 },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'gallery',
+    label: '12 · Campus Gallery',
+    desc: 'The photo grid of campus life.',
+    fields: [
+      { t: 'text', k: 'kicker', label: 'Small Line Above Title' },
+      { t: 'text', k: 'title', label: 'Heading' },
+      {
+        t: 'list',
+        k: 'items',
+        label: 'Gallery Photos',
+        titleField: 'caption',
+        def: { src: '', alt: '', caption: '' },
+        fields: [
+          { t: 'img', k: 'src', label: 'Photo' },
+          { t: 'text', k: 'alt', label: 'Alt Text' },
+          { t: 'text', k: 'caption', label: 'Caption' },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'leadForm',
+    label: '13 · Inquiry Form',
+    desc: 'The admission enquiry form block and its side text.',
+    fields: [
+      { t: 'text', k: 'title', label: 'Heading' },
+      { t: 'area', k: 'text', label: 'Paragraph' },
+      { t: 'strlist', k: 'perks', label: 'Perk Lines' },
+      { t: 'area', k: 'privacyNote', label: 'Privacy Note', rows: 2 },
+      { t: 'text', k: 'submitText', label: 'Submit Button Text' },
+      { t: 'area', k: 'successNote', label: 'Success Message', rows: 2 },
+      { t: 'text', k: 'brochureUrl', label: 'Brochure PDF Link' },
+    ],
+  },
+];
+
+/* ────────────────────────────────────────────────────────────────────────
+ * The editor itself.
+ *──────────────────────────────────────────────────────────────────────── */
+export default function HomeEditor() {
+  const [data, setData] = useState<any>(null);
+  const [activeKey, setActiveKey] = useState<string>('hero');
+  const [mode, setMode] = useState<'form' | 'json'>('form');
+  const [sectionJson, setSectionJson] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const res = await fetch('/api/admin/homepage');
+      const json = await res.json();
+      if (res.ok) {
+        setData(json.homepage);
+      } else {
+        setMsg({ ok: false, text: json.error || 'Could not load home page content' });
+      }
+      setLoading(false);
+    })();
+  }, []);
+
+  const activeIdx = useMemo(
+    () => SECTIONS.findIndex((s) => s.key === activeKey),
+    [activeKey]
+  );
+  const activeSection = SECTIONS[activeIdx];
+
+  useEffect(() => {
+    if (data) setSectionJson(JSON.stringify(data[activeSection.key], null, 2));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeKey, data === null]);
+
+  function setSectionValue(next: any) {
+    setData((prev: any) => ({ ...prev, [activeSection.key]: next }));
+  }
+
+  function toggleVisible() {
+    setData((prev: any) => ({
+      ...prev,
+      [activeSection.key]: { ...prev[activeSection.key], visible: prev[activeSection.key]?.visible === false },
+    }));
+  }
+
+  async function save() {
+    setMsg(null);
+    let payload = data;
+
+    if (mode === 'json') {
+      try {
+        const parsed = JSON.parse(sectionJson);
+        payload = { ...data, [activeSection.key]: parsed };
+        setData(payload);
+      } catch (e: any) {
+        setMsg({ ok: false, text: `JSON error: ${e.message}` });
+        return;
+      }
+    }
+
+    setBusy(true);
+    const res = await fetch('/api/admin/homepage', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ homepage: payload }),
+    });
+    const json = await res.json();
+    setBusy(false);
+
+    if (res.ok) {
+      setMsg({ ok: true, text: 'Saved! The live home page is updated.' });
+    } else {
+      setMsg({ ok: false, text: json.error || 'Could not save' });
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="bg-white rounded-2xl border border-slate-200 p-10 text-center text-sm text-slate-500">
+        Loading home page content…
+      </div>
+    );
+  }
+
+  if (!data) {
+    return (
+      <div className="bg-white rounded-2xl border border-red-200 p-10 text-center text-sm text-red-700">
+        {msg?.text || 'Could not load home page content.'}
+      </div>
+    );
+  }
+
+  const sectionData = data[activeSection.key] ?? {};
+  const isVisible = sectionData?.visible !== false;
+
+  return (
+    <div className="space-y-5">
+      {/* Section switcher */}
+      <div className="flex flex-wrap gap-2">
+        {SECTIONS.map((s) => {
+          const off = data[s.key]?.visible === false;
+          return (
+            <button
+              key={s.key}
+              onClick={() => setActiveKey(s.key)}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition border ${
+                s.key === activeKey
+                  ? 'bg-[#9E0B0F] text-white border-[#9E0B0F] shadow'
+                  : 'bg-white text-slate-600 border-slate-200 hover:border-slate-400'
+              }`}
+            >
+              {s.label}
+              {off && <span className="ml-1.5 opacity-70">•</span>}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Toolbar */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <div className="inline-flex bg-white rounded-xl border border-slate-200 p-1 shadow-sm">
+            <button
+              onClick={() => {
+                setMode('form');
+                setSectionJson(JSON.stringify(sectionData, null, 2));
+              }}
+              className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition ${
+                mode === 'form' ? 'bg-slate-900 text-white' : 'text-slate-500 hover:text-slate-900'
+              }`}
+            >
+              <FormInput className="w-3.5 h-3.5" /> Content Form
+            </button>
+            <button
+              onClick={() => setMode('json')}
+              className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition ${
+                mode === 'json' ? 'bg-slate-900 text-white' : 'text-slate-500 hover:text-slate-900'
+              }`}
+            >
+              <FileJson className="w-3.5 h-3.5" /> Advanced JSON
+            </button>
+          </div>
+
+          <button
+            onClick={toggleVisible}
+            className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold border transition ${
+              isVisible
+                ? 'bg-white text-slate-600 border-slate-200 hover:border-slate-400'
+                : 'bg-amber-50 text-amber-700 border-amber-300'
+            }`}
+          >
+            {isVisible ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
+            {isVisible ? 'Section Visible' : 'Section Hidden'}
+          </button>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <a
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:text-slate-900 border border-slate-200 bg-white"
+          >
+            <ExternalLink className="w-3.5 h-3.5" /> View Live Page
+          </a>
+          <button
+            onClick={save}
+            disabled={busy}
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-[#9E0B0F] hover:bg-[#7B080B] text-white text-xs font-bold shadow disabled:opacity-60"
+          >
+            <Save className="w-3.5 h-3.5" />
+            {busy ? 'Saving…' : 'Save Changes'}
+          </button>
+        </div>
+      </div>
+
+      {/* Message */}
+      {msg && (
+        <div
+          className={`flex items-center gap-2 text-sm rounded-xl px-4 py-3 ${
+            msg.ok
+              ? 'text-emerald-700 bg-emerald-50 border border-emerald-200'
+              : 'text-red-700 bg-red-50 border border-red-200'
+          }`}
+        >
+          {msg.ok ? <CheckCircle2 className="w-4 h-4 shrink-0" /> : <AlertCircle className="w-4 h-4 shrink-0" />}
+          {msg.text}
+        </div>
+      )}
+
+      <p className="text-xs text-slate-500">{activeSection.desc}</p>
+
+      {mode === 'form' ? (
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 space-y-5">
+          <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">
+            {activeSection.label}
+          </h3>
+          <SpecFields spec={activeSection.fields} value={sectionData} onChange={setSectionValue} />
+        </div>
+      ) : (
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <div className="flex items-center justify-between px-5 py-3 border-b border-slate-100 bg-slate-50">
+            <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">
+              Section data (JSON) — {activeSection.label}
+            </span>
+            <button
+              onClick={() => setSectionJson(JSON.stringify(sectionData, null, 2))}
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-slate-900"
+            >
+              <RotateCcw className="w-3.5 h-3.5" /> Reset
+            </button>
+          </div>
+          <textarea
+            value={sectionJson}
+            onChange={(e) => setSectionJson(e.target.value)}
+            spellCheck={false}
+            className="w-full h-[560px] p-5 font-mono text-xs leading-relaxed text-slate-800 focus:outline-none resize-y bg-white"
+          />
+        </div>
+      )}
+    </div>
+  );
+}

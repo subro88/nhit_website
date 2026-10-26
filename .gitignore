@@ -31,3 +31,19 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# workspace
+/skills/
+/nhit_website/
+/dev.log
+.env
+/download/
+/upload/
+/.next/
+/db/
+/agent-ctx/
+
+# CMS private files
+/cms-users.json
+/cms-secret.txt
+/cms-backups/

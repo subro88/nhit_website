@@ -4,166 +4,63 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import anime from 'animejs';
-import { 
-  GraduationCap, 
-  ChevronLeft, 
-  ChevronRight, 
-  Play, 
-  Pause, 
-  CheckCircle, 
-  Book, 
-  Compass, 
-  Network, 
-  Building, 
-  Users, 
-  Wifi, 
-  IdCard, 
-  Cog, 
-  Cpu, 
-  Car, 
-  Code, 
-  MessageSquare, 
-  UserCheck, 
-  FileText, 
-  Video, 
-  Briefcase, 
-  Award, 
-  Rocket 
+import type { CareerJourneyData, JourneyStage } from '@/lib/homeTypes';
+import {
+  GraduationCap,
+  ChevronLeft,
+  ChevronRight,
+  Play,
+  Pause,
+  CheckCircle,
+  Book,
+  Compass,
+  Network,
+  Building,
+  Users,
+  Wifi,
+  IdCard,
+  Cog,
+  Cpu,
+  Car,
+  Code,
+  MessageSquare,
+  UserCheck,
+  FileText,
+  Video,
+  Briefcase,
+  Award,
+  Rocket
 } from 'lucide-react';
 
-interface Stage {
-  id: number;
-  phase: string;
-  title: string;
-  desc: string;
-  tag: string;
-  pin: string;
-  accent: string;
-  glow: string;
-  image: string;
-  pills: { icon: any; text: string }[];
-  metric1: { label: string; value: string };
-  metric2: { label: string; value: string };
-}
+/*
+ * Icon names stored in homepage.json (careerJourney.stages[].pills[].icon)
+ * are resolved here. Unknown names fall back to CheckCircle.
+ */
+const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
+  GraduationCap,
+  CheckCircle,
+  Book,
+  Compass,
+  Network,
+  Building,
+  Users,
+  Wifi,
+  IdCard,
+  Cog,
+  Cpu,
+  Car,
+  Code,
+  MessageSquare,
+  UserCheck,
+  FileText,
+  Video,
+  Briefcase,
+  Award,
+  Rocket,
+};
 
-const STAGES: Stage[] = [
-  {
-    id: 0,
-    phase: 'PHASE 01 / 06 • FOUNDATION',
-    title: 'The Aspiring School Student',
-    desc: 'You have just completed Class 10 with a spark of engineering curiosity. Rather than spending 2 years on rote memorization, NHIT offers a direct, practical gateway into technical education where foundational science meets hands-on discovery.',
-    tag: '🎒 Age 15 • Class 10 Pass',
-    pin: '🎒',
-    accent: '#d90429',
-    glow: 'rgba(217, 4, 41, 0.28)',
-    image: '/images/journey/stage-1-school.jpg',
-    pills: [
-      { icon: CheckCircle, text: 'Direct Entry After 10th' },
-      { icon: Book, text: 'Core Applied Sciences' },
-      { icon: Compass, text: 'Career Counselling' },
-      { icon: Network, text: '6 Specialised Branches' }
-    ],
-    metric1: { label: 'ELIGIBILITY PATH', value: 'Class 10 / JEXPO' },
-    metric2: { label: 'EARLY ADVANTAGE', value: 'Hands-on at Age 15' }
-  },
-  {
-    id: 1,
-    phase: 'PHASE 02 / 06 • CAMPUS INDUCTION',
-    title: 'Welcome to NHIT Durgapur',
-    desc: 'Stepping into Eastern India’s premier polytechnic campus. Over 2,000 peers, 40+ state-of-the-art laboratories, a digital library, and dedicated faculty mentor groups welcome you into a vibrant, collaborative engineering community.',
-    tag: '🏫 Day 01 • Campus Induction',
-    pin: '🏫',
-    accent: '#f77f00',
-    glow: 'rgba(247, 127, 0, 0.28)',
-    image: '/images/journey/stage-2-fresher.jpg',
-    pills: [
-      { icon: Building, text: 'Est. 2007 Legacy' },
-      { icon: Users, text: '2,000+ Student Community' },
-      { icon: Wifi, text: 'High-Tech Wi-Fi Campus' },
-      { icon: IdCard, text: '1-on-1 Faculty Mentorship' }
-    ],
-    metric1: { label: 'CAMPUS LABS', value: '40+ Advanced Setups' },
-    metric2: { label: 'COMMUNITY', value: '18+ Years Excellence' }
-  },
-  {
-    id: 2,
-    phase: 'PHASE 03 / 06 • PRACTICAL RIGOR',
-    title: 'Hands-On Labs from Semester One',
-    desc: 'At NHIT, you don’t wait until final year to touch real machinery. From your very first semester, you work directly with CNC machines, automobile engine teardowns, electrical grids, civil surveying total stations, and programming compilers.',
-    tag: '🔧 Sem 1-2 • 40+ Advanced Labs',
-    pin: '🔧',
-    accent: '#06d6a0',
-    glow: 'rgba(6, 214, 160, 0.28)',
-    image: '/images/journey/stage-3-workshop.jpg',
-    pills: [
-      { icon: Cog, text: 'CNC Machining & Turning' },
-      { icon: Cpu, text: 'Circuit Simulation' },
-      { icon: Car, text: 'Automobile Rig Testing' },
-      { icon: Code, text: 'Full-Stack Programming' }
-    ],
-    metric1: { label: 'PRACTICAL RATIO', value: '65% Lab & Workshop' },
-    metric2: { label: 'SAFETY CERTIFIED', value: 'Industrial Standards' }
-  },
-  {
-    id: 3,
-    phase: 'PHASE 04 / 06 • PROFESSIONAL GROOMING',
-    title: 'Rigorous Soft Skills & Personality Prep',
-    desc: 'Technical skills alone won’t win the boardroom. NHIT’s dedicated Training & Placement Cell conducts structured communication training, mock group discussions, personal interview drills, and corporate etiquette bootcamps.',
-    tag: '🎯 Sem 3-4 • T&P Cell Grooming',
-    pin: '🎯',
-    accent: '#118ab2',
-    glow: 'rgba(17, 138, 178, 0.28)',
-    image: '/images/journey/stage-4-softskills.jpg',
-    pills: [
-      { icon: MessageSquare, text: 'Spoken English & GDs' },
-      { icon: UserCheck, text: 'Corporate Etiquette' },
-      { icon: FileText, text: 'ATS-Optimised Resume' },
-      { icon: Video, text: 'Mock Video Interviews' }
-    ],
-    metric1: { label: 'MOCK ROUNDS', value: '12+ Rigorous Sessions' },
-    metric2: { label: 'GROOMING CELL', value: 'Full-Time HR Trainers' }
-  },
-  {
-    id: 4,
-    phase: 'PHASE 05 / 06 • INDUSTRY EXPOSURE',
-    title: 'Industry-Ready & Competitive Exams',
-    desc: 'Real-world exposure via institutional MoUs with CSIR-CMERI Durgapur, National Entrepreneurship Network (NEN), and technology tie-ups with HCL. VOCLET coaching for B.Tech lateral entry alongside live industrial internships.',
-    tag: '🏭 Sem 5 • MoUs & Internships',
-    pin: '🏭',
-    accent: '#8338ec',
-    glow: 'rgba(131, 56, 236, 0.28)',
-    image: '/images/journey/stage-5-industry.jpg',
-    pills: [
-      { icon: Briefcase, text: 'CSIR-CMERI Live Projects' },
-      { icon: Building, text: 'HCL Technology Training' },
-      { icon: Award, text: 'VOCLET / JELET Prep' },
-      { icon: Rocket, text: 'Entrepreneurship Cell' }
-    ],
-    metric1: { label: 'RESEARCH TIE-UP', value: 'CSIR-CMERI Durgapur' },
-    metric2: { label: 'TRAINING PARTNER', value: 'HCL Technologies' }
-  },
-  {
-    id: 5,
-    phase: 'PHASE 06 / 06 • CONVOCATION & CAREER',
-    title: 'Placed Engineer & Future Leader',
-    desc: 'From an uncertain school-leaver to an empowered, certified diploma engineer. Holding an official offer letter or stepping into prestigious government engineering colleges through lateral entry — your transformation is complete.',
-    tag: '🎓 Final Sem • Placed Engineer',
-    pin: '🎓',
-    accent: '#d90429',
-    glow: 'rgba(217, 4, 41, 0.32)',
-    image: '/images/journey/stage-6-engineer.jpg',
-    pills: [
-      { icon: Award, text: '80–85% Placement Band' },
-      { icon: Briefcase, text: 'L&T, John Deere, Tata' },
-      { icon: GraduationCap, text: 'Direct 2nd Yr B.Tech' },
-      { icon: Users, text: '6,000+ Alumni Network' }
-    ],
-    metric1: { label: 'PLACEMENT RECORD', value: '80–85% Consistent' },
-    metric2: { label: 'TOP RECRUITERS', value: '50+ Global Brands' }
-  }
-];
-
-export default function CareerJourney() {
+export default function CareerJourney({ data }: { data: CareerJourneyData }) {
+  const STAGES: JourneyStage[] = data.stages ?? [];
   const [currentIdx, setCurrentIdx] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -175,7 +72,7 @@ export default function CareerJourney() {
   const avatarCardRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
 
-  const activeStage = STAGES[currentIdx];
+  const activeStage = STAGES[currentIdx] ?? STAGES[0];
 
   const triggerAnimeTransition = useCallback((nextIdx: number, dir: number) => {
     if (avatarCardRef.current) {
@@ -263,6 +160,8 @@ export default function CareerJourney() {
     return () => clearInterval(interval);
   }, [isPlaying, currentIdx, handleScrollToStage]);
 
+  if (!activeStage) return null;
+
   return (
     <div ref={trackRef} className="relative w-full h-[350vh] bg-white">
       <section 
@@ -275,13 +174,14 @@ export default function CareerJourney() {
           <div className="text-center max-w-[780px] mx-auto mb-3">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 border border-red-200 text-[#C10A0C] text-xs font-bold uppercase tracking-wider mb-2">
               <GraduationCap className="w-3.5 h-3.5" />
-              The Student Transformation
+              {data.kicker}
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight">
-              From Aspiring Student to <span className="text-[#C10A0C]">Industry-Ready Engineer</span>
+              {data.title}{" "}
+              {data.titleEm && <span className="text-[#C10A0C]">{data.titleEm}</span>}
             </h2>
             <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-2xl mx-auto">
-              Experience the transformative 3-year journey at NHIT Durgapur — where school-level curiosity turns into workshop mastery, professional grooming, and high-value industry careers.
+              {data.sub}
             </p>
           </div>
 
@@ -327,7 +227,7 @@ export default function CareerJourney() {
                 <div className="absolute bottom-2 left-2 right-2 bg-slate-900/80 backdrop-blur-md px-3 py-1.5 rounded-lg flex justify-between items-center text-white text-xs">
                   <span className="font-medium truncate">{activeStage.tag}</span>
                   <span className="text-[10px] bg-red-600 px-1.5 py-0.5 rounded font-mono">
-                    0{activeStage.id + 1}
+                    0{(activeStage.id ?? 0) + 1}
                   </span>
                 </div>
               </div>
@@ -341,7 +241,7 @@ export default function CareerJourney() {
                     {activeStage.phase}
                   </span>
                   <span className="font-mono text-xs font-bold text-slate-400">
-                    0{activeStage.id + 1} / 06
+                    0{(activeStage.id ?? 0) + 1} / 06
                   </span>
                 </div>
 
@@ -355,7 +255,7 @@ export default function CareerJourney() {
                 {/* Pills */}
                 <div className="grid grid-cols-2 gap-2 mb-4">
                   {activeStage.pills.map((pill, i) => {
-                    const Icon = pill.icon;
+                    const Icon = ICON_MAP[pill.icon] || CheckCircle;
                     return (
                       <div key={i} className="flex items-center gap-1.5 text-xs text-slate-700 bg-slate-50 border border-slate-200/80 px-2.5 py-1.5 rounded-lg">
                         <Icon className="w-3.5 h-3.5 text-red-600 shrink-0" />
@@ -425,25 +325,22 @@ export default function CareerJourney() {
         <div className="nhit-journey__container">
           <div className="nhit-journey__cta">
             <div className="nhit-journey__cta-info">
-              <h3>Start Your Engineering Story at NHIT</h3>
-              <p>
-                Admissions open for Session 2026–27. Scholarships available for meritorious students
-                across all 6 diploma engineering streams.
-              </p>
+              <h3>{data.ctaTitle}</h3>
+              <p>{data.ctaText}</p>
             </div>
             <div className="nhit-journey__cta-actions">
-              <Link href="/admissions" className="jrn-btn-primary">
-                <span>Apply for Admission 2026</span>
+              <Link href={data.ctaBtn1Href || '#'} className="jrn-btn-primary">
+                <span>{data.ctaBtn1Text}</span>
                 <i className="fa fa-arrow-right" aria-hidden="true" />
               </Link>
               <a
-                href="https://nhit.in/wp-content/uploads/2024/06/Brochure-Final-2_compressed-1.pdf"
+                href={data.ctaBtn2Href || '#'}
                 target="_blank"
                 rel="noopener"
                 className="jrn-btn-outline"
               >
                 <i className="fa fa-download" aria-hidden="true" />
-                <span>Download Brochure</span>
+                <span>{data.ctaBtn2Text}</span>
               </a>
             </div>
           </div>

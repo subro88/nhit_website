@@ -1,23 +1,11 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import type { CountersData } from '@/lib/homeTypes';
 
-interface CounterData {
-  target: number;
-  prefix?: string;
-  suffix: string;
-  label: string;
-}
-
-const stats: CounterData[] = [
-  { target: 17, suffix: '+', label: 'Years of Academic Excellence' },
-  { target: 5000, suffix: '+', label: 'Placements' },
-  { target: 200, suffix: '+', label: 'Recruiters' },
-  { target: 6000, suffix: '+', label: 'Alumni Members' },
-];
-
-export default function CountersSection() {
-  const [counts, setCounts] = useState<number[]>([17, 5000, 200, 6000]);
+export default function CountersSection({ data }: { data: CountersData }) {
+  const stats = data.items ?? [];
+  const [counts, setCounts] = useState<number[]>(() => stats.map((s) => s.target));
   const sectionRef = useRef<HTMLElement>(null);
   const animatedRef = useRef(false);
 
@@ -53,6 +41,7 @@ export default function CountersSection() {
     }
 
     return () => observer.disconnect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -61,7 +50,8 @@ export default function CountersSection() {
         {stats.map((stat, i) => (
           <div key={i} className="edu-counter">
             <div className="edu-counter__value">
-              {counts[i].toLocaleString()}
+              {stat.prefix || ''}
+              {(counts[i] ?? 0).toLocaleString()}
               {stat.suffix}
             </div>
             <div className="edu-counter__label">{stat.label}</div>

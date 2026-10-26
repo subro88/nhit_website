@@ -2,66 +2,17 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import type { HeroData } from '@/lib/homeTypes';
 
-interface Slide {
-  bg: string;
-  kicker: string;
-  title: string;
-  titleEm: string;
-  titleAfter: string;
-  text: string;
-  btnPrimaryText: string;
-  btnPrimaryHref: string;
-  btnGhostText: string;
-  btnGhostHref: string;
-}
-
-const slides: Slide[] = [
-  {
-    bg: '/images/hero-campus.jpg',
-    kicker: 'Welcome to NHIT · Est. 2007',
-    title: 'Build Your Engineering Career ',
-    titleEm: 'Hands-On',
-    titleAfter: ' in Durgapur',
-    text: "One of eastern India's largest diploma engineering institutes — six branches, two ITI trades and 40+ laboratories, affiliated to WBSCT&VE&SD.",
-    btnPrimaryText: 'Apply — Session 2026 →',
-    btnPrimaryHref: '/admissions',
-    btnGhostText: 'Explore Departments',
-    btnGhostHref: '/departments',
-  },
-  {
-    bg: '/images/hero-computers.jpg',
-    kicker: 'Learn By Doing',
-    title: 'Labs You Work In From ',
-    titleEm: 'Semester One',
-    titleAfter: ', Not Year Three',
-    text: 'From compiler labs to solar-power rigs and live engine teardowns — every branch runs its own laboratory programme with industry MoUs behind it.',
-    btnPrimaryText: 'See Lab Floors →',
-    btnPrimaryHref: '/departments',
-    btnGhostText: 'Placement Record',
-    btnGhostHref: '/placements',
-  },
-  {
-    bg: '/images/hero-electronics.jpg',
-    kicker: 'Placements & Pathways',
-    title: '80–85% of Eligible Students ',
-    titleEm: 'Placed',
-    titleAfter: ' or in B.Tech',
-    text: 'Recruiters from Tata Motors to L&T, MoUs with CSIR-CMERI and HCL, and a proven ladder into B.Tech lateral entry.',
-    btnPrimaryText: 'Placement Story →',
-    btnPrimaryHref: '/placements',
-    btnGhostText: 'Visit the Campus',
-    btnGhostHref: '/contact',
-  },
-];
-
-export default function HeroSlider() {
+export default function HeroSlider({ data }: { data: HeroData }) {
+  const slides = data.slides ?? [];
+  const chips = data.chips ?? [];
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || slides.length <= 1) return;
     timerRef.current = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
     }, 6200);
@@ -69,7 +20,7 @@ export default function HeroSlider() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isPaused]);
+  }, [isPaused, slides.length]);
 
   return (
     <section
@@ -152,18 +103,12 @@ export default function HeroSlider() {
       </div>
 
       {/* 3D Floating Chips */}
-      <div className="edu-chip3d edu-chip3d--a">
-        <span className="edu-chip3d__label">Placement Record</span>
-        <span className="edu-chip3d__value is-red">80–85%*</span>
-      </div>
-      <div className="edu-chip3d edu-chip3d--b">
-        <span className="edu-chip3d__label">Labs on Campus</span>
-        <span className="edu-chip3d__value">40+ Tracked</span>
-      </div>
-      <div className="edu-chip3d edu-chip3d--c">
-        <span className="edu-chip3d__label">R&D MoU</span>
-        <span className="edu-chip3d__value">CSIR-CMERI</span>
-      </div>
+      {chips.map((chip, i) => (
+        <div key={i} className={`edu-chip3d edu-chip3d--${['a', 'b', 'c', 'd', 'e'][i] || 'e'}`}>
+          <span className="edu-chip3d__label">{chip.label}</span>
+          <span className={`edu-chip3d__value ${chip.tone === 'red' ? 'is-red' : ''}`}>{chip.value}</span>
+        </div>
+      ))}
     </section>
   );
 }

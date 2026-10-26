@@ -1,8 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
+import type { LeadFormData } from '@/lib/homeTypes';
 
-export default function LeadCaptureSection() {
+export default function LeadCaptureSection({ data }: { data: LeadFormData }) {
+  const perks = data.perks ?? [];
+
   const [formData, setFormData] = useState({
     student_name: '',
     whatsapp_number: '',
@@ -19,10 +22,9 @@ export default function LeadCaptureSection() {
     setSubmitted(true);
     // Trigger download of prospectus after brief delay
     setTimeout(() => {
-      window.open(
-        'https://nhit.in/wp-content/uploads/2024/06/Brochure-Final-2_compressed-1.pdf',
-        '_blank'
-      );
+      if (data.brochureUrl) {
+        window.open(data.brochureUrl, '_blank');
+      }
     }, 800);
   };
 
@@ -36,45 +38,32 @@ export default function LeadCaptureSection() {
         <div className="nhit-inst-lead-box">
           {/* Left Column: Perks & Info */}
           <div className="nhit-inst-lead-content">
-            <h2>Begin Your Journey at NHIT Durgapur</h2>
-            <p>
-              Admissions are now open for Session 2026–2027. Speak directly with our Senior Academic
-              Counselors for branch eligibility, JEXPO/MAKAUT counseling guidance, hostel
-              availability, and merit scholarships.
-            </p>
+            <h2>{data.title}</h2>
+            <p>{data.text}</p>
 
             <ul className="nhit-inst-lead-perks">
-              <li className="nhit-inst-lead-perk-item">
-                <span className="nhit-inst-lead-perk-icon">✓</span>
-                <span>Official 2026–27 Institute Prospectus &amp; Fee Structure PDF</span>
-              </li>
-              <li className="nhit-inst-lead-perk-item">
-                <span className="nhit-inst-lead-perk-icon">✓</span>
-                <span>SVMCM, OASIS &amp; Aikyashree Scholarship Assistance</span>
-              </li>
-              <li className="nhit-inst-lead-perk-item">
-                <span className="nhit-inst-lead-perk-icon">✓</span>
-                <span>One-on-One Counseling &amp; Campus Lab Tour Invitation</span>
-              </li>
-              <li className="nhit-inst-lead-perk-item">
-                <span className="nhit-inst-lead-perk-icon">✓</span>
-                <span>Institute Bus Route Details (Asansol, Raniganj, Bardhaman)</span>
-              </li>
+              {perks.map((perk, i) => (
+                <li key={i} className="nhit-inst-lead-perk-item">
+                  <span className="nhit-inst-lead-perk-icon">✓</span>
+                  <span>{perk}</span>
+                </li>
+              ))}
             </ul>
 
-            <div
-              style={{
-                padding: '14px 18px',
-                background: 'rgba(255,255,255,0.06)',
-                border: '1px solid rgba(255,255,255,0.12)',
-                borderRadius: '8px',
-                fontSize: '13px',
-                color: '#94A3B8',
-              }}
-            >
-              🔒 Your contact information is kept strictly confidential according to NHIT
-              institutional privacy guidelines.
-            </div>
+            {data.privacyNote && (
+              <div
+                style={{
+                  padding: '14px 18px',
+                  background: 'rgba(255,255,255,0.06)',
+                  border: '1px solid rgba(255,255,255,0.12)',
+                  borderRadius: '8px',
+                  fontSize: '13px',
+                  color: '#94A3B8',
+                }}
+              >
+                {data.privacyNote}
+              </div>
+            )}
           </div>
 
           {/* Right Column: Lead Form */}
@@ -199,7 +188,7 @@ export default function LeadCaptureSection() {
 
               <div className="nhit-inst-form-full" style={{ marginTop: '10px' }}>
                 <button type="submit" className="nhit-inst-form-submit-btn">
-                  <span>Register Admission Inquiry &amp; Download Brochure ↘</span>
+                  <span>{data.submitText || 'Register Admission Inquiry'}</span>
                 </button>
                 {submitted && (
                   <div
@@ -217,8 +206,10 @@ export default function LeadCaptureSection() {
                       textAlign: 'center',
                     }}
                   >
-                    ✓ Thank you, {formData.student_name}! Your inquiry has been registered. The
-                    admissions desk will reach out on WhatsApp ({formData.whatsapp_number}).
+                    ✓ Thank you, {formData.student_name}!{' '}
+                    {data.successNote ||
+                      'Your inquiry has been registered. The admissions desk will reach out on WhatsApp.'}{' '}
+                    ({formData.whatsapp_number}).
                   </div>
                 )}
               </div>

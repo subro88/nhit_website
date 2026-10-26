@@ -17,6 +17,8 @@ import {
 } from 'lucide-react';
 import SubpageHero from '@/components/layout/SubpageHero';
 import PlacementRadar from '@/components/home/PlacementRadar';
+import { readJson, HOMEPAGE_FILE } from '@/lib/cmsStore';
+import type { HomepageData } from '@/lib/homeTypes';
 
 export const metadata = {
   title: 'Training & Placements | Recruiter Wall & Placement Metrics — NHIT Durgapur',
@@ -101,7 +103,7 @@ export default function PlacementsPage() {
 
         {/* ── Placement Radar & Sector Breakdown ────────────────────── */}
         <section>
-          <PlacementRadar />
+          <PlacementRadar data={readJson<HomepageData>(HOMEPAGE_FILE, {} as HomepageData).placementRadar} />
         </section>
 
         {/* ── Recruiter Wall & Corporate Partners ─────────────────────── */}

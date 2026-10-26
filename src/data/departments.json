@@ -1,0 +1,1972 @@
+{
+  "computer-science-technology": {
+    "slug": "computer-science-technology",
+    "code": "CST_01",
+    "title": "Computer Science & Technology",
+    "order": 1,
+    "tagline": "Center of Excellence in Software Systems, Cloud Computing, Full-Stack Engineering & Cyber Infrastructure",
+    "accentHex": "#0EA5E9",
+    "accentRgb": "14, 165, 233",
+    "intake": "60 Seats",
+    "duration": "3 Years · 6 Semesters",
+    "regulatory": "WBSCTVESD & AICTE Approved",
+    "practicalRatio": "60% Lab Practical / 40% Theory",
+    "eligibility": "1st Year Entry: Passed 10th Standard / Madhyamik examination from a recognized State/Central Board with at least 35% aggregate marks (including Mathematics, Physical Science, and English). Valid rank in JEXPO examination conducted by WBSCTVESD, or direct institutional quota counseling. No upper age limit.\n2nd Year Lateral Entry: Passed 10+2 examination with Physics/Mathematics/Chemistry/Vocational or Computer Science OR passed 10th + 2-year ITI in relevant computer trade (COPA, IT). Valid rank in VOCLET entrance examination conducted by WBSCTVESD. Directly admitted to 3rd Semester (2nd Year) completing the entire Diploma in 2 years.",
+    "syllabusPdf": "https://nhit.in/wp-content/uploads/2024/06/Brochure-Final-2_compressed-1.pdf",
+    "stats": {
+      "placementRate": "85–90%",
+      "highestCtc": "₹4.8 LPA",
+      "medianCtc": "₹2.8 LPA"
+    },
+    "heroSlides": [
+      "/images/hero-computers.jpg",
+      "/images/campus-01.jpg",
+      "/images/campus-05.jpg",
+      "/images/campus-11.jpg",
+      "/images/campus-16.jpg"
+    ],
+    "hudSpecs": [
+      {
+        "label": "Approved Intake",
+        "val": "60 Seats",
+        "sub": "Annual Merit Sanction"
+      },
+      {
+        "label": "Program Duration",
+        "val": "3 Years",
+        "sub": "6 Prescribed Semesters"
+      },
+      {
+        "label": "Hands-on Ratio",
+        "val": "60% Lab",
+        "sub": "Practical Systems Focus"
+      },
+      {
+        "label": "Placement Rate",
+        "val": "85–90%",
+        "sub": "Corporate & JELET Path"
+      },
+      {
+        "label": "Highest Package",
+        "val": "₹4.8 LPA",
+        "sub": "Top IT Services Offer"
+      }
+    ],
+    "pillars": [
+      {
+        "tag": "PILLAR 01 // CORE SYSTEMS",
+        "title": "Algorithmic Systems & Code Craft",
+        "desc": "Foundational mastery of C, Java, and Python with data structures, algorithms, and Linux system-level execution.",
+        "skills": [
+          "C / C++",
+          "Java OOP",
+          "Data Structures",
+          "Linux Shell",
+          "Memory Management"
+        ]
+      },
+      {
+        "tag": "PILLAR 02 // WEB & DATA",
+        "title": "Full-Stack & Cloud Databases",
+        "desc": "Designing relational databases, high-performance SQL schemas, RESTful APIs, and responsive modern web interfaces.",
+        "skills": [
+          "RDBMS & PostgreSQL",
+          "Modern JavaScript",
+          "REST APIs",
+          "UI/UX Design",
+          "Git CI/CD"
+        ]
+      },
+      {
+        "tag": "PILLAR 03 // INFRASTRUCTURE",
+        "title": "Networking & Cyber Infrastructure",
+        "desc": "Cisco router/switch configuration, TCP/IP network protocols, network security fundamentals, and microprocessor logic.",
+        "skills": [
+          "Cisco Packet Tracer",
+          "Network Security",
+          "Microprocessor 8085/86",
+          "Server Admin",
+          "Cloud Virt."
+        ]
+      }
+    ],
+    "narrative": "The Department of Computer Science & Technology at NHIT Durgapur delivers a rigorous, industry-aligned technical education designed to bridge theoretical computation and applied software engineering. Approved by AICTE and affiliated with WBSCTVESD, our curriculum immerses students in high-velocity programming sprints, relational database engineering, Linux kernel operations, and enterprise networking. Under the mentorship of certified faculty, students engage in over 60% hands-on laboratory experimentation—building real-world web platforms, cloud microservices, and hardware IoT prototypes that prepare them for immediate multinational IT placement and premier B.Tech lateral entry.",
+    "hod": {
+      "name": "Shohini Das",
+      "desig": "Department In-Charge & Lecturer",
+      "img": "/images/faculty/nhitfacutyimages0820240068.jpg",
+      "message": "Computing is the sole engineering discipline where you can architect, build, and deploy an enterprise solution directly from your terminal. At NHIT, our mission is to build robust algorithmic foundations, clean engineering practices, and fearless problem-solving abilities so that our diploma engineers excel in modern tech ecosystems and elite B.Tech lateral entry programs."
+    },
+    "labs": [
+      {
+        "name": "High-Performance Programming Lab",
+        "spec": "Modern Linux/Windows workstations equipped with GCC, Clang, Python 3, OpenJDK, and Git for core systems programming.",
+        "img": "/images/hero-computers.jpg"
+      },
+      {
+        "name": "Database Management Systems & SQL Lab",
+        "spec": "Dedicated PostgreSQL, MySQL, and enterprise Oracle database instances for relational modeling and query optimization.",
+        "img": "/images/campus-01.jpg"
+      },
+      {
+        "name": "Data Structures & Algorithm Lab",
+        "spec": "High-speed terminals configured for algorithm profiling, C/C++ memory leak debugging with Valgrind, and graph traversal algorithms.",
+        "img": "/images/campus-05.jpg"
+      },
+      {
+        "name": "Computer Networking & Cisco Routing Lab",
+        "spec": "Cisco modular routers, 24-port managed switches, Wireshark packet capture stations, and Cat6 cable crimping benches.",
+        "img": "/images/labs/lab-electronics-circuit.jpg"
+      },
+      {
+        "name": "Operating Systems & Cloud Virtualization Lab",
+        "spec": "Dual-boot Linux developer terminals, Docker container runtime, bash automation scripting, and system administration rigs.",
+        "img": "/images/campus-11.jpg"
+      },
+      {
+        "name": "Full-Stack Web Development & UI/UX Studio",
+        "spec": "Modern front-end tooling running Node.js, React, REST API development servers, and Figma UI/UX prototyping benches.",
+        "img": "/images/campus-16.jpg"
+      },
+      {
+        "name": "Microprocessor & Embedded IoT Lab",
+        "spec": "Intel 8085/8086 microcomputer kits, stepper motor interfacing cards, ADC/DAC modules, Arduino, and ESP32 IoT sensors.",
+        "img": "/images/labs/lab-auto-engine.jpg"
+      }
+    ],
+    "sems": {
+      "1": [
+        "Engineering Mathematics-I",
+        "Applied Physics",
+        "Applied Chemistry",
+        "Computer Fundamentals & Applications",
+        "Communication Skills in English",
+        "Values & Ethics in Technical Education"
+      ],
+      "2": [
+        "Engineering Mathematics-II",
+        "Fundamentals of Electrical & Electronics",
+        "Programming in C",
+        "Communication Skills-II",
+        "Engineering Drawing Workshop"
+      ],
+      "3": [
+        "Discrete Mathematics",
+        "Advanced C Programming",
+        "Digital Logic Design",
+        "Data Structures using C/C++",
+        "Computer Organization & Architecture",
+        "Professional Practice-I (PC Maintenance)"
+      ],
+      "4": [
+        "Microprocessor & Assembly Programming",
+        "Computer Networks & Protocols",
+        "Relational Database Management Systems (RDBMS)",
+        "Object-Oriented Programming (Java/C++)",
+        "Computer Graphics & Multimedia",
+        "Professional Practice-II (Web Technologies)"
+      ],
+      "5": [
+        "Software Engineering Principles",
+        "Client-Server Architecture & APIs",
+        "System Software & Compiler Basics",
+        "Full-Stack Web Designing Lab",
+        "Entrepreneurship Development",
+        "Major Project Stage-I"
+      ],
+      "6": [
+        "Advanced Network Installation & Security",
+        "Mobile Application Development",
+        "Cloud Administration & Linux",
+        "4-Week Industrial Summer Training",
+        "Capstone Project Stage-II & Defense",
+        "Comprehensive Viva Voce"
+      ]
+    },
+    "events": [
+      {
+        "title": "CodeStorm: 24-Hour Annual Departmental Hackathon",
+        "date_badge": "Annual Flagship",
+        "type": "Hackathon",
+        "desc": "Over 120 student coders competed in rapid software, web application, and IoT solution sprints evaluated by senior architects from Cognizant and TCS.",
+        "image": "/images/campus-01.jpg"
+      },
+      {
+        "title": "Hands-on Cloud Computing & Docker Containers Bootcamp",
+        "date_badge": "Technical Workshop",
+        "type": "Workshop",
+        "desc": "Intensive 3-day practical training covering Linux systems, containerized microservice architectures, and modern CI/CD pipelines.",
+        "image": "/images/hero-computers.jpg"
+      },
+      {
+        "title": "Cybersecurity & Ethical Hacking Defense Symposium",
+        "date_badge": "Industry Masterclass",
+        "type": "Symposium",
+        "desc": "Live demonstration analyzing web application security vectors (OWASP Top 10), penetration testing drills, and packet-level firewall defenses.",
+        "image": "/images/campus-02.jpg"
+      }
+    ],
+    "projects": [
+      {
+        "title": "Smart Campus Navigation & Real-Time Notice Broadcast Hub",
+        "team": "Batch 2024 · Final Year Team Alpha",
+        "stack": "React · Node.js · WebSockets · MongoDB",
+        "desc": "Interactive progressive web app delivering real-time hall notifications, digital exam seating maps, and geo-tagged campus navigation for students.",
+        "image": "/images/campus-01.jpg"
+      },
+      {
+        "title": "IoT Server Room Climate Telemetry & Automatic Hazard Alert System",
+        "team": "Batch 2024 · Final Year Team Beta",
+        "stack": "ESP32 · DHT22 · MQTT · Python Flask",
+        "desc": "Low-latency hardware sensor telemetry streaming server rack thermal parameters with automated emergency SMS/email triggers during HVAC faults.",
+        "image": "/images/hero-computers.jpg"
+      },
+      {
+        "title": "Automated Student Attendance & Hall Ticket Verification Portal",
+        "team": "Batch 2023 · Final Year Team Gamma",
+        "stack": "Python OpenCV · SQLite · Flask · Tailwind",
+        "desc": "Computer-vision powered biometric attendance tracker logging entry times and flagging proxy attempts with sub-second verification latency.",
+        "image": "/images/campus-05.jpg"
+      }
+    ],
+    "testimonials": [
+      {
+        "name": "Anirban Mukherjee",
+        "role": "Batch 2023 · Associate Software Engineer",
+        "org": "Tata Consultancy Services (TCS) · ₹4.2 LPA",
+        "quote": "The solid programming discipline and hands-on Linux/database lab sessions at NHIT helped me clear the TCS technical evaluation in my first attempt. Grateful to our faculty mentors!",
+        "photo": "/images/faculty/nhitfacutyimages0820240003.jpg"
+      },
+      {
+        "name": "Sneha Ghosh",
+        "role": "Batch 2024 · JELET Rank 23",
+        "org": "Jadavpur University (B.Tech CSE Lateral Entry)",
+        "quote": "NHIT faculty covered the curriculum with rigorous mathematical and algorithmic depth. The regular mock assessments made qualifying for Jadavpur University straightforward.",
+        "photo": "/images/faculty/nhitfacutyimages0820240010.jpg"
+      },
+      {
+        "name": "Debashis Roy",
+        "role": "Batch 2022 · Cloud Operations Engineer",
+        "org": "Wipro Technologies · ₹4.5 LPA",
+        "quote": "NHIT emphasized real project building over rote memorization. The practical exposure to networking, scripting, and web servers set me far ahead in my corporate career.",
+        "photo": "/images/faculty/nhitfacutyimages0820240016.jpg"
+      },
+      {
+        "name": "Sayantan Banerjee",
+        "role": "Batch 2023 · Full Stack Developer",
+        "org": "Cognizant Technology Solutions · ₹4.0 LPA",
+        "quote": "Building live web apps and database schemas in NHIT labs gave me an immense competitive advantage during Cognizant campus hiring hackathons.",
+        "photo": "/images/faculty/nhitfacutyimages0820240015.jpg"
+      }
+    ],
+    "careers": {
+      "roles": {
+        "title": "Software & Modern Tech Roles",
+        "desc": "High-demand career tracks spanning web platforms, cloud microservices, and network security operations.",
+        "items": [
+          "Full-Stack Web Developer (Node.js / React / Python)",
+          "Database Administrator & SQL Analyst (PostgreSQL / MySQL)",
+          "Network & Systems Administrator (Cisco / Linux)",
+          "Cloud & DevOps Junior Engineer",
+          "Quality Assurance & Test Automation Specialist",
+          "Technical Support & IT Infrastructure Engineer"
+        ]
+      },
+      "psu": {
+        "title": "PSU & Government IT Cadre",
+        "desc": "Prestigious technical officer and scientific assistant openings across government boards.",
+        "items": [
+          "DRDO & ISRO — Technical Assistant (Computer Science)",
+          "NIC (National Informatics Centre) — Technical Officer",
+          "Indian Railways (RRB-JE) — IT & Information Services",
+          "State & Central Public Sector Banks — IT Specialist Officers",
+          "SSC-JE & State Electricity Transmission IT Wings",
+          "Ordnance Factory Board (OFB) — Systems Support Staff"
+        ]
+      },
+      "lateral": {
+        "title": "B.Tech Lateral Entry (JELET Pathway)",
+        "desc": "Accelerated direct admission into the 2nd Year (3rd Semester) of B.Tech CSE / IT.",
+        "items": [
+          "Direct admission into Jadavpur University (JU)",
+          "Kalyani Government Engineering College (KGEC)",
+          "Jalpaiguri Government Engineering College (JGEC)",
+          "Heritage Institute of Technology & Techno India University",
+          "Direct eligibility for GATE & M.Tech post-graduation"
+        ]
+      },
+      "recruiters": [
+        "TCS",
+        "Wipro",
+        "Infosys",
+        "Cognizant",
+        "Capgemini",
+        "Tech Mahindra",
+        "IBM India",
+        "HCL Tech"
+      ]
+    },
+    "faqs": [
+      {
+        "q": "1. What is the eligibility criteria for admission into Diploma in Computer Science & Technology?",
+        "a": "Candidates must have passed 10th Standard / Madhyamik examination or equivalent with a minimum of 35% aggregate marks (including Mathematics, Physical Science, and English). Admissions are conducted through the West Bengal State Council JEXPO counseling examination or direct institutional quota counseling under WBSCTVESD guidelines. There is no upper age limit."
+      },
+      {
+        "q": "2. Can 10+2 (Science/Vocational) or ITI students join directly in the 2nd year through lateral entry?",
+        "a": "Yes. Students having passed 10+2 with Physics, Mathematics, and Chemistry/Computer Science OR 10th + 2-year ITI in relevant computer trades (COPA, IT) with a valid VOCLET rank are eligible for direct lateral admission into the 2nd Year (3rd Semester), completing their diploma degree in just 2 years."
+      },
+      {
+        "q": "3. Which programming languages, frameworks, and tools are taught in the CST department at NHIT?",
+        "a": "Students receive thorough hands-on training in C, C++, Core Java, Python, and modern Web Technologies (HTML5, CSS3, JavaScript ES6+, RESTful APIs). On the infrastructure side, students learn Relational Database Management Systems (PostgreSQL / MySQL), Linux system administration, Docker basics, and Cisco Packet Tracer network simulation."
+      },
+      {
+        "q": "4. What are the laboratory facilities available for Computer Science & Technology students?",
+        "a": "NHIT features 7 specialized computing laboratories outfitted with high-performance desktop machines, Gigabit local area networking, high-speed leased line internet, dual-boot Linux/Windows environments, dedicated database servers, and modern IoT trainer kits with Arduino and ESP32 microcontrollers."
+      },
+      {
+        "q": "5. What kind of campus placements do CST students receive at NHIT?",
+        "a": "The CST department boasts an 85–90% placement and higher education transition rate. Students are recruited as Associate Software Engineers, Web Developers, Database Analysts, and Network Support Executives by IT service leaders and tech firms with salary packages reaching up to ₹4.8 LPA (median ₹2.8 LPA)."
+      },
+      {
+        "q": "6. Can diploma CST holders pursue B.Tech through lateral entry?",
+        "a": "Yes, diploma holders can appear for the West Bengal state-level JELET examination for direct entry into the 2nd Year (3rd Semester) of B.Tech / B.E. programs in Computer Science & Engineering, Information Technology, or emerging domains like AI & Machine Learning at institutions such as Jadavpur University, KGEC, JGEC, and Heritage."
+      },
+      {
+        "q": "7. Are separate hostel and Wi-Fi facilities available on campus for students?",
+        "a": "Yes. NHIT maintains separate, secure in-campus hostels for boys and girls with 24/7 security, high-speed Wi-Fi internet access, hygienic dining halls serving balanced meals, round-the-clock water, and recreational rooms."
+      }
+    ]
+  },
+  "diploma-in-mechanical-engineering": {
+    "slug": "diploma-in-mechanical-engineering",
+    "code": "ME_02",
+    "title": "Mechanical Engineering",
+    "order": 2,
+    "tagline": "Center of Excellence in Machine Design, Thermal Engineering, CNC Machining & Precision Manufacturing",
+    "accentHex": "#F97316",
+    "accentRgb": "249, 115, 22",
+    "intake": "60 Seats",
+    "duration": "3 Years · 6 Semesters",
+    "regulatory": "WBSCTVESD & AICTE Approved",
+    "practicalRatio": "60% Lab Practical / 40% Theory",
+    "eligibility": "1st Year Entry: Passed 10th Standard / Madhyamik examination from a recognized State/Central Board with at least 35% aggregate marks (including Mathematics, Physical Science, and English). Valid rank in JEXPO examination conducted by WBSCTVESD, or direct institutional quota counseling. No upper age limit.\n2nd Year Lateral Entry: Passed 10+2 examination with Physics/Mathematics/Chemistry/Vocational subjects OR passed 10th + 2-year ITI in relevant trade (Fitter, Turner, Machinist, Welder). Valid rank in VOCLET entrance examination conducted by WBSCTVESD. Directly admitted to 3rd Semester (2nd Year) completing the entire Diploma in 2 years.",
+    "syllabusPdf": "https://nhit.in/wp-content/uploads/2024/06/Brochure-Final-2_compressed-1.pdf",
+    "stats": {
+      "placementRate": "82–88%",
+      "highestCtc": "₹4.8 LPA",
+      "medianCtc": "₹2.8 LPA"
+    },
+    "heroSlides": [
+      "/images/hero-mechanical.jpg",
+      "/images/lab-mechanical.jpg",
+      "/images/labs/lab-lathe-shop.jpg",
+      "/images/labs/lab-utm-testing.jpg",
+      "/images/campus-02.jpg"
+    ],
+    "hudSpecs": [
+      {
+        "label": "Approved Intake",
+        "val": "60 Seats",
+        "sub": "State Quota Sanction"
+      },
+      {
+        "label": "Program Duration",
+        "val": "3 Years",
+        "sub": "6 Rigorous Semesters"
+      },
+      {
+        "label": "Hands-on Ratio",
+        "val": "60% Shop",
+        "sub": "Machine Tools Practice"
+      },
+      {
+        "label": "Placement Rate",
+        "val": "82–88%",
+        "sub": "Core Heavy Industries"
+      },
+      {
+        "label": "Highest Package",
+        "val": "₹4.8 LPA",
+        "sub": "L&T / Core Plant Offer"
+      }
+    ],
+    "pillars": [
+      {
+        "tag": "PILLAR 01 // MACHINE DESIGN & CAD",
+        "title": "Machine Design, Kinematics & SolidWorks",
+        "desc": "Parametric 3D solid modeling, tolerance stack-up, gear train mechanics, and finite element stress analysis using AutoCAD & SolidWorks.",
+        "skills": [
+          "SolidWorks 3D",
+          "AutoCAD Mechanical",
+          "Gear Train Design",
+          "FEA Simulation",
+          "Geometric Dimensioning"
+        ]
+      },
+      {
+        "tag": "PILLAR 02 // THERMAL & FLUID POWER",
+        "title": "Thermal Engineering & Fluid Mechanics",
+        "desc": "Thermodynamics of steam boilers, multi-cylinder IC engines, refrigeration cycles, and hydraulic turbines/pumps operation.",
+        "skills": [
+          "Steam Boilers & Turbines",
+          "IC Engine Overhaul",
+          "RAC Psychrometry",
+          "Centrifugal Pumps",
+          "Heat Transfer Rigs"
+        ]
+      },
+      {
+        "tag": "PILLAR 03 // MANUFACTURING & CNC",
+        "title": "Precision Manufacturing & CNC Toolpaths",
+        "desc": "Advanced center lathe turning, universal milling, shaper gear hobbing, G-code CNC programming, and metrology inspection.",
+        "skills": [
+          "CNC Turning & Milling",
+          "G-Code Programming",
+          "Metrology & Verniers",
+          "TIG / MIG Welding",
+          "UTM Tensile Testing"
+        ]
+      }
+    ],
+    "narrative": "Mechanical Engineering at NHIT Durgapur stands at the core of eastern India's heavy manufacturing, metallurgy, and infrastructure renaissance. Rooted in Durgapur's industrial heartland, our department combines fundamental physical engineering with computerized manufacturing. Students spend extensive hours across 8 fully equipped machine shops—operating industrial center lathes, universal milling stations, computerized Universal Testing Machines (UTM), and CNC turning simulators. Backed by regular industrial immersions at SAIL Durgapur Steel Plant, our graduates are highly prized by national steel, infrastructure, and heavy automotive corporations.",
+    "hod": {
+      "name": "Pallab Naskar",
+      "desig": "Head of Department & Lecturer",
+      "img": "/images/faculty/nhitfacutyimages0820240031.jpg",
+      "message": "Mechanical Engineering remains the evergreen cornerstone of industrial civilization. At NHIT, our objective is to instill analytical rigor, digital prototyping capability, and fearless shop-floor mastery in every aspiring diploma engineer."
+    },
+    "labs": [
+      {
+        "name": "CNC Machine & Production Shop",
+        "spec": "Industrial heavy-duty lathe machines, universal milling stations, shapers, surface grinders & CNC turning simulators.",
+        "img": "/images/labs/lab-lathe-shop.jpg"
+      },
+      {
+        "name": "Strength of Materials & Metrology Lab",
+        "spec": "Computerized 400kN Universal Testing Machine (UTM), Torsion tester, Impact testing rig (Izod/Charpy), and digital Vernier calipers.",
+        "img": "/images/labs/lab-utm-testing.jpg"
+      },
+      {
+        "name": "Thermal Engineering & IC Engines Lab",
+        "spec": "Single & multi-cylinder computerized Petrol and Diesel test rigs, bomb calorimeter, and exhaust gas analyzer benches.",
+        "img": "/images/lab-mechanical.jpg"
+      },
+      {
+        "name": "Fluid Mechanics & Hydraulic Machinery Lab",
+        "spec": "Pelton wheel turbine, Francis turbine, Venturimeter flow calibration rig, and multi-stage centrifugal pump test bench.",
+        "img": "/images/hero-mechanical.jpg"
+      },
+      {
+        "name": "Welding & Metal Fabrication Shop",
+        "spec": "Shielded Metal Arc Welding (SMAW), TIG/MIG welding sets, oxy-acetylene gas cutting rigs, and sheet metal benders.",
+        "img": "/images/labs/lab-welding-shop.jpg"
+      },
+      {
+        "name": "CAD/CAM Simulation & Prototyping Studio",
+        "spec": "High-end CAD developer workstations running AutoCAD, SolidWorks, and ANSYS mechanical modeling software.",
+        "img": "/images/campus-02.jpg"
+      }
+    ],
+    "sems": {
+      "1": [
+        "Engineering Mathematics-I",
+        "Applied Physics",
+        "Applied Chemistry",
+        "Engineering Mechanics",
+        "Basic Workshop Practice-I"
+      ],
+      "2": [
+        "Engineering Mathematics-II",
+        "Fundamentals of Electrical & Electronics",
+        "Engineering Drawing",
+        "Basic Workshop Practice-II",
+        "Communication Skills in English"
+      ],
+      "3": [
+        "Thermal Engineering-I",
+        "Manufacturing Processes-I",
+        "Strength of Materials",
+        "Fluid Mechanics & Machinery",
+        "Mechanical Engineering Drawing"
+      ],
+      "4": [
+        "Theory of Machines & Mechanisms",
+        "Manufacturing Processes-II",
+        "Thermal Engineering-II",
+        "Material Science & Metallurgy",
+        "CAD in Mechanical Engineering"
+      ],
+      "5": [
+        "Design of Machine Elements",
+        "Power Plant Engineering",
+        "Advanced Manufacturing & CNC Technology",
+        "Industrial Engineering & Safety",
+        "Project Stage-I"
+      ],
+      "6": [
+        "Industrial Management & Entrepreneurship",
+        "Refrigeration & Air Conditioning",
+        "Automobile Engineering / Elective",
+        "Industrial Project & Fabrication Stage-II",
+        "Comprehensive Viva Voce"
+      ]
+    },
+    "events": [
+      {
+        "title": "Industrial Immersion Visit to SAIL Durgapur Steel Plant (DSP)",
+        "date_badge": "Heavy Industry Visit",
+        "type": "Industrial Tour",
+        "desc": "Comprehensive walk-through of the blast furnace complex, continuous casting plant, wheel & axle plant, and medium structural rolling mill.",
+        "image": "/images/hero-mechanical.jpg"
+      },
+      {
+        "title": "3D CAD Modeling & Finite Element Analysis (FEA) Masterclass",
+        "date_badge": "SolidWorks Workshop",
+        "type": "Masterclass",
+        "desc": "5-day intensive workshop training students in parametric 3D assembly, kinematic motion analysis, and stress concentration simulation.",
+        "image": "/images/lab-mechanical.jpg"
+      },
+      {
+        "title": "CNC Milling & Precision Turning Toolpath Programming Clinic",
+        "date_badge": "Manufacturing Expo",
+        "type": "Expo",
+        "desc": "Hands-on G-code and M-code part programming on CNC industrial turning centers with precision surface roughness testing.",
+        "image": "/images/labs/lab-lathe-shop.jpg"
+      }
+    ],
+    "projects": [
+      {
+        "title": "Automated Pneumatic Can Crusher & Scrap Metal Baling Unit",
+        "team": "Batch 2024 · Final Year Team Alpha",
+        "stack": "Double-Acting Cylinder · 5/2 Solenoid Valve · PLC",
+        "desc": "An industrial recycling prototype engineered with automated double-acting pneumatic cylinders operating at 6 bar to compact aluminium scrap with 78% volume reduction.",
+        "image": "/images/labs/lab-lathe-shop.jpg"
+      },
+      {
+        "title": "Design & Fabrication of a Single-Seater Hybrid Eco-Kart Chassis",
+        "team": "Batch 2024 · Final Year Team Beta",
+        "stack": "AISI 4130 Chromoly Tubing · SolidWorks · Disc Brakes",
+        "desc": "Space-frame chassis engineered for optimal torsional stiffness and crash impact dissipation, powered by a 125cc IC engine coupled with a rear electric hub motor.",
+        "image": "/images/lab-mechanical.jpg"
+      },
+      {
+        "title": "Four-Wheel Steering (4WS) Mechanism for Tight Industrial Maneuvering",
+        "team": "Batch 2024 · Final Year Team Gamma",
+        "stack": "Rack & Pinion · Bevel Gearbox · Microcontroller",
+        "desc": "Dual-linkage steering system that enables both in-phase and opposite-phase steering modes, reducing turning radius of campus transport buggies by 34%.",
+        "image": "/images/hero-mechanical.jpg"
+      }
+    ],
+    "testimonials": [
+      {
+        "name": "Rahul Mukherjee",
+        "role": "Batch 2023 · Junior Production Engineer",
+        "org": "Larsen & Toubro (L&T Heavy Engineering) · ₹4.8 LPA",
+        "quote": "The lathe shop discipline, blueprint GD&T reading, and CNC toolpath training at NHIT gave me complete confidence when stepping onto the L&T shop floor.",
+        "photo": "/images/faculty/nhitfacutyimages0820240002.jpg"
+      },
+      {
+        "name": "Subhadip Ghosh",
+        "role": "Batch 2024 · JELET State Rank 14",
+        "org": "Jadavpur University (B.Tech Mechanical Lateral Entry)",
+        "quote": "NHIT faculty covered thermodynamics and fluid dynamics with exceptional clarity. The mock tests prepared me to secure a top 15 rank in West Bengal JELET.",
+        "photo": "/images/faculty/nhitfacutyimages0820240010.jpg"
+      },
+      {
+        "name": "Bishal Mondal",
+        "role": "Batch 2023 · Plant Maintenance Engineer",
+        "org": "Tata Motors Commercial Vehicles · ₹4.4 LPA",
+        "quote": "Working on heavy engine overhauls and computerized UTM tests in NHIT labs gave me practical insights that proved decisive during campus selection.",
+        "photo": "/images/faculty/nhitfacutyimages0820240015.jpg"
+      },
+      {
+        "name": "Kallol Sen",
+        "role": "Batch 2022 · Quality Assurance Specialist",
+        "org": "Cummins India Limited · ₹4.2 LPA",
+        "quote": "From precision micrometers to pneumatic systems, the practical foundation at NHIT sets its diploma engineers apart in modern plant operations.",
+        "photo": "/images/faculty/nhitfacutyimages0820240016.jpg"
+      }
+    ],
+    "careers": {
+      "roles": {
+        "title": "Core Mechanical & Manufacturing Roles",
+        "desc": "Essential plant operations, machine maintenance, and production management responsibilities.",
+        "items": [
+          "Production & Manufacturing Line Supervisor",
+          "CAD Mechanical Draftsman (AutoCAD / SolidWorks)",
+          "Plant Maintenance & Overhauling Engineer",
+          "CNC Programmer & Machine Tool Operator",
+          "Quality Control (QA/QC) & Metrology Inspector",
+          "Thermal Power Plant Field Technician"
+        ]
+      },
+      "psu": {
+        "title": "PSU & Defence Manufacturing Cadre",
+        "desc": "Vast recruitment openings across premier state and central heavy industries.",
+        "items": [
+          "Steel Authority of India (SAIL DSP / BSP) — ACTT Mechanical",
+          "Indian Railways (RRB-JE) — Carriage, Wagon & Workshop Cadre",
+          "Bharat Heavy Electricals Limited (BHEL) — Artisan & Technician",
+          "Ordnance Factory Board (OFB Gun & Shell Factory)",
+          "DRDO & ISRO — Technical Assistant (Mechanical)",
+          "Coal India Limited (CIL) & NTPC Power Plant Technicians"
+        ]
+      },
+      "lateral": {
+        "title": "B.Tech Lateral Entry (JELET Pathway)",
+        "desc": "Direct 2nd Year admission into elite Bachelor of Technology mechanical programs.",
+        "items": [
+          "Direct admission into Jadavpur University (JU Mechanical)",
+          "Kalyani Government Engineering College (KGEC ME)",
+          "Jalpaiguri Government Engineering College (JGEC)",
+          "IIEST Shibpur & MAKAUT in-house university departments",
+          "Gateway to UPSC Indian Engineering Services (IES) & GATE"
+        ]
+      },
+      "recruiters": [
+        "Tata Motors",
+        "Larsen & Toubro",
+        "Cummins India",
+        "Kiswok Industries",
+        "Shyam Steel",
+        "Gabriel India",
+        "Electrosteel Castings"
+      ]
+    },
+    "faqs": [
+      {
+        "q": "1. What is the eligibility criteria for admission into Diploma in Mechanical Engineering?",
+        "a": "Applicants must have passed 10th Standard / Madhyamik examination or equivalent with a minimum of 35% aggregate marks (including Mathematics, Physical Science, and English). Admissions are conducted through centralized JEXPO counseling or direct institutional counseling per WBSCTVESD directives. There is no upper age limit."
+      },
+      {
+        "q": "2. Can ITI (Fitter, Turner, Machinist) students join directly in 2nd year through lateral entry?",
+        "a": "Yes! Students with 10+2 (Vocational/Science) or 10th + 2-year ITI in relevant trades (Fitter, Turner, Machinist, Welder) with a valid VOCLET rank qualify for direct lateral admission into the 2nd Year (3rd Semester), completing their diploma in just 2 years."
+      },
+      {
+        "q": "3. What practical machinery and equipment are housed in NHIT mechanical workshops?",
+        "a": "NHIT houses industrial all-geared center lathes, universal milling machines, shaper machines, surface grinders, radial drilling machines, computerized 400kN Universal Testing Machine (UTM), Izod/Charpy impact testers, TIG/MIG welding units, and multi-cylinder IC engine test benches."
+      },
+      {
+        "q": "4. Is CNC programming and CAD software included in the regular diploma curriculum?",
+        "a": "Yes. Students receive dedicated training in AutoCAD Mechanical, SolidWorks 3D parametric design, and hands-on G-code/M-code part programming for CNC turning and milling simulators in the CAD/CAM studio."
+      },
+      {
+        "q": "5. Which core companies hire Mechanical Engineering graduates from NHIT?",
+        "a": "Graduates are recruited by leading engineering and manufacturing firms including Tata Motors, Larsen & Toubro, Cummins India, Kiswok Industries, Shyam Steel, and Gabriel India with packages up to ₹4.8 LPA."
+      },
+      {
+        "q": "6. What government job opportunities are available for mechanical diploma engineers?",
+        "a": "Mechanical diploma holders have huge recruitment quotas in Indian Railways (RRB-JE & ALP), SAIL Durgapur Steel Plant (ACTT), Defence Research & Development Organisation (DRDO), Ordnance Factory Board, and state municipal waterworks."
+      },
+      {
+        "q": "7. How can diploma mechanical engineers pursue B.Tech through lateral entry?",
+        "a": "Through the state JELET entrance examination, diploma holders enter directly into the 2nd Year (3rd Semester) of 4-year B.Tech in Mechanical Engineering at top colleges like Jadavpur University, KGEC Kalyani, and JGEC."
+      }
+    ]
+  },
+  "diploma-in-electrical-engineering": {
+    "slug": "diploma-in-electrical-engineering",
+    "code": "EE_04",
+    "title": "Electrical Engineering",
+    "order": 3,
+    "tagline": "Center of Excellence in Electrical Machines, Power Transmission, Smart Switchgear & Solar Photovoltaics",
+    "accentHex": "#F59E0B",
+    "accentRgb": "245, 158, 11",
+    "intake": "60 Seats",
+    "duration": "3 Years · 6 Semesters",
+    "regulatory": "WBSCTVESD & AICTE Approved",
+    "practicalRatio": "60% Lab Practical / 40% Theory",
+    "eligibility": "1st Year Entry: Passed 10th Standard / Madhyamik examination from a recognized State/Central Board with at least 35% aggregate marks (including Mathematics, Physical Science, and English). Valid rank in JEXPO examination conducted by WBSCTVESD, or direct institutional quota counseling. No upper age limit.\n2nd Year Lateral Entry: Passed 10+2 examination with Physics/Mathematics/Chemistry/Vocational subjects OR passed 10th + 2-year ITI in Electrician or Wireman trade. Valid rank in VOCLET entrance examination conducted by WBSCTVESD. Directly admitted to 3rd Semester (2nd Year) completing the entire Diploma in 2 years.",
+    "syllabusPdf": "https://nhit.in/wp-content/uploads/2024/06/Brochure-Final-2_compressed-1.pdf",
+    "stats": {
+      "placementRate": "82–88%",
+      "highestCtc": "₹4.6 LPA",
+      "medianCtc": "₹2.7 LPA"
+    },
+    "heroSlides": [
+      "/images/hero-electronics.jpg",
+      "/images/lab-electronics.jpg",
+      "/images/labs/lab-electrical-machines.jpg",
+      "/images/campus-03.jpg"
+    ],
+    "hudSpecs": [
+      {
+        "label": "Approved Intake",
+        "val": "60 Seats",
+        "sub": "Council Sanctioned"
+      },
+      {
+        "label": "Program Duration",
+        "val": "3 Years",
+        "sub": "6 Full Semesters"
+      },
+      {
+        "label": "Hands-on Ratio",
+        "val": "60% Lab",
+        "sub": "Machines & Grid Focus"
+      },
+      {
+        "label": "Placement Rate",
+        "val": "82–88%",
+        "sub": "Power Utilities & PSUs"
+      },
+      {
+        "label": "Highest Package",
+        "val": "₹4.6 LPA",
+        "sub": "Tata Power / Schneider"
+      }
+    ],
+    "pillars": [
+      {
+        "tag": "PILLAR 01 // MACHINES & DRIVES",
+        "title": "Rotating Machines & Industrial Drives",
+        "desc": "Operational mastery of AC/DC motors, alternators, transformers, and Variable Frequency Drive (VFD) industrial automation.",
+        "skills": [
+          "DC Machines & Transformers",
+          "Induction & Synchronous",
+          "VFD Control",
+          "Motor Starter Wiring",
+          "Power Factor Corr."
+        ]
+      },
+      {
+        "tag": "PILLAR 02 // POWER GRIDS",
+        "title": "Power Systems & Substation Protection",
+        "desc": "High-voltage transmission line parameters, switchgear, numerical relays, circuit breaker testing, and substation design.",
+        "skills": [
+          "Transmission & Distribution",
+          "Switchgear & Protection",
+          "Electromagnetic Relays",
+          "Substation Layout",
+          "Earthing Norms"
+        ]
+      },
+      {
+        "tag": "PILLAR 03 // GREEN TECH",
+        "title": "Solar Photovoltaics & Power Electronics",
+        "desc": "Design of grid-connected and off-grid solar PV installations, DC-DC buck/boost converters, inverters, and battery storage.",
+        "skills": [
+          "Solar PV Benchmarking",
+          "Power Converters",
+          "Inverter Topologies",
+          "Battery Management",
+          "Energy Auditing"
+        ]
+      }
+    ],
+    "narrative": "The Department of Electrical Engineering at NHIT Durgapur shapes dynamic technical professionals equipped for the modern electrified world. From massive high-voltage transmission lines and regional substation switchgear to renewable solar microgrids and automated industrial variable frequency drives, our training balances theory with rigorous shop-floor practice. In our 7 specialized laboratories, students wire live transformer banks, configure numerical protection relays, calibrate solar charge controllers, and program PLCs for industrial drive systems.",
+    "hod": {
+      "name": "Sudeshna Mukherjee",
+      "desig": "Head of Department & Lecturer",
+      "img": "/images/faculty/nhitfacutyimages0820240019.jpg",
+      "message": "From heavy power transmission grids to modern rooftop solar microgrids and industrial variable frequency drives, the world runs on electrical energy. At NHIT, we combine robust electrical machine laboratory work with advanced protection relays, transmission simulators, and solar technology to shape competent, safety-conscious electrical engineers."
+    },
+    "labs": [
+      {
+        "name": "DC Machines & Transformers Lab",
+        "spec": "Coupled DC shunt/series motor-generator sets, 3-phase autotransformers, Scott connection benches, and speed regulation rheostats.",
+        "img": "/images/labs/lab-electrical-machines.jpg"
+      },
+      {
+        "name": "AC Synchronous & Induction Machines Lab",
+        "spec": "3-phase slip-ring and squirrel-cage induction motors, synchronous alternators, synchronizing lamp sets, and DOL/Star-Delta starter benches.",
+        "img": "/images/hero-electronics.jpg"
+      },
+      {
+        "name": "Switchgear & Substation Protection Lab",
+        "spec": "Air circuit breakers, SF6 simulation setups, overcurrent numerical relays, earth fault relays, and CT/PT testing benches.",
+        "img": "/images/lab-electronics.jpg"
+      },
+      {
+        "name": "Solar Power Technology & Clean Energy Lab",
+        "spec": "Mono/polycrystalline solar PV trainer kits, solar tracking benches, grid-tied and standalone inverters, and MPPT charge controllers.",
+        "img": "/images/campus-03.jpg"
+      },
+      {
+        "name": "Power Electronics & Industrial Drives Lab",
+        "spec": "Thyristor, MOSFET & IGBT firing circuits, single/three-phase controlled rectifiers, buck-boost DC converters, and VFD controllers.",
+        "img": "/images/labs/lab-electronics-circuit.jpg"
+      },
+      {
+        "name": "Electrical Measurement & Instrumentation Lab",
+        "spec": "Kelvin double bridge, Maxwell bridge, wattmeters, power factor meters, digital energy meter calibration, and current transducers.",
+        "img": "/images/campus-01.jpg"
+      }
+    ],
+    "sems": {
+      "1": [
+        "Engineering Mathematics-I",
+        "Applied Physics",
+        "Applied Chemistry",
+        "Basic Electrical Engineering",
+        "Communication Skills in English"
+      ],
+      "2": [
+        "Engineering Mathematics-II",
+        "Fundamentals of Electronics",
+        "Electrical Circuits & Networks",
+        "Engineering Drawing",
+        "Basic Workshop Practice"
+      ],
+      "3": [
+        "Electrical Machines-I (DC Machines & Transformers)",
+        "Electrical & Electronic Measurement",
+        "Analog & Digital Electronics",
+        "Power Generation Economics",
+        "Circuit Analysis Lab"
+      ],
+      "4": [
+        "Electrical Machines-II (AC Machines)",
+        "Transmission & Distribution of Electric Power",
+        "Power Electronics",
+        "Microcontroller & Applications",
+        "Electrical Simulation Lab"
+      ],
+      "5": [
+        "Switchgear & Protection",
+        "Industrial Drives & Control",
+        "Solar PV & Renewable Energy Systems",
+        "Illumination Engineering",
+        "Project Stage-I"
+      ],
+      "6": [
+        "Substation & Energy Auditing",
+        "Industrial Management & Smart Grid",
+        "Elective Subject",
+        "Major Project Stage-II & Defense",
+        "Comprehensive Viva Voce"
+      ]
+    },
+    "events": [
+      {
+        "title": "Industrial Technical Visit to WBSETCL 132kV / 33kV Substation",
+        "date_badge": "Power Grid Visit",
+        "type": "Industrial Tour",
+        "desc": "On-site study of 50MVA power transformers, SF6 gas circuit breakers, protective numerical relay suites, and automated busbar arrangements.",
+        "image": "/images/hero-electronics.jpg"
+      },
+      {
+        "title": "Solar Photovoltaic Grid Integration & Storage Masterclass",
+        "date_badge": "Clean Energy Workshop",
+        "type": "Masterclass",
+        "desc": "Practical wiring and optimization of MPPT solar charge controllers, rooftop PV string configurations, and grid-tied net-metering systems.",
+        "image": "/images/lab-electronics.jpg"
+      },
+      {
+        "title": "Industrial Automation & PLC / SCADA Programming Bootcamp",
+        "date_badge": "Industry 4.0 Training",
+        "type": "Workshop",
+        "desc": "Hands-on ladder logic programming using Siemens S7-1200 PLCs and HMI interfacing for automated motor drive sequences.",
+        "image": "/images/campus-03.jpg"
+      }
+    ],
+    "projects": [
+      {
+        "title": "Microcontroller-Based Smart Overcurrent & Earth Fault Relay",
+        "team": "Batch 2024 · Final Year Team Alpha",
+        "stack": "Arduino · Current Sensors · Solid State Relay · LCD",
+        "desc": "Fast-response numerical protective relay prototype simulating instantaneous and inverse-time overcurrent trip curves for feeder line protection.",
+        "image": "/images/hero-electronics.jpg"
+      },
+      {
+        "title": "Hybrid Solar-Grid Inverter with Automated MPPT Tracking",
+        "team": "Batch 2024 · Final Year Team Beta",
+        "stack": "Solar PV · Buck-Boost Converter · Microcontroller · Pure Sine Inverter",
+        "desc": "High-efficiency renewable power system maintaining battery state-of-charge while maximizing PV panel energy extraction under partial shading.",
+        "image": "/images/lab-electronics.jpg"
+      },
+      {
+        "title": "Automated 3-Phase Induction Motor Direction & Speed Controller",
+        "team": "Batch 2023 · Final Year Team Gamma",
+        "stack": "VFD Inverter · Push-button Station · Contactor Interlocking",
+        "desc": "Heavy industrial motor starter rig demonstrating smooth deceleration, dynamic DC injection braking, and automated sequence reversal.",
+        "image": "/images/labs/lab-electrical-machines.jpg"
+      }
+    ],
+    "testimonials": [
+      {
+        "name": "Sayan Chakraborty",
+        "role": "Batch 2023 · Assistant Substation Engineer",
+        "org": "Tata Power Limited · ₹4.4 LPA",
+        "quote": "Working on coupled motor-generator sets and live switchgear panels in NHIT electrical labs made my transition into Tata Power substation operations completely natural.",
+        "photo": "/images/faculty/nhitfacutyimages0820240003.jpg"
+      },
+      {
+        "name": "Riya Bhattacharya",
+        "role": "Batch 2024 · JELET Rank 12",
+        "org": "Jalpaiguri Government Engineering College (JGEC)",
+        "quote": "NHIT gives tremendous focus to electrical machines and power systems. The conceptual clarity I gained here paved the way for my top-15 JELET state ranking.",
+        "photo": "/images/faculty/nhitfacutyimages0820240010.jpg"
+      },
+      {
+        "name": "Amitava Roy",
+        "role": "Batch 2022 · Automation Specialist",
+        "org": "Schneider Electric India · ₹4.6 LPA",
+        "quote": "The solar technology lab and VFD drive practicals at NHIT distinguish its students from everyone else. Strongly recommend NHIT Electrical!",
+        "photo": "/images/faculty/nhitfacutyimages0820240016.jpg"
+      },
+      {
+        "name": "Anup Mondal",
+        "role": "Batch 2023 · Electrical Site Engineer",
+        "org": "Havells India · ₹4.2 LPA",
+        "quote": "The safety standards, busbar calculations, and relay wiring learned at NHIT are in exact accordance with modern industrial norms.",
+        "photo": "/images/faculty/nhitfacutyimages0820240015.jpg"
+      }
+    ],
+    "careers": {
+      "roles": {
+        "title": "Power, Plant & Automation Roles",
+        "desc": "Hands-on operational and installation responsibilities in core manufacturing and power sectors.",
+        "items": [
+          "Electrical Site Engineer & Commissioning Specialist",
+          "Substation & Switchgear Maintenance Engineer",
+          "Industrial Drives & PLC/SCADA Automation Engineer",
+          "Rooftop Solar PV Installation & Energy Auditor",
+          "Power Plant Operator (Thermal / Hydel / Captive)",
+          "Building Electrification & HT/LT Panel Fabricator"
+        ]
+      },
+      "psu": {
+        "title": "PSU & State Power Utilities",
+        "desc": "Vast state and central power generation and distribution corporation opportunities.",
+        "items": [
+          "WBSEDCL & WBSETCL — Junior Engineer (Electrical)",
+          "Power Grid Corporation of India Limited (POWERGRID / PGCIL)",
+          "Indian Railways (RRB-JE Electrical) & Assistant Loco Pilot (ALP)",
+          "Steel Authority of India Limited (SAIL Durgapur & IISCO Burnpur)",
+          "NTPC, DVC (Damodar Valley Corp) & NHPC Power Stations",
+          "Bharat Heavy Electricals Limited (BHEL) & Coal India (CIL)"
+        ]
+      },
+      "lateral": {
+        "title": "B.Tech Lateral Entry (JELET Pathway)",
+        "desc": "Direct 2nd Year entry into prestigious B.Tech Electrical / Power Engineering degrees.",
+        "items": [
+          "Jadavpur University (Power & Electrical Engineering)",
+          "Kalyani Government Engineering College (KGEC EE)",
+          "Jalpaiguri Government Engineering College (JGEC)",
+          "Heritage Institute of Technology & Narula Institute",
+          "Pathways to Smart Grid, Electric Vehicle (EV) & Renewable energy research"
+        ]
+      },
+      "recruiters": [
+        "Tata Power",
+        "Schneider Electric",
+        "Havells India",
+        "Larsen & Toubro Electrical",
+        "CESC Limited",
+        "ABB India",
+        "Siemens",
+        "Alstom"
+      ]
+    },
+    "faqs": [
+      {
+        "q": "1. What is the eligibility criteria for admission into Diploma in Electrical Engineering?",
+        "a": "Candidates must have passed 10th Standard / Madhyamik examination with at least 35% aggregate marks (including Mathematics, Physical Science, and English). Candidates can enter through centralized JEXPO counseling or direct institutional counseling under WBSCTVESD guidelines. There is no upper age limit."
+      },
+      {
+        "q": "2. Can Electrician ITI or 10+2 Vocational pass-outs enter directly in the 2nd year?",
+        "a": "Yes. Candidates with 10+2 (Physics, Chemistry, Maths) or 10th standard + 2-year ITI in Electrician or Wireman trade with a valid VOCLET rank can enter directly into the 2nd Year (3rd Semester) via lateral entry, completing their diploma in 2 years."
+      },
+      {
+        "q": "3. What practical laboratories are featured in the Electrical Engineering department?",
+        "a": "The department boasts 7 advanced laboratories: DC Machines & Transformers Lab, Induction & Synchronous Machines Lab, Switchgear & Substation Protection Lab, Electric Power Transmission & Distribution Lab, Industrial Drives & VFD Lab, Solar Photovoltaic & Green Energy Lab, and Electrical Measurement Lab."
+      },
+      {
+        "q": "4. Is solar energy and renewable power technology covered in the curriculum?",
+        "a": "Yes. NHIT has established a dedicated Solar Power Technology Lab featuring mono/polycrystalline solar PV trainer kits, solar tracking benches, grid-tied and standalone inverters, MPPT charge controllers, and battery storage setups to equip students for the rapid green energy expansion."
+      },
+      {
+        "q": "5. What are the campus placement records and recruiters for Electrical Engineering?",
+        "a": "The department maintains an 82–88% placement track record. Prominent recruiting partners include Tata Power, Schneider Electric, Havells India, Larsen & Toubro Electrical, CESC Limited, ABB India, and leading electrical switchgear fabricators across West Bengal, Jharkhand, and Odisha, with packages up to ₹4.6 LPA."
+      },
+      {
+        "q": "6. What public sector (PSU) and government opportunities exist for electrical diploma engineers?",
+        "a": "Electrical diploma graduates can appear for WBSEDCL / WBSETCL Junior Engineer exams, Indian Railways (RRB-JE & Assistant Loco Pilot), PowerGrid Corporation (PGCIL), SAIL Durgapur Steel Plant (OCT), NTPC, DVC, and BHEL technical cadre recruitments."
+      },
+      {
+        "q": "7. What higher studies pathways are available through JELET lateral entry?",
+        "a": "Students can appear for the JELET examination to enter directly into the 2nd Year (3rd Semester) of B.Tech in Electrical Engineering, Power Engineering, or Electrical & Electronics Engineering at prestigious institutions including Jadavpur University, KGEC, JGEC, and Heritage."
+      }
+    ]
+  },
+  "diploma-in-civil-engineering": {
+    "slug": "diploma-in-civil-engineering",
+    "code": "CE_05",
+    "title": "Civil Engineering",
+    "order": 4,
+    "tagline": "Center of Excellence in Structural Analysis, Concrete Technology, Modern Surveying & Infrastructure Engineering",
+    "accentHex": "#0284C7",
+    "accentRgb": "2, 132, 199",
+    "intake": "60 Seats",
+    "duration": "3 Years · 6 Semesters",
+    "regulatory": "WBSCTVESD & AICTE Approved",
+    "practicalRatio": "60% Lab Practical / 40% Theory",
+    "eligibility": "1st Year Entry: Passed 10th Standard / Madhyamik examination from a recognized State/Central Board with at least 35% aggregate marks (including Mathematics, Physical Science, and English). Valid rank in JEXPO examination conducted by WBSCTVESD, or direct institutional quota counseling. No upper age limit.\n2nd Year Lateral Entry: Passed 10+2 examination with Physics/Mathematics/Chemistry/Vocational subjects OR passed 10th + 2-year ITI in Draughtsman Civil or Surveyor trade. Valid rank in VOCLET entrance examination conducted by WBSCTVESD. Directly admitted to 3rd Semester (2nd Year) completing the entire Diploma in 2 years.",
+    "syllabusPdf": "https://nhit.in/wp-content/uploads/2024/06/Brochure-Final-2_compressed-1.pdf",
+    "stats": {
+      "placementRate": "80–85%",
+      "highestCtc": "₹4.5 LPA",
+      "medianCtc": "₹2.6 LPA"
+    },
+    "heroSlides": [
+      "/images/about-survey.jpg",
+      "/images/campus-04.jpg",
+      "/images/campus-08.jpg",
+      "/images/campus-14.jpg",
+      "/images/labs/lab-civil-survey.jpg"
+    ],
+    "hudSpecs": [
+      {
+        "label": "Approved Intake",
+        "val": "60 Seats",
+        "sub": "Council Authorized"
+      },
+      {
+        "label": "Program Duration",
+        "val": "3 Years",
+        "sub": "6 Field Semesters"
+      },
+      {
+        "label": "Hands-on Ratio",
+        "val": "60% Field",
+        "sub": "Total Station & Testing"
+      },
+      {
+        "label": "Placement Rate",
+        "val": "80–85%",
+        "sub": "L&T / Infra Leaders"
+      },
+      {
+        "label": "Highest Package",
+        "val": "₹4.5 LPA",
+        "sub": "L&T Construction Offer"
+      }
+    ],
+    "pillars": [
+      {
+        "tag": "PILLAR 01 // STRUCTURES",
+        "title": "Structural Analysis & CAD Modeling",
+        "desc": "Design of reinforced concrete (RCC) and steel structures compliant with Indian Standard codes using AutoCAD & STAAD.Pro.",
+        "skills": [
+          "IS 456 RCC Design",
+          "Steel Structures",
+          "STAAD.Pro",
+          "AutoCAD Civil 3D",
+          "Bar Bending Schedule"
+        ]
+      },
+      {
+        "tag": "PILLAR 02 // GEOMATICS",
+        "title": "Digital Geomatics & Geotechnical",
+        "desc": "Precision field topographic mapping with electronic Total Stations, GPS, and complete laboratory soil mechanics analysis.",
+        "skills": [
+          "Total Station Survey",
+          "Soil Triaxial Tests",
+          "Leveling & Contouring",
+          "SBR & Shear Tests",
+          "Direct Shear"
+        ]
+      },
+      {
+        "tag": "PILLAR 03 // INFRASTRUCTURE",
+        "title": "Highway & Public Health Engineering",
+        "desc": "Pavement design, aggregate/bitumen lab testing, municipal water supply networks, wastewater treatment, and green building concepts.",
+        "skills": [
+          "Pavement Material Tests",
+          "PHE Sanitation",
+          "Hydraulics & Flow",
+          "Quantity Estimation",
+          "Site Safety"
+        ]
+      }
+    ],
+    "narrative": "Civil engineering leaves an indelible mark on civilization. At NHIT Durgapur, the Civil Engineering department combines foundational structural engineering theory with authentic field surveying and rigorous materials testing. From precision topographic surveys across undulating terrain using electronic Total Stations to testing concrete compressive cube strength and analyzing highway subgrades, our curriculum equips students with site-ready expertise and strict safety discipline required by major national infrastructure builders.",
+    "hod": {
+      "name": "Partha De",
+      "desig": "Head of Department & Lecturer",
+      "img": "/images/faculty/nhitfacutyimages0820240037.jpg",
+      "message": "Civil engineers leave their permanent signature upon civilization. Our department grounds students in both rigorous structural theory and authentic field practice—from precision digital Total Station surveys to automated concrete mix testing and computerized CAD drafting. We prepare site-ready engineers with uncompromising safety ethics."
+    },
+    "labs": [
+      {
+        "name": "Advanced Surveying & Geomatics Lab",
+        "spec": "Electronic Total Stations, digital auto-levels, optical transit theodolites, handheld GPS units, and surveying compasses.",
+        "img": "/images/labs/lab-civil-survey.jpg"
+      },
+      {
+        "name": "Concrete Technology & Materials Testing Lab",
+        "spec": "Digital Compression Testing Machine (CTM), slump test cones, compaction factor rig, Vicat apparatus, and sieve shakers.",
+        "img": "/images/campus-04.jpg"
+      },
+      {
+        "name": "Geotechnical & Soil Mechanics Lab",
+        "spec": "Direct shear apparatus, triaxial shear testing cell, Proctor compaction test equipment, liquid limit apparatus, and hydrometers.",
+        "img": "/images/about-survey.jpg"
+      },
+      {
+        "name": "Highway & Transportation Engineering Lab",
+        "spec": "Los Angeles abrasion testing machine, aggregate impact tester, Marshall stability rig, and bitumen penetration/ductility baths.",
+        "img": "/images/campus-08.jpg"
+      },
+      {
+        "name": "Hydraulics & Fluid Mechanics Lab",
+        "spec": "Notch/weir discharge flow tanks, Bernoulli theorem verification apparatus, pipe friction loss test bench, and orifice meter rigs.",
+        "img": "/images/campus-14.jpg"
+      },
+      {
+        "name": "CAD Civil Drafting & Structural Design Lab",
+        "spec": "High-speed CAD design stations running AutoCAD Civil 3D, STAAD.Pro structural analysis software, and estimation packages.",
+        "img": "/images/campus-01.jpg"
+      }
+    ],
+    "sems": {
+      "1": [
+        "Engineering Mathematics-I",
+        "Applied Physics",
+        "Applied Chemistry",
+        "Basic Civil Engineering & Materials",
+        "Communication Skills in English"
+      ],
+      "2": [
+        "Engineering Mathematics-II",
+        "Fundamentals of Electrical & Mechanical",
+        "Civil Engineering Drawing-I",
+        "Surveying-I & Field Practicals",
+        "Basic Workshop Practice"
+      ],
+      "3": [
+        "Strength of Materials (Civil)",
+        "Surveying-II (Theodolite & Total Station)",
+        "Building Construction & Concrete Technology",
+        "Fluid Mechanics (Civil)",
+        "Civil Engineering Drawing-II (AutoCAD)"
+      ],
+      "4": [
+        "Design of RCC Structures (IS 456)",
+        "Geotechnical Engineering & Soil Mechanics",
+        "Transportation Engineering-I (Highways)",
+        "Public Health Engineering (Water Supply)",
+        "Quantity Surveying & Estimation-I"
+      ],
+      "5": [
+        "Design of Steel Structures (IS 800)",
+        "Transportation Engineering-II (Railways & Bridges)",
+        "Environmental Engineering & Wastewater",
+        "Contracts & Valuation",
+        "Project Stage-I"
+      ],
+      "6": [
+        "Construction Planning & Management",
+        "Advanced Structural Analysis / Elective",
+        "Irrigation Engineering & Hydraulics",
+        "Major Project Stage-II & Defense",
+        "Comprehensive Viva Voce"
+      ]
+    },
+    "events": [
+      {
+        "title": "Electronic Total Station & Geodetic Field Surveying Camp",
+        "date_badge": "Field Training",
+        "type": "Field Camp",
+        "desc": "Intensive 7-day field contouring and coordinate triangulation camp training undergraduates on advanced electronic Total Stations and digital levels.",
+        "image": "/images/about-survey.jpg"
+      },
+      {
+        "title": "Industrial Technical Visit to DVC Maithon Dam & Power Canal",
+        "date_badge": "Industrial Tour",
+        "type": "Site Tour",
+        "desc": "Direct site inspection of hydraulic spillways, structural retaining walls, earthen embankments, and heavy water control civil structures.",
+        "image": "/images/campus-04.jpg"
+      },
+      {
+        "title": "Concrete Mix Design & Non-Destructive Testing (NDT) Seminar",
+        "date_badge": "Technical Symposium",
+        "type": "Seminar",
+        "desc": "Hands-on workshop exploring Rebound Hammer calibration, Ultrasonic Pulse Velocity measurements, and modern high-strength mix designs.",
+        "image": "/images/campus-08.jpg"
+      }
+    ],
+    "projects": [
+      {
+        "title": "Experimental Analysis of Self-Compacting Concrete (SCC) with Fly Ash",
+        "team": "Batch 2024 · Final Year Team Alpha",
+        "stack": "M30 Grade · Class F Fly Ash · Superplasticizer · CTM",
+        "desc": "Formulation and compressive strength validation of green self-compacting concrete mixes replacing 30% Portland cement with thermal power plant fly ash.",
+        "image": "/images/campus-04.jpg"
+      },
+      {
+        "title": "Digital 3D Topographic Contour Mapping of NHIT Campus via Total Station",
+        "team": "Batch 2024 · Final Year Team Beta",
+        "stack": "Electronic Total Station · AutoCAD Civil 3D · Surfer GIS",
+        "desc": "High-precision coordinate triangulation and digital surface elevation model establishing accurate storm drainage and road grading contours.",
+        "image": "/images/about-survey.jpg"
+      },
+      {
+        "title": "Campus Rainwater Harvesting & Gravity Filtration Distribution Grid",
+        "team": "Batch 2023 · Final Year Team Gamma",
+        "stack": "Hydraulic Modeling · Multi-Layer Sand Filters · Storage Sump",
+        "desc": "Engineering design and flow simulation for harvesting 1.2 million liters of annual rooftop rainwater for ground recharge and campus irrigation.",
+        "image": "/images/campus-08.jpg"
+      }
+    ],
+    "testimonials": [
+      {
+        "name": "Subhendu Paul",
+        "role": "Batch 2023 · Junior Site Engineer",
+        "org": "Larsen & Toubro Construction (L&T) · ₹4.5 LPA",
+        "quote": "The electronic Total Station surveying and concrete cube testing at NHIT prepared me for high-intensity site work from my very first day on duty.",
+        "photo": "/images/faculty/nhitfacutyimages0820240002.jpg"
+      },
+      {
+        "name": "Priyanka Dutta",
+        "role": "Batch 2024 · JELET Rank 18",
+        "org": "Jadavpur University (B.Tech Civil Lateral Entry)",
+        "quote": "Structural analysis and fluid mechanics concepts were taught with complete clarity at NHIT. Their constant mentorship helped me secure a top rank in JELET.",
+        "photo": "/images/faculty/nhitfacutyimages0820240010.jpg"
+      },
+      {
+        "name": "Arghya Mondal",
+        "role": "Batch 2022 · Quantity Surveyor & QA/QC",
+        "org": "Afcons Infrastructure Ltd · ₹4.2 LPA",
+        "quote": "The CAD civil drafting lab and soil testing experiments at NHIT are directly aligned with actual highway and metro infrastructure projects.",
+        "photo": "/images/faculty/nhitfacutyimages0820240015.jpg"
+      },
+      {
+        "name": "Debojyoti Sen",
+        "role": "Batch 2023 · Structural Detailer",
+        "org": "Shapoorji Pallonji · ₹4.0 LPA",
+        "quote": "NHIT taught me how to read complex bar bending schedules and structural drawings without hesitation. Grateful to the civil faculty.",
+        "photo": "/images/faculty/nhitfacutyimages0820240016.jpg"
+      }
+    ],
+    "careers": {
+      "roles": {
+        "title": "Core Civil & Infrastructure Roles",
+        "desc": "Critical site engineering, structural drafting, and project management responsibilities.",
+        "items": [
+          "Site Construction Engineer & Project Supervisor",
+          "Structural Draftsman & CAD Detailer (STAAD.Pro / AutoCAD)",
+          "Quantity Surveyor & Estimation Engineer",
+          "Quality Control & Concrete QA/QC Specialist",
+          "Highway & Transportation Field Supervisor",
+          "Public Health Engineering (PHE) Network Supervisor"
+        ]
+      },
+      "psu": {
+        "title": "Public Sector & Government Services",
+        "desc": "Prime government engineering postings with gazetted promotion opportunities.",
+        "items": [
+          "Staff Selection Commission — Junior Engineer (SSC-JE Civil)",
+          "Indian Railways (RRB-JE Civil) — Works & P-Way Divisions",
+          "Public Works Department (PWD West Bengal) — Junior Engineer",
+          "Irrigation & Waterways Directorate (Govt. of West Bengal)",
+          "KMDA, Asansol-Durgapur Development Authority (ADDA) & Municipalities",
+          "National Highways Authority of India (NHAI) Project Cells"
+        ]
+      },
+      "lateral": {
+        "title": "B.Tech Lateral Entry (JELET Pathway)",
+        "desc": "Direct 2nd Year admission into premier civil engineering bachelor programs.",
+        "items": [
+          "Direct 2nd Year entry into Jadavpur University (JU Civil)",
+          "IIEST Shibpur & Kalyani Govt. Engineering College",
+          "Jalpaiguri Govt. Engineering College & MAKAUT in-house",
+          "Heritage, Meghnad Saha & Techno India University",
+          "Foundation for AMIE, UPSC Indian Engineering Services (IES)"
+        ]
+      },
+      "recruiters": [
+        "Larsen & Toubro (L&T Construction)",
+        "Shapoorji Pallonji",
+        "Simplex Infrastructures",
+        "Afcons Infrastructure",
+        "Gammon India",
+        "Tata Projects"
+      ]
+    },
+    "faqs": [
+      {
+        "q": "1. What is the eligibility criteria for admission into Diploma in Civil Engineering?",
+        "a": "Applicants must have cleared 10th Standard / Madhyamik examination or equivalent with at least 35% marks in aggregate. Admission is granted through state-level JEXPO counseling conducted by WBSCTVESD, or through direct institutional counseling per government norms. No upper age barrier applies."
+      },
+      {
+        "q": "2. Can students with ITI (Draughtsman Civil / Surveyor) or 10+2 join directly in 2nd year?",
+        "a": "Yes! Candidates who have completed 10+2 with PCM or passed 10th standard along with a 2-year ITI in trades like Draughtsman Civil or Surveyor with a valid VOCLET rank can enter directly into the 3rd Semester (2nd Year) through lateral entry, finishing the entire diploma in 2 academic years."
+      },
+      {
+        "q": "3. What field instruments and software are students trained on in Civil Engineering?",
+        "a": "Civil engineering students at NHIT train on modern electronic Total Stations, digital auto-levels, transit theodolites, and GPS receivers for field surveying. In software labs, students master 2D drafting and structural detailing in AutoCAD Civil 3D, and learn structural frame analysis in STAAD.Pro."
+      },
+      {
+        "q": "4. What heavy testing equipment is available in the Civil Engineering laboratories?",
+        "a": "The department is equipped with a digital Compression Testing Machine (CTM) for concrete cube strength, direct shear apparatus and triaxial cells for soil testing, Los Angeles abrasion machine for aggregate testing, bitumen penetration/ductility rigs, and a water & wastewater testing PHE laboratory."
+      },
+      {
+        "q": "5. What are the primary job profiles and companies hiring NHIT civil diploma graduates?",
+        "a": "Graduates are hired as Site Construction Engineers, Structural Draftsmen, Quantity Surveyors, Quality Control (QA/QC) Inspectors, and PHE Supervisors by top infrastructure giants like Larsen & Toubro (L&T Construction), Shapoorji Pallonji, Afcons, Simplex Infrastructures, and Gammon India with packages up to ₹4.5 LPA."
+      },
+      {
+        "q": "6. What government recruitment exams can a civil engineering diploma holder take?",
+        "a": "Diploma civil engineers are in highest demand across public sector exams including SSC-JE (Staff Selection Commission), RRB-JE (Indian Railways Works & Permanent Way), West Bengal Public Works Department (PWD-JE), Irrigation & Waterways Directorate, KMDA, and municipal corporations."
+      },
+      {
+        "q": "7. How does lateral entry to B.Tech Civil Engineering work after diploma?",
+        "a": "Through the state JELET entrance test, diploma holders secure direct lateral admission into the 2nd Year (3rd Semester) of 4-year B.Tech Civil Engineering at premier colleges such as Jadavpur University, IIEST Shibpur, Kalyani Govt. Engineering College, and Jalpaiguri Govt. Engineering College."
+      }
+    ]
+  },
+  "diploma-in-electronics-telecommunications-engineering": {
+    "slug": "diploma-in-electronics-telecommunications-engineering",
+    "code": "ETCE_06",
+    "title": "Electronics & Telecommunication Engineering",
+    "order": 5,
+    "tagline": "Center of Excellence in RF Wireless Communications, Embedded Systems, IoT & VLSI Circuit Design",
+    "accentHex": "#8B5CF6",
+    "accentRgb": "139, 92, 246",
+    "intake": "60 Seats",
+    "duration": "3 Years · 6 Semesters",
+    "regulatory": "WBSCTVESD & AICTE Approved",
+    "practicalRatio": "60% Lab Practical / 40% Theory",
+    "eligibility": "1st Year Entry: Passed 10th Standard / Madhyamik examination from a recognized State/Central Board with at least 35% aggregate marks (including Mathematics, Physical Science, and English). Valid rank in JEXPO examination conducted by WBSCTVESD, or direct institutional quota counseling. No upper age limit.\n2nd Year Lateral Entry: Passed 10+2 examination with Physics/Mathematics/Chemistry/Vocational subjects OR passed 10th + 2-year ITI in Electronic Mechanic or ICTSM trade. Valid rank in VOCLET entrance examination conducted by WBSCTVESD. Directly admitted to 3rd Semester (2nd Year) completing the entire Diploma in 2 years.",
+    "syllabusPdf": "https://nhit.in/wp-content/uploads/2024/06/Brochure-Final-2_compressed-1.pdf",
+    "stats": {
+      "placementRate": "80–86%",
+      "highestCtc": "₹4.7 LPA",
+      "medianCtc": "₹2.7 LPA"
+    },
+    "heroSlides": [
+      "/images/hero-electronics.jpg",
+      "/images/lab-electronics.jpg",
+      "/images/labs/lab-electronics-circuit.jpg",
+      "/images/campus-03.jpg"
+    ],
+    "hudSpecs": [
+      {
+        "label": "Approved Intake",
+        "val": "60 Seats",
+        "sub": "Council Approved"
+      },
+      {
+        "label": "Program Duration",
+        "val": "3 Years",
+        "sub": "6 Specialized Terms"
+      },
+      {
+        "label": "Hands-on Ratio",
+        "val": "60% Lab",
+        "sub": "RF, IoT & Embedded"
+      },
+      {
+        "label": "Placement Rate",
+        "val": "80–86%",
+        "sub": "Telecom & Hardware"
+      },
+      {
+        "label": "Highest Package",
+        "val": "₹4.7 LPA",
+        "sub": "Ericsson / Networking"
+      }
+    ],
+    "pillars": [
+      {
+        "tag": "PILLAR 01 // WIRELESS & TELECOM",
+        "title": "RF Communications & Microwave Engineering",
+        "desc": "Modulation systems, superheterodyne receivers, microwave test benches, antenna radiation patterns, and 5G cellular architectures.",
+        "skills": [
+          "RF Spectrum Analyzers",
+          "Antenna Trainer Kits",
+          "Microwave Klystron Benches",
+          "5G / LTE Standards",
+          "Optical Fiber Splicing"
+        ]
+      },
+      {
+        "tag": "PILLAR 02 // EMBEDDED SYSTEMS",
+        "title": "Microcontrollers & Smart IoT Solutions",
+        "desc": "Programming Intel 8085, 8051, ARM Cortex, ESP32, and Arduino microcontrollers with sensors, actuators, and cloud wireless protocols.",
+        "skills": [
+          "ARM Cortex & 8051",
+          "ESP32 & Arduino C++",
+          "LoRa & Zigbee Nodes",
+          "Sensor Interfacing",
+          "Embedded C Firmware"
+        ]
+      },
+      {
+        "tag": "PILLAR 03 // CIRCUITS & VLSI",
+        "title": "Analog Electronics & VLSI Architecture",
+        "desc": "Operational amplifiers, active filters, multi-stage transistor amplifiers, PCB schematic design in KiCad, and VHDL digital circuit simulation.",
+        "skills": [
+          "Op-Amp Audio & Filters",
+          "KiCad PCB Layout",
+          "VHDL / Verilog Basics",
+          "Digital Storage Oscilloscopes",
+          "SMD Soldering"
+        ]
+      }
+    ],
+    "narrative": "The Department of Electronics & Telecommunication Engineering (ETCE) at NHIT Durgapur sits at the nexus of modern digital connectivity, 5G cellular infrastructure, embedded IoT microcontrollers, and precision electronic hardware. In our advanced laboratories, students work with 100MHz Digital Storage Oscilloscopes (DSOs), microwave Klystron benches, optical fiber fusion splicers, and ARM Cortex embedded development boards. Students gain complete end-to-end fluency—from laying out multi-layer PCBs in KiCad to deploying cloud-connected IoT edge nodes.",
+    "hod": {
+      "name": "Arunangshu Chakraborty",
+      "desig": "Head of Department & Lecturer",
+      "img": "/images/faculty/arunangshu-chakraborty.jpg",
+      "message": "From 5G cellular networks and satellite transceivers to autonomous microcontrollers and wearable medical electronics, modern society is powered by telecommunication and hardware. At NHIT, we train students with hands-on RF test benches, optical fiber splicing, and embedded microcontrollers to create visionary electronics engineers."
+    },
+    "labs": [
+      {
+        "name": "Analog & Digital Electronics Circuit Lab",
+        "spec": "100MHz Digital Storage Oscilloscopes (DSOs), multi-output function generators, regulated DC power supplies, and analog IC test stations.",
+        "img": "/images/labs/lab-electronics-circuit.jpg"
+      },
+      {
+        "name": "RF Communication & Microwave Lab",
+        "spec": "RF spectrum analyzers, Klystron microwave test benches, Gunn oscillators, AM/FM modulation trainers, and antenna radiation pattern rigs.",
+        "img": "/images/hero-electronics.jpg"
+      },
+      {
+        "name": "Microcontroller & Embedded Systems Lab",
+        "spec": "ARM Cortex development kits, 8051 microcontrollers, Intel 8085 trainer kits, stepper motor interfacing cards, and universal programmers.",
+        "img": "/images/campus-03.jpg"
+      },
+      {
+        "name": "IoT & Wireless Sensor Networks Lab",
+        "spec": "ESP32 Wi-Fi/BLE edge devices, Arduino Mega, LoRa long-range transceivers, Zigbee modules, and cloud IoT telemetry dashboards.",
+        "img": "/images/lab-electronics.jpg"
+      },
+      {
+        "name": "Optical Fiber Communication Lab",
+        "spec": "Optical fiber trainer kits, laser diode transmitters, PIN/APD photodetectors, optical power meters, and fiber cleaver/splicer units.",
+        "img": "/images/campus-01.jpg"
+      },
+      {
+        "name": "PCB Design & SMD Prototyping Studio",
+        "spec": "KiCad and Proteus PCB design suites, chemical PCB etching baths, precision SMD hot-air rework stations, and component testing rigs.",
+        "img": "/images/campus-05.jpg"
+      }
+    ],
+    "sems": {
+      "1": [
+        "Engineering Mathematics-I",
+        "Applied Physics",
+        "Applied Chemistry",
+        "Basic Electronics & Components",
+        "Communication Skills in English"
+      ],
+      "2": [
+        "Engineering Mathematics-II",
+        "Fundamentals of Electrical Engineering",
+        "Electronic Devices & Circuits",
+        "Engineering Drawing",
+        "Basic Workshop Practice"
+      ],
+      "3": [
+        "Analog Electronic Circuits",
+        "Digital Electronics & Logic Design",
+        "Signals & Network Systems",
+        "Electronic Measurements & Instruments",
+        "C Programming Lab"
+      ],
+      "4": [
+        "Linear Integrated Circuits & Op-Amps",
+        "Microprocessor & Interfacing (8085/86)",
+        "Analog Communication Systems",
+        "Transmission Lines & Antennas",
+        "Circuit Simulation & PCB Lab"
+      ],
+      "5": [
+        "Digital Communication & Information Theory",
+        "Microcontrollers & Embedded Systems (8051/ARM)",
+        "Optical Fiber Communication",
+        "Consumer Electronics / IoT Elective",
+        "Project Stage-I"
+      ],
+      "6": [
+        "Wireless & Mobile Cellular Networks (5G/LTE)",
+        "Microwave & Radar Engineering",
+        "VLSI Design & VHDL Basics",
+        "Major Project Stage-II & Defense",
+        "Comprehensive Viva Voce"
+      ]
+    },
+    "events": [
+      {
+        "title": "5G Wireless Standards & Software Defined Radio (SDR) Bootcamp",
+        "date_badge": "Wireless Symposium",
+        "type": "Bootcamp",
+        "desc": "Hands-on spectrum capture using RTL-SDR dongles, GNU Radio flowgraphs, and digital modulation/demodulation analysis.",
+        "image": "/images/hero-electronics.jpg"
+      },
+      {
+        "title": "Technical Field Visit to BSNL Optical Telecommunication Exchange",
+        "date_badge": "Telecom Tour",
+        "type": "Industrial Tour",
+        "desc": "On-site study of DWDM optical multiplexers, fiber distribution hubs (FDH), optical time-domain reflectometers (OTDR), and cellular BTS towers.",
+        "image": "/images/campus-03.jpg"
+      },
+      {
+        "title": "Hands-on KiCad PCB Design & Prototyping Workshop",
+        "date_badge": "Hardware Sprint",
+        "type": "Workshop",
+        "desc": "Designing multi-layer printed circuit boards from schematic capture to Gerber file generation and chemical etching in the department lab.",
+        "image": "/images/labs/lab-electronics-circuit.jpg"
+      }
+    ],
+    "projects": [
+      {
+        "title": "Long-Range (LoRa) Microclimate IoT Agricultural Telemetry Node",
+        "team": "Batch 2024 · Final Year Team Alpha",
+        "stack": "ESP32 · LoRa SX1278 · Soil Moisture · Solar Panel · Node-RED",
+        "desc": "Battery-backed solar IoT sensor node transmitting soil moisture, temperature, and ambient humidity across a 4.5km line-of-sight wireless link.",
+        "image": "/images/lab-electronics.jpg"
+      },
+      {
+        "title": "Autonomous Obstacle-Avoiding Quadcopter with Live Video Downlink",
+        "team": "Batch 2024 · Final Year Team Beta",
+        "stack": "STM32 Flight Controller · Ultrasonic Sensors · 5.8GHz FPV",
+        "desc": "Custom-built quadcopter featuring automated barometric altitude hold, ultrasonic collision avoidance, and stabilized video broadcast.",
+        "image": "/images/hero-electronics.jpg"
+      },
+      {
+        "title": "Design of a 28 GHz Microstrip Patch Antenna for 5G Millimeter-Wave",
+        "team": "Batch 2023 · Final Year Team Gamma",
+        "stack": "Rogers RT/Duroid Substrate · HFSS Simulation · VNA Testing",
+        "desc": "Engineered a 28 GHz millimeter-wave microstrip patch antenna offering 8.4 dBi gain and wide bandwidth conforming to 5G cellular transceiver parameters.",
+        "image": "/images/campus-03.jpg"
+      }
+    ],
+    "testimonials": [
+      {
+        "name": "Soumyadip Kar",
+        "role": "Batch 2023 · RF Commissioning Engineer",
+        "org": "Ericsson India Global · ₹4.7 LPA",
+        "quote": "Working on spectrum analyzers and optical fiber fusion splicers at NHIT gave me an immediate head start when joining Ericsson 5G rollout projects.",
+        "photo": "/images/faculty/nhitfacutyimages0820240003.jpg"
+      },
+      {
+        "name": "Moumita Sen",
+        "role": "Batch 2024 · JELET State Rank 16",
+        "org": "Jadavpur University (B.Tech ECE Lateral Entry)",
+        "quote": "The mathematical rigor in communication systems and digital signal processing at NHIT helped me secure a coveted seat at Jadavpur University.",
+        "photo": "/images/faculty/nhitfacutyimages0820240010.jpg"
+      },
+      {
+        "name": "Arijit Ghosh",
+        "role": "Batch 2022 · Embedded Hardware Engineer",
+        "org": "Schneider Electric · ₹4.4 LPA",
+        "quote": "The KiCad PCB prototyping sessions and ARM Cortex labs taught me how to take an idea from circuit breadboard all the way to industrial manufacture.",
+        "photo": "/images/faculty/nhitfacutyimages0820240016.jpg"
+      },
+      {
+        "name": "Pratik Mondal",
+        "role": "Batch 2023 · Network Operations Associate",
+        "org": "Tata Communications · ₹4.2 LPA",
+        "quote": "NHIT emphasizes practical instrumentation. Calibrating DSOs and microwave benches gave me supreme confidence in technical interviews.",
+        "photo": "/images/faculty/nhitfacutyimages0820240015.jpg"
+      }
+    ],
+    "careers": {
+      "roles": {
+        "title": "Electronics, Telecom & Hardware Roles",
+        "desc": "Specialized positions in cellular networks, electronics manufacture, and embedded IoT firmware.",
+        "items": [
+          "Telecom Network Installation & RF Drive Test Engineer",
+          "Embedded Systems & IoT Firmware Programmer",
+          "PCB Layout Designer & Hardware Prototyping Specialist",
+          "Electronics Quality Assurance & Testing Technician",
+          "Optical Fiber Network Maintenance Engineer",
+          "Broadcast & Satellite Ground Station Support Executive"
+        ]
+      },
+      "psu": {
+        "title": "PSU, Defence & Telecom Opportunities",
+        "desc": "High-intake technical officer and junior engineer positions in premier national organizations.",
+        "items": [
+          "Bharat Electronics Limited (BEL) — Technical Assistant",
+          "BSNL & MTNL — Junior Telecom Officer (JTO)",
+          "DRDO & ISRO — Technical Assistant (Electronics)",
+          "Airports Authority of India (AAI CNS Junior Executive)",
+          "Indian Railways (RRB-JE Signal & Telecommunications)",
+          "Hindustan Aeronautics Limited (HAL Avionics Division)"
+        ]
+      },
+      "lateral": {
+        "title": "B.Tech Lateral Entry (JELET Pathway)",
+        "desc": "Direct 2nd Year admission into premier Electronics & Communication Engineering programs.",
+        "items": [
+          "Direct admission to Jadavpur University (JU ECE)",
+          "Kalyani Government Engineering College (KGEC ECE)",
+          "Jalpaiguri Government Engineering College (JGEC)",
+          "Heritage Institute of Technology & Techno India University",
+          "Direct path to VLSI chip design, Robotics, and Aerospace careers"
+        ]
+      },
+      "recruiters": [
+        "Ericsson India",
+        "Nokia Networks",
+        "Schneider Electric",
+        "Havells India",
+        "Dixon Technologies",
+        "Tata Communications",
+        "Bharat Electronics"
+      ]
+    },
+    "faqs": [
+      {
+        "q": "1. What is the eligibility criteria for admission into Diploma in ETCE?",
+        "a": "Applicants must have passed 10th Standard / Madhyamik examination with at least 35% aggregate marks (including Mathematics, Physical Science, and English). Admissions are conducted through state-level JEXPO counseling conducted by WBSCTVESD, or through direct institutional counseling. No upper age barrier applies."
+      },
+      {
+        "q": "2. Can 10+2 (Science) or Electronics Mechanic ITI pass-outs join directly in 2nd year?",
+        "a": "Yes. Candidates with 10+2 (PCM) or 10th standard + 2-year ITI in trades like Electronic Mechanic, Information & Communication Technology (ICTSM), or Wireman with a valid VOCLET rank can enter directly into the 3rd Semester (2nd Year) through lateral entry, completing their diploma in 2 years."
+      },
+      {
+        "q": "3. What practical labs and equipment does the ETCE department house?",
+        "a": "The department houses 6 specialized laboratories: Analog & Digital Electronics Circuit Lab (100MHz DSOs, function generators), RF Communication & Microwave Lab (spectrum analyzers, Klystron benches), Microcontroller & Embedded Systems Lab (ARM Cortex, 8051, 8085), IoT & Sensor Lab (ESP32, Arduino, LoRa), Optical Fiber Lab, and DSP/PCB Design Lab."
+      },
+      {
+        "q": "4. Are 5G communication standards and Internet of Things (IoT) included in the syllabus?",
+        "a": "Yes. Students study 5G wireless standards, software-defined radio basics, wireless sensor networks (WSN), and implement practical IoT projects using ESP32 Wi-Fi/BLE modules connected to cloud dashboards."
+      },
+      {
+        "q": "5. What are the major placement avenues for ETCE graduates?",
+        "a": "Graduates are recruited by telecommunications infrastructure firms, networking vendors, and electronic hardware manufacturers including Ericsson India, Nokia Networks, Schneider Electric, Havells, Dixon Technologies, and Tata Communications with compensation packages reaching up to ₹4.7 LPA."
+      },
+      {
+        "q": "6. What public sector (PSU) and defence examinations can ETCE diploma holders appear for?",
+        "a": "Graduates are eligible for technical officer and junior engineer examinations at Bharat Electronics Limited (BEL), BSNL / MTNL (Junior Telecom Officer), ISRO, DRDO Technical Assistant, Airports Authority of India (AAI CNS), and Indian Railways (RRB-JE Signal & Telecom)."
+      },
+      {
+        "q": "7. How can ETCE diploma holders pursue higher education (B.Tech)?",
+        "a": "Through the state JELET entrance test, diploma holders secure direct lateral admission into the 2nd Year (3rd Semester) of 4-year B.Tech in Electronics & Communication Engineering (ECE) or ETCE at premier universities such as Jadavpur University, KGEC Kalyani, and JGEC."
+      }
+    ]
+  },
+  "diploma-in-automobile-engineering": {
+    "slug": "diploma-in-automobile-engineering",
+    "code": "AE_03",
+    "title": "Automobile Engineering",
+    "order": 6,
+    "tagline": "Center of Excellence in IC Engines, Vehicle Dynamics, Electric Mobility (EV) & OBD-II Diagnostics",
+    "accentHex": "#EF4444",
+    "accentRgb": "239, 68, 68",
+    "intake": "60 Seats",
+    "duration": "3 Years · 6 Semesters",
+    "regulatory": "WBSCTVESD & AICTE Approved",
+    "practicalRatio": "60% Lab Practical / 40% Theory",
+    "eligibility": "1st Year Entry: Passed 10th Standard / Madhyamik examination from a recognized State/Central Board with at least 35% aggregate marks (including Mathematics, Physical Science, and English). Valid rank in JEXPO examination conducted by WBSCTVESD, or direct institutional quota counseling. No upper age limit.\n2nd Year Lateral Entry: Passed 10+2 examination with Physics/Mathematics/Chemistry/Vocational subjects OR passed 10th + 2-year ITI in Mechanic Motor Vehicle (MMV), Diesel Mechanic, or Tractor Mechanic. Valid rank in VOCLET entrance examination conducted by WBSCTVESD. Directly admitted to 3rd Semester (2nd Year) completing the entire Diploma in 2 years.",
+    "syllabusPdf": "https://nhit.in/wp-content/uploads/2024/06/Brochure-Final-2_compressed-1.pdf",
+    "stats": {
+      "placementRate": "80–86%",
+      "highestCtc": "₹4.6 LPA",
+      "medianCtc": "₹2.6 LPA"
+    },
+    "heroSlides": [
+      "/images/lab-automobile.jpg",
+      "/images/labs/lab-auto-engine.jpg",
+      "/images/hero-mechanical.jpg",
+      "/images/campus-12.jpg"
+    ],
+    "hudSpecs": [
+      {
+        "label": "Approved Intake",
+        "val": "60 Seats",
+        "sub": "Council Certified"
+      },
+      {
+        "label": "Program Duration",
+        "val": "3 Years",
+        "sub": "6 Automotive Terms"
+      },
+      {
+        "label": "Hands-on Ratio",
+        "val": "60% Shop",
+        "sub": "Engines & Chassis Bays"
+      },
+      {
+        "label": "Placement Rate",
+        "val": "80–86%",
+        "sub": "OEM & Dealerships"
+      },
+      {
+        "label": "Highest Package",
+        "val": "₹4.6 LPA",
+        "sub": "Tata Motors Offer"
+      }
+    ],
+    "pillars": [
+      {
+        "tag": "PILLAR 01 // POWERTRAIN",
+        "title": "IC Engines, Dynamometers & Tuning",
+        "desc": "Comprehensive overhaul of multi-cylinder petrol and diesel engines, dynamometer performance benchmarking, and heat balance calculations.",
+        "skills": [
+          "Engine Overhaul & Assembly",
+          "Eddy Current Dynamometer",
+          "CRDI & MPFI Systems",
+          "Exhaust Gas Analysis",
+          "Combustion Tuning"
+        ]
+      },
+      {
+        "tag": "PILLAR 02 // CHASSIS & VEHICLE DYNAMICS",
+        "title": "Automotive Chassis, Suspension & Transmission",
+        "desc": "Operational mechanics of manual and automatic transmissions, differential gear trains, power steering, and disc/drum braking systems.",
+        "skills": [
+          "Differential Gearboxes",
+          "Hydraulic Brake Systems",
+          "Suspension Rigs (MacPherson)",
+          "Wheel Alignment & Balancing",
+          "4WS Steering Rigs"
+        ]
+      },
+      {
+        "tag": "PILLAR 03 // E-MOBILITY & DIAGNOSTICS",
+        "title": "Electric Vehicles (EV) & OBD-II Diagnostics",
+        "desc": "Modern automotive electronic sensors, ECU architecture, OBD-II onboard fault diagnostics, EV battery packs, and BLDC traction motors.",
+        "skills": [
+          "OBD-II Fault Scanners",
+          "EV Battery & BMS Rigs",
+          "BLDC Traction Motors",
+          "CAN Bus Telemetry",
+          "Auto Electrical Wiring"
+        ]
+      }
+    ],
+    "narrative": "The Department of Automobile Engineering at NHIT Durgapur drives eastern India's automotive technical workforce into the future. With the mobility landscape evolving rapidly from traditional internal combustion engines toward hybrid and fully electric powertrains (EV), our training blends deep mechanical mechanical assembly with automotive electronics. Students dismantle and reassemble multi-cylinder commercial vehicle engines, measure torque with eddy current dynamometers, scan ECU sensor error codes with Bosch OBD-II diagnostic tools, and test high-voltage Lithium-Ion Battery Management Systems (BMS).",
+    "hod": {
+      "name": "Pallab Naskar",
+      "desig": "In-Charge & Head of Department",
+      "img": "/images/faculty/nhitfacutyimages0820240031.jpg",
+      "message": "Automobiles represent the ultimate synthesis of mechanical design, thermal dynamics, and cutting-edge electronic control. At NHIT, our students get grease on their hands in real engine bays, learn ECU computerized diagnostics, and master electric vehicle battery architecture to power the future of transportation."
+    },
+    "labs": [
+      {
+        "name": "Engine Overhaul & Test Bay",
+        "spec": "Cut-section and running models of multi-cylinder petrol and diesel engines, CRDI fuel injection test benches, and valve re-seating rigs.",
+        "img": "/images/labs/lab-auto-engine.jpg"
+      },
+      {
+        "name": "Automotive Chassis & Transmission Lab",
+        "spec": "Fully functional manual gearboxes, synchromesh units, differential gear trains, MacPherson strut suspension rigs, and hydraulic brake testers.",
+        "img": "/images/lab-automobile.jpg"
+      },
+      {
+        "name": "Auto Electrical & OBD-II Diagnostics Bay",
+        "spec": "Bosch handheld OBD-II scan tools, alternator/starter motor test benches, electronic fuel injection (EFI) simulators, and CAN-bus rigs.",
+        "img": "/images/hero-mechanical.jpg"
+      },
+      {
+        "name": "Electric Vehicle (EV) & Clean Mobility Lab",
+        "spec": "Lithium-Ion battery pack assembly station, digital Battery Management System (BMS) testing rig, and BLDC traction motor dynamometer.",
+        "img": "/images/campus-12.jpg"
+      },
+      {
+        "name": "Thermal Dynamometer & Emission Testing Station",
+        "spec": "Eddy current engine dynamometer, computerized fuel consumption meters, and 4-gas digital exhaust emission analyzer.",
+        "img": "/images/labs/lab-utm-testing.jpg"
+      },
+      {
+        "name": "CAD Automotive Design Studio",
+        "spec": "Developer CAD workstations running SolidWorks and CATIA for chassis space-frame modeling and suspension kinematics analysis.",
+        "img": "/images/campus-02.jpg"
+      }
+    ],
+    "sems": {
+      "1": [
+        "Engineering Mathematics-I",
+        "Applied Physics",
+        "Applied Chemistry",
+        "Automotive Basics & Hand Tools",
+        "Communication Skills in English"
+      ],
+      "2": [
+        "Engineering Mathematics-II",
+        "Fundamentals of Electrical & Electronics",
+        "Automotive Engineering Drawing",
+        "Engineering Mechanics",
+        "Basic Workshop Practice"
+      ],
+      "3": [
+        "Automotive Engines-I (Thermodynamics & Design)",
+        "Automotive Chassis & Running Gear",
+        "Strength of Materials (Auto)",
+        "Manufacturing Processes",
+        "Machine Drawing (AutoCAD)"
+      ],
+      "4": [
+        "Automotive Engines-II (Combustion & Fuels)",
+        "Transmission Systems & Gearboxes",
+        "Automotive Electrical & Electronic Systems",
+        "Fluid Mechanics & Pneumatics",
+        "Engine Disassembly Lab"
+      ],
+      "5": [
+        "Vehicle Dynamics & Suspension Design",
+        "Automotive Diagnostics & OBD-II Scanners",
+        "Electric & Hybrid Vehicles (EV/HEV)",
+        "Industrial Management & Road Safety",
+        "Project Stage-I"
+      ],
+      "6": [
+        "Transport Management & Motor Vehicle Acts",
+        "Automotive Air Conditioning & Body Engineering",
+        "Modern Vehicle Fleet Maintenance",
+        "Major Project Stage-II & Defense",
+        "Comprehensive Viva Voce"
+      ]
+    },
+    "events": [
+      {
+        "title": "Hands-on EV Powertrain & Li-Ion Battery Architecture Workshop",
+        "date_badge": "EV Masterclass",
+        "type": "Masterclass",
+        "desc": "Comprehensive study of high-voltage Li-Ion battery pack design, active Battery Management Systems (BMS), and regenerative braking controllers.",
+        "image": "/images/labs/lab-auto-engine.jpg"
+      },
+      {
+        "title": "Industrial Immersion Visit to Tata Motors Commercial Vehicle Works",
+        "date_badge": "OEM Plant Tour",
+        "type": "Plant Tour",
+        "desc": "Direct observation of robotic chassis welding, multi-link axle assembly, and automated roller dynamometer end-of-line vehicle testing.",
+        "image": "/images/hero-mechanical.jpg"
+      },
+      {
+        "title": "Bosch OBD-II Automotive Diagnostics & Emission Testing Clinic",
+        "date_badge": "Diagnostics Clinic",
+        "type": "Clinic",
+        "desc": "Live electronic fault code scanning, sensor live data streaming, and 4-gas exhaust emission analyzer calibration on BS-VI vehicles.",
+        "image": "/images/campus-12.jpg"
+      }
+    ],
+    "projects": [
+      {
+        "title": "Electric Powertrain Conversion of a 100cc Commuter Motorcycle",
+        "team": "Batch 2024 · Final Year Team Alpha",
+        "stack": "72V 30Ah Li-Ion Pack · 2kW BLDC Hub Motor · Smart BMS",
+        "desc": "Engineered a clean electric retrofit conversion achieving 75km range per charge with regenerative braking and digital battery telemetry.",
+        "image": "/images/labs/lab-auto-engine.jpg"
+      },
+      {
+        "title": "Pneumatically Actuated Active Suspension with Level Compensation",
+        "team": "Batch 2024 · Final Year Team Beta",
+        "stack": "Pneumatic Bellows · Proximity Sensors · Arduino Controller",
+        "desc": "Smart vehicle chassis leveling rig adjusting ride height dynamically based on road surface inclination and variable passenger payload.",
+        "image": "/images/lab-automobile.jpg"
+      },
+      {
+        "title": "Cut-Section Operational CRDI Diesel Fuel Injection Display Rig",
+        "team": "Batch 2023 · Final Year Team Gamma",
+        "stack": "High-Pressure Common Rail · Solenoid Injectors · 12V DC Motor",
+        "desc": "Educational motorized test bench illustrating common-rail fuel pressurization up to 1600 bar and multi-stage pilot/main injection pulses.",
+        "image": "/images/hero-mechanical.jpg"
+      }
+    ],
+    "testimonials": [
+      {
+        "name": "Rituraj Banerjee",
+        "role": "Batch 2023 · Production Plant Engineer",
+        "org": "Tata Motors Commercial Vehicles · ₹4.4 LPA",
+        "quote": "The multi-cylinder engine overhaul and dynamometer test rigs at NHIT gave me practical troubleshooting confidence that set me apart in my Tata Motors plant interview.",
+        "photo": "/images/faculty/nhitfacutyimages0820240003.jpg"
+      },
+      {
+        "name": "Subhadeep Pal",
+        "role": "Batch 2024 · JELET State Rank 18",
+        "org": "Kalyani Government Engineering College (KGEC B.Tech)",
+        "quote": "NHIT automobile faculty taught vehicle thermodynamics and chassis dynamics with tremendous academic rigor. I cleared JELET with rank 18 on my first attempt.",
+        "photo": "/images/faculty/nhitfacutyimages0820240010.jpg"
+      },
+      {
+        "name": "Akash Dey",
+        "role": "Batch 2022 · Quality & Testing Engineer",
+        "org": "Force Motors Ltd · ₹4.2 LPA",
+        "quote": "The automotive electronics and OBD-II scanner diagnostics training at NHIT are cutting-edge. I transitioned into vehicle QA seamlessly.",
+        "photo": "/images/faculty/nhitfacutyimages0820240016.jpg"
+      },
+      {
+        "name": "Manish Verma",
+        "role": "Batch 2023 · Master Service Technician",
+        "org": "Ashok Leyland Authorized · ₹4.0 LPA",
+        "quote": "From gearbox overhauls to EV motor controller wiring, NHIT gives you real mechanical shop skills you cannot get from textbooks alone.",
+        "photo": "/images/faculty/nhitfacutyimages0820240015.jpg"
+      }
+    ],
+    "careers": {
+      "roles": {
+        "title": "Automotive & E-Mobility Roles",
+        "desc": "Direct technical positions in OEM vehicle manufacturing, dealership diagnostic bays, and EV powertrain cells.",
+        "items": [
+          "Automotive Service Engineer & Master Diagnostic Technician",
+          "Powertrain & Chassis Assembly Line Supervisor",
+          "Vehicle Quality Assurance & Road Testing Inspector",
+          "CAD Automotive Component Draftsman (SolidWorks / CATIA)",
+          "Electric Vehicle (EV) Battery Pack & BMS Retrofit Specialist",
+          "Fleet Maintenance & Transport Depot Supervisor"
+        ]
+      },
+      "psu": {
+        "title": "PSU, Railways & Defence Heavy Vehicles",
+        "desc": "Prestigious public sector openings across state transport corporations and defence manufacturing plants.",
+        "items": [
+          "Indian Railways (RRB-JE Diesel & Mechanical Loco Cadre)",
+          "State Road Transport Corporations (SBSTC, NBSTC, WBTC) — Junior Engineer",
+          "Heavy Vehicle Factory (HVF Avadi, Ministry of Defence)",
+          "Vehicle Factory Jabalpur (VFJ) & DRDO VRDE Technical Staff",
+          "Staff Selection Commission (SSC-JE Mechanical/Auto)",
+          "Border Roads Organisation (BRO) Workshop Cadre"
+        ]
+      },
+      "lateral": {
+        "title": "B.Tech Lateral Entry (JELET Pathway)",
+        "desc": "Direct 2nd Year admission into B.Tech Automobile / Mechanical Engineering.",
+        "items": [
+          "Direct admission to Kalyani Govt. Engineering College (KGEC)",
+          "Jadavpur University & Jalpaiguri Govt. Engineering College",
+          "Heritage Institute of Technology & Techno India University",
+          "Specialized tracks in Electric Mobility, Autonomous Driving & Mechatronics",
+          "Eligibility for GATE and Automotive Research Association of India (ARAI) programs"
+        ]
+      },
+      "recruiters": [
+        "Tata Motors",
+        "Ashok Leyland",
+        "Force Motors",
+        "Mahindra & Mahindra",
+        "Gabriel India",
+        "Cummins India",
+        "Maruti Suzuki Suppliers"
+      ]
+    },
+    "faqs": [
+      {
+        "q": "1. What is the eligibility criteria for admission into Diploma in Automobile Engineering?",
+        "a": "Candidates must have passed 10th Standard / Madhyamik examination or equivalent with a minimum of 35% aggregate marks (including Mathematics, Physical Science, and English). Admissions are conducted through state JEXPO counseling examination or direct institutional quota counseling under WBSCTVESD guidelines. There is no upper age limit."
+      },
+      {
+        "q": "2. Can ITI (Mechanic Motor Vehicle / Diesel Mechanic) students join directly in 2nd year?",
+        "a": "Yes. Candidates with 10+2 (PCM) or 10th + 2-year ITI in trades like Mechanic Motor Vehicle (MMV), Diesel Mechanic, or Tractor Mechanic with a valid VOCLET rank can enter directly into the 2nd Year (3rd Semester) via lateral entry, completing their diploma in 2 years."
+      },
+      {
+        "q": "3. What practical automobile workshop and test facilities are available at NHIT?",
+        "a": "The department features 6 specialized labs: Engine Overhaul Shop (multi-cylinder petrol/diesel cut models, CRDI test bench), Chassis & Transmission Lab (gearboxes, differential, suspension, steering), Auto Electrical & OBD-II Diagnostic Lab, Thermal Dynamometer Lab, Heavy Machine & Honing Shop, and CAD Automotive Design Studio."
+      },
+      {
+        "q": "4. Is Electric Vehicle (EV) and hybrid powertrain technology covered in the course?",
+        "a": "Yes. In line with the automotive industry’s clean mobility transformation, students receive dedicated training on Lithium-Ion battery pack assembly, Battery Management Systems (BMS), BLDC traction motor controllers, and EV regenerative braking systems."
+      },
+      {
+        "q": "5. What companies recruit Automobile Engineering graduates from NHIT?",
+        "a": "Graduates are recruited by major automotive OEMs and component manufacturers including Tata Motors, Ashok Leyland, Force Motors, Mahindra & Mahindra, Gabriel India, Cummins India, and leading multi-brand authorized dealership networks with annual packages up to ₹4.6 LPA."
+      },
+      {
+        "q": "6. What government and public sector job opportunities are available for auto engineers?",
+        "a": "Graduates can appear for Indian Railways (RRB-JE Diesel Loco & Mechanical), State Road Transport Corporations (SBSTC, NBSTC, WBTC Junior Engineer), Heavy Vehicle Factory Avadi, Vehicle Factory Jabalpur, and the Border Roads Organisation (BRO)."
+      },
+      {
+        "q": "7. Can diploma automobile engineers pursue B.Tech through lateral entry?",
+        "a": "Yes. Through the state-level JELET examination, diploma holders gain direct admission into the 2nd Year (3rd Semester) of B.Tech in Automobile Engineering or Mechanical Engineering at institutions like Kalyani Government Engineering College (KGEC), Jadavpur University, and Heritage Institute of Technology."
+      }
+    ]
+  }
+}

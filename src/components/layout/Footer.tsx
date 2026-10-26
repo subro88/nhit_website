@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -11,6 +12,10 @@ export default function Footer() {
     student_phone: '',
     interested_course: '',
   });
+
+  // The admin panel renders its own shell — never show the site footer there.
+  const pathname = usePathname();
+  if (pathname?.startsWith('/admin')) return null;
 
   const handleProspectusSubmit = (e: React.FormEvent) => {
     e.preventDefault();
