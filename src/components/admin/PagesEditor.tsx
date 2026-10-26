@@ -14,6 +14,8 @@ import {
   Trash2,
   Plus,
 } from 'lucide-react';
+import ImagePicker from './ImagePicker';
+import { ICON_NAMES } from '../layout/iconMap';
 
 /*
  * PagesEditor — edits the simple content pages (RTI, Anti-Ragging,
@@ -23,6 +25,10 @@ import {
  */
 
 const PAGE_LIST = [
+  { key: 'about', label: 'About NHIT', href: '/about' },
+  { key: 'our-infrastructure', label: 'Infrastructure', href: '/our-infrastructure' },
+  { key: 'student-life', label: 'Student Life', href: '/student-life' },
+  { key: 'iti-courses', label: 'ITI Courses', href: '/iti-courses' },
   { key: 'rti-process-officer', label: 'RTI Process & Officer', href: '/rti-process-officer' },
   { key: 'anti-ragging-committee', label: 'Anti-Ragging', href: '/anti-ragging-committee' },
   { key: 'quality-policy-iso-certification', label: 'Quality Policy & ISO', href: '/quality-policy-iso-certification' },
@@ -38,8 +44,15 @@ const SECTION_TYPES: Array<{ value: string; label: string }> = [
   { value: 'objectives', label: 'Check List (title + text)' },
   { value: 'grid', label: 'Card Grid (title + tag + text)' },
   { value: 'approvals', label: 'Approval Rows' },
-  { value: 'helplines', label: 'Helpline Number Boxes' },
+  { value: 'helplines', label: 'Number / Value Boxes' },
   { value: 'banner', label: 'Dark Highlight Banner' },
+  { value: 'iconCards', label: 'Icon Cards (icon + title + text)' },
+  { value: 'photoGrid', label: 'Photo Gallery' },
+  { value: 'hubCards', label: 'Innovation Hub Cards' },
+  { value: 'tradeCards', label: 'ITI Trade Cards' },
+  { value: 'milestones', label: 'Year Timeline' },
+  { value: 'visionMission', label: 'Vision + Mission Block' },
+  { value: 'linkCards', label: 'Emoji Link Cards' },
 ];
 
 function defaultSection(type: string): any {
@@ -63,7 +76,35 @@ function defaultSection(type: string): any {
     case 'helplines':
       return { type, boxes: [{ title: '', value: '', note: '', color: 'red' }] };
     case 'banner':
-      return { type, heading: '', paragraphs: [''], note: '' };
+      return { type, heading: '', paragraphs: [''], note: '', badge: '', btnText: '', btnHref: '' };
+    case 'iconCards':
+      return { type, tag: '', heading: '', paragraphs: [], items: [{ icon: 'Star', tone: 'red', title: '', desc: '' }] };
+    case 'photoGrid':
+      return { type, heading: '', sub: '', linkText: '', linkHref: '', photoStyle: 'overlay', columnsCount: 4, photos: [{ src: '', caption: '' }] };
+    case 'hubCards':
+      return {
+        type,
+        tag: '', heading: '', sub: '',
+        items: [{ code: '', status: '', statusColor: 'emerald', title: '', track: '', mode: '', accent: '#ff3115', icon: 'Rocket', desc: '' }],
+      };
+    case 'tradeCards':
+      return {
+        type,
+        items: [{
+          slug: '', title: '', badge: '', duration: '', intake: '', accent: '#ff3115',
+          icon: 'Wrench', image: '', tagline: '', highlights: [''], workshops: '',
+        }],
+      };
+    case 'milestones':
+      return { type, tag: '', heading: '', items: [{ year: '', title: '', desc: '' }] };
+    case 'visionMission':
+      return {
+        type,
+        visionEmoji: '🎯', visionTitle: 'Our Vision', visionText: '',
+        missionEmoji: '🚀', missionTitle: 'Our Mission', missionItems: [''],
+      };
+    case 'linkCards':
+      return { type, tag: '', heading: '', items: [{ emoji: '📄', title: '', desc: '', href: '' }] };
     default:
       return { type };
   }
@@ -176,6 +217,18 @@ function MiniList({
   );
 }
 
+function IconSelect({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  return (
+    <select className={inputCls} value={value || 'Star'} onChange={(e) => onChange(e.target.value)}>
+      {ICON_NAMES.map((n) => (
+        <option key={n} value={n}>
+          {n}
+        </option>
+      ))}
+    </select>
+  );
+}
+
 function SectionForm({ section, onChange }: { section: any; onChange: (s: any) => void }) {
   const set = (patch: any) => onChange({ ...section, ...patch });
 
@@ -188,6 +241,43 @@ function SectionForm({ section, onChange }: { section: any; onChange: (s: any) =
             <Field label="Heading"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
           </div>
           <LinesField label="Paragraphs" value={section.paragraphs ?? []} onChange={(v) => set({ paragraphs: v })} hint="One paragraph per line. **double stars** = bold." />
+          <MiniList
+            label="Stat Tiles (optional)"
+            items={section.stats ?? []}
+            def={{ value: '', label: '', color: 'dark' }}
+            onChange={(v) => set({ stats: v })}
+            titleOf={(s) => s.value || ''}
+            renderFields={(st, setSt) => (
+              <>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Big Value"><input className={inputCls} value={st.value ?? ''} onChange={(e) => setSt({ value: e.target.value })} /></Field>
+                  <Field label="Small Label"><input className={inputCls} value={st.label ?? ''} onChange={(e) => setSt({ label: e.target.value })} /></Field>
+                </div>
+                <Field label="Value Color">
+                  <select className={inputCls} value={st.color ?? 'dark'} onChange={(e) => setSt({ color: e.target.value })}>
+                    <option value="red">Red</option>
+                    <option value="green">Green</option>
+                    <option value="cyan">Cyan</option>
+                    <option value="blue">Blue</option>
+                    <option value="dark">Dark</option>
+                  </select>
+                </Field>
+              </>
+            )}
+          />
+          <MiniList
+            label="Photos (optional)"
+            items={section.photos ?? []}
+            def={{ src: '', caption: '' }}
+            onChange={(v) => set({ photos: v })}
+            titleOf={(p) => p.caption || p.src || ''}
+            renderFields={(ph, setPh) => (
+              <>
+                <ImagePicker label="Photo" value={ph.src ?? ''} onChange={(url) => setPh({ src: url })} />
+                <Field label="Caption"><input className={inputCls} value={ph.caption ?? ''} onChange={(e) => setPh({ caption: e.target.value })} /></Field>
+              </>
+            )}
+          />
         </>
       );
 
@@ -363,6 +453,9 @@ function SectionForm({ section, onChange }: { section: any; onChange: (s: any) =
                 <Field label="Number Color">
                   <select className={inputCls} value={box.color ?? 'red'} onChange={(e) => setBox({ color: e.target.value })}>
                     <option value="red">Red</option>
+                    <option value="green">Green</option>
+                    <option value="cyan">Cyan</option>
+                    <option value="blue">Blue</option>
                     <option value="dark">Dark</option>
                   </select>
                 </Field>
@@ -379,6 +472,249 @@ function SectionForm({ section, onChange }: { section: any; onChange: (s: any) =
           <Field label="Banner Heading"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
           <LinesField label="Banner Text" value={section.paragraphs ?? []} onChange={(v) => set({ paragraphs: v })} rows={3} />
           <Field label="Small Note"><input className={inputCls} value={section.note ?? ''} onChange={(e) => set({ note: e.target.value })} /></Field>
+        </>
+      );
+
+    case 'banner':
+      return (
+        <>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Badge (optional)" hint="Replaces the round icon with a small orange pill."><input className={inputCls} value={section.badge ?? ''} onChange={(e) => set({ badge: e.target.value })} /></Field>
+            <Field label="Banner Heading"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
+          </div>
+          <LinesField label="Banner Text" value={section.paragraphs ?? []} onChange={(v) => set({ paragraphs: v })} rows={3} />
+          <Field label="Small Note"><input className={inputCls} value={section.note ?? ''} onChange={(e) => set({ note: e.target.value })} /></Field>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Button Text (optional)"><input className={inputCls} value={section.btnText ?? ''} onChange={(e) => set({ btnText: e.target.value })} /></Field>
+            <Field label="Button Link (optional)" hint="e.g. /circulars"><input className={inputCls} value={section.btnHref ?? ''} onChange={(e) => set({ btnHref: e.target.value })} /></Field>
+          </div>
+        </>
+      );
+
+    case 'iconCards':
+      return (
+        <>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Small Tag"><input className={inputCls} value={section.tag ?? ''} onChange={(e) => set({ tag: e.target.value })} /></Field>
+            <Field label="Heading"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
+          </div>
+          <LinesField label="Intro Paragraphs (optional)" value={section.paragraphs ?? []} onChange={(v) => set({ paragraphs: v })} rows={3} />
+          <MiniList
+            label="Cards"
+            items={section.items ?? []}
+            def={{ icon: 'Star', tone: 'red', title: '', desc: '' }}
+            onChange={(v) => set({ items: v })}
+            titleOf={(o) => o.title || ''}
+            renderFields={(it, setIt) => (
+              <>
+                <div className="grid sm:grid-cols-3 gap-4">
+                  <Field label="Icon"><IconSelect value={it.icon ?? ''} onChange={(v) => setIt({ icon: v })} /></Field>
+                  <Field label="Icon Color">
+                    <select className={inputCls} value={it.tone ?? 'red'} onChange={(e) => setIt({ tone: e.target.value })}>
+                      <option value="red">Red</option>
+                      <option value="blue">Blue</option>
+                      <option value="green">Green</option>
+                    </select>
+                  </Field>
+                  <Field label="Title"><input className={inputCls} value={it.title ?? ''} onChange={(e) => setIt({ title: e.target.value })} /></Field>
+                </div>
+                <Field label="Description"><textarea rows={3} className={inputCls} value={it.desc ?? ''} onChange={(e) => setIt({ desc: e.target.value })} /></Field>
+              </>
+            )}
+          />
+        </>
+      );
+
+    case 'photoGrid':
+      return (
+        <>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Heading"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
+            <Field label="Small Line Under Heading"><input className={inputCls} value={section.sub ?? ''} onChange={(e) => set({ sub: e.target.value })} /></Field>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Corner Link Text (optional)"><input className={inputCls} value={section.linkText ?? ''} onChange={(e) => set({ linkText: e.target.value })} /></Field>
+            <Field label="Corner Link URL"><input className={inputCls} value={section.linkHref ?? ''} onChange={(e) => set({ linkHref: e.target.value })} /></Field>
+          </div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Photo Style">
+              <select className={inputCls} value={section.photoStyle ?? 'overlay'} onChange={(e) => set({ photoStyle: e.target.value })}>
+                <option value="overlay">Tall photos, caption on image</option>
+                <option value="card">Small photos, caption below</option>
+              </select>
+            </Field>
+            <Field label="Photos Per Row">
+              <select className={inputCls} value={String(section.columnsCount ?? 4)} onChange={(e) => set({ columnsCount: Number(e.target.value) })}>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+              </select>
+            </Field>
+          </div>
+          <MiniList
+            label="Photos"
+            items={section.photos ?? []}
+            def={{ src: '', caption: '' }}
+            onChange={(v) => set({ photos: v })}
+            titleOf={(p) => p.caption || p.src || ''}
+            renderFields={(ph, setPh) => (
+              <>
+                <ImagePicker label="Photo" value={ph.src ?? ''} onChange={(url) => setPh({ src: url })} />
+                <Field label="Caption"><input className={inputCls} value={ph.caption ?? ''} onChange={(e) => setPh({ caption: e.target.value })} /></Field>
+              </>
+            )}
+          />
+        </>
+      );
+
+    case 'hubCards':
+      return (
+        <>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Small Tag"><input className={inputCls} value={section.tag ?? ''} onChange={(e) => set({ tag: e.target.value })} /></Field>
+            <Field label="Heading"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
+          </div>
+          <Field label="Sub Text"><textarea rows={2} className={inputCls} value={section.sub ?? ''} onChange={(e) => set({ sub: e.target.value })} /></Field>
+          <MiniList
+            label="Hub Cards"
+            items={section.items ?? []}
+            def={{ code: '', status: '', statusColor: 'emerald', title: '', track: '', mode: '', accent: '#ff3115', icon: 'Rocket', desc: '' }}
+            onChange={(v) => set({ items: v })}
+            titleOf={(h) => h.title || ''}
+            renderFields={(h, setH) => (
+              <>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Top-Left Code"><input className={inputCls} value={h.code ?? ''} onChange={(e) => setH({ code: e.target.value })} /></Field>
+                  <Field label="Status Badge Text"><input className={inputCls} value={h.status ?? ''} onChange={(e) => setH({ status: e.target.value })} /></Field>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Badge Color">
+                    <select className={inputCls} value={h.statusColor ?? 'emerald'} onChange={(e) => setH({ statusColor: e.target.value })}>
+                      <option value="emerald">Green</option>
+                      <option value="blue">Blue</option>
+                      <option value="purple">Purple</option>
+                      <option value="amber">Amber</option>
+                      <option value="indigo">Indigo</option>
+                      <option value="cyan">Cyan</option>
+                    </select>
+                  </Field>
+                  <Field label="Icon"><IconSelect value={h.icon ?? ''} onChange={(v) => setH({ icon: v })} /></Field>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Title"><input className={inputCls} value={h.title ?? ''} onChange={(e) => setH({ title: e.target.value })} /></Field>
+                  <Field label="Accent Color (hex)"><input className={inputCls} value={h.accent ?? ''} onChange={(e) => setH({ accent: e.target.value })} /></Field>
+                </div>
+                <Field label="Description"><textarea rows={3} className={inputCls} value={h.desc ?? ''} onChange={(e) => setH({ desc: e.target.value })} /></Field>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Track (bottom left)"><input className={inputCls} value={h.track ?? ''} onChange={(e) => setH({ track: e.target.value })} /></Field>
+                  <Field label="Mode (bottom right)"><input className={inputCls} value={h.mode ?? ''} onChange={(e) => setH({ mode: e.target.value })} /></Field>
+                </div>
+              </>
+            )}
+          />
+        </>
+      );
+
+    case 'tradeCards':
+      return (
+        <MiniList
+          label="Trade Cards"
+          items={section.items ?? []}
+          def={{ slug: '', title: '', badge: '', duration: '', intake: '', accent: '#ff3115', icon: 'Wrench', image: '', tagline: '', highlights: [''], workshops: '' }}
+          onChange={(v) => set({ items: v })}
+          titleOf={(t) => t.title || ''}
+          renderFields={(t, setT) => (
+            <>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <Field label="Trade Title"><input className={inputCls} value={t.title ?? ''} onChange={(e) => setT({ title: e.target.value })} /></Field>
+                <Field label="Detail Page Slug" hint="e.g. iti-electrician — links to /iti-courses/<slug>"><input className={inputCls} value={t.slug ?? ''} onChange={(e) => setT({ slug: e.target.value })} /></Field>
+              </div>
+              <ImagePicker label="Card Photo" value={t.image ?? ''} onChange={(url) => setT({ image: url })} />
+              <div className="grid sm:grid-cols-2 gap-4">
+                <Field label="Badge (NCVT Code)"><input className={inputCls} value={t.badge ?? ''} onChange={(e) => setT({ badge: e.target.value })} /></Field>
+                <Field label="Seats Text"><input className={inputCls} value={t.intake ?? ''} onChange={(e) => setT({ intake: e.target.value })} /></Field>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <Field label="Duration Line"><input className={inputCls} value={t.duration ?? ''} onChange={(e) => setT({ duration: e.target.value })} /></Field>
+                <Field label="Accent Color (hex)"><input className={inputCls} value={t.accent ?? ''} onChange={(e) => setT({ accent: e.target.value })} /></Field>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <Field label="Icon"><IconSelect value={t.icon ?? ''} onChange={(v) => setT({ icon: v })} /></Field>
+                <Field label="Tagline"><textarea rows={3} className={inputCls} value={t.tagline ?? ''} onChange={(e) => setT({ tagline: e.target.value })} /></Field>
+              </div>
+              <LinesField label="Highlight Lines" value={t.highlights ?? []} onChange={(v) => setT({ highlights: v })} rows={4} />
+              <Field label="Workshop Facilities Line"><input className={inputCls} value={t.workshops ?? ''} onChange={(e) => setT({ workshops: e.target.value })} /></Field>
+            </>
+          )}
+        />
+      );
+
+    case 'milestones':
+      return (
+        <>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Small Tag"><input className={inputCls} value={section.tag ?? ''} onChange={(e) => set({ tag: e.target.value })} /></Field>
+            <Field label="Heading"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
+          </div>
+          <MiniList
+            label="Timeline Rows"
+            items={section.items ?? []}
+            def={{ year: '', title: '', desc: '' }}
+            onChange={(v) => set({ items: v })}
+            titleOf={(m) => (m.year ? `${m.year} — ${m.title ?? ''}` : '')}
+            renderFields={(m, setM) => (
+              <>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Year"><input className={inputCls} value={m.year ?? ''} onChange={(e) => setM({ year: e.target.value })} /></Field>
+                  <Field label="Title"><input className={inputCls} value={m.title ?? ''} onChange={(e) => setM({ title: e.target.value })} /></Field>
+                </div>
+                <Field label="Description"><textarea rows={2} className={inputCls} value={m.desc ?? ''} onChange={(e) => setM({ desc: e.target.value })} /></Field>
+              </>
+            )}
+          />
+        </>
+      );
+
+    case 'visionMission':
+      return (
+        <>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Vision Emoji"><input className={inputCls} value={section.visionEmoji ?? ''} onChange={(e) => set({ visionEmoji: e.target.value })} /></Field>
+            <Field label="Vision Title"><input className={inputCls} value={section.visionTitle ?? ''} onChange={(e) => set({ visionTitle: e.target.value })} /></Field>
+          </div>
+          <Field label="Vision Text"><textarea rows={4} className={inputCls} value={section.visionText ?? ''} onChange={(e) => set({ visionText: e.target.value })} /></Field>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Mission Emoji"><input className={inputCls} value={section.missionEmoji ?? ''} onChange={(e) => set({ missionEmoji: e.target.value })} /></Field>
+            <Field label="Mission Title"><input className={inputCls} value={section.missionTitle ?? ''} onChange={(e) => set({ missionTitle: e.target.value })} /></Field>
+          </div>
+          <LinesField label="Mission Points" value={section.missionItems ?? []} onChange={(v) => set({ missionItems: v })} rows={4} hint="**Bold start:** then normal text." />
+        </>
+      );
+
+    case 'linkCards':
+      return (
+        <>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <Field label="Small Tag"><input className={inputCls} value={section.tag ?? ''} onChange={(e) => set({ tag: e.target.value })} /></Field>
+            <Field label="Heading"><input className={inputCls} value={section.heading ?? ''} onChange={(e) => set({ heading: e.target.value })} /></Field>
+          </div>
+          <MiniList
+            label="Link Cards"
+            items={section.items ?? []}
+            def={{ emoji: '📄', title: '', desc: '', href: '' }}
+            onChange={(v) => set({ items: v })}
+            titleOf={(l) => l.title || ''}
+            renderFields={(l, setL) => (
+              <>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <Field label="Emoji"><input className={inputCls} value={l.emoji ?? ''} onChange={(e) => setL({ emoji: e.target.value })} /></Field>
+                  <Field label="Title"><input className={inputCls} value={l.title ?? ''} onChange={(e) => setL({ title: e.target.value })} /></Field>
+                </div>
+                <Field label="Description"><textarea rows={2} className={inputCls} value={l.desc ?? ''} onChange={(e) => setL({ desc: e.target.value })} /></Field>
+                <Field label="Link URL" hint="e.g. /message-from-principal"><input className={inputCls} value={l.href ?? ''} onChange={(e) => setL({ href: e.target.value })} /></Field>
+              </>
+            )}
+          />
         </>
       );
 
