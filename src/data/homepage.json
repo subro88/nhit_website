@@ -312,56 +312,96 @@
         "label": "2015–18",
         "heightPct": "98.5%",
         "color": "var(--edu-primary)",
-        "colorDark": "var(--edu-primary-dark)"
+        "colorDark": "var(--edu-primary-dark)",
+        "total": "618",
+        "opted": "335",
+        "placed": "330",
+        "higher": "283",
+        "ongoing": false
       },
       {
         "value": "97.1%",
         "label": "2016–19",
         "heightPct": "97.1%",
         "color": "var(--edu-primary)",
-        "colorDark": "var(--edu-primary-dark)"
+        "colorDark": "var(--edu-primary-dark)",
+        "total": "523",
+        "opted": "340",
+        "placed": "330",
+        "higher": "183",
+        "ongoing": false
       },
       {
         "value": "71.3%",
         "label": "2017–20",
         "heightPct": "71.3%",
         "color": "var(--edu-primary)",
-        "colorDark": "var(--edu-primary-dark)"
+        "colorDark": "var(--edu-primary-dark)",
+        "total": "514",
+        "opted": "321",
+        "placed": "229",
+        "higher": "193",
+        "ongoing": false
       },
       {
         "value": "85.5%",
         "label": "2018–21",
         "heightPct": "85.5%",
         "color": "var(--edu-primary)",
-        "colorDark": "var(--edu-primary-dark)"
+        "colorDark": "var(--edu-primary-dark)",
+        "total": "435",
+        "opted": "249",
+        "placed": "213",
+        "higher": "186",
+        "ongoing": false
       },
       {
         "value": "93.1%",
         "label": "2019–22",
         "heightPct": "93.1%",
         "color": "var(--edu-primary)",
-        "colorDark": "var(--edu-primary-dark)"
+        "colorDark": "var(--edu-primary-dark)",
+        "total": "421",
+        "opted": "302",
+        "placed": "281",
+        "higher": "119",
+        "ongoing": false
       },
       {
         "value": "92.0%",
         "label": "2020–23",
         "heightPct": "92%",
         "color": "var(--edu-primary)",
-        "colorDark": "var(--edu-primary-dark)"
+        "colorDark": "var(--edu-primary-dark)",
+        "total": "303",
+        "opted": "212",
+        "placed": "195",
+        "higher": "91",
+        "ongoing": false
       },
       {
         "value": "98.2%",
         "label": "2021–24",
         "heightPct": "98.2%",
         "color": "var(--edu-primary)",
-        "colorDark": "var(--edu-primary-dark)"
+        "colorDark": "var(--edu-primary-dark)",
+        "total": "385",
+        "opted": "270",
+        "placed": "265",
+        "higher": "115",
+        "ongoing": false
       },
       {
         "value": "91.7%",
         "label": "2022–25*",
         "heightPct": "91.7%",
         "color": "#00bcd4",
-        "colorDark": "#0097a7"
+        "colorDark": "#0097a7",
+        "total": "362",
+        "opted": "278",
+        "placed": "255",
+        "higher": "84",
+        "ongoing": true
       }
     ],
     "outcomes": [

@@ -224,6 +224,12 @@ export interface OutcomeBar {
   heightPct?: string;
   color?: string;
   colorDark?: string;
+  /* optional session details shown in the interactive panel below the chart */
+  total?: string;
+  opted?: string;
+  placed?: string;
+  higher?: string;
+  ongoing?: boolean;
 }
 
 export interface OutcomeItem {

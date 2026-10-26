@@ -290,3 +290,20 @@ Work Log:
 Stage Summary:
 - Outcomes chart now shows real NHIT T&P data, fully editable in Admin > Home Page Editor > Outcomes tab (bars list)
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 13
+Agent: main (Z.ai)
+Task: Replace 3D bar chart with simple interactive bar chart (user request)
+
+Work Log:
+- Rewrote OutcomesSection.tsx as client component: flat bar chart (no 3D), bars are <button>s - hover/tap/keyboard-focus selects a session; detail panel below updates live (session title + ONGOING badge + big placement % + 4 stats: Total Students / Opted for Placement / Placed / Higher Studies). Default selection = latest batch. Bars grow in staggered via CSS transition on edu-reveal is-inview; prefers-reduced-motion respected.
+- homeTypes.ts OutcomeBar: added optional total/opted/placed/higher/ongoing fields.
+- homepage.json: all 8 bars seeded with real session details from T&P synopsis (e.g. 2015-18: 618/335/330/283; 2022-25*: 362/278/255/84 + ongoing:true).
+- sections.css: removed entire edu-chart3d/edu-bar3d/dense CSS block; added .edu-barchart styles (dimmed idle bars, active bar full color + white label, focus ring, detail panel card with accent edge; mobile 2x2 stats grid, tighter type).
+- HomeEditor Outcomes tab: bars list gains 5 new fields (total, opted, placed, higher, ongoing checkbox) + updated desc.
+- Verified: tsc clean; desktop screenshot (default 2022-25* selected); real-mouse hover on 2015-18 updates panel (Session 2015-18 | 98.5% | 618); mobile 390px clean; home 200.
+
+Stage Summary:
+- Outcomes chart is now simple + interactive, fully CMS-editable (Admin > Outcomes tab)
+- Committed locally, NOT pushed (waiting for user "push")

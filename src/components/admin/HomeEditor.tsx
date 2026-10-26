@@ -229,7 +229,7 @@ const SECTIONS: SectionDef[] = [
   {
     key: 'outcomes',
     label: '7 · Outcomes',
-    desc: 'Dark section with the 3D bar chart and outcome highlights.',
+    desc: 'Dark section with the interactive placement bar chart and outcome highlights. Hover a bar on the live site to show that session\u2019s numbers.',
     fields: [
       { t: 'text', k: 'kicker', label: 'Small Line Above Title' },
       { t: 'text', k: 'title', label: 'Heading' },
@@ -238,13 +238,18 @@ const SECTIONS: SectionDef[] = [
         k: 'bars',
         label: 'Chart Bars',
         titleField: 'label',
-        def: { value: '', label: '', heightPct: '60%', color: '#ff3115', colorDark: '#c92810' },
+        def: { value: '', label: '', heightPct: '60%', color: '#ff3115', colorDark: '#c92810', total: '', opted: '', placed: '', higher: '', ongoing: false },
         fields: [
-          { t: 'text', k: 'value', label: 'Value Shown' },
-          { t: 'text', k: 'label', label: 'Label Under Bar' },
+          { t: 'text', k: 'value', label: 'Value Shown (e.g. 91.7%)' },
+          { t: 'text', k: 'label', label: 'Label Under Bar (e.g. 2022–25*)' },
           { t: 'text', k: 'heightPct', label: 'Bar Height', hint: 'Percentage, e.g. 80%' },
-          { t: 'text', k: 'color', label: 'Bar Color (hex)' },
-          { t: 'text', k: 'colorDark', label: 'Bar Dark Color (hex)' },
+          { t: 'text', k: 'color', label: 'Bar Color (hex or var(--edu-primary))' },
+          { t: 'text', k: 'colorDark', label: 'Bar Dark Color (hex or var(--edu-primary-dark))' },
+          { t: 'text', k: 'total', label: 'Total Students (shown on hover)' },
+          { t: 'text', k: 'opted', label: 'Opted for Placement (shown on hover)' },
+          { t: 'text', k: 'placed', label: 'Placed (shown on hover)' },
+          { t: 'text', k: 'higher', label: 'Higher Studies (shown on hover)' },
+          { t: 'bool', k: 'ongoing', label: 'Mark as Ongoing Batch' },
         ],
       },
       {
