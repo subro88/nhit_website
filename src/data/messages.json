@@ -1,0 +1,81 @@
+{
+  "principal": {
+    "kicker": "Academic Executive Desk",
+    "badge": "Office of the Principal",
+    "title": "Message from the Principal",
+    "subtitle": "Welcome from the Academic Head of The New Horizons Institute of Technology, Durgapur.",
+    "photo": "/images/principal.jpg",
+    "photoAlt": "Principal, NHIT Durgapur",
+    "roleTag": "Executive Academic Head",
+    "heading": "From the Desk of the Principal",
+    "orgLine": "The New Horizons Institute of Technology (NHIT Durgapur)",
+    "approvalChip": "AICTE Approved · WBSCT&VE&SD Affiliated",
+    "paragraphs": [
+      "**Welcome to The New Horizons Institute of Technology.** As educators in a rapidly advancing technological era, we hold the conviction that genuine engineering competence is forged in the laboratories and heavy workshops, not merely absorbed from textbooks.",
+      "At NHIT, every diploma engineering curriculum is systematically structured to balance foundational physics, mathematics, and computation with hands-on machinery mastery. Our students engage with CNC milling, high-voltage test rigs, Cisco networking terminals, and live vehicle teardowns from their earliest semesters.",
+      "We take immense pride in our disciplined campus environment, active Training & Placement Cell, and national research linkages with institutions like CSIR-CMERI. Over 85% of our eligible pass-out students consistently transition into core MNC employment or lateral admission into premier B.Tech degree programs.",
+      "I invite aspiring students and proud parents to tour our campus, interact with our dedicated faculty, and begin an inspiring journey toward technical distinction."
+    ],
+    "signPlace": "Durgapur, West Bengal",
+    "signName": "Principal, NHIT Durgapur"
+  },
+  "vicePrincipal": {
+    "kicker": "Student Welfare & Academic Operations",
+    "badge": "Office of Vice Principal",
+    "title": "Message from the Vice Principal",
+    "subtitle": "Academic operations, student welfare, anti-ragging vigilance, and scholarship facilitation at NHIT Durgapur.",
+    "photo": "",
+    "photoAlt": "Vice Principal, NHIT Durgapur",
+    "roleTag": "Academic Operations & Welfare",
+    "heading": "Message from the Vice Principal",
+    "orgLine": "Vice Principal & Academic In-Charge · NHIT Durgapur",
+    "approvalChip": "",
+    "paragraphs": [
+      "“At NHIT, academic discipline and student welfare go hand-in-hand. We maintain an uncompromising zero-tolerance anti-ragging campus with dedicated faculty mentors assigned to each batch from their first orientation day.”",
+      "“Our academic cell operates transparently with regular internal assessments, practical lab examinations, and remedial tutorial sessions for students needing additional academic support. Whether helping eligible candidates secure West Bengal Government scholarships such as **SVMCM (Swami Vivekananda Merit-cum-Means)**, **OASIS**, and **Aikyashree**, or coordinating technical symposiums, our administrative and counseling teams stand by our students at every milestone.”",
+      "“We encourage our students to immerse themselves in workshops, maintain curiosity, and build enduring professional values.”"
+    ],
+    "signPlace": "Durgapur Campus",
+    "signName": "Vice Principal, NHIT Durgapur"
+  },
+  "president": {
+    "kicker": "Executive Governance Desk",
+    "badge": "Trust Leadership",
+    "title": "Messages from President & Secretary",
+    "subtitle": "Insights, institutional commitments, and visionary guidance from the Governing Council of Durgapur Ispat People's Society and NHIT.",
+    "photo": "",
+    "photoAlt": "President, NHIT Durgapur",
+    "roleTag": "Apex Leadership",
+    "heading": "Message from the President",
+    "orgLine": "",
+    "approvalChip": "",
+    "quoteStyle": true,
+    "paragraphs": [
+      "“Technical education is the real engine of national progress. When NHIT was conceived in 2007, our goal was not simply to erect classrooms, but to create an intellectual home where students from all walks of life could master engineering trades with high self-esteem and genuine competence.”",
+      "“Over the last eighteen years, NHIT graduates have proven their mettle across multinational core plants, software enterprises, and national infrastructure projects. With our expanding research tie-ups and academic affiliations, we rededicate ourselves to building capable technocrats and ethical leaders for Bengal and the nation.”"
+    ],
+    "signPlace": "",
+    "signName": "President",
+    "signOrg": "Durgapur Ispat People's Society · NHIT Durgapur"
+  },
+  "secretary": {
+    "kicker": "Executive Governance Desk",
+    "badge": "Trust Leadership",
+    "title": "Messages from President & Secretary",
+    "subtitle": "Insights, institutional commitments, and visionary guidance from the Governing Council of Durgapur Ispat People's Society and NHIT.",
+    "photo": "",
+    "photoAlt": "Secretary, NHIT Durgapur",
+    "roleTag": "Operational Vision",
+    "heading": "Message from the Secretary",
+    "orgLine": "",
+    "approvalChip": "",
+    "paragraphs": [
+      "“At NHIT, we believe that education is an active partnership between student aspirations, faculty mentorship, and industrial reality. We have made continuous capital investments in our departmental laboratories — from heavy CNC lathes and hydraulic presses to cloud computing clusters and renewable energy rigs.”",
+      "“Our proactive Training & Placement Cell works year-round with automotive, construction, and IT conglomerates to ensure that every graduating student is equipped not merely with a certificate, but with tangible day-one employable competence.”",
+      "“We welcome every aspiring technocrat to step into the NHIT campus and realize their full potential.”"
+    ],
+    "signPlace": "",
+    "signName": "Sri Partha Mandal",
+    "signOrg": "Secretary · Durgapur Ispat People's Society & NHIT Durgapur"
+  }
+}

@@ -1,0 +1,868 @@
+/* ==========================================================================
+   NHIT Career Journey — The Student Transformation (100vh Viewport Layout)
+   Contrasting pristine modern-tech white section between two dark sections
+   Fitted 100% inside standard screen height for zero-cutoff mouse wheel exploration
+   ========================================================================== */
+
+/* ── Custom Theme Properties ────────────────────────────────────────────── */
+:root {
+  --jrn-bg:               #ffffff;
+  --jrn-bg-alt:           #f8fafc;
+  --jrn-card-bg:          #ffffff;
+  --jrn-border:           #e2e8f0;
+  --jrn-border-focus:     #cbd5e1;
+  --jrn-text-head:        #0f172a;
+  --jrn-text-body:        #475569;
+  --jrn-text-muted:       #64748b;
+  --jrn-crimson:          var(--edu-primary);
+  --jrn-crimson-light:    rgba(var(--edu-primary-rgb), 0.08);
+  --jrn-crimson-glow:     rgba(var(--edu-primary-rgb), 0.25);
+  --jrn-navy:             #1e293b;
+  --jrn-radius:           20px;
+  --jrn-shadow-sm:        0 2px 4px -1px rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
+  --jrn-shadow-md:        0 10px 20px -3px rgba(15, 23, 42, 0.06), 0 3px 6px -2px rgba(15, 23, 42, 0.03);
+  --jrn-shadow-lg:        0 20px 40px -10px rgba(15, 23, 42, 0.10), 0 0 0 1px rgba(226, 232, 240, 0.85);
+}
+
+/* ── Pinned Scroll Track Architecture (animejs.com signature) ────────────── */
+.nhit-journey-scroll-track {
+  position: relative;
+  height: 350vh;
+  width: 100%;
+  background-color: var(--jrn-bg);
+  box-sizing: border-box;
+}
+
+/* ── Section Container & Background (100vh Viewport Fitting) ────────────── */
+.nhit-journey {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--jrn-bg);
+  background-image: 
+    radial-gradient(#cbd5e1 1.2px, transparent 1.2px),
+    radial-gradient(circle at 10% 20%, rgba(217, 4, 41, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.03) 0%, transparent 40%);
+  background-size: 24px 24px, 100% 100%, 100% 100%;
+  color: var(--jrn-text-body);
+  padding: 32px 0 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  border-top: 1px solid #1e293b;
+  box-sizing: border-box;
+  will-change: transform;
+}
+
+.nhit-journey.is-pinned {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 50;
+  border-top: none;
+  border-bottom: none;
+}
+
+.nhit-journey.is-bottom {
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+/* Elegant top and bottom gradient glow dividers from adjacent dark sections */
+.nhit-journey::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.06) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.nhit-journey::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: linear-gradient(0deg, rgba(0,0,0,0.06) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.nhit-journey__container {
+  max-width: 1180px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 20px;
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+}
+
+/* ── Section Header (Compact for 100vh fit) ──────────────────────────────── */
+.nhit-journey__header {
+  text-align: center;
+  max-width: 780px;
+  margin: 0 auto 14px;
+}
+
+.jrn-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: var(--jrn-crimson-light);
+  border: 1px solid rgba(217, 4, 41, 0.20);
+  color: var(--jrn-crimson);
+  font-size: 0.70rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  box-shadow: 0 1px 4px rgba(217, 4, 41, 0.06);
+}
+
+.jrn-badge-pill i {
+  font-size: 0.78rem;
+}
+
+.nhit-journey__title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  font-weight: 800;
+  color: var(--jrn-text-head);
+  line-height: 1.16;
+  margin: 0 0 5px;
+  letter-spacing: -0.015em;
+}
+
+.nhit-journey__title span {
+  background: linear-gradient(135deg, #d90429 0%, #ef233c 60%, #e85d04 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nhit-journey__subtitle {
+  font-size: 0.86rem;
+  color: var(--jrn-text-muted);
+  line-height: 1.45;
+  margin: 0 auto;
+  max-width: 620px;
+}
+
+/* ── Interactive Stage Tabs (Compact Chapter Navigation) ─────────────────── */
+.nhit-journey__tabs-wrapper {
+  position: relative;
+  margin-bottom: 10px;
+  background: var(--jrn-bg-alt);
+  border: 1px solid var(--jrn-border);
+  border-radius: 9999px;
+  padding: 4px;
+  box-shadow: var(--jrn-shadow-sm);
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.nhit-journey__tabs-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.nhit-journey__tabs {
+  display: flex;
+  width: 100%;
+  gap: 3px;
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.jrn-tab-btn {
+  flex: 1 1 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 9999px;
+  background: transparent;
+  border: none;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--jrn-text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.22s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.jrn-tab-btn:hover {
+  color: var(--jrn-text-head);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.jrn-tab-btn.is-active {
+  color: #ffffff;
+  background: var(--jrn-navy);
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.18);
+}
+
+.jrn-tab-btn .tab-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.08);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.jrn-tab-btn.is-active .tab-num {
+  background: var(--jrn-crimson);
+  color: #ffffff;
+}
+
+/* ── Mouse Wheel & Scroll Guide Pill ─────────────────────────────────────── */
+.jrn-wheel-guide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--jrn-text-muted);
+  letter-spacing: 0.03em;
+}
+
+.jrn-wheel-guide .guide-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 11px;
+  background: #ffffff;
+  border: 1px solid var(--jrn-border);
+  border-radius: 9999px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+}
+
+.jrn-wheel-guide .guide-mouse-icon {
+  display: inline-block;
+  width: 12px;
+  height: 17px;
+  border: 1.5px solid var(--jrn-text-muted);
+  border-radius: 6px;
+  position: relative;
+}
+
+.jrn-wheel-guide .guide-mouse-icon::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 4px;
+  background: var(--jrn-crimson);
+  border-radius: 2px;
+  animation: jrnWheelRoll 1.4s infinite ease-in-out;
+}
+
+@keyframes jrnWheelRoll {
+  0% { transform: translate(-50%, 0); opacity: 1; }
+  60% { transform: translate(-50%, 5px); opacity: 0; }
+  100% { transform: translate(-50%, 0); opacity: 0; }
+}
+
+/* ── Main Showcase Arena (Viewport Fitted Proportions) ──────────────────── */
+.nhit-journey__showcase {
+  background: var(--jrn-card-bg);
+  border: 1px solid var(--jrn-border);
+  border-radius: var(--jrn-radius);
+  box-shadow: var(--jrn-shadow-lg);
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  overflow: hidden;
+  position: relative;
+  min-height: 440px;
+  max-height: 490px;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.nhit-journey__showcase.is-wheel-active {
+  box-shadow: 0 25px 50px -10px rgba(15, 23, 42, 0.16), 0 0 0 2px var(--stage-accent, var(--jrn-crimson));
+}
+
+/* ── Left Column: 3D Avatar Stage Arena ─────────────────────────────────── */
+.jrn-avatar-stage {
+  background: linear-gradient(145deg, #f8fafc 0%, #edf2f7 100%);
+  border-right: 1px solid var(--jrn-border);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow: hidden;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+/* Ambient dynamic colored glow behind avatar */
+.jrn-avatar-stage__glow {
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--stage-accent, rgba(217,4,41,0.22)) 0%, transparent 70%);
+  filter: blur(35px);
+  opacity: 0.7;
+  pointer-events: none;
+  transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+/* Rotating concentric aura rings */
+.jrn-avatar-stage__rings {
+  position: absolute;
+  width: 290px;
+  height: 290px;
+  border-radius: 50%;
+  border: 1.5px dashed var(--jrn-border);
+  pointer-events: none;
+  animation: jrnRingSpin 24s linear infinite;
+  will-change: transform;
+}
+
+.jrn-avatar-stage__rings::after {
+  content: "";
+  position: absolute;
+  inset: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(217, 4, 41, 0.15);
+  animation: jrnRingSpinRev 16s linear infinite;
+}
+
+@keyframes jrnRingSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes jrnRingSpinRev {
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0deg); }
+}
+
+/* Avatar Card Container */
+.jrn-avatar-card {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-style: preserve-3d;
+}
+
+/* Avatar Image Frame (Proportioned for zero-cutoff 100vh fit) */
+.jrn-avatar-viewport {
+  position: relative;
+  width: 230px;
+  height: 280px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 16px 30px -6px rgba(15, 23, 42, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  transition: transform 0.12s ease-out;
+  will-change: transform;
+}
+
+.jrn-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transform-origin: center bottom;
+  will-change: transform, opacity;
+}
+
+/* Floating Milestone Badge on Avatar */
+.jrn-avatar-milestone {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 10px;
+  padding: 6px 10px;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  transform: translateZ(20px);
+}
+
+.jrn-avatar-milestone .milestone-tag {
+  color: #ffd166;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Floating Stage Badge Icon */
+.jrn-avatar-pin {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid var(--jrn-border);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  z-index: 5;
+  transform: translateZ(30px);
+  transition: transform 0.3s ease;
+}
+
+/* ── Right Column: Story & Milestone Details ────────────────────────────── */
+.jrn-details-stage {
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+/* Stage Header Info */
+.jrn-stage-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.jrn-phase-pill {
+  font-size: 0.70rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--stage-accent, var(--jrn-crimson));
+}
+
+.jrn-step-counter {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--jrn-text-muted);
+  background: var(--jrn-bg-alt);
+  padding: 3px 10px;
+  border-radius: 9999px;
+  border: 1px solid var(--jrn-border);
+}
+
+.jrn-stage-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(1.3rem, 1.8vw, 1.6rem);
+  font-weight: 800;
+  color: var(--jrn-text-head);
+  line-height: 1.2;
+  margin: 0 0 8px;
+  letter-spacing: -0.01em;
+}
+
+.jrn-stage-title .jrn-word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  margin-right: 0.22em;
+}
+
+.jrn-stage-title .jrn-word:last-child {
+  margin-right: 0;
+}
+
+.jrn-stage-title .jrn-char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+.jrn-stage-desc {
+  font-size: 0.88rem;
+  color: var(--jrn-text-body);
+  line-height: 1.55;
+  margin: 0 0 14px;
+}
+
+/* ── Key Highlights Pill Badges ─────────────────────────────────────────── */
+.jrn-pills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.jrn-feature-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  background: var(--jrn-bg-alt);
+  border: 1px solid var(--jrn-border);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--jrn-text-head);
+  transition: all 0.2s ease;
+  will-change: transform, opacity;
+}
+
+.jrn-feature-pill i {
+  color: var(--stage-accent, var(--jrn-crimson));
+  font-size: 0.75rem;
+}
+
+.jrn-feature-pill:hover {
+  border-color: var(--stage-accent, var(--jrn-crimson));
+  background: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* ── Dynamic Transformation Metrics Box ─────────────────────────────────── */
+.jrn-metrics-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  background: var(--jrn-bg-alt);
+  border-radius: 12px;
+  border: 1px solid var(--jrn-border);
+  will-change: transform, opacity;
+}
+
+.jrn-metric-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.jrn-metric-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: var(--jrn-text-muted);
+  margin-bottom: 2px;
+}
+
+.jrn-metric-value {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: var(--jrn-text-head);
+}
+
+/* ── Interactive Footer Controls & Progress Bar ─────────────────────────── */
+.jrn-footer-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid var(--jrn-border);
+}
+
+.jrn-nav-btns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.jrn-nav-arrow {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--jrn-border);
+  background: #ffffff;
+  color: var(--jrn-text-head);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+}
+
+.jrn-nav-arrow:hover {
+  background: var(--jrn-navy);
+  color: #ffffff;
+  border-color: var(--jrn-navy);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+}
+
+.jrn-nav-arrow:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.jrn-autoplay-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  border: 1px solid var(--jrn-border);
+  background: var(--jrn-bg-alt);
+  color: var(--jrn-text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.jrn-autoplay-btn:hover {
+  background: #ffffff;
+  color: var(--jrn-text-head);
+}
+
+.jrn-autoplay-btn.is-playing {
+  background: rgba(6, 214, 160, 0.10);
+  border-color: rgba(6, 214, 160, 0.40);
+  color: #06a57c;
+}
+
+.jrn-progress-track {
+  flex: 1 1 0;
+  margin: 0 16px;
+  height: 5px;
+  background: var(--jrn-border);
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+}
+
+.jrn-progress-bar {
+  height: 100%;
+  width: 16.66%;
+  background: linear-gradient(90deg, #d90429, #ef233c);
+  border-radius: 9999px;
+  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Section Bottom Call To Action (Exit Banner) ────────────────────────── */
+.nhit-journey-exit-cta {
+  position: relative;
+  background-color: var(--jrn-bg);
+  background-image: 
+    radial-gradient(#cbd5e1 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+  padding: 40px 0 70px;
+  border-bottom: 1px solid #1e293b;
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+.nhit-journey-exit-cta .nhit-journey__cta {
+  margin-top: 0;
+}
+
+.nhit-journey__cta {
+  margin-top: 28px;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  border-radius: var(--jrn-radius);
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: var(--jrn-shadow-md);
+  color: #ffffff;
+}
+
+.nhit-journey__cta-info h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.nhit-journey__cta-info p {
+  color: rgba(255, 255, 255, 0.70);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.nhit-journey__cta-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.jrn-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #d90429 0%, #ef233c 100%);
+  color: #ffffff !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.84rem;
+  text-decoration: none !important;
+  box-shadow: 0 6px 18px rgba(217, 4, 41, 0.35);
+  transition: all 0.22s ease;
+}
+
+.jrn-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(217, 4, 41, 0.45);
+}
+
+.jrn-btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 20px;
+  border-radius: 9999px;
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.28);
+  color: #ffffff !important;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.84rem;
+  text-decoration: none !important;
+  transition: all 0.22s ease;
+}
+
+.jrn-btn-outline:hover {
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.10);
+  transform: translateY(-2px);
+}
+
+/* ── Responsive Adjustments ─────────────────────────────────────────────── */
+@media (max-width: 1080px) {
+  .nhit-journey__showcase {
+    grid-template-columns: 310px 1fr;
+  }
+  .jrn-avatar-viewport {
+    width: 200px;
+    height: 250px;
+  }
+  .jrn-details-stage {
+    padding: 20px 24px;
+  }
+}
+
+@media (max-width: 900px) {
+  .nhit-journey-scroll-track {
+    height: auto;
+  }
+  .nhit-journey {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: auto;
+    padding: 40px 0;
+    min-height: auto;
+  }
+  .nhit-journey.is-pinned,
+  .nhit-journey.is-bottom {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    height: auto;
+  }
+  .nhit-journey__showcase {
+    grid-template-columns: 1fr;
+    max-height: none;
+  }
+  .jrn-avatar-stage {
+    border-right: none;
+    border-bottom: 1px solid var(--jrn-border);
+    padding: 24px 16px;
+  }
+  .jrn-details-stage {
+    padding: 24px 20px;
+  }
+  .nhit-journey__cta {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px 20px;
+  }
+  .nhit-journey__cta-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .jrn-btn-primary, .jrn-btn-outline {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .jrn-metrics-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .jrn-tab-btn span:not(.tab-num) {
+    display: none;
+  }
+  .jrn-tab-btn {
+    padding: 6px 10px;
+  }
+  .jrn-footer-controls {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .jrn-progress-track {
+    order: 3;
+    width: 100%;
+    margin: 4px 0 0;
+  }
+}

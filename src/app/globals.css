@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --nhit-crimson: #C10A0C;
+  --nhit-heading: #9E0B0F;
+  --edu-primary: #FF3115;
+  --edu-primary-dark: #E41F05;
+  --edu-primary-rgb: 255, 49, 21;
+  --edu-primary-text: #C10A0C;
+  --edu-ink: #0F172A;
+  --edu-body: #334155;
+  --edu-muted: #64748B;
+  --edu-surface: #F8FAFC;
+}
+
+body {
+  color: var(--edu-body);
+  background-color: #FFFFFF;
+  font-family: var(--font-roboto), sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-montserrat), sans-serif;
+  color: var(--edu-ink);
+}
+
+/* Blueprint Dot Matrix Pattern */
+.bg-blueprint-grid {
+  background-color: #ffffff;
+  background-image: 
+    radial-gradient(#cbd5e1 1.2px, transparent 1.2px),
+    radial-gradient(circle at 10% 20%, rgba(217, 4, 41, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.03) 0%, transparent 40%);
+  background-size: 24px 24px, 100% 100%, 100% 100%;
+}
+
+/* Stadium Card Styling for Faculty Directory */
+.card-stadium {
+  background-color: #FFFFFF;
+  border-radius: 60px;
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 6px 22px rgba(15, 23, 42, 0.06);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-stadium:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+  border-color: rgba(193, 10, 12, 0.4);
+}
+
+/* ── Department Hero Sci-Fi HUD Radar & Laser Animations ── */
+.dept-laser-line {
+  fill: none !important;
+  stroke: var(--dept-accent, #38bdf8);
+  stroke-width: 2px;
+  stroke-dasharray: 7 5;
+  filter: drop-shadow(0 0 6px #00F0FF);
+}
+
+.dept-laser-dot {
+  fill: #00F0FF;
+  filter: drop-shadow(0 0 6px #00F0FF);
+}
+
+@keyframes dept-laser-dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+@keyframes dept-ring-spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes dept-ring-spin-rev {
+  from { transform: translate(-50%, -50%) rotate(360deg); }
+  to { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+@keyframes dept-radar-pulse {
+  0% {
+    width: 120px;
+    height: 120px;
+    opacity: 0.8;
+  }
+  100% {
+    width: 360px;
+    height: 360px;
+    opacity: 0;
+  }
+}
+
+@keyframes dept-radar-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   SITE COLOR THEMES
+   Pick a palette in: Admin → Home Page Editor → "Theme Colors" tab.
+   The chosen palette is stored in src/data/homepage.json (theme.palette)
+   and applied as data-theme on <html>. Each block overrides the shared
+   accent variables; everything else (inks, surfaces, neutrals) stays.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* 2 · Classic Crimson */
+[data-theme="crimson"] {
+  --edu-primary: #dc2626;
+  --edu-primary-dark: #b91c1c;
+  --edu-primary-rgb: 220, 38, 38;
+  --edu-primary-text: #b91c1c;
+  --nhit-crimson: #b91c1c;
+  --nhit-heading: #7f1d1d;
+}
+
+/* 3 · Royal Blue */
+[data-theme="royal-blue"] {
+  --edu-primary: #1d4ed8;
+  --edu-primary-dark: #1e3a8a;
+  --edu-primary-rgb: 29, 78, 216;
+  --edu-primary-text: #1e40af;
+  --nhit-crimson: #1e40af;
+  --nhit-heading: #172554;
+}
+
+/* 4 · Emerald Green */
+[data-theme="emerald"] {
+  --edu-primary: #059669;
+  --edu-primary-dark: #047857;
+  --edu-primary-rgb: 5, 150, 105;
+  --edu-primary-text: #047857;
+  --nhit-crimson: #047857;
+  --nhit-heading: #064e3b;
+}
+
+/* 5 · Ocean Teal */
+[data-theme="teal"] {
+  --edu-primary: #0d9488;
+  --edu-primary-dark: #0f766e;
+  --edu-primary-rgb: 13, 148, 136;
+  --edu-primary-text: #0f766e;
+  --nhit-crimson: #0f766e;
+  --nhit-heading: #134e4a;
+}
+
+/* 6 · Royal Purple */
+[data-theme="royal-purple"] {
+  --edu-primary: #7c3aed;
+  --edu-primary-dark: #6d28d9;
+  --edu-primary-rgb: 124, 58, 237;
+  --edu-primary-text: #6d28d9;
+  --nhit-crimson: #6d28d9;
+  --nhit-heading: #4c1d95;
+}
+
+/* 7 · Saffron Orange */
+[data-theme="saffron"] {
+  --edu-primary: #ea580c;
+  --edu-primary-dark: #c2410c;
+  --edu-primary-rgb: 234, 88, 12;
+  --edu-primary-text: #c2410c;
+  --nhit-crimson: #c2410c;
+  --nhit-heading: #7c2d12;
+}
+
+/* 8 · Sun Gold */
+[data-theme="sun-gold"] {
+  --edu-primary: #d97706;
+  --edu-primary-dark: #b45309;
+  --edu-primary-rgb: 217, 119, 6;
+  --edu-primary-text: #92400e;
+  --nhit-crimson: #b45309;
+  --nhit-heading: #78350f;
+}

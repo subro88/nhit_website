@@ -1,0 +1,789 @@
+/* ==========================================================================
+   NHIT INTERACTIVE PLACEMENT & CAREER TRAJECTORY CONSOLE (ANIME.JS)
+   ========================================================================== */
+
+:root {
+  --nhit-console-bg: #07152d;
+  --nhit-console-card: rgba(14, 30, 58, 0.78);
+  --nhit-console-border: rgba(255, 255, 255, 0.1);
+  --nhit-console-border-focus: rgba(var(--edu-primary-rgb), 0.5);
+  --nhit-accent-orange: var(--edu-primary);
+  --nhit-accent-cyan: #00d2ff;
+  --nhit-accent-green: #10b981;
+  --nhit-text-bright: #ffffff;
+  --nhit-text-muted: #94a3b8;
+  --nhit-text-dim: #64748b;
+  --nhit-font-head: 'Montserrat', sans-serif;
+  --nhit-font-mono: 'Roboto Condensed', 'SF Pro Display', sans-serif;
+}
+
+/* SECTION SHELL */
+.nhit-placement-radar {
+  position: relative;
+  background: radial-gradient(circle at 50% 10%, #0d234d 0%, #061124 75%, #040c1a 100%);
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+  color: var(--nhit-text-bright);
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Ambient Background Holographic Grid */
+.nhit-placement-radar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center center;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.nhit-placement-radar::after {
+  content: '';
+  position: absolute;
+  top: -15%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(var(--edu-primary-rgb), 0.12) 0%, transparent 70%);
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.nhit-radar-glow-cyan {
+  position: absolute;
+  bottom: -20%;
+  left: -10%;
+  width: 650px;
+  height: 650px;
+  background: radial-gradient(circle, rgba(0, 210, 255, 0.09) 0%, transparent 70%);
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* SECTION HEADER */
+.nhit-radar-header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 820px;
+  margin-inline: auto;
+  margin-bottom: 2.8rem;
+}
+
+.nhit-radar-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(var(--edu-primary-rgb), 0.14);
+  border: 1px solid rgba(var(--edu-primary-rgb), 0.35);
+  color: color-mix(in srgb, var(--edu-primary) 62%, white);
+  font-family: var(--nhit-font-head);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.nhit-radar-kicker__pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--nhit-accent-orange);
+  box-shadow: 0 0 10px var(--nhit-accent-orange);
+  animation: nhitPulseDot 1.8s ease-in-out infinite;
+}
+
+@keyframes nhitPulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.5; }
+}
+
+.nhit-radar-title {
+  font-family: var(--nhit-font-head);
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.nhit-radar-title span {
+  background: linear-gradient(135deg, var(--edu-primary) 0%, #ff8342 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nhit-radar-sub {
+  font-size: clamp(0.95rem, 1.4vw, 1.05rem);
+  color: var(--nhit-text-muted);
+  line-height: 1.6;
+}
+
+/* BRANCH FILTER NAVIGATION */
+.nhit-branch-nav {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 2.5rem;
+}
+
+.nhit-branch-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  background: rgba(15, 33, 64, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  color: #cbd5e1;
+  font-family: var(--nhit-font-head);
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  user-select: none;
+}
+
+.nhit-branch-tab:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.nhit-branch-tab.is-active {
+  background: linear-gradient(135deg, var(--edu-primary) 0%, #e02206 100%);
+  border-color: #ff4d36;
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(var(--edu-primary-rgb), 0.35);
+  transform: translateY(-2px);
+}
+
+.nhit-branch-tab__tag {
+  font-size: 0.68rem;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 7px;
+  border-radius: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.nhit-branch-tab.is-active .nhit-branch-tab__tag {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* MAIN COCKPIT CONSOLE */
+.nhit-radar-console {
+  position: relative;
+  z-index: 2;
+  background: var(--nhit-console-card);
+  border: 1px solid var(--nhit-console-border);
+  border-radius: 24px;
+  padding: clamp(1.8rem, 3.5vw, 3rem);
+  box-shadow: 
+    0 20px 50px -10px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: border-color 0.4s ease;
+}
+
+.nhit-radar-console:hover {
+  border-color: rgba(var(--edu-primary-rgb), 0.25);
+}
+
+/* CONSOLE TOP BAR */
+.nhit-console-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 1.4rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.nhit-console-branch-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nhit-console-branch-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(var(--edu-primary-rgb), 0.12);
+  border: 1px solid rgba(var(--edu-primary-rgb), 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.nhit-console-branch-title {
+  font-family: var(--nhit-font-head);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.nhit-console-branch-desc {
+  font-size: 0.82rem;
+  color: var(--nhit-text-muted);
+  margin: 2px 0 0;
+}
+
+/* Ambient Auto-Cycle Progress Indicator */
+.nhit-cycle-widget {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  color: var(--nhit-text-dim);
+}
+
+.nhit-cycle-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--nhit-text-muted);
+}
+
+.nhit-cycle-label i {
+  color: var(--nhit-accent-orange);
+  font-size: 0.72rem;
+}
+
+.nhit-cycle-track {
+  width: 64px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.nhit-cycle-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0%;
+  background: linear-gradient(90deg, var(--edu-primary), #00d2ff);
+  border-radius: 999px;
+}
+
+/* CONSOLE MAIN GRID */
+.nhit-console-main {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: clamp(1.8rem, 3.5vw, 3rem);
+  margin-bottom: 2.4rem;
+}
+
+@media (max-width: 1024px) {
+  .nhit-console-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* METRICS HUD CARDS (LEFT COLUMN) */
+.nhit-metrics-hud {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 1024px) {
+  .nhit-metrics-hud {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .nhit-metrics-hud {
+    grid-template-columns: 1fr;
+  }
+}
+
+.nhit-metric-box {
+  background: rgba(8, 20, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.15rem 1.4rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nhit-metric-box:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(12, 28, 58, 0.85);
+}
+
+.nhit-metric-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--metric-accent, var(--edu-primary));
+  opacity: 0.8;
+}
+
+.nhit-metric-box--orange { --metric-accent: var(--edu-primary); }
+.nhit-metric-box--cyan { --metric-accent: #00d2ff; }
+.nhit-metric-box--green { --metric-accent: #10b981; }
+.nhit-metric-box--purple { --metric-accent: #a855f7; }
+
+.nhit-metric-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.76rem;
+  font-family: var(--nhit-font-head);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--nhit-text-dim);
+  margin-bottom: 0.45rem;
+}
+
+.nhit-metric-value-wrap {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.nhit-metric-value {
+  font-family: var(--nhit-font-head);
+  font-size: clamp(1.8rem, 2.5vw, 2.3rem);
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.nhit-metric-unit {
+  font-family: var(--nhit-font-head);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--metric-accent, var(--edu-primary));
+}
+
+.nhit-metric-caption {
+  font-size: 0.74rem;
+  color: var(--nhit-text-muted);
+  margin-top: 0.4rem;
+  line-height: 1.4;
+}
+
+/* CAREER TRAJECTORY RADAR (RIGHT COLUMN) */
+.nhit-trajectory-panel {
+  background: rgba(6, 16, 35, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  padding: clamp(1.4rem, 2.5vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.nhit-trajectory-panel__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.8rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.nhit-trajectory-panel__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--nhit-font-head);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+.nhit-trajectory-panel__badge {
+  font-size: 0.72rem;
+  background: rgba(0, 210, 255, 0.12);
+  border: 1px solid rgba(0, 210, 255, 0.3);
+  color: var(--nhit-accent-cyan);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* SVG INTERACTIVE PATH CANVAS */
+.nhit-path-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.nhit-trajectory-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  display: block;
+}
+
+/* SVG Elements Styling */
+.nhit-svg-base-line {
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 4;
+  fill: none;
+  stroke-linecap: round;
+}
+
+.nhit-svg-active-path {
+  stroke: url(#nhitGlowGradient);
+  stroke-width: 5;
+  fill: none;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 8px rgba(var(--edu-primary-rgb), 0.6));
+}
+
+.nhit-svg-node-outer {
+  fill: #07152d;
+  stroke: rgba(255, 255, 255, 0.2);
+  stroke-width: 3;
+  transition: all 0.3s ease;
+}
+
+.nhit-svg-node-outer.is-active {
+  stroke: var(--nhit-accent-orange);
+  filter: drop-shadow(0 0 10px rgba(var(--edu-primary-rgb), 0.8));
+}
+
+.nhit-svg-node-inner {
+  fill: var(--nhit-accent-orange);
+}
+
+.nhit-svg-pulse-ring {
+  fill: none;
+  stroke: var(--nhit-accent-orange);
+  stroke-width: 1.5;
+  opacity: 0.8;
+  transform-origin: center;
+}
+
+/* 4-STAGE MILESTONE CARDS (STEPPERS) */
+.nhit-milestones-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: auto;
+}
+
+@media (max-width: 900px) {
+  .nhit-milestones-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .nhit-milestones-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.nhit-milestone-card {
+  background: rgba(14, 29, 56, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 1rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  cursor: pointer;
+}
+
+.nhit-milestone-card:hover {
+  background: rgba(var(--edu-primary-rgb), 0.08);
+  border-color: rgba(var(--edu-primary-rgb), 0.35);
+  transform: translateY(-2px);
+}
+
+.nhit-milestone-card.is-current {
+  background: rgba(var(--edu-primary-rgb), 0.12);
+  border-color: var(--nhit-accent-orange);
+  box-shadow: 0 4px 16px rgba(var(--edu-primary-rgb), 0.2);
+}
+
+.nhit-milestone-step {
+  font-size: 0.68rem;
+  font-family: var(--nhit-font-head);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--nhit-accent-orange);
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+
+.nhit-milestone-title {
+  font-family: var(--nhit-font-head);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+  line-height: 1.25;
+}
+
+.nhit-milestone-desc {
+  font-size: 0.74rem;
+  color: var(--nhit-text-muted);
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* RECRUITER & ROLES SHOWCASE SECTION (BOTTOM DECK) */
+.nhit-console-recruiter-deck {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 2rem;
+}
+
+.nhit-deck-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.nhit-deck-heading {
+  font-family: var(--nhit-font-head);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--nhit-text-bright);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nhit-deck-legend {
+  font-size: 0.76rem;
+  color: var(--nhit-text-dim);
+}
+
+/* ROLES CARDS GRID */
+.nhit-roles-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+@media (max-width: 1100px) {
+  .nhit-roles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .nhit-roles-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.nhit-role-card {
+  background: rgba(10, 24, 48, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.15rem;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.nhit-role-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 210, 255, 0.4);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 210, 255, 0.15);
+  background: rgba(14, 32, 64, 0.85);
+}
+
+.nhit-role-card__badge-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.nhit-role-card__company {
+  font-family: var(--nhit-font-head);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.04em;
+}
+
+.nhit-role-card__tag {
+  font-size: 0.66rem;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.nhit-tag--auto { background: rgba(var(--edu-primary-rgb), 0.15); color: #ff624d; border: 1px solid rgba(var(--edu-primary-rgb), 0.3); }
+.nhit-tag--infra { background: rgba(0, 210, 255, 0.15); color: #38bdf8; border: 1px solid rgba(0, 210, 255, 0.3); }
+.nhit-tag--tech { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+.nhit-tag--power { background: rgba(250, 204, 21, 0.15); color: #fde047; border: 1px solid rgba(250, 204, 21, 0.3); }
+
+.nhit-role-card__title {
+  font-family: var(--nhit-font-head);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin: 0 0 0.4rem 0;
+  line-height: 1.3;
+}
+
+.nhit-role-card__scope {
+  font-size: 0.76rem;
+  color: var(--nhit-text-muted);
+  line-height: 1.45;
+  margin-bottom: 0.85rem;
+}
+
+.nhit-role-card__footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 0.65rem;
+  font-size: 0.72rem;
+  color: var(--nhit-text-dim);
+}
+
+.nhit-role-card__salary {
+  font-family: var(--nhit-font-head);
+  font-weight: 700;
+  color: var(--nhit-accent-green);
+  font-size: 0.84rem;
+}
+
+/* ACTION FOOTER BANNER */
+.nhit-radar-cta-banner {
+  margin-top: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, rgba(var(--edu-primary-rgb), 0.1) 0%, rgba(0, 210, 255, 0.08) 100%);
+  border: 1px solid rgba(var(--edu-primary-rgb), 0.25);
+  border-radius: 16px;
+  padding: 1.25rem 2rem;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.nhit-cta-text h4 {
+  font-family: var(--nhit-font-head);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+}
+
+.nhit-cta-text p {
+  font-size: 0.82rem;
+  color: var(--nhit-text-muted);
+  margin: 0;
+}
+
+.nhit-cta-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nhit-radar-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: var(--nhit-accent-orange);
+  color: #ffffff;
+  font-family: var(--nhit-font-head);
+  font-size: 0.86rem;
+  font-weight: 700;
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 4px 18px rgba(var(--edu-primary-rgb), 0.4);
+  transition: all 0.25s ease;
+}
+
+.nhit-radar-btn-primary:hover {
+  background: var(--edu-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(var(--edu-primary-rgb), 0.5);
+  color: #ffffff;
+}
+
+.nhit-radar-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-family: var(--nhit-font-head);
+  font-size: 0.86rem;
+  font-weight: 600;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.nhit-radar-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  transform: translateY(-2px);
+}

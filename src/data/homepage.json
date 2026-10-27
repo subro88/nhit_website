@@ -1,0 +1,1549 @@
+{
+  "theme": {
+    "palette": "crimson"
+  },
+  "brand": {
+    "visible": true,
+    "logo": "/images/logo-nhit.png",
+    "name": "NHIT Durgapur",
+    "nameEm": "Durgapur",
+    "sub": "The New Horizons Institute of Technology"
+  },
+  "hero": {
+    "visible": true,
+    "slides": [
+      {
+        "bg": "/images/hero-campus.jpg",
+        "kicker": "Best and Top Diploma College in Durgapur",
+        "title": "Build Your Engineering Career ",
+        "titleEm": "Hands-On",
+        "titleAfter": " in Durgapur",
+        "text": "The first two-shift diploma college in Eastern India — six branches, two ITI trades and 40+ laboratories, affiliated to WBSCT&VE&SD.",
+        "btnPrimaryText": "Apply — Session 2026 →",
+        "btnPrimaryHref": "/admissions",
+        "btnGhostText": "Explore Departments",
+        "btnGhostHref": "/departments"
+      },
+      {
+        "bg": "/images/hero-computers.jpg",
+        "kicker": "Learn By Doing",
+        "title": "Labs You Work In From ",
+        "titleEm": "Semester One",
+        "titleAfter": ", Not Year Three",
+        "text": "From compiler labs to solar-power rigs and live engine teardowns — every branch runs its own laboratory programme with industry MoUs behind it.",
+        "btnPrimaryText": "See Lab Floors →",
+        "btnPrimaryHref": "/departments",
+        "btnGhostText": "Placement Record",
+        "btnGhostHref": "/placements"
+      },
+      {
+        "bg": "/images/hero-electronics.jpg",
+        "kicker": "Placements & Pathways",
+        "title": "80–85% of Eligible Students ",
+        "titleEm": "Placed",
+        "titleAfter": " or in B.Tech",
+        "text": "Recruiters from Tata Motors to L&T, MoUs with CSIR-CMERI and HCL, and a proven ladder into B.Tech lateral entry.",
+        "btnPrimaryText": "Placement Story →",
+        "btnPrimaryHref": "/placements",
+        "btnGhostText": "Visit the Campus",
+        "btnGhostHref": "/contact"
+      }
+    ],
+    "chips": [
+      {
+        "label": "Placement Record",
+        "value": "80–85%*",
+        "tone": "red"
+      },
+      {
+        "label": "Labs on Campus",
+        "value": "40+ Tracked",
+        "tone": "plain"
+      },
+      {
+        "label": "R&D MoU",
+        "value": "CSIR-CMERI",
+        "tone": "plain"
+      }
+    ],
+    "estdBadge": {
+      "visible": true,
+      "text": "Estd: 2007",
+      "features": [
+        {
+          "icon": "fa-trophy",
+          "label": "Placement Record",
+          "value": "80-85% Consistent"
+        },
+        {
+          "icon": "fa-handshake-o",
+          "label": "MOUs Signed",
+          "value": "25+ Industry Partners"
+        },
+        {
+          "icon": "fa-flask",
+          "label": "Modern Labs",
+          "value": "40+ Labs & Workshops"
+        },
+        {
+          "icon": "fa-certificate",
+          "label": "AICTE Approved",
+          "value": "WBSCTVESD Affiliated"
+        },
+        {
+          "icon": "fa-users",
+          "label": "Expert Faculty",
+          "value": "60+ Experienced"
+        },
+        {
+          "icon": "fa-graduation-cap",
+          "label": "Alumni Network",
+          "value": "5000+ Members"
+        }
+      ]
+    },
+    "tourLabel": "Watch Campus Tour",
+    "tourVideo": "xcXh2vLC7VU"
+  },
+  "features": {
+    "visible": true,
+    "items": [
+      {
+        "icon": "fa-graduation-cap",
+        "title": "Est. 2007 — 18+ Years",
+        "desc": "First session began 16 August 2007; 14+ batches have passed out into industry and B.Tech programmes."
+      },
+      {
+        "icon": "fa-university",
+        "title": "WBSCT&VE&SD Affiliated",
+        "desc": "All diploma programmes under the West Bengal State Council of Technical & Vocational Education and Skill Development."
+      },
+      {
+        "icon": "fa-flask",
+        "title": "40+ Laboratories",
+        "desc": "Department-wise lab floors — from CNC machining and solar power to embedded systems and concrete testing."
+      },
+      {
+        "icon": "fa-handshake-o",
+        "title": "Industry MoUs",
+        "desc": "CSIR-CMERI and NEN MoUs, an HCL technology tie-up, ISTE & IE(India) memberships and British Council Library access."
+      }
+    ]
+  },
+  "about": {
+    "visible": true,
+    "image": "/images/about-survey.jpg",
+    "imageAlt": "NHIT civil engineering students during a surveying field exercise",
+    "badgeYear": "2007",
+    "badgeLabel": "Serving Since",
+    "title": "Welcome to The New Horizons Institute of Technology",
+    "text": "NHIT opened its first academic session on 16 August 2007 at Durgapur. Today it is one of eastern India’s largest diploma engineering institutes by student intake — with six diploma branches, a Private ITI, and a first pass-out batch that set the standard:",
+    "textBold": "85% moved into jobs or B.Tech lateral entry",
+    "checklist": [
+      "Six diploma branches — three years, six semesters each",
+      "Private ITI trades: Electrician & Fitter",
+      "MoUs with CSIR-CMERI (Govt. of India) and NEN; HCL tie-up",
+      "Life Member, Institution of Engineers (India); ISTE member"
+    ],
+    "btnPrimaryText": "Know More →",
+    "btnPrimaryHref": "/about",
+    "btnOutlineText": "Visit Campus",
+    "btnOutlineHref": "/contact"
+  },
+  "ticker": {
+    "visible": true,
+    "heading": "Latest News",
+    "footText": "View All Notices →",
+    "footHref": "/circulars",
+    "items": [
+      {
+        "day": "02",
+        "mon": "OCT",
+        "title": "5th Internal Assessment — Schedule Released",
+        "link": "/circulars/5th-internal-assessment-schedule",
+        "isNew": true
+      },
+      {
+        "day": "15",
+        "mon": "SEP",
+        "title": "1st Internal Examination — Session 2026 Schedule",
+        "link": "/circulars/1st-internal-examination-2026-schedule",
+        "isNew": true
+      },
+      {
+        "day": "20",
+        "mon": "AUG",
+        "title": "Odd Semester Fee Payment Window",
+        "link": "/circulars/odd-semester-fee-payment-window",
+        "isNew": false
+      },
+      {
+        "day": "10",
+        "mon": "JUL",
+        "title": "Seminar: Green & Clean Energy",
+        "link": "/circulars/seminar-green-clean-energy",
+        "isNew": false
+      },
+      {
+        "day": "18",
+        "mon": "JUN",
+        "title": "NHIT Private ITI — Trade Admissions Open",
+        "link": "/circulars/nhit-private-iti-admission-notice",
+        "isNew": false
+      },
+      {
+        "day": "10",
+        "mon": "JUN",
+        "title": "Farewell Ceremony — Batch 2021–2024",
+        "link": "/circulars/farewell-ceremony-batch-2021-2024",
+        "isNew": false
+      }
+    ]
+  },
+  "counters": {
+    "visible": true,
+    "items": [
+      {
+        "target": 19,
+        "prefix": "",
+        "suffix": "+",
+        "label": "Years of Academic Excellence"
+      },
+      {
+        "target": 5000,
+        "prefix": "",
+        "suffix": "+",
+        "label": "Placements"
+      },
+      {
+        "target": 60,
+        "prefix": "",
+        "suffix": "+",
+        "label": "Recruiting Partners"
+      },
+      {
+        "target": 6000,
+        "prefix": "",
+        "suffix": "+",
+        "label": "Alumni Members"
+      }
+    ]
+  },
+  "courses": {
+    "visible": true,
+    "kicker": "Our Programs",
+    "title": "Popular Diploma Courses",
+    "sub": "Three-year, six-semester diploma programmes after Class 10 — plus two ITI trades.",
+    "items": [
+      {
+        "slug": "computer-science-technology",
+        "code": "CST",
+        "title": "Computer Science & Technology",
+        "tagline": "Software Development, Database Management, Computer Networks & AI Foundations",
+        "image": "/images/hero-computers.jpg",
+        "labs": "07 LABS",
+        "intake": "60 SEATS"
+      },
+      {
+        "slug": "diploma-in-mechanical-engineering",
+        "code": "ME",
+        "title": "Mechanical Engineering",
+        "tagline": "Precision Machining, Thermal Systems, Hydraulics & Industrial Manufacturing",
+        "image": "/images/lab-mechanical.jpg",
+        "labs": "11 LABS",
+        "intake": "120 SEATS"
+      },
+      {
+        "slug": "diploma-in-electrical-engineering",
+        "code": "EE",
+        "title": "Electrical Engineering",
+        "tagline": "Power Systems, Electrical Machines, Switchgear & Renewable Energy",
+        "image": "/images/hero-electronics.jpg",
+        "labs": "08 LABS",
+        "intake": "120 SEATS"
+      },
+      {
+        "slug": "diploma-in-civil-engineering",
+        "code": "CE",
+        "title": "Civil Engineering",
+        "tagline": "Total Station Surveying, Concrete Technology, Structural CAD & Soil Mechanics",
+        "image": "/images/about-survey.jpg",
+        "labs": "08 LABS",
+        "intake": "60 SEATS"
+      },
+      {
+        "slug": "diploma-in-electronics-telecommunications-engineering",
+        "code": "ETCE",
+        "title": "Electronics & Telecommunications",
+        "tagline": "Microprocessors, Embedded IoT Systems, Optical Fiber & Wireless Networks",
+        "image": "/images/lab-electronics.jpg",
+        "labs": "07 LABS",
+        "intake": "30 SEATS"
+      },
+      {
+        "slug": "diploma-in-automobile-engineering",
+        "code": "AE",
+        "title": "Automobile Engineering",
+        "tagline": "Engine Diagnostics, Vehicle Dynamics, CAD Design & Hybrid/EV Technologies",
+        "image": "/images/lab-automobile.jpg",
+        "labs": "07 LABS",
+        "intake": "60 SEATS"
+      }
+    ],
+    "itiHub": {
+      "badge": "NCVT Craftsman Training Scheme (CTS)",
+      "title": "Looking for Industrial Training (ITI)?",
+      "text": "NHIT offers 2-Year Full-Time NCVT Approved ITI in Electrician and Fitter with intensive workshop practice and 100% placement support.",
+      "btn1Text": "ITI Electrician →",
+      "btn1Href": "/admissions",
+      "btn2Text": "ITI Fitter →",
+      "btn2Href": "/admissions",
+      "btn3Text": "Explore ITI Hub ↗",
+      "btn3Href": "/departments"
+    }
+  },
+  "outcomes": {
+    "visible": true,
+    "kicker": "Outcomes Infographic",
+    "title": "Where an NHIT Diploma Takes You",
+    "videoOn": true,
+    "videoId": "xcXh2vLC7VU",
+    "bars": [
+      {
+        "value": "98.5%",
+        "label": "2015–18",
+        "heightPct": "98.5%",
+        "color": "color-mix(in srgb, var(--edu-primary) 45%, #fff)",
+        "colorDark": "color-mix(in srgb, var(--edu-primary) 82%, #fff)",
+        "total": "618",
+        "opted": "335",
+        "placed": "330",
+        "higher": "283",
+        "ongoing": false
+      },
+      {
+        "value": "97.1%",
+        "label": "2016–19",
+        "heightPct": "97.1%",
+        "color": "color-mix(in srgb, var(--edu-primary) 45%, #fff)",
+        "colorDark": "color-mix(in srgb, var(--edu-primary) 82%, #fff)",
+        "total": "523",
+        "opted": "340",
+        "placed": "330",
+        "higher": "183",
+        "ongoing": false
+      },
+      {
+        "value": "71.3%",
+        "label": "2017–20",
+        "heightPct": "71.3%",
+        "color": "color-mix(in srgb, var(--edu-primary) 45%, #fff)",
+        "colorDark": "color-mix(in srgb, var(--edu-primary) 82%, #fff)",
+        "total": "514",
+        "opted": "321",
+        "placed": "229",
+        "higher": "193",
+        "ongoing": false
+      },
+      {
+        "value": "85.5%",
+        "label": "2018–21",
+        "heightPct": "85.5%",
+        "color": "color-mix(in srgb, var(--edu-primary) 45%, #fff)",
+        "colorDark": "color-mix(in srgb, var(--edu-primary) 82%, #fff)",
+        "total": "435",
+        "opted": "249",
+        "placed": "213",
+        "higher": "186",
+        "ongoing": false
+      },
+      {
+        "value": "93.1%",
+        "label": "2019–22",
+        "heightPct": "93.1%",
+        "color": "color-mix(in srgb, var(--edu-primary) 45%, #fff)",
+        "colorDark": "color-mix(in srgb, var(--edu-primary) 82%, #fff)",
+        "total": "421",
+        "opted": "302",
+        "placed": "281",
+        "higher": "119",
+        "ongoing": false
+      },
+      {
+        "value": "92.0%",
+        "label": "2020–23",
+        "heightPct": "92%",
+        "color": "color-mix(in srgb, var(--edu-primary) 45%, #fff)",
+        "colorDark": "color-mix(in srgb, var(--edu-primary) 82%, #fff)",
+        "total": "303",
+        "opted": "212",
+        "placed": "195",
+        "higher": "91",
+        "ongoing": false
+      },
+      {
+        "value": "98.2%",
+        "label": "2021–24",
+        "heightPct": "98.2%",
+        "color": "color-mix(in srgb, var(--edu-primary) 45%, #fff)",
+        "colorDark": "color-mix(in srgb, var(--edu-primary) 82%, #fff)",
+        "total": "385",
+        "opted": "270",
+        "placed": "265",
+        "higher": "115",
+        "ongoing": false
+      },
+      {
+        "value": "91.7%",
+        "label": "2022–25*",
+        "heightPct": "91.7%",
+        "color": "#00bcd4",
+        "colorDark": "#0097a7",
+        "total": "362",
+        "opted": "278",
+        "placed": "255",
+        "higher": "84",
+        "ongoing": true
+      }
+    ],
+    "outcomes": [
+      {
+        "icon": "💼",
+        "title": "2,098 Students Placed — 90.9%",
+        "text": "Of the 2,307 students who opted for placement since 2015 — recruited by SIGMA, Cummins, Daikin, RDC Concrete, CMS IT Services and more."
+      },
+      {
+        "icon": "🎓",
+        "title": "1,254 Moved to B.Tech",
+        "text": "Diploma-to-degree lateral entry into second-year B.E./B.Tech — 84 from the 2022–25 batch alone, and 283 in our best year (2015–18)."
+      },
+      {
+        "icon": "🚀",
+        "title": "Foundership via NEN",
+        "text": "A few alumni have launched auto-sector enterprises, backed by our National Entrepreneurship Network MoU."
+      }
+    ],
+    "footnote": "Batch-wise diploma placement %, sessions 2015–2025, as recorded by the NHIT T&P cell. * 2022–25 batch — figures update as ongoing drives close."
+  },
+  "recruiters": {
+    "visible": true,
+    "kicker": "Placements & Industry",
+    "title": "Recruiters Who Hire NHIT Engineers",
+    "sub": "Automotive, construction and technology employers from NHIT's placement records.",
+    "logos": [
+      {
+        "src": "/images/rec-tata.png",
+        "alt": "Tata Motors"
+      },
+      {
+        "src": "/images/rec-lt.png",
+        "alt": "Larsen & Toubro"
+      },
+      {
+        "src": "/images/rec-cummins.png",
+        "alt": "Cummins India"
+      },
+      {
+        "src": "/images/rec-magna.png",
+        "alt": "Magna Automotive"
+      },
+      {
+        "src": "/images/rec-force.png",
+        "alt": "Force Motors"
+      },
+      {
+        "src": "/images/rec-kiswok.jpg",
+        "alt": "Kiswok"
+      },
+      {
+        "src": "/images/rec-mate.jpg",
+        "alt": "MATE"
+      },
+      {
+        "src": "/images/rec-wmark.jpg",
+        "alt": "Campus recruiter partner"
+      },
+      {
+        "src": "/images/rec-hex.png",
+        "alt": "Piaggio"
+      }
+    ],
+    "marks": [
+      {
+        "name": "JOHN DEERE",
+        "sub": "Agri-Machinery"
+      },
+      {
+        "name": "JBM GROUP",
+        "sub": "Auto Systems"
+      },
+      {
+        "name": "TIL INDIA",
+        "sub": "Heavy Equipment"
+      },
+      {
+        "name": "ANAND GROUP",
+        "sub": "Components"
+      },
+      {
+        "name": "SHARDA MOTORS",
+        "sub": "Automotive"
+      },
+      {
+        "name": "HCL",
+        "sub": "Technology Partner"
+      }
+    ]
+  },
+  "placementRadar": {
+    "visible": true,
+    "kicker": "Career Launchpad & Placements",
+    "title": "From Diploma Classrooms to",
+    "titleEm": "Tier-1 Engineering MNCs",
+    "titleAfter": "",
+    "sub": "Explore branch-wise placement trajectories, verified compensation packages, and day-1 corporate recruiter networks across 18+ years of technical excellence at NHIT Durgapur.",
+    "pipelineTitle": "Career Development Pipeline",
+    "pipelineBadge": "Click Milestones to Inspect",
+    "deckHeading": "Key Recruiting Partners & Job Profiles",
+    "deckLegend": "* Annual CTC figures based on NHIT T&P records",
+    "ctaTitle": "Prepare for Your Engineering Future at NHIT",
+    "ctaText": "Our dedicated Training & Placement Cell arranges campus interviews, soft-skill grooming, and industry MoUs.",
+    "ctaBtn1Text": "Download Placement Brochure",
+    "ctaBtn1Href": "https://nhit.in/wp-content/uploads/2024/06/Brochure-Final-2_compressed-1.pdf",
+    "ctaBtn2Text": "Explore T&P Cell",
+    "ctaBtn2Href": "/placements",
+    "branches": [
+      {
+        "id": "all",
+        "tabLabel": "All Branches",
+        "tabTag": "Overview",
+        "title": "All Disciplines — Institutional Overview",
+        "icon": "🎓",
+        "desc": "6 AICTE-Approved Diploma Engineering Disciplines + B.Tech Lateral Pathway",
+        "stats": {
+          "highest": 4.8,
+          "avg": 2.65,
+          "rate": 88.4,
+          "recruiters": 200
+        },
+        "milestones": [
+          {
+            "step": "Phase 1 · Sem 1–2",
+            "title": "Applied Engineering Labs",
+            "desc": "Physics, chemistry, foundational CAD, and hands-on mechanical & electrical workshops."
+          },
+          {
+            "step": "Phase 2 · Sem 3–4",
+            "title": "Core Industrial Training",
+            "desc": "Real industrial visits and 4-week summer vocational internship in Durgapur-Asansol belt."
+          },
+          {
+            "step": "Phase 3 · Sem 5",
+            "title": "T&P Aptitude & HR Bootcamps",
+            "desc": "National Entrepreneurship Network (NEN) soft skills, coding drills, and mock corporate GDs."
+          },
+          {
+            "step": "Phase 4 · Sem 6",
+            "title": "Tier-1 Campus Offers / JELET",
+            "desc": "Day-1 placement drives by MNCs and direct lateral admission to 2nd Year B.Tech."
+          }
+        ],
+        "roles": [
+          {
+            "company": "Tata Motors",
+            "tag": "Auto",
+            "tagClass": "nhit-tag--auto",
+            "title": "Junior Engineer (Plant Operations)",
+            "scope": "Assembly line automation, vehicle integration & quality inspection standards.",
+            "salary": "₹3.60 – ₹4.20 LPA"
+          },
+          {
+            "company": "Larsen & Toubro",
+            "tag": "Infra",
+            "tagClass": "nhit-tag--infra",
+            "title": "Graduate Site Trainee (L&T Construction)",
+            "scope": "Structural fabrication, heavy site surveying, and high-precision quality control.",
+            "salary": "₹3.20 – ₹4.00 LPA"
+          },
+          {
+            "company": "Cummins India",
+            "tag": "Auto",
+            "tagClass": "nhit-tag--auto",
+            "title": "Powertrain Quality Engineer",
+            "scope": "Heavy diesel engine testing, emission compliance, and CNC precision machining.",
+            "salary": "₹3.40 – ₹4.10 LPA"
+          },
+          {
+            "company": "HCL Technologies",
+            "tag": "Tech",
+            "tagClass": "nhit-tag--tech",
+            "title": "Associate Support Engineer",
+            "scope": "Enterprise IT infrastructure, automated networking & systems maintenance.",
+            "salary": "₹3.00 – ₹4.80 LPA"
+          }
+        ]
+      },
+      {
+        "id": "me",
+        "tabLabel": "Mechanical (ME)",
+        "tabTag": "91% Placed",
+        "title": "Mechanical Engineering (ME)",
+        "icon": "⚙️",
+        "desc": "Precision Manufacturing, Thermal Engineering, CAD/CAM & Automobile Systems",
+        "stats": {
+          "highest": 4.2,
+          "avg": 2.55,
+          "rate": 91.2,
+          "recruiters": 48
+        },
+        "milestones": [
+          {
+            "step": "Phase 1 · Sem 1–2",
+            "title": "Machine Drawing & Lathe Lab",
+            "desc": "Foundational bench fitting, turning, smithy, and 2D AutoCAD mechanical drafting."
+          },
+          {
+            "step": "Phase 2 · Sem 3–4",
+            "title": "CNC & Fluid Dynamics",
+            "desc": "Hydraulics, heat engine performance tests, and 4-week industrial vocational training."
+          },
+          {
+            "step": "Phase 3 · Sem 5",
+            "title": "Production Tech & GD&T",
+            "desc": "Geometric tolerancing, automated jigs & fixtures, and company-specific aptitude drives."
+          },
+          {
+            "step": "Phase 4 · Sem 6",
+            "title": "Auto MNC Day-1 Onboarding",
+            "desc": "Direct hiring by OEM giants or entry to prestigious B.Tech mechanical degrees."
+          }
+        ],
+        "roles": [
+          {
+            "company": "Tata Motors",
+            "tag": "Auto",
+            "tagClass": "nhit-tag--auto",
+            "title": "Junior Production Engineer",
+            "scope": "Supervising robotic weld lines, chassis assembly & shop-floor kaizen protocols.",
+            "salary": "₹3.60 – ₹4.20 LPA"
+          },
+          {
+            "company": "Cummins India",
+            "tag": "Power",
+            "tagClass": "nhit-tag--power",
+            "title": "Engine Testing Trainee",
+            "scope": "Dynamometer testing, vibration diagnostics & fuel injection calibration.",
+            "salary": "₹3.20 – ₹3.90 LPA"
+          },
+          {
+            "company": "JBM Group",
+            "tag": "Auto",
+            "tagClass": "nhit-tag--auto",
+            "title": "Press Shop & Tooling Tech",
+            "scope": "High-tonnage stamping dies, sheet metal tolerances & robotic spot-welding.",
+            "salary": "₹2.80 – ₹3.40 LPA"
+          },
+          {
+            "company": "Kiswok Industries",
+            "tag": "Foundry",
+            "tagClass": "nhit-tag--infra",
+            "title": "Metallurgy Quality Inspector",
+            "scope": "Ductile iron casting inspection, spectrometer testing & precision CNC milling.",
+            "salary": "₹2.60 – ₹3.20 LPA"
+          }
+        ]
+      },
+      {
+        "id": "ee",
+        "tabLabel": "Electrical (EE)",
+        "tabTag": "₹4.50L Max",
+        "title": "Electrical Engineering (EE)",
+        "icon": "⚡",
+        "desc": "Power Systems, PLC/SCADA Automation, Electric Drives & Renewable Energy",
+        "stats": {
+          "highest": 4.5,
+          "avg": 2.6,
+          "rate": 89.5,
+          "recruiters": 42
+        },
+        "milestones": [
+          {
+            "step": "Phase 1 · Sem 1–2",
+            "title": "Circuits & Basic Electronics",
+            "desc": "Ohmic theorem verification, wiring safety codes, transformer testing, and circuit analysis."
+          },
+          {
+            "step": "Phase 2 · Sem 3–4",
+            "title": "AC/DC Machines & Switchgear",
+            "desc": "Synchronous alternators, induction motor controls, and high-voltage substation visits."
+          },
+          {
+            "step": "Phase 3 · Sem 5",
+            "title": "Industrial PLC & Automation",
+            "desc": "Ladder logic programming, SCADA interfaces, and industrial power drive commissioning."
+          },
+          {
+            "step": "Phase 4 · Sem 6",
+            "title": "Power Grid / MNC Commissioning",
+            "desc": "Substation engineering roles, L&T power contracts, and WBSEDCL career tracks."
+          }
+        ],
+        "roles": [
+          {
+            "company": "L&T Power",
+            "tag": "Power",
+            "tagClass": "nhit-tag--power",
+            "title": "Substation Commissioning Trainee",
+            "scope": "132kV/33kV substation layout, circuit breaker timing & relay coordination.",
+            "salary": "₹3.40 – ₹4.50 LPA"
+          },
+          {
+            "company": "Schneider Electric",
+            "tag": "Auto",
+            "tagClass": "nhit-tag--tech",
+            "title": "PLC / Automation Technician",
+            "scope": "Variable frequency drives (VFD), panel board wiring & energy audit telemetry.",
+            "salary": "₹3.10 – ₹3.80 LPA"
+          },
+          {
+            "company": "TIL India",
+            "tag": "Infra",
+            "tagClass": "nhit-tag--infra",
+            "title": "Heavy Crane Electrical Specialist",
+            "scope": "Electro-hydraulic mobile crane wiring, motor control diagnostics & PLCs.",
+            "salary": "₹2.90 – ₹3.60 LPA"
+          },
+          {
+            "company": "Tata Power",
+            "tag": "Power",
+            "tagClass": "nhit-tag--power",
+            "title": "Solar & Renewable Grid Trainee",
+            "scope": "Inverter array maintenance, solar PV string monitoring & SCADA supervision.",
+            "salary": "₹3.00 – ₹3.75 LPA"
+          }
+        ]
+      },
+      {
+        "id": "cst",
+        "tabLabel": "Comp. Science (CST)",
+        "tabTag": "₹4.80L Max",
+        "title": "Computer Science & Technology (CST)",
+        "icon": "💻",
+        "desc": "Full-Stack Development, Cloud Systems, Database Architecture & DevOps",
+        "stats": {
+          "highest": 4.8,
+          "avg": 2.85,
+          "rate": 92,
+          "recruiters": 38
+        },
+        "milestones": [
+          {
+            "step": "Phase 1 · Sem 1–2",
+            "title": "Algorithms, C & Web Tech",
+            "desc": "Data structures in C, relational SQL queries, responsive HTML5/CSS, and Linux CLI."
+          },
+          {
+            "step": "Phase 2 · Sem 3–4",
+            "title": "OOP, Python & Networking",
+            "desc": "Java & Python programming, OSI stack packet inspection, and web application projects."
+          },
+          {
+            "step": "Phase 3 · Sem 5",
+            "title": "Full-Stack Frameworks & Git",
+            "desc": "Node.js/React architectures, cloud deployment, and technical coding interview rounds."
+          },
+          {
+            "step": "Phase 4 · Sem 6",
+            "title": "IT MNC Onboarding / B.Tech",
+            "desc": "Direct placements in tech services, QA automation, and lateral entry into CSE B.Tech."
+          }
+        ],
+        "roles": [
+          {
+            "company": "HCL Technologies",
+            "tag": "Tech",
+            "tagClass": "nhit-tag--tech",
+            "title": "Junior Software Engineer",
+            "scope": "Enterprise backend APIs, SQL optimization, and automated continuous test pipelines.",
+            "salary": "₹3.20 – ₹4.80 LPA"
+          },
+          {
+            "company": "Wipro Technologies",
+            "tag": "Tech",
+            "tagClass": "nhit-tag--tech",
+            "title": "Cloud Infrastructure Associate",
+            "scope": "Linux system administration, virtual machine provisioning & network telemetry.",
+            "salary": "₹3.00 – ₹4.00 LPA"
+          },
+          {
+            "company": "TCS iON Partner",
+            "tag": "Tech",
+            "tagClass": "nhit-tag--tech",
+            "title": "QA & Test Automation Trainee",
+            "scope": "Automated test suite maintenance, regression test runs & API validation.",
+            "salary": "₹2.80 – ₹3.60 LPA"
+          },
+          {
+            "company": "Capgemini",
+            "tag": "Tech",
+            "tagClass": "nhit-tag--tech",
+            "title": "Application Development Intern",
+            "scope": "Frontend component library development, bug remediation & Git collaboration.",
+            "salary": "₹3.00 – ₹4.20 LPA"
+          }
+        ]
+      },
+      {
+        "id": "ce",
+        "tabLabel": "Civil (CE)",
+        "tabTag": "Infra Hub",
+        "title": "Civil Engineering (CE)",
+        "icon": "🏗️",
+        "desc": "Structural Engineering, Total Station Surveying, Concrete Technology & CAD",
+        "stats": {
+          "highest": 3.9,
+          "avg": 2.4,
+          "rate": 84.6,
+          "recruiters": 32
+        },
+        "milestones": [
+          {
+            "step": "Phase 1 · Sem 1–2",
+            "title": "Surveying & Building Materials",
+            "desc": "Levelling, theodolite traverse, chain surveying, brickwork & cement testing standards."
+          },
+          {
+            "step": "Phase 2 · Sem 3–4",
+            "title": "Total Station & RCC Design",
+            "desc": "Digital Total Station surveying, reinforced concrete beams, and AutoCAD civil drafting."
+          },
+          {
+            "step": "Phase 3 · Sem 5",
+            "title": "Highway & Soil Mechanics",
+            "desc": "Soil compaction, California Bearing Ratio (CBR), estimation, costing & tender specs."
+          },
+          {
+            "step": "Phase 4 · Sem 6",
+            "title": "Mega Infrastructure Projects",
+            "desc": "Site execution supervisor roles with L&T, Afcons, Shapoorji, and state PWD contractors."
+          }
+        ],
+        "roles": [
+          {
+            "company": "L&T Construction",
+            "tag": "Infra",
+            "tagClass": "nhit-tag--infra",
+            "title": "Site Execution Trainee",
+            "scope": "Reinforced concrete foundation casting, rebar checking & safety compliance on site.",
+            "salary": "₹3.00 – ₹3.90 LPA"
+          },
+          {
+            "company": "Simplex Infrastructures",
+            "tag": "Infra",
+            "tagClass": "nhit-tag--infra",
+            "title": "Total Station Surveyor",
+            "scope": "High-precision coordinate setting, bridge pier alignment & digital elevation mapping.",
+            "salary": "₹2.70 – ₹3.40 LPA"
+          },
+          {
+            "company": "Shapoorji Pallonji",
+            "tag": "Infra",
+            "tagClass": "nhit-tag--infra",
+            "title": "Quality & Material Inspector",
+            "scope": "Cube compressive strength testing, slump cone tests & material register logging.",
+            "salary": "₹2.80 – ₹3.50 LPA"
+          },
+          {
+            "company": "Afcons Infrastructure",
+            "tag": "Infra",
+            "tagClass": "nhit-tag--infra",
+            "title": "Junior Structural Drafter",
+            "scope": "AutoCAD civil detailing, bar bending schedules (BBS) & structural revisions.",
+            "salary": "₹2.50 – ₹3.20 LPA"
+          }
+        ]
+      },
+      {
+        "id": "etce",
+        "tabLabel": "Electronics (ETCE)",
+        "tabTag": "IoT / 5G",
+        "title": "Electronics & Telecomm (ETCE)",
+        "icon": "📡",
+        "desc": "Embedded Systems, Microcontrollers, VLSI, Optical Fibres & 5G Telecommunications",
+        "stats": {
+          "highest": 4.3,
+          "avg": 2.5,
+          "rate": 87.8,
+          "recruiters": 30
+        },
+        "milestones": [
+          {
+            "step": "Phase 1 · Sem 1–2",
+            "title": "Semiconductors & Digital Logic",
+            "desc": "Diode circuits, BJT/FET biasing, logic gates, Boolean minimization, and oscilloscope labs."
+          },
+          {
+            "step": "Phase 2 · Sem 3–4",
+            "title": "Microprocessors & Communication",
+            "desc": "8051/ARM programming, AM/FM modulation, fiber optic splicing, and antenna parameters."
+          },
+          {
+            "step": "Phase 3 · Sem 5",
+            "title": "Embedded C, IoT & PCB Design",
+            "desc": "Sensors interfacing, Arduino/ESP32 firmware, Eagle PCB layout, and telecom testing."
+          },
+          {
+            "step": "Phase 4 · Sem 6",
+            "title": "Telecom & Hardware MNC Drives",
+            "desc": "Telecom NOC engineering, consumer electronics testing, and lateral B.Tech entry."
+          }
+        ],
+        "roles": [
+          {
+            "company": "Dixon Technologies",
+            "tag": "Tech",
+            "tagClass": "nhit-tag--tech",
+            "title": "SMT & Hardware Testing Tech",
+            "scope": "Surface-mount technology (SMT) inspection, automated PCB in-circuit testing.",
+            "salary": "₹3.10 – ₹4.30 LPA"
+          },
+          {
+            "company": "Ericsson India",
+            "tag": "Tech",
+            "tagClass": "nhit-tag--tech",
+            "title": "Telecom Field Operations Trainee",
+            "scope": "5G base transceiver station (BTS) verification, microwave links & spectrum checks.",
+            "salary": "₹3.00 – ₹3.80 LPA"
+          },
+          {
+            "company": "Havells India",
+            "tag": "Power",
+            "tagClass": "nhit-tag--power",
+            "title": "Electronic Switchgear Inspector",
+            "scope": "Solid-state relay testing, surge suppression circuits & reliability qualification.",
+            "salary": "₹2.80 – ₹3.50 LPA"
+          },
+          {
+            "company": "Schneider Electric",
+            "tag": "Tech",
+            "tagClass": "nhit-tag--tech",
+            "title": "Smart Metering Systems Tech",
+            "scope": "Digital power metering telemetry, RS-485 Modbus calibration & IoT interfaces.",
+            "salary": "₹3.00 – ₹3.70 LPA"
+          }
+        ]
+      },
+      {
+        "id": "ae",
+        "tabLabel": "Automobile (AE)",
+        "tabTag": "OEM Ties",
+        "title": "Automobile Engineering (AE)",
+        "icon": "🚗",
+        "desc": "Vehicle Dynamics, Powertrain Testing, Electric Vehicle (EV) Systems & Fleet Diagnostics",
+        "stats": {
+          "highest": 4.1,
+          "avg": 2.5,
+          "rate": 90,
+          "recruiters": 34
+        },
+        "milestones": [
+          {
+            "step": "Phase 1 · Sem 1–2",
+            "title": "Automotive Mechanics & CAD",
+            "desc": "Internal combustion engines, chassis layouts, suspension mechanics & 2D vehicle drafting."
+          },
+          {
+            "step": "Phase 2 · Sem 3–4",
+            "title": "Transmission & Fuel Systems",
+            "desc": "Multi-plate clutches, synchromesh gearboxes, CRDi injectors & summer plant internships."
+          },
+          {
+            "step": "Phase 3 · Sem 5",
+            "title": "EV Powertrain & OBD-II Diagnostics",
+            "desc": "Lithium-ion battery management (BMS), motor controllers, and computerized scan tools."
+          },
+          {
+            "step": "Phase 4 · Sem 6",
+            "title": "Auto OEM Campus Placements",
+            "desc": "Direct hiring by vehicle manufacturers, ancillaries, and specialized B.Tech programs."
+          }
+        ],
+        "roles": [
+          {
+            "company": "Force Motors",
+            "tag": "Auto",
+            "tagClass": "nhit-tag--auto",
+            "title": "Vehicle Assembly Line Supervisor",
+            "scope": "Chassis decking, axle alignment, brake bleeding & final rollout inspection.",
+            "salary": "₹3.20 – ₹4.10 LPA"
+          },
+          {
+            "company": "Magna Automotive",
+            "tag": "Auto",
+            "tagClass": "nhit-tag--auto",
+            "title": "Tier-1 Seating & Body Engineer",
+            "scope": "Automotive seat mechanism testing, laser welded subframes & crash compliance.",
+            "salary": "₹3.00 – ₹3.80 LPA"
+          },
+          {
+            "company": "Tata Motors",
+            "tag": "Auto",
+            "tagClass": "nhit-tag--auto",
+            "title": "Commercial Vehicle Assembly Tech",
+            "scope": "Heavy truck transmission assembly, air-brake circuit testing & dyno audit.",
+            "salary": "₹3.40 – ₹4.10 LPA"
+          },
+          {
+            "company": "Piaggio Vehicles",
+            "tag": "Auto",
+            "tagClass": "nhit-tag--auto",
+            "title": "3-Wheeler & EV Quality Specialist",
+            "scope": "Electric powertrain dyno evaluation, hub-motor diagnostics & battery testing.",
+            "salary": "₹2.90 – ₹3.60 LPA"
+          }
+        ]
+      }
+    ]
+  },
+  "careerJourney": {
+    "visible": true,
+    "kicker": "The Student Transformation",
+    "title": "From Aspiring Student to",
+    "titleEm": "Industry-Ready Engineer",
+    "sub": "Experience the transformative 3-year journey at NHIT Durgapur — where school-level curiosity turns into workshop mastery, professional grooming, and high-value industry careers.",
+    "ctaTitle": "Start Your Engineering Story at NHIT",
+    "ctaText": "Admissions open for Session 2026–27. Scholarships available for meritorious students across all 6 diploma engineering streams.",
+    "ctaBtn1Text": "Apply for Admission 2026",
+    "ctaBtn1Href": "/admissions",
+    "ctaBtn2Text": "Download Brochure",
+    "ctaBtn2Href": "https://nhit.in/wp-content/uploads/2024/06/Brochure-Final-2_compressed-1.pdf",
+    "stages": [
+      {
+        "id": 0,
+        "phase": "PHASE 01 / 06 • FOUNDATION",
+        "title": "The Aspiring School Student",
+        "desc": "You have just completed Class 10 with a spark of engineering curiosity. Rather than spending 2 years on rote memorization, NHIT offers a direct, practical gateway into technical education where foundational science meets hands-on discovery.",
+        "tag": "🎒 Age 15 • Class 10 Pass",
+        "pin": "🎒",
+        "accent": "#d90429",
+        "glow": "rgba(217, 4, 41, 0.28)",
+        "image": "/images/journey/stage-1-school.jpg",
+        "pills": [
+          {
+            "icon": "CheckCircle",
+            "text": "Direct Entry After 10th"
+          },
+          {
+            "icon": "Book",
+            "text": "Core Applied Sciences"
+          },
+          {
+            "icon": "Compass",
+            "text": "Career Counselling"
+          },
+          {
+            "icon": "Network",
+            "text": "6 Specialised Branches"
+          }
+        ],
+        "metric1": {
+          "label": "ELIGIBILITY PATH",
+          "value": "Class 10 / JEXPO"
+        },
+        "metric2": {
+          "label": "EARLY ADVANTAGE",
+          "value": "Hands-on at Age 15"
+        }
+      },
+      {
+        "id": 1,
+        "phase": "PHASE 02 / 06 • CAMPUS INDUCTION",
+        "title": "Welcome to NHIT Durgapur",
+        "desc": "Stepping into Eastern India’s premier polytechnic campus. Over 2,000 peers, 40+ state-of-the-art laboratories, a digital library, and dedicated faculty mentor groups welcome you into a vibrant, collaborative engineering community.",
+        "tag": "🏫 Day 01 • Campus Induction",
+        "pin": "🏫",
+        "accent": "#f77f00",
+        "glow": "rgba(247, 127, 0, 0.28)",
+        "image": "/images/journey/stage-2-fresher.jpg",
+        "pills": [
+          {
+            "icon": "Building",
+            "text": "Est. 2007 Legacy"
+          },
+          {
+            "icon": "Users",
+            "text": "2,000+ Student Community"
+          },
+          {
+            "icon": "Wifi",
+            "text": "High-Tech Wi-Fi Campus"
+          },
+          {
+            "icon": "IdCard",
+            "text": "1-on-1 Faculty Mentorship"
+          }
+        ],
+        "metric1": {
+          "label": "CAMPUS LABS",
+          "value": "40+ Advanced Setups"
+        },
+        "metric2": {
+          "label": "COMMUNITY",
+          "value": "18+ Years Excellence"
+        }
+      },
+      {
+        "id": 2,
+        "phase": "PHASE 03 / 06 • PRACTICAL RIGOR",
+        "title": "Hands-On Labs from Semester One",
+        "desc": "At NHIT, you don’t wait until final year to touch real machinery. From your very first semester, you work directly with CNC machines, automobile engine teardowns, electrical grids, civil surveying total stations, and programming compilers.",
+        "tag": "🔧 Sem 1-2 • 40+ Advanced Labs",
+        "pin": "🔧",
+        "accent": "#06d6a0",
+        "glow": "rgba(6, 214, 160, 0.28)",
+        "image": "/images/journey/stage-3-workshop.jpg",
+        "pills": [
+          {
+            "icon": "Cog",
+            "text": "CNC Machining & Turning"
+          },
+          {
+            "icon": "Cpu",
+            "text": "Circuit Simulation"
+          },
+          {
+            "icon": "Car",
+            "text": "Automobile Rig Testing"
+          },
+          {
+            "icon": "Code",
+            "text": "Full-Stack Programming"
+          }
+        ],
+        "metric1": {
+          "label": "PRACTICAL RATIO",
+          "value": "65% Lab & Workshop"
+        },
+        "metric2": {
+          "label": "SAFETY CERTIFIED",
+          "value": "Industrial Standards"
+        }
+      },
+      {
+        "id": 3,
+        "phase": "PHASE 04 / 06 • PROFESSIONAL GROOMING",
+        "title": "Rigorous Soft Skills & Personality Prep",
+        "desc": "Technical skills alone won’t win the boardroom. NHIT’s dedicated Training & Placement Cell conducts structured communication training, mock group discussions, personal interview drills, and corporate etiquette bootcamps.",
+        "tag": "🎯 Sem 3-4 • T&P Cell Grooming",
+        "pin": "🎯",
+        "accent": "#118ab2",
+        "glow": "rgba(17, 138, 178, 0.28)",
+        "image": "/images/journey/stage-4-softskills.jpg",
+        "pills": [
+          {
+            "icon": "MessageSquare",
+            "text": "Spoken English & GDs"
+          },
+          {
+            "icon": "UserCheck",
+            "text": "Corporate Etiquette"
+          },
+          {
+            "icon": "FileText",
+            "text": "ATS-Optimised Resume"
+          },
+          {
+            "icon": "Video",
+            "text": "Mock Video Interviews"
+          }
+        ],
+        "metric1": {
+          "label": "MOCK ROUNDS",
+          "value": "12+ Rigorous Sessions"
+        },
+        "metric2": {
+          "label": "GROOMING CELL",
+          "value": "Full-Time HR Trainers"
+        }
+      },
+      {
+        "id": 4,
+        "phase": "PHASE 05 / 06 • INDUSTRY EXPOSURE",
+        "title": "Industry-Ready & Competitive Exams",
+        "desc": "Real-world exposure via institutional MoUs with CSIR-CMERI Durgapur, National Entrepreneurship Network (NEN), and technology tie-ups with HCL. VOCLET coaching for B.Tech lateral entry alongside live industrial internships.",
+        "tag": "🏭 Sem 5 • MoUs & Internships",
+        "pin": "🏭",
+        "accent": "#8338ec",
+        "glow": "rgba(131, 56, 236, 0.28)",
+        "image": "/images/journey/stage-5-industry.jpg",
+        "pills": [
+          {
+            "icon": "Briefcase",
+            "text": "CSIR-CMERI Live Projects"
+          },
+          {
+            "icon": "Building",
+            "text": "HCL Technology Training"
+          },
+          {
+            "icon": "Award",
+            "text": "VOCLET / JELET Prep"
+          },
+          {
+            "icon": "Rocket",
+            "text": "Entrepreneurship Cell"
+          }
+        ],
+        "metric1": {
+          "label": "RESEARCH TIE-UP",
+          "value": "CSIR-CMERI Durgapur"
+        },
+        "metric2": {
+          "label": "TRAINING PARTNER",
+          "value": "HCL Technologies"
+        }
+      },
+      {
+        "id": 5,
+        "phase": "PHASE 06 / 06 • CONVOCATION & CAREER",
+        "title": "Placed Engineer & Future Leader",
+        "desc": "From an uncertain school-leaver to an empowered, certified diploma engineer. Holding an official offer letter or stepping into prestigious government engineering colleges through lateral entry — your transformation is complete.",
+        "tag": "🎓 Final Sem • Placed Engineer",
+        "pin": "🎓",
+        "accent": "#d90429",
+        "glow": "rgba(217, 4, 41, 0.32)",
+        "image": "/images/journey/stage-6-engineer.jpg",
+        "pills": [
+          {
+            "icon": "Award",
+            "text": "80–85% Placement Band"
+          },
+          {
+            "icon": "Briefcase",
+            "text": "L&T, John Deere, Tata"
+          },
+          {
+            "icon": "GraduationCap",
+            "text": "Direct 2nd Yr B.Tech"
+          },
+          {
+            "icon": "Users",
+            "text": "6,000+ Alumni Network"
+          }
+        ],
+        "metric1": {
+          "label": "PLACEMENT RECORD",
+          "value": "80–85% Consistent"
+        },
+        "metric2": {
+          "label": "TOP RECRUITERS",
+          "value": "50+ Global Brands"
+        }
+      }
+    ]
+  },
+  "testimonials": {
+    "visible": true,
+    "heading": "WHAT PEOPLE SAY",
+    "sub": "Voices of our alumni, industry recruiters, and parents reflecting 18+ years of technical excellence at NHIT Durgapur.",
+    "items": [
+      {
+        "name": "Debjit Ghosh",
+        "role": "Alumnus, Mechanical Engineering (Tata Motors)",
+        "image": "/images/campus-04.jpg",
+        "quote": "NHIT provided the ideal balance of workshop hands-on practice and rigorous theory. The state-of-the-art CNC lab made the campus interview process seamless."
+      },
+      {
+        "name": "Sneha Mukherjee",
+        "role": "Alumna, Computer Science & Technology",
+        "image": "/images/campus-05.jpg",
+        "quote": "The high-speed computing lab and faculty mentoring gave me the technical edge to excel in lateral entry B.Tech and subsequent software development career."
+      },
+      {
+        "name": "Subhash Mondal",
+        "role": "Parent of EE Diploma Graduate",
+        "image": "/images/campus-06.jpg",
+        "quote": "The academic discipline, anti-ragging security, and dedicated placement cell gave our family complete peace of mind. My son secured direct campus placement."
+      },
+      {
+        "name": "Rajesh Karmakar",
+        "role": "Alumnus, Automobile Engineering (Anand Group)",
+        "image": "/images/campus-07.jpg",
+        "quote": "Live vehicle chassis test benches and industry visit exposure at NHIT Durgapur prepared me with real manufacturing skills that auto giants demand."
+      }
+    ],
+    "kicker": "Voices Of NHIT"
+  },
+  "gallery": {
+    "visible": true,
+    "kicker": "Campus Life",
+    "title": "Inside the NHIT Campus",
+    "items": [
+      {
+        "src": "/images/hero-campus.jpg",
+        "alt": "NHIT campus main building",
+        "caption": "Main Block"
+      },
+      {
+        "src": "/images/hero-computers.jpg",
+        "alt": "Computer laboratory",
+        "caption": "Computer Lab"
+      },
+      {
+        "src": "/images/lab-automobile.jpg",
+        "alt": "Automobile engine laboratory",
+        "caption": "Engine Lab"
+      },
+      {
+        "src": "/images/lab-mechanical.jpg",
+        "alt": "Hydraulics laboratory",
+        "caption": "Hydraulics Lab"
+      },
+      {
+        "src": "/images/lab-electronics.jpg",
+        "alt": "Electronics laboratory session",
+        "caption": "Electronics Lab"
+      },
+      {
+        "src": "/images/about-survey.jpg",
+        "alt": "Surveying field practice",
+        "caption": "Survey Practice"
+      },
+      {
+        "src": "/images/hero-electronics.jpg",
+        "alt": "Electrical measurement lab",
+        "caption": "Measurement Lab"
+      },
+      {
+        "src": "/images/gallery-event.jpg",
+        "alt": "Farewell ceremony",
+        "caption": "Farewell 2024"
+      },
+      {
+        "src": "/images/campus-01.jpg",
+        "alt": "Campus life at NHIT",
+        "caption": "Campus Life"
+      },
+      {
+        "src": "/images/campus-03.jpg",
+        "alt": "Training session",
+        "caption": "Training Session"
+      },
+      {
+        "src": "/images/campus-11.jpg",
+        "alt": "Industry visit",
+        "caption": "Industry Visit"
+      },
+      {
+        "src": "/images/campus-21.jpg",
+        "alt": "Campus event",
+        "caption": "Campus Event"
+      }
+    ]
+  },
+  "leadForm": {
+    "visible": true,
+    "title": "Begin Your Journey at NHIT Durgapur",
+    "text": "Admissions are now open for Session 2026–2027. Speak directly with our Senior Academic Counselors for branch eligibility, JEXPO/MAKAUT counseling guidance, hostel availability, and merit scholarships.",
+    "perks": [
+      "Official 2026–27 Institute Prospectus & Fee Structure PDF",
+      "SVMCM, OASIS & Aikyashree Scholarship Assistance",
+      "One-on-One Counseling & Campus Lab Tour Invitation",
+      "Institute Bus Route Details (Asansol, Raniganj, Bardhaman)"
+    ],
+    "privacyNote": "🔒 Your contact information is kept strictly confidential according to NHIT institutional privacy guidelines.",
+    "submitText": "Register Admission Inquiry & Download Brochure ↘",
+    "successNote": "Thank you! Your inquiry has been registered. The admissions desk will reach out on WhatsApp.",
+    "brochureUrl": "https://nhit.in/wp-content/uploads/2024/06/Brochure-Final-2_compressed-1.pdf"
+  },
+  "ctaBand": {
+    "visible": true,
+    "title": "Ready To Build Your Career With NHIT?",
+    "note": "Admissions open for Session 2026–27. AICTE-approved diploma seats fill fast — talk to our admission cell today.",
+    "btn1Text": "Apply for 2026–27 Session",
+    "btn1Href": "/admissions",
+    "btn2Text": "Call +91 98005 71423",
+    "btn2Href": "tel:+919800571423"
+  },
+  "achievements": {
+    "visible": true,
+    "heading": "Achievements & Milestones",
+    "items": [
+      {
+        "icon": "fa-bolt",
+        "text": "NSPCL Durgapur × NHIT joint programme — September 2026"
+      },
+      {
+        "icon": "fa-trophy",
+        "text": "Students selected @ CMS IT Services as Associate Trainee Engineers — 2025"
+      },
+      {
+        "icon": "fa-building",
+        "text": "RDC Concrete (India) campus placement success — 2025"
+      },
+      {
+        "icon": "fa-industry",
+        "text": "Cummins India campus drive & selection list"
+      },
+      {
+        "icon": "fa-car",
+        "text": "SIGMA Engineered Solutions campus drive at NHIT"
+      },
+      {
+        "icon": "fa-snowflake-o",
+        "text": "Daikin India placements — HVAC careers"
+      },
+      {
+        "icon": "fa-check-circle",
+        "text": "18 of 19 eligible Automobile students placed — 2023 batch (94.7%)"
+      }
+    ]
+  },
+  "videoStrip": {
+    "visible": true,
+    "kicker": "Life At NHIT",
+    "title": "See The Campus In Motion",
+    "sub": "Real labs, real projects, real campus life — straight from the official NHIT YouTube channel.",
+    "videos": [
+      {
+        "youtubeId": "xcXh2vLC7VU",
+        "title": "Campus Life & Infrastructure",
+        "note": "Walk the NHIT campus — classrooms, labs and workshops"
+      },
+      {
+        "youtubeId": "Bu83389zeWU",
+        "title": "LED Assembly & Manufacturing Lab",
+        "note": "Electrical Engineering students build real LED products"
+      },
+      {
+        "youtubeId": "-_KILOcTx2k",
+        "title": "Smart Bridge Safety System",
+        "note": "ETCE final-year project — 2026 batch"
+      }
+    ],
+    "ctaText": "Watch more on YouTube",
+    "ctaHref": "https://www.youtube.com/@nhit_durgapur"
+  },
+  "placementBars": {
+    "visible": true,
+    "kicker": "Placement Record",
+    "title": "Branch-Wise Placement Percentage",
+    "sub": "Eligible students placed through the Training & Placement Cell — 2020–23 batch records.",
+    "bars": [
+      {
+        "label": "Automobile Engineering",
+        "pct": "94.7",
+        "show": true
+      },
+      {
+        "label": "Mechanical Engineering",
+        "pct": "92.6",
+        "show": true
+      },
+      {
+        "label": "ITI Electrician (NCVT)",
+        "pct": "80.6",
+        "show": true
+      },
+      {
+        "label": "Electrical Engineering",
+        "pct": "80.0",
+        "show": true
+      },
+      {
+        "label": "ITI Fitter (NCVT)",
+        "pct": "66.7",
+        "show": false
+      },
+      {
+        "label": "Electronics & Telecommunications",
+        "pct": "52.6",
+        "show": false
+      },
+      {
+        "label": "Civil Engineering",
+        "pct": "26.7",
+        "show": false
+      }
+    ],
+    "footnote": "* As recorded by the NHIT Training & Placement Cell (2020–23 batches). Branches can be switched on in the admin panel.",
+    "trust": [
+      {
+        "icon": "fa-flask",
+        "text": "MoU — CSIR-CMERI, Govt. of India"
+      },
+      {
+        "icon": "fa-certificate",
+        "text": "Life Member — Institution of Engineers (India)"
+      },
+      {
+        "icon": "fa-graduation-cap",
+        "text": "Member — ISTE, New Delhi"
+      },
+      {
+        "icon": "fa-book",
+        "text": "Institutional Member — British Council Library"
+      },
+      {
+        "icon": "fa-handshake-o",
+        "text": "MoU — National Entrepreneurship Network"
+      },
+      {
+        "icon": "fa-laptop",
+        "text": "Industry Tie-up — HCL"
+      }
+    ]
+  },
+  "socialWall": {
+    "visible": true,
+    "kicker": "Join The Community",
+    "title": "NHIT On Social Media",
+    "sub": "Campus updates, placement announcements and student life — follow the official pages.",
+    "cards": [
+      {
+        "icon": "fa-facebook",
+        "name": "Facebook",
+        "handle": "facebook.com/nhit.in",
+        "stat": "10K+ Followers",
+        "url": "https://www.facebook.com/nhit.in",
+        "note": "Placement news, event albums and reels from campus"
+      },
+      {
+        "icon": "fa-linkedin",
+        "name": "LinkedIn",
+        "handle": "The New Horizons Institute of Technology",
+        "stat": "2,696 Followers",
+        "url": "https://in.linkedin.com/school/the-new-horizons-institute-of-technology/",
+        "note": "Alumni careers and industry updates"
+      },
+      {
+        "icon": "fa-youtube-play",
+        "name": "YouTube",
+        "handle": "@nhit_durgapur",
+        "stat": "447 Subscribers · 26 Videos",
+        "url": "https://www.youtube.com/@nhit_durgapur",
+        "note": "Campus tours, lab demos and alumni podcasts"
+      }
+    ]
+  },
+  "alumniVoices": {
+    "visible": true,
+    "kicker": "Alumni Voices",
+    "title": "Hear It From NHIT Graduates",
+    "sub": "The official alumni podcast follows diploma engineers from NHIT classrooms to industry careers.",
+    "voices": [
+      {
+        "youtubeId": "uzoxE63xukI",
+        "name": "Alumni Podcast — EP 1",
+        "role": "Diploma Civil Engineer Career Journey",
+        "quote": "From NHIT classrooms to live construction sites — an honest look at the diploma-to-career path."
+      },
+      {
+        "youtubeId": "KBzRtl5-WfQ",
+        "name": "Deepayan Das — EP 2",
+        "role": "CAD & BIM Engineer Career Journey",
+        "quote": "How workshop-first training at NHIT grew into a modern CAD and BIM engineering career."
+      }
+    ]
+  }
+}

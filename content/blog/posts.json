@@ -1,0 +1,32 @@
+[
+  {
+    "id": 122,
+    "slug": "nhit-partnership-csir-cmeri-robotics",
+    "title": "NHIT Inks Strategic MoU with CSIR-CMERI for Advanced Robotics & Automation",
+    "date": "March 15, 2026",
+    "category": "R&D & MoUs",
+    "image": "/images/campus-auditorium.jpg",
+    "excerpt": "This milestone partnership enables polytechnic students across Computer Science, Electrical, and Mechanical disciplines to access joint research facilities, industrial automation benches, and specialized workshops on IoT and Mechatronics.",
+    "content": "The New Horizons Institute of Technology (NHIT) has formalized an advanced collaboration framework with the Central Mechanical Engineering Research Institute (CSIR-CMERI), Durgapur. This milestone partnership enables polytechnic students across Computer Science, Electrical, and Mechanical disciplines to access joint research facilities, industrial automation benches, and specialized workshops on IoT and Mechatronics.\n\nUnder this agreement, senior scientists and technical consultants from CSIR-CMERI will mentor NHIT final-year students on real-world industrial problem statements. Hands-on training modules will focus on CNC programming, sensor integration, and programmable logic controllers (PLCs), directly enhancing campus placement readiness."
+  },
+  {
+    "id": 123,
+    "slug": "placement-season-record-85-percent-selected",
+    "title": "Placement Season Milestone: Over 85% Eligible Diploma Engineers Placed",
+    "date": "April 02, 2026",
+    "category": "Placements",
+    "image": "/images/campus-cafeteria.jpg",
+    "excerpt": "Over 85% of eligible diploma candidates from Mechanical, Electrical, Civil, and CST departments have received confirmed employment offers and B.Tech lateral admissions with highest package touching ₹4.8 LPA.",
+    "content": "NHIT's Training & Placement Cell has announced record-breaking campus hiring figures for the current academic session. Over 85% of eligible diploma candidates from Mechanical, Electrical, Civil, and CST departments have received confirmed employment offers and B.Tech lateral admissions.\n\nProminent participating recruiters include Anand Group, Larsen & Toubro (L&T), Tata Motors, John Deere, JBM Group, and TIL India. The highest annual package touched ₹4.8 LPA, underscoring the strong industrial reputation of NHIT’s hands-on laboratory curriculum."
+  },
+  {
+    "id": 124,
+    "slug": "annual-project-expo-smart-iot-innovations",
+    "title": "Smart IoT & Green Energy: Highlights from the NHIT Annual Tech Expo",
+    "date": "April 20, 2026",
+    "category": "Campus Innovation",
+    "image": "/images/campus-library.jpg",
+    "excerpt": "Student innovators displayed over 40 working prototypes at the Annual Technical Symposium including automated agricultural solar monitoring and IoT grid management systems.",
+    "content": "Student innovators from across NHIT displayed over 40 working prototypes at the Annual Technical Symposium. Notable exhibits included an automated agricultural monitoring system powered by solar arrays, an ultrasonic obstacle-detection rover, and an IoT-based power grid load management system.\n\nJudges from industrial plants in the Durgapur-Asansol belt praised the student teams for their emphasis on practical engineering solutions and low-cost sustainable hardware implementations."
+  }
+]

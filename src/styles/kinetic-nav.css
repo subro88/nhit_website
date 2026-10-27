@@ -1,0 +1,185 @@
+/**
+ * NHIT EduLearn — Authentic getartcraft.com Kinetic Navigation CSS
+ * 1:1 Implementation of getartcraft.com Spatial Letter Morph & Ruler System
+ */
+
+:root {
+	--bg: #ffffff;
+	--ink-strong: #0f172a;
+	--accent-ink: var(--edu-primary);
+}
+
+/* ==========================================================================
+   Full Screen Fixed Overlays
+   ========================================================================== */
+.nhit-kinetic-overlay-blur {
+	pointer-events: none;
+	position: fixed;
+	inset: 0;
+	z-index: 39;
+}
+
+.nhit-kinetic-overlay-main {
+	pointer-events: none;
+	position: fixed;
+	inset: 0;
+	z-index: 40;
+	user-select: none;
+}
+
+/* Responsive display: only on desktop with fine pointer */
+@media (max-width: 1023px) {
+	.nhit-kinetic-overlay-blur,
+	.nhit-kinetic-overlay-main {
+		display: none !important;
+	}
+}
+
+/* ==========================================================================
+   Contrast Pools (Top & Bottom Frost Blur with Radial Mask)
+   ========================================================================== */
+.nhit-kinetic-pool {
+	position: absolute;
+	right: 0;
+	pointer-events: none;
+	backdrop-filter: blur(9px);
+	-webkit-backdrop-filter: blur(9px);
+	background-color: color-mix(in srgb, var(--bg) 80%, transparent);
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+
+.nhit-kinetic-pool--top {
+	top: 0;
+	mask-image: radial-gradient(100% 100% at 100% 0%, black 38%, rgba(0,0,0,0.82) 56%, rgba(0,0,0,0.48) 72%, rgba(0,0,0,0.2) 86%, rgba(0,0,0,0.05) 94%, transparent 97%);
+	-webkit-mask-image: radial-gradient(100% 100% at 100% 0%, black 38%, rgba(0,0,0,0.82) 56%, rgba(0,0,0,0.48) 72%, rgba(0,0,0,0.2) 86%, rgba(0,0,0,0.05) 94%, transparent 97%);
+}
+
+.nhit-kinetic-pool--bottom {
+	bottom: 0;
+	mask-image: radial-gradient(100% 100% at 100% 100%, black 38%, rgba(0,0,0,0.82) 56%, rgba(0,0,0,0.48) 72%, rgba(0,0,0,0.2) 86%, rgba(0,0,0,0.05) 94%, transparent 97%);
+	-webkit-mask-image: radial-gradient(100% 100% at 100% 100%, black 38%, rgba(0,0,0,0.82) 56%, rgba(0,0,0,0.48) 72%, rgba(0,0,0,0.2) 86%, rgba(0,0,0,0.05) 94%, transparent 97%);
+}
+
+/* ==========================================================================
+   Tactile Ruler Track (Rail width: 60px)
+   ========================================================================== */
+.nhit-kinetic-ruler {
+	position: absolute;
+	right: 0;
+	top: 12px;
+	bottom: 12px;
+	width: 60px;
+	pointer-events: auto;
+	cursor: pointer;
+	z-index: 41;
+}
+
+.nhit-kinetic-ruler__line {
+	position: absolute;
+	right: 29px;
+	top: 0;
+	bottom: 0;
+	width: 1px;
+	background: rgba(15, 23, 42, 0.16);
+}
+
+.nhit-kinetic-ruler__ticks {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+}
+
+.nhit-kinetic-ruler__tick {
+	position: absolute;
+	right: 29px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	transform: translateY(-50%);
+}
+
+.nhit-kinetic-ruler__tick-mark {
+	width: 8px;
+	height: 1px;
+	background: rgba(15, 23, 42, 0.25);
+}
+
+.nhit-kinetic-ruler__tick--major .nhit-kinetic-ruler__tick-mark {
+	width: 16px;
+	background: rgba(15, 23, 42, 0.45);
+}
+
+.nhit-kinetic-ruler__tick-label {
+	font-family: 'Roboto Condensed', 'Montserrat', monospace;
+	font-size: 9px;
+	font-weight: 700;
+	color: #64748b;
+	margin-right: 6px;
+	line-height: 1;
+	font-variant-numeric: tabular-nums;
+	letter-spacing: -0.02em;
+}
+
+/* Gliding Needle Thumb on Ruler */
+.nhit-kinetic-ruler__thumb {
+	position: absolute;
+	right: 20px;
+	transform: translateY(-50%);
+	pointer-events: none;
+	will-change: top;
+	z-index: 45;
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.nhit-kinetic-ruler__badge {
+	background: var(--accent-ink);
+	color: #ffffff;
+	font-family: 'Roboto Condensed', 'Montserrat', monospace;
+	font-size: 10px;
+	font-weight: 800;
+	padding: 2px 5px;
+	border-radius: 3px;
+	box-shadow: 0 2px 6px rgba(var(--edu-primary-rgb), 0.4);
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+.nhit-kinetic-ruler__pin {
+	width: 10px;
+	height: 2px;
+	background: var(--accent-ink);
+}
+
+/* ==========================================================================
+   Clickable Hit Areas & Kinetic Character Spans
+   ========================================================================== */
+.nhit-kinetic-hit {
+	pointer-events: auto;
+	position: absolute;
+	cursor: pointer;
+	z-index: 42;
+	border-radius: 4px;
+}
+
+.nhit-kinetic-hit:focus-visible {
+	outline: 2px solid var(--accent-ink);
+	outline-offset: 3px;
+}
+
+.nhit-kinetic-letter {
+	font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+	font-weight: 800;
+	font-size: 34px;
+	line-height: 1;
+	position: absolute;
+	top: 0;
+	left: 0;
+	white-space: pre;
+	pointer-events: none;
+	will-change: transform, opacity;
+	text-shadow: 0 0 4px var(--bg), 0 0 10px var(--bg);
+	transform-origin: center center;
+}
