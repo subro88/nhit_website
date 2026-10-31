@@ -1018,48 +1018,179 @@
    GALLERY
    -------------------------------------------------------------------------- */
 
-.edu-gallery { padding-block: clamp(4rem, 8vw, 6.5rem); background: var(--edu-cloud); }
-.edu-gallery__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
-@media (max-width: 900px) { .edu-gallery__grid { grid-template-columns: repeat(2, 1fr); } }
-
-.edu-gallery__item {
-  position: relative;
-  border-radius: var(--edu-radius-md, 12px);
-  overflow: hidden;
-  aspect-ratio: 4 / 3;
-  display: block;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: var(--edu-shadow-sm);
-  transition: box-shadow 0.35s var(--edu-ease), transform 0.35s var(--edu-ease);
+/* "Journal-style" 3D photo fan (matches the user's reference recording):
+   a curved coverflow deck — active photo front and center, the rest fanned
+   away in 3D perspective, sweeping through on navigate. Geometry is pure CSS
+   driven by per-card --i (signed slot) / --abs (distance) custom properties;
+   only transform/opacity animate. */
+.edu-gallery {
+  padding-block: clamp(4rem, 8vw, 6.5rem);
+  background:
+    radial-gradient(1100px 520px at 50% -12%, rgba(var(--edu-primary-rgb), 0.14), transparent 62%),
+    var(--edu-ink);
+  overflow: hidden; /* far fanned cards poke past the viewport — never scroll */
 }
-.edu-gallery__item:hover { box-shadow: var(--edu-shadow-lg); transform: translateY(-4px); }
-.edu-gallery__item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s var(--edu-ease); }
-.edu-gallery__item::after {
-  content: "";
+.edu-gallery .edu-sec-head__kicker { color: var(--edu-primary); }
+.edu-gallery .edu-sec-head__title { color: #fff; }
+.edu-gallery__hint {
+  color: #94a3b8;
+  font-size: 0.86rem;
+  margin: 0.7rem 0 0;
+}
+
+.edu-gallery__fan { position: relative; }
+
+.fan-stage {
+  --card-w: clamp(230px, 30vw, 430px);
+  --fan-x: calc(var(--card-w) * 0.46);   /* horizontal travel per slot   */
+  --fan-z: calc(var(--card-w) * -0.16);  /* depth push per |slot|        */
+  position: relative;
+  height: calc(var(--card-w) * 0.75 + 120px);
+  margin-top: clamp(1.6rem, 3.5vw, 2.6rem);
+  perspective: 1500px;
+  perspective-origin: 50% 42%;
+  touch-action: pan-y; /* horizontal drags captured, vertical scroll kept */
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+  border-radius: 24px;
+}
+.fan-stage:focus-visible { box-shadow: 0 0 0 3px rgba(var(--edu-primary-rgb), 0.55); }
+.fan-stage.is-dragging { cursor: grabbing; }
+
+.fan-card {
+  position: absolute;
+  top: calc(50% - var(--card-w) * 0.375);
+  left: 50%;
+  width: var(--card-w);
+  aspect-ratio: 4 / 3;
+  margin-left: calc(var(--card-w) / -2);
+  border-radius: 18px;
+  overflow: hidden;
+  background: #0b1120;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.65);
+  transform:
+    translateX(calc(var(--i) * var(--fan-x) + var(--drag-x, 0px)))
+    rotateY(calc(var(--i) * -30deg + var(--drag-ry, 0deg)))
+    translateZ(calc(var(--i) * var(--i) * var(--fan-z)));
+  opacity: calc(1 - var(--abs) * 0.22);
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
+  will-change: transform;
+}
+.fan-stage.is-dragging .fan-card { transition: none; }
+.fan-card.is-gone {
+  pointer-events: none;
+  /* fully faded cards stop compositing (visibility flips after the fade) */
+  visibility: hidden;
+  transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease, visibility 0s 0.55s;
+}
+.fan-card.is-active { box-shadow: 0 42px 80px -28px rgba(0, 0, 0, 0.8); }
+.fan-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+.fan-card__dim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(var(--edu-primary-rgb), 0.55));
-  opacity: 0;
-  transition: opacity 0.35s var(--edu-ease);
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.05), rgba(15, 23, 42, 0.6));
+  opacity: calc(var(--abs) * 0.22);
+  transition: opacity 0.5s ease;
+  pointer-events: none;
 }
-.edu-gallery__item:hover img { transform: scale(1.08); }
-.edu-gallery__item:hover::after { opacity: 1; }
-.edu-gallery__item figcaption {
+
+.fan-arrow {
   position: absolute;
-  left: 14px;
-  bottom: 10px;
-  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 60;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
   color: #fff;
-  font-family: var(--edu-cond);
-  font-weight: 700;
-  font-size: 0.85rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity 0.35s var(--edu-ease), transform 0.35s var(--edu-ease);
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease, border-color 0.25s ease;
 }
-.edu-gallery__item:hover figcaption { opacity: 1; transform: none; }
+.fan-arrow:hover { background: var(--edu-primary); border-color: var(--edu-primary); }
+.fan-arrow--prev { left: clamp(6px, 2.5vw, 34px); }
+.fan-arrow--next { right: clamp(6px, 2.5vw, 34px); }
+
+.fan-meta { text-align: center; margin-top: 1.4rem; }
+.fan-caption {
+  color: #fff;
+  font-family: var(--edu-heading, 'Montserrat', sans-serif);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 2.4vw, 1.7rem);
+  margin: 0;
+}
+.fan-counter {
+  color: #94a3b8;
+  font-family: var(--edu-cond, 'Roboto Condensed', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  margin: 0.45rem 0 0;
+}
+
+.fan-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 1.15rem;
+}
+.fan-dots { display: flex; align-items: center; gap: 7px; }
+.fan-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: width 0.3s var(--edu-ease, ease), background 0.3s ease;
+}
+.fan-dot.is-on { transform: scaleX(2.9); background: var(--edu-primary); }
+.fan-auto {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.06);
+  color: #e2e8f0;
+  font-family: var(--edu-cond, 'Roboto Condensed', sans-serif);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+.fan-auto:hover { background: var(--edu-primary); border-color: var(--edu-primary); color: #fff; }
+
+@media (max-width: 700px) {
+  .fan-stage { --card-w: clamp(190px, 60vw, 270px); height: calc(var(--card-w) * 0.75 + 96px); }
+  .fan-arrow { width: 38px; height: 38px; font-size: 18px; }
+  .fan-dot { width: 8px; height: 8px; }
+  .fan-dot.is-on { transform: scaleX(2.75); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fan-card,
+  .fan-card__dim { transition-duration: 0.01ms; }
+}
 
 /* --------------------------------------------------------------------------
    CTA BAND

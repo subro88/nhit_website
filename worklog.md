@@ -529,3 +529,20 @@ Work Log:
 Stage Summary:
 - Red contact card now deliberately straddles the seam between the page section and the footer (50/50, measured) on every page at tablet/desktop widths; mobile keeps the stacked card fully above the footer
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 26
+Agent: main (Z.ai)
+Task: Campus gallery — user uploaded a screen recording (Journal-style 3D photo fan, /upload/Screen Recording 2026-10-31 155657.mp4) and pasted the current edu-gallery HTML: "i want this section like uploaded video"
+
+Work Log:
+- Analyzed the 6s recording via frame extraction (2fps contact sheets): it shows a "Journal" photo viewer — all photos as cards in a curved 3D coverflow deck, active photo flat front-center, the rest fanned away with rotateY+translateZ perspective, cards sweeping through the center on navigate, dark navy backdrop, rounded corners, bottom round controls.
+- Rewrote src/components/home/CampusGallery.tsx as a client component implementing that deck (butter-smooth rules from the Journey rebuild): per-card geometry is pure CSS from --i (signed circular slot offset) and --abs vars; transform = translateX(calc(i*fan-x + drag)) rotateY(calc(i*-30deg + dragRy)) translateZ(calc(i*i*fan-z)); opacity = 1 - abs*0.22 (is-gone at abs>=5). React re-renders only on index change; drag writes --drag-x/--drag-ry on the stage via rAF-throttled refs (no state per pointermove); only transform/opacity animate. Features: prev/next glass arrows, click-a-side-card to bring it forward, pointer drag/swipe with snap-to-nearest-slot (touch-action: pan-y keeps vertical scroll), 12 dots + 01/12 counter + aria-live caption, Auto-Play 4.5s toggle (skips ticks when tab hidden / hovered / dragging), ArrowLeft/Right keys on the focused stage, prefers-reduced-motion support. Section restyled to the video's dark journal look (--edu-ink + primary radial glow, white heading).
+- Data unchanged: still renders gallery.items from homepage.json (CMS gallery editor keeps working).
+- Bug found by synthetic-event QA: endDrag read pendingDx which the applying rAF had already nulled -> shift always 0 and drags never committed. Fixed by tracking lastDx in the drag ref (pendingDx stays a pure rAF handoff).
+- Perf work: removed backdrop-filter from the arrows (backdrop re-blur over the animating deck), is-gone cards get visibility:hidden after the fade (fewer composited layers), dot "active" pill switched from width (layout) to transform: scaleX. FPS probe (headless, software rendering, no GPU): fan transition ~31-35 FPS vs Journey 61 in the same session; with card images hidden still ~35 -> cost is software-compositing 12 concurrent 3D layers (SwiftShader), not images/JS; transform/opacity-only + no layout work means real-GPU browsers composite this trivially (standard coverflow).
+- QA: desktop 1440 — fan matches the reference (center card flat, side cards receding, ~4 visible per side); arrows advance (07->08), side-card click 01->02->01, drag left 01->02, dot #9 jumps to "Campus Life" with dot active, Pause/Auto-Play toggle works, autoplay advanced 01->04 unattended at the 4.5s cadence; mobile 390x844 — 234px card, dots+toggle fit, no horizontal overflow; no page errors; bunx tsc --noEmit clean. Screenshots: download/fan-desktop-1.jpg (caught mid-sweep), fan-controls.jpg, fan-mobile.jpg
+
+Stage Summary:
+- "Inside the NHIT Campus" is now the Journal-style 3D photo fan from the user's video: curved coverflow deck, sweep transitions, drag/swipe/arrows/dots/keyboard/autoplay, dark cinematic section — still 100% CMS-driven
+- Committed locally, NOT pushed (waiting for user "push")
