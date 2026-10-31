@@ -433,3 +433,19 @@ Work Log:
 Stage Summary:
 - Faculty carousel shows exactly 3 cards on desktop (2 tablet / 1 mobile) and auto-scrolls smoothly one card every 4s, loops, pauses on hover/touch
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 20
+Agent: main (Z.ai)
+Task: Events + Projects sections -> shared carousel (senior-dev suggestion approved by user: "ok do it")
+
+Work Log:
+- User asked how both sections should behave when more cards are added later. Recommendation (accepted): same pattern as faculty carousel — 3 visible desktop / 2 tablet / 1 mobile, smooth auto-scroll, pause on hover/touch. Old code was a fixed md:grid-cols-3 grid that only looks right with 3/6/9 cards.
+- Extracted Task 19 carousel logic into shared client component src/components/department/CardCarousel.tsx (items: ReactNode[], autoScrollMs, label; ref-driven interval, per-view clamp via live DOM step width, loop, hover pause, 6s resume after touch/wheel, skips hidden tab + prefers-reduced-motion; nav hidden when <=1 card).
+- DepartmentEvents rebuilt on CardCarousel (autoScrollMs 4000); DepartmentProjects rebuilt (6000ms — visitors study projects longer); card markup unchanged, roots +h-full; images sizes attr updated to match responsive widths.
+- DepartmentFacultyRoster refactored to reuse CardCarousel (DRY — one tested implementation powers faculty/events/projects); header kept per-section, FacultyCard extracted.
+- QA: bunx tsc clean; page 200; 1440px => all 3 sections trackW 1216 / cardW 389 / 3 fully visible; simulated CMS growth by temporarily doubling CS data to 6+6: events stepped 413px every 4s (0->413->827->1240->loop 0), projects every 6s, counters synced (02/06, 04/06); mobile 390 => 1 fully visible both sections; 0 page errors; test data reverted byte-identical (no git diff). Screenshots download/events-carousel-desktop.jpg, download/projects-carousel-desktop.jpg.
+
+Stage Summary:
+- Events + Projects + Faculty all share one carousel: adding 1 or 20 cards later never breaks layout; department page has one consistent card interaction pattern
+- Committed locally, NOT pushed (waiting for user "push")

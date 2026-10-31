@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { DepartmentEvent } from '@/data/departmentsData';
 import { Calendar, ArrowRight } from 'lucide-react';
+import CardCarousel from './CardCarousel';
 
 interface Props {
   events: DepartmentEvent[];
@@ -16,8 +17,8 @@ export default function DepartmentEvents({ events, accentHex, deptCode }: Props)
   return (
     <section className="space-y-6">
       <div className="text-center max-w-2xl mx-auto space-y-2">
-        <span 
-          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider"
+        <span
+          className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider"
           style={{
             backgroundColor: `${accentHex}15`,
             color: accentHex,
@@ -33,11 +34,13 @@ export default function DepartmentEvents({ events, accentHex, deptCode }: Props)
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {events.map((event, idx) => (
+      <CardCarousel
+        label="departmental events"
+        autoScrollMs={4000}
+        items={events.map((event, idx) => (
           <div
             key={idx}
-            className="group bg-white rounded-2xl border border-slate-200/90 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col justify-between"
+            className="group bg-white rounded-2xl border border-slate-200/90 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col justify-between h-full"
           >
             <div>
               {/* Event Image & Badge */}
@@ -47,10 +50,10 @@ export default function DepartmentEvents({ events, accentHex, deptCode }: Props)
                   alt={event.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
-                
+
                 {/* Date Badge */}
                 <div className="absolute bottom-3 left-3">
                   <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-bold bg-white text-slate-900 shadow-sm">
@@ -62,7 +65,7 @@ export default function DepartmentEvents({ events, accentHex, deptCode }: Props)
                 {/* Event Type Badge */}
                 {event.type && (
                   <div className="absolute top-3 right-3">
-                    <span 
+                    <span
                       className="px-2.5 py-0.5 rounded text-[10px] font-extrabold uppercase tracking-wider text-white shadow-sm"
                       style={{ backgroundColor: accentHex }}
                     >
@@ -96,7 +99,7 @@ export default function DepartmentEvents({ events, accentHex, deptCode }: Props)
             </div>
           </div>
         ))}
-      </div>
+      />
     </section>
   );
 }

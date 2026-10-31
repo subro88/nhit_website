@@ -2,7 +2,8 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { DepartmentProject } from '@/data/departmentsData';
-import { Lightbulb, ArrowRight, Layers } from 'lucide-react';
+import { Lightbulb, ArrowRight } from 'lucide-react';
+import CardCarousel from './CardCarousel';
 
 interface Props {
   projects: DepartmentProject[];
@@ -16,8 +17,8 @@ export default function DepartmentProjects({ projects, accentHex, deptCode }: Pr
   return (
     <section className="space-y-6">
       <div className="text-center max-w-2xl mx-auto space-y-2">
-        <span 
-          className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider"
+        <span
+          className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider"
           style={{
             backgroundColor: `${accentHex}15`,
             color: accentHex,
@@ -33,11 +34,13 @@ export default function DepartmentProjects({ projects, accentHex, deptCode }: Pr
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {projects.map((proj, idx) => (
+      <CardCarousel
+        label="showcase projects"
+        autoScrollMs={6000}
+        items={projects.map((proj, idx) => (
           <div
             key={idx}
-            className="group bg-white rounded-2xl border border-slate-200/90 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col justify-between"
+            className="group bg-white rounded-2xl border border-slate-200/90 shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col justify-between h-full"
           >
             <div>
               {/* Project Image & Capstone Badge */}
@@ -47,10 +50,10 @@ export default function DepartmentProjects({ projects, accentHex, deptCode }: Pr
                   alt={proj.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none" />
-                
+
                 {/* Capstone Badge */}
                 <div className="absolute top-3 left-3">
                   <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase tracking-wider bg-slate-900/85 text-white border border-white/20 backdrop-blur-sm shadow-sm">
@@ -66,7 +69,7 @@ export default function DepartmentProjects({ projects, accentHex, deptCode }: Pr
                   <span className="text-[11px] font-mono font-semibold text-slate-600 block">
                     {proj.team}
                   </span>
-                  <span 
+                  <span
                     className="inline-block text-[10px] font-mono font-bold px-2 py-0.5 rounded text-white"
                     style={{ backgroundColor: accentHex }}
                   >
@@ -97,7 +100,7 @@ export default function DepartmentProjects({ projects, accentHex, deptCode }: Pr
             </div>
           </div>
         ))}
-      </div>
+      />
     </section>
   );
 }
