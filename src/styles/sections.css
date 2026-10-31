@@ -3018,7 +3018,7 @@
   color: #a0a0a0;
   position: relative;
   font-family: var(--edu-font, 'Montserrat', sans-serif);
-  padding-top: 80px;
+  padding-top: 48px;
   overflow: hidden;
 }
 
@@ -3059,7 +3059,7 @@
   background: var(--edu-primary);
   padding: 35px 20px;
   border-radius: 8px;
-  margin-top: -125px;
+  margin-top: 0; /* sits fully inside the footer — no pull-up over the previous section */
   position: relative;
   z-index: 20;
   box-shadow: 0 14px 35px rgba(0, 0, 0, 0.28);
@@ -3075,7 +3075,7 @@
 }
 @media (max-width: 768px) {
   .footer-contact-desc {
-    margin-top: -65px;
+    margin-top: 0;
   }
   .footer-contact-desc .col-md-4 {
     flex: 0 0 100%;

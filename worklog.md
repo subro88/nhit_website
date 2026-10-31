@@ -500,3 +500,17 @@ Work Log:
 Stage Summary:
 - Journey scroll animation rebuilt: sticky CSS pinning + rAF engine + transform-only progress + preloaded cross-fade images = 61 FPS measured (was visibly janky), React renders cut from ~hundreds to max 6 per pass, pin no longer hides content behind the header, mobile no longer cuts 259px of content, exit CTA now actually visible, autoplay polite (pauses on interaction, respects reduced motion)
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 24
+Agent: main (Z.ai)
+Task: Footer contact card overlay — user pasted the .footer-contact-desc HTML: "this section hase overlay issue with previous section"
+
+Work Log:
+- Diagnosis: .footer-contact-desc had margin-top: -125px (desktop) / -65px (mobile) with the footer at padding-top: 80px — the edu theme's "floating contact card" design that deliberately pulls the red card 45px up over the bottom of the section above the footer (CtaBand "Ready To Build Your Career With NHIT?" on the home page). Measured across 1440/1200/1024/768/390 and on 7 pages (about, placements, admissions, contact, student-life, message-from-principal, our-infrastructure): the card always intruded 45px into the previous section's bottom padding on desktop; on mobile it landed flush. User considers the overlap a bug.
+- Fix in src/styles/sections.css: .footer-contact-desc margin-top -125px -> 0 (and mobile -65px -> 0) so the card sits fully inside the footer; footer padding-top 80px -> 48px to rebalance the space the pull-up used to occupy. No markup change.
+- QA: home @1440 — card top is 48px BELOW the footer top edge (cardInsideFooter=true), CtaBand banner fully visible with clear white space below, junction screenshot clean (download/footer-overlay-fixed2.jpg); /about and mobile 390x844 both cardInsideFooter=true; no page errors. Applied globally so every page's footer junction is consistent.
+
+Stage Summary:
+- Footer contact card no longer overlaps the section above the footer on any page; footer spacing rebalanced
+- Committed locally, NOT pushed (waiting for user "push")
