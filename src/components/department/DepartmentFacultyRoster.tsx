@@ -7,10 +7,14 @@ import { UserCheck, Award, Clock, Phone, Mail, GraduationCap, ChevronLeft, Chevr
 interface FacultyMember {
   name: string;
   role?: string;
+  designation?: string;
   desig?: string;
+  qualification?: string;
   qual?: string;
+  experience?: string;
   exp?: string;
   spec?: string;
+  avatar?: string;
   img?: string;
   photo?: string;
   email?: string;
@@ -124,10 +128,17 @@ export default function DepartmentFacultyRoster({ faculty, accentHex }: Props) {
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {faculty.map((f, idx) => {
-            const photo = f.img || f.photo || '/images/faculty/nhitfacutyimages0820240002.jpg';
-            const photoUrl = photo.startsWith('http') || photo.startsWith('/') 
-              ? photo 
-              : `/images/faculty/${photo}`;
+            const photo = f.avatar || f.img || f.photo || '';
+            const photoUrl = photo
+              ? photo.startsWith('http') || photo.startsWith('/')
+                ? photo
+                : `/images/faculty/${photo}`
+              : '';
+            const initials = f.name
+              .split(/\s+/)
+              .slice(0, 2)
+              .map((w) => w[0]?.toUpperCase() ?? '')
+              .join('');
 
             return (
               <div
@@ -146,13 +157,23 @@ export default function DepartmentFacultyRoster({ faculty, accentHex }: Props) {
                         boxShadow: `0 0 20px -3px ${accentHex}30`,
                       }}
                     >
-                      <Image
-                        src={photoUrl}
-                        alt={f.name}
-                        fill
-                        className="object-cover"
-                        sizes="160px"
-                      />
+                      {photoUrl ? (
+                        <Image
+                          src={photoUrl}
+                          alt={f.name}
+                          fill
+                          className="object-cover"
+                          sizes="160px"
+                        />
+                      ) : (
+                        <div
+                          className="w-full h-full flex items-center justify-center bg-slate-100 text-4xl font-extrabold tracking-wide"
+                          style={{ color: accentHex }}
+                          aria-hidden="true"
+                        >
+                          {initials}
+                        </div>
+                      )}
                     </div>
 
                     {/* Faculty Name */}
@@ -164,18 +185,18 @@ export default function DepartmentFacultyRoster({ faculty, accentHex }: Props) {
                     <div className="w-full space-y-1.5 py-3 border-y border-slate-100 text-xs text-slate-600">
                       <div className="flex items-center justify-center gap-1.5 font-bold text-slate-800">
                         <UserCheck className="w-3.5 h-3.5 text-[color:var(--edu-primary)]" />
-                        <span>{f.desig || f.role || 'Lecturer'}</span>
+                        <span>{f.designation || f.desig || f.role || 'Lecturer'}</span>
                       </div>
-                      {f.qual && (
+                      {(f.qualification || f.qual) && (
                         <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-600">
                           <GraduationCap className="w-3.5 h-3.5 text-slate-600" />
-                          <span>{f.qual}</span>
+                          <span>{f.qualification || f.qual}</span>
                         </div>
                       )}
-                      {f.exp && (
+                      {(f.experience || f.exp) && (
                         <div className="flex items-center justify-center gap-1.5 text-[11px] text-slate-600 font-medium">
                           <Clock className="w-3.5 h-3.5 text-slate-600" />
-                          <span>{f.exp}</span>
+                          <span>{f.experience || f.exp}</span>
                         </div>
                       )}
                     </div>

@@ -94,7 +94,7 @@
     "hod": {
       "name": "Shohini Das",
       "desig": "Department In-Charge & Lecturer",
-      "img": "/images/faculty/nhitfacutyimages0820240068.jpg",
+      "img": "/images/faculty/shohini-das.jpg",
       "message": "Computing is the sole engineering discipline where you can architect, build, and deploy an enterprise solution directly from your terminal. At NHIT, our mission is to build robust algorithmic foundations, clean engineering practices, and fearless problem-solving abilities so that our diploma engineers excel in modern tech ecosystems and elite B.Tech lateral entry programs."
     },
     "labs": [
@@ -433,7 +433,7 @@
     "hod": {
       "name": "Pallab Naskar",
       "desig": "Head of Department & Lecturer",
-      "img": "/images/faculty/nhitfacutyimages0820240031.jpg",
+      "img": "/images/faculty/pallab-naskar.jpg",
       "message": "Mechanical Engineering remains the evergreen cornerstone of industrial civilization. At NHIT, our objective is to instill analytical rigor, digital prototyping capability, and fearless shop-floor mastery in every aspiring diploma engineer."
     },
     "labs": [
@@ -760,7 +760,7 @@
     "hod": {
       "name": "Sudeshna Mukherjee",
       "desig": "Head of Department & Lecturer",
-      "img": "/images/faculty/nhitfacutyimages0820240019.jpg",
+      "img": "/images/faculty/sudeshna-mukherjee.jpg",
       "message": "From heavy power transmission grids to modern rooftop solar microgrids and industrial variable frequency drives, the world runs on electrical energy. At NHIT, we combine robust electrical machine laboratory work with advanced protection relays, transmission simulators, and solar technology to shape competent, safety-conscious electrical engineers."
     },
     "labs": [
@@ -1089,7 +1089,7 @@
     "hod": {
       "name": "Partha De",
       "desig": "Head of Department & Lecturer",
-      "img": "/images/faculty/nhitfacutyimages0820240037.jpg",
+      "img": "/images/faculty/partha-de.jpg",
       "message": "Civil engineers leave their permanent signature upon civilization. Our department grounds students in both rigorous structural theory and authentic field practice—from precision digital Total Station surveys to automated concrete mix testing and computerized CAD drafting. We prepare site-ready engineers with uncompromising safety ethics."
     },
     "labs": [
@@ -1413,9 +1413,9 @@
     ],
     "narrative": "The Department of Electronics & Telecommunication Engineering (ETCE) at NHIT Durgapur sits at the nexus of modern digital connectivity, 5G cellular infrastructure, embedded IoT microcontrollers, and precision electronic hardware. In our advanced laboratories, students work with 100MHz Digital Storage Oscilloscopes (DSOs), microwave Klystron benches, optical fiber fusion splicers, and ARM Cortex embedded development boards. Students gain complete end-to-end fluency—from laying out multi-layer PCBs in KiCad to deploying cloud-connected IoT edge nodes.",
     "hod": {
-      "name": "Arunangshu Chakraborty",
+      "name": "Arnab Mukhopadhyay",
       "desig": "Head of Department & Lecturer",
-      "img": "/images/faculty/arunangshu-chakraborty.jpg",
+      "img": "/images/faculty/arnab-mukhopadhyay.jpg",
       "message": "From 5G cellular networks and satellite transceivers to autonomous microcontrollers and wearable medical electronics, modern society is powered by telecommunication and hardware. At NHIT, we train students with hands-on RF test benches, optical fiber splicing, and embedded microcontrollers to create visionary electronics engineers."
     },
     "labs": [
@@ -1742,7 +1742,7 @@
     "hod": {
       "name": "Pallab Naskar",
       "desig": "In-Charge & Head of Department",
-      "img": "/images/faculty/nhitfacutyimages0820240031.jpg",
+      "img": "/images/faculty/pallab-naskar.jpg",
       "message": "Automobiles represent the ultimate synthesis of mechanical design, thermal dynamics, and cutting-edge electronic control. At NHIT, our students get grease on their hands in real engine bays, learn ECU computerized diagnostics, and master electric vehicle battery architecture to power the future of transportation."
     },
     "labs": [

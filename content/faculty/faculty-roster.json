@@ -103,7 +103,7 @@
     "name": "Ritam Bauri",
     "slug": "ritam-bauri",
     "designation": "Sr. Lecturer",
-    "qualification": "Master of Engineering (CSE)",
+    "qualification": "Masters of Engineering (CSE)",
     "experience": "2 yrs",
     "department": "computer-science-technology",
     "order": 2,
@@ -316,7 +316,7 @@
     "experience": "1 yr",
     "department": "computer-science-technology",
     "order": 6,
-    "avatar": "/images/faculty/saheli-shyam.jpg"
+    "avatar": ""
   },
   {
     "id": 36,
@@ -349,7 +349,7 @@
     "experience": "1 yr",
     "department": "computer-science-technology",
     "order": 7,
-    "avatar": "/images/faculty/chaitali-ghosh.jpg"
+    "avatar": ""
   },
   {
     "id": 37,
@@ -379,10 +379,10 @@
     "slug": "anubhab-karmakar",
     "designation": "Lecturer",
     "qualification": "B.Tech Mechanical",
-    "experience": "1 yr",
+    "experience": "0 yr",
     "department": "diploma-in-mechanical-engineering",
     "order": 8,
-    "avatar": "/images/faculty/anubhab-karmakar.jpg"
+    "avatar": ""
   },
   {
     "id": 38,

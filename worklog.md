@@ -400,3 +400,20 @@ Work Log:
 Stage Summary:
 - Video background is now truly full width / full bleed, still fixed in place, clipped to the section
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 18
+Agent: main (Z.ai)
+Task: Faculty + HOD data synced exactly from old nhit.in department pages, with real photos (user request: CSE first, then all depts)
+
+Work Log:
+- Scraped old site: all 6 /diploma-courses/* pages, parsed the 'Our Faculties' jet-listing cards (post ids, name, designation, qualification, experience, photo) via scripts/parse_old_faculty.py; extracted 40 cards across 6 depts.
+- Found root cause of the broken faculty section: DepartmentFacultyRoster read f.desig/f.qual/f.exp/f.img|photo but faculty-roster.json stores designation/qualification/experience/avatar => every card showed the hard-coded fallback photo (rajib-sukul's 0002) and 'Lecturer', quals/exp dropped. Fixed mapping + added avatar?: to the interface + initials placeholder for empty avatar (fixed truthy '/images/faculty/' empty-path bug too).
+- Downloaded all 37 faculty photos (full-size, stripped -WxH suffix) from nhit.in wp-uploads to public/images/faculty/<person-slug>.jpg via scripts/download_faculty_photos.py (37 ok / 0 fail). Old-site has NO photo for Saheli Shyam, Chaitali Ghosh (CSE), Anubhab Karmakar (ME) — they now render accent initials.
+- faculty-roster.json: all 40 entries set to old-site-exact designation/qualification/experience (+ avatars). Kept people, count and display order (HOD first); normalized only name casing, degree abbreviations (M.SC->M.Sc, BCOM->B.Com) and the old site's 'Mathamatics' typo.
+- departments.json HOD fixes (old cards show real HOD tags): CSE Shohini Das photo was sagnik's 0068 -> shohini-das.jpg; ME Pallab Naskar photo was pallabi's 0031 -> pallab-naskar.jpg; EE Sudeshna Mukherjee photo was tanushree's 0019 -> sudeshna-mukherjee.jpg; CIVIL Partha De photo was mrinmoy's 0037 -> partha-de.jpg; ET HOD name changed Arunangshu Chakraborty -> Arnab Mukhopadhyay (old site's ET HOD) + real photo; AUTO Pallab Naskar (In-Charge) real photo. HOD messages kept as-is (old site has none).
+- QA: bunx tsc clean; all 6 dept pages + / + /admissions + /blog 200; CSE grid screenshot (real photos, quals, exp), CSE HOD tab screenshot (Shohini Das + photo), EE grid screenshot (HOD Sudeshna + 10 faculty); 0 wrong-fallback refs in faculty sections; initials verified for the 3 no-photo people. Note: testimonial 'Subhendu Paul' (Civil) still uses 0002.jpg — pre-existing, out of scope.
+
+Stage Summary:
+- Faculty grid + HOD Desk on all 6 department pages now show the exact old-site people/designations/quals/experience with their real photos; broken field mapping fixed; CMS store untouched so admin editing keeps working
+- Committed locally, NOT pushed (waiting for user "push")
