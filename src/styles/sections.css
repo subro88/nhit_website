@@ -3018,7 +3018,9 @@
   color: #a0a0a0;
   position: relative;
   font-family: var(--edu-font, 'Montserrat', sans-serif);
-  padding-top: 48px;
+  /* Extra top padding clears the bottom half of the straddling contact card
+     (.footer-contact-desc, pulled up over the seam from the wrapper above). */
+  padding-top: 72px;
   overflow: hidden;
 }
 
@@ -3055,11 +3057,17 @@
   position: relative;
   z-index: 2;
 }
+/* Contact strip wrapper — sits between the last page section and the footer.
+   The orange card inside deliberately straddles the seam: top half over this
+   white band (continuous with the page above), bottom half over the footer. */
+.nhit-contact-straddle {
+  background: var(--edu-paper);
+  position: relative;
+}
 .footer-contact-desc {
   background: var(--edu-primary);
   padding: 35px 20px;
   border-radius: 8px;
-  margin-top: 0; /* sits fully inside the footer — no pull-up over the previous section */
   position: relative;
   z-index: 20;
   box-shadow: 0 14px 35px rgba(0, 0, 0, 0.28);
@@ -3073,9 +3081,23 @@
   padding: 10px 18px;
   text-align: center;
 }
+/* Straddle pull: measured card height is 248px at 769–1023px and 206px at
+   ≥1024px (card copy is fixed, so these pulls are stable). Each pull puts
+   the card's midpoint on the section/footer seam; the intruding bottom half
+   is cleared by footer padding-top (72px) + .footer-top padding (65px). */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .footer-contact-desc {
+    margin-bottom: -124px;
+  }
+}
+@media (min-width: 1024px) {
+  .footer-contact-desc {
+    margin-bottom: -103px;
+  }
+}
 @media (max-width: 768px) {
   .footer-contact-desc {
-    margin-top: 0;
+    margin-bottom: 0; /* mobile: stacked card stays fully above the footer */
   }
   .footer-contact-desc .col-md-4 {
     flex: 0 0 100%;

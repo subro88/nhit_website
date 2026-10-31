@@ -37,15 +37,13 @@ export default function Footer({ brand }: { brand?: BrandData }) {
 
   return (
     <>
-      <footer id="rs-footer" className="wp-block-group rs-footer bg3">
-        {/* Giant outlined brand watermark (decorative, non-interactive) */}
-        <div className="nhit-footer-watermark" aria-hidden="true">
-          NHIT
-        </div>
+      {/* Footer contact strip — deliberately straddles the seam between the
+          last page section and the footer: top half floats over the page
+          section, bottom half over the footer (.nhit-contact-straddle CSS). */}
+      <div className="nhit-contact-straddle">
         <div className="container edu-container">
           {/* Footer Address Strip */}
-          <div>
-            <div className="row footer-contact-desc">
+          <div className="row footer-contact-desc">
               <div className="col-md-4">
                 <div className="contact-inner">
                   <i className="fa fa-map-marker" />
@@ -87,8 +85,14 @@ export default function Footer({ brand }: { brand?: BrandData }) {
                   </p>
                 </div>
               </div>
-            </div>
           </div>
+        </div>
+      </div>
+
+      <footer id="rs-footer" className="wp-block-group rs-footer bg3">
+        {/* Giant outlined brand watermark (decorative, non-interactive) */}
+        <div className="nhit-footer-watermark" aria-hidden="true">
+          NHIT
         </div>
 
         {/* Footer Top */}

@@ -514,3 +514,18 @@ Work Log:
 Stage Summary:
 - Footer contact card no longer overlaps the section above the footer on any page; footer spacing rebalanced
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 25
+Agent: main (Z.ai)
+Task: Footer contact card — user clarified the "overlap" is the DESIGN they want: "actually i want this section overlay between both section top and bottom half on top and half on bottom" (card must straddle the section/footer seam, half over each)
+
+Work Log:
+- Reversal of Task 24: the pull-up was never a bug; the card must sit half over the last page section and half over the footer background, centered on the seam.
+- Restructured src/components/layout/Footer.tsx: moved the .footer-contact-desc card OUT of <footer> into a new sibling band .nhit-contact-straddle (a footer child translated above its own top edge would be clipped by the footer's overflow:hidden watermark clip — moving it out avoids touching that).
+- src/styles/sections.css: added .nhit-contact-straddle (background var(--edu-paper) = white, continuous with the page above); card gets a negative bottom margin per tier so the footer is pulled up under the card's midpoint — measured card heights: 248px at 769-1023px (pull -124px), 206px at >=1024px (pull -103px), mobile <=768px pull 0 (527px stacked card cannot straddle on a phone). Footer padding-top 48 -> 72px so the intruding bottom half (max 124px) is always cleared by footer padding + .footer-top padding (137px total) at every width.
+- QA (agent-browser): @1440 card spans 14372-14578, footer top 14475 = exact 50% above seam; @900 cardH 248, 50% above seam; @390 cardBottom == footerTop (no overlap); /contact inner page 50% above seam (footer is site-wide, works over the map section too); screenshots download/straddle-desktop.jpg, straddle-900.jpg, straddle-mobile.jpg, straddle-contact-page.jpg; no page errors; bunx tsc --noEmit clean.
+
+Stage Summary:
+- Red contact card now deliberately straddles the seam between the page section and the footer (50/50, measured) on every page at tablet/desktop widths; mobile keeps the stacked card fully above the footer
+- Committed locally, NOT pushed (waiting for user "push")
