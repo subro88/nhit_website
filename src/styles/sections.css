@@ -1078,7 +1078,10 @@
   transition: transform 0.65s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
   will-change: transform;
 }
-.fan-stage.is-dragging .fan-card { transition: none; }
+.fan-stage.is-dragging .fan-card { transition: none; cursor: grabbing; }
+/* Side photos are tappable — show the affordance (the active one keeps the
+   stage's grab cursor for dragging). */
+.fan-card:not(.is-active) { cursor: pointer; }
 .fan-card.is-gone {
   pointer-events: none;
   /* fully faded cards stop compositing (visibility flips after the fade) */

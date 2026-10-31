@@ -17,6 +17,14 @@ import type { GalleryData } from '@/lib/homeTypes';
  *  - Dragging writes two CSS vars (--drag-x / --drag-ry) on the stage through
  *    a rAF-throttled ref — no React state per pointermove.
  *  - Only transform/opacity animate => compositor-friendly, no layout work.
+ *
+ * Click handling note: the stage calls setPointerCapture() on pointerdown, so
+ * the browser retargets the follow-up "click" to the STAGE, not to whatever
+ * was pressed — native onClick on the arrows/cards would never fire. Instead:
+ *  - presses that start on an arrow bail out of the drag logic entirely, so
+ *    the button keeps its native click;
+ *  - a press on a card that ends without movement is treated as a tap and the
+ *    card is activated from endDrag() via the card's data-idx attribute.
  */
 
 const AUTOPLAY_MS = 4500;
@@ -40,7 +48,7 @@ export default function CampusGallery({ data }: { data: GalleryData }) {
 
   const stageRef = useRef<HTMLDivElement | null>(null);
   const hoverRef = useRef(false);
-  const dragRef = useRef({ on: false, startX: 0, lastDx: 0, moved: false, ryRatio: 0.15 });
+  const dragRef = useRef({ on: false, startX: 0, lastDx: 0, moved: false, ryRatio: 0.15, idx: null as number | null });
   const rafRef = useRef(0);
   const pendingDx = useRef<number | null>(null);
 
@@ -88,11 +96,20 @@ export default function CampusGallery({ data }: { data: GalleryData }) {
 
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
+    const t = e.target as HTMLElement | null;
+    /* Presses on the prev/next arrows must never become drags or get pointer-
+       captured — capturing would retarget their click to the stage and the
+       buttons would go dead. Bail out and let the button handle it natively. */
+    if (t?.closest?.('.fan-arrow')) return;
     const st = stageRef.current;
     if (!st) return;
     const card = st.querySelector<HTMLElement>('.fan-card');
     const slotW = (card?.offsetWidth || 380) * 0.46;
-    dragRef.current = { on: true, startX: e.clientX, lastDx: 0, moved: false, ryRatio: FAN_ANGLE / slotW };
+    /* Remember which card was pressed so endDrag() can treat a movement-less
+       release as a "tap this photo forward" action. */
+    const cardEl = t?.closest?.('.fan-card');
+    const pressedIdx = cardEl ? Number(cardEl.getAttribute('data-idx')) : null;
+    dragRef.current = { on: true, startX: e.clientX, lastDx: 0, moved: false, ryRatio: FAN_ANGLE / slotW, idx: Number.isFinite(pressedIdx) ? pressedIdx : null };
     try {
       st.setPointerCapture(e.pointerId);
     } catch {
@@ -137,15 +154,16 @@ export default function CampusGallery({ data }: { data: GalleryData }) {
          resting fan instead of snapping. */
       st.classList.remove('is-dragging');
       const shift = Math.round(-dx / slotW);
-      if (shift !== 0 && n >= 2) setActive((a) => (a + shift + n * Math.abs(shift) + n) % n);
+      const pressedIdx = dragRef.current.idx;
+      if (shift !== 0 && n >= 2) {
+        setActive((a) => (a + shift + n * Math.abs(shift) + n) % n);
+      } else if (!dragRef.current.moved && pressedIdx !== null && n >= 2) {
+        /* No real drag happened — it was a tap on a photo, so bring it forward. */
+        setActive(pressedIdx);
+      }
       st.style.setProperty('--drag-x', '0px');
       st.style.setProperty('--drag-ry', '0deg');
     }
-  };
-
-  const onCardClick = (i: number) => {
-    if (dragRef.current.moved) return; // it was a drag, not a click
-    if (i !== active) setActive(i);
   };
 
   /* Keyboard support while the stage is focused. */
@@ -201,7 +219,7 @@ export default function CampusGallery({ data }: { data: GalleryData }) {
                 key={i}
                 className={`fan-card${d === 0 ? ' is-active' : ''}${abs >= 5 ? ' is-gone' : ''}`}
                 style={{ '--i': d, '--abs': abs, zIndex: 50 - abs } as React.CSSProperties}
-                onClick={() => onCardClick(i)}
+                data-idx={i}
                 aria-hidden={d !== 0}
               >
                 <img src={item.src} alt={item.alt} loading="eager" draggable={false} />

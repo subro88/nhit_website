@@ -546,3 +546,20 @@ Work Log:
 Stage Summary:
 - "Inside the NHIT Campus" is now the Journal-style 3D photo fan from the user's video: curved coverflow deck, sweep transitions, drag/swipe/arrows/dots/keyboard/autoplay, dark cinematic section — still 100% CMS-driven
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 27
+Agent: main (Z.ai)
+Task: User reported "back and next button not working" on the campus gallery + a Next.js hydration error ("Hydration failed because the initial UI does not match what was rendered on the server", Call Stack: React)
+
+Work Log:
+- Root cause of the dead arrows found in code + confirmed by real-input QA: .fan-arrow sits inside .fan-stage, whose onPointerDown called st.setPointerCapture(e.pointerId) unconditionally. Per the pointer-events spec, once capture is active the follow-up click is dispatched at the CAPTURE TARGET (the stage), not the pressed element — so the buttons' onClick never fired. agent-browser real click on .fan-arrow--next/.fan-arrow--prev left the counter at 01/12 (reproduced); same capture also silently killed tap-a-side-card (real mouse click on a slot -1 card left caption "Main Block").
+- Fix in CampusGallery.tsx: (1) onPointerDown bails out when the press starts inside a .fan-arrow — no capture, no drag, button keeps its native click; (2) card taps now go through the drag pipeline: cards carry data-idx, pointerdown records the pressed card in dragRef.idx, and endDrag treats a movement-less release (<6px, !moved) as "tap this photo forward" (setActive(pressedIdx)) — needed because with capture the click lands on the stage anyway; removed the dead onClick/onCardClick from cards. Header comment documents the capture/click-retarget model.
+- Drag regression check after the tap rework: 380px left drag from card center committed (round(-dx/slotW)) -> counter 03/12 "Engine Lab"; is-dragging cursor now also grabbing via .fan-stage.is-dragging .fan-card, and side cards get cursor:pointer affordance (.fan-card:not(.is-active)).
+- Hydration error: could NOT reproduce on a clean browser — swept /, /about, /departments, /placements, /admissions, /contact, /student-life, /our-infrastructure, /blog, /iti-courses after fresh reloads; zero hydration entries in console/errors on all pages; no Math.random/Date.now/window-in-render branches in homepage components (gallery state is deterministic from active=0; CareerJourney's typeof window use is callback-only). Likely causes: dev overlay from Fast Refresh while files were being edited in the prior session, or a browser extension injecting attributes into <html>/<body>. Hardened layout.tsx with suppressHydrationWarning on <html> and <body> (standard guard for extension-injected attributes; matches the root-level "Call Stack: React" the user saw).
+- QA (real input events, autoplay paused first): arrows 01->02->03->02; tap side card "Computer Lab"->"Main Block"; drag left 0->"03 Engine Lab"; dot #10 jumps to "10/12 Training Session"; ArrowRight on focused stage 10->11; mobile 390x844 next arrow 01->02; agent-browser errors clean; bunx tsc --noEmit clean. Screenshots: download/gallery-fix-desktop.jpg, download/gallery-fix-mobile.jpg
+
+Stage Summary:
+- Gallery prev/next arrows and tap-a-photo now actually respond (pointer-capture click theft fixed); drag/dots/keyboard/autoplay unchanged
+- Hydration error not reproducible in clean browser (all 10 pages swept clean); root elements hardened with suppressHydrationWarning so extension/overlay mismatches no longer throw
+- Committed locally, NOT pushed (waiting for user "push")

@@ -52,8 +52,12 @@ export default async function RootLayout({
       lang="en"
       data-theme={palette}
       className={`${montserrat.variable} ${robotoCondensed.variable} edu-js`}
+      /* Browser extensions (Grammarly, translators, password managers…) inject
+         attributes into <html>/<body>; without this flag that reads as a
+         hydration mismatch and throws the Next.js dev overlay. */
+      suppressHydrationWarning
     >
-      <body className="antialiased min-h-screen flex flex-col justify-between">
+      <body className="antialiased min-h-screen flex flex-col justify-between" suppressHydrationWarning>
         <Header brand={brand} />
         <main className="flex-1">{children}</main>
         <Footer brand={brand} />
