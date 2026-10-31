@@ -496,7 +496,7 @@
     ]
   },
   "placementRadar": {
-    "visible": true,
+    "visible": false,
     "kicker": "Career Launchpad & Placements",
     "title": "From Diploma Classrooms to",
     "titleEm": "Tier-1 Engineering MNCs",

@@ -463,3 +463,18 @@ Work Log:
 Stage Summary:
 - Footer now carries the giant outlined NHIT brand watermark like technhit.in; purely decorative, zero layout impact
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 22
+Agent: main (Z.ai)
+Task: Remove Placement Radar section from home page (user pasted the section HTML and said "i don want this section in my home page")
+
+Work Log:
+- PlacementRadar was already CMS-gated: page.tsx renders it via show(data.placementRadar) = visible !== false; homepage.json had placementRadar.visible: true.
+- Flipped placementRadar.visible -> false in homepage.json (surgical 1-line diff). No code change needed.
+- Admin panel already has a per-section show/hide toggle (HomeEditor toggleVisible + off-state dots in section list), so the user can re-enable it from Admin > Homepage > Placement Radar anytime.
+- QA: rendered homepage HTML contains 0 "placement-radar" matches; page 200; DOM check radarInDom=false; remaining sections verified (hero, about, courses, placement, placement-record, life-at-nhit, alumni-voices, rs-testimonial, campus, social, admission, apply-cta, rs-footer); no browser errors.
+
+Stage Summary:
+- Placement Radar hidden from home page via CMS flag (reversible from admin), everything else untouched
+- Committed locally, NOT pushed (waiting for user "push")
