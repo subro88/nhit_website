@@ -6,7 +6,7 @@ export async function GET() {
   return NextResponse.json(
     {
       status: 'healthy',
-      service: 'technhit-portal',
+      service: 'nhit_in-portal',
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),
       memory: process.memoryUsage ? process.memoryUsage().rss : null,
@@ -14,4 +14,3 @@ export async function GET() {
     { status: 200 }
   );
 }
-

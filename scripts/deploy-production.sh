@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# NHIT Production Zero-Downtime Blue/Green Deployment Script
+# NHIT.IN Production Zero-Downtime Blue/Green Deployment Script
 # ==============================================================================
+# Target Root: /www/wwwroot/nhit.in
 # Architecture:
-#   - Public Port: 3000 (Routed via lightweight Nginx reverse proxy `technhit_proxy`)
-#   - Slot Blue:  Port 3001 (`technhit_blue`)
-#   - Slot Green: Port 3002 (`technhit_green`)
+#   - Public Port: 3000 (Routed via lightweight Nginx reverse proxy `nhit_in_proxy`)
+#   - Slot Blue:  Port 3001 (`nhit_in_blue`)
+#   - Slot Green: Port 3002 (`nhit_in_green`)
 #   - Zero Dropped Connections: Nginx `nginx -s reload` after candidate health pass
-#   - Port Conflict Protection: Scans and blocks all existing production ports
+#   - Conflict Protection: Scans and blocks all existing production ports
+#   - Auto-Migration: Cleans up legacy `technhit_*` containers automatically
 # ==============================================================================
 
 set -Eeuo pipefail
@@ -23,9 +25,9 @@ C_RED='\033[31m'
 C_MAGENTA='\033[35m'
 
 # ── Production Port Safety Matrix (FORBIDDEN CONFLICT PORTS) ───────────────────
-# Ports assigned to existing production containers:
+# Ports assigned to existing production containers on the server:
 #   1025: exam_mailpit (SMTP)
-#   3000: technhit public entrypoint
+#   3000: nhit_in public entrypoint
 #   3307: erp_db (MySQL 5.7)
 #   3308: snipeit_mariadb (MariaDB 11.4.7)
 #   3309: exam_db (MySQL 5.7)
@@ -39,22 +41,27 @@ C_MAGENTA='\033[35m'
 #   8085: vlab-simulators-green
 FORBIDDEN_PORTS=(1025 3000 3307 3308 3309 6380 8000 8001 8025 8080 8081 8082 8085)
 
-# ── Configuration Variables ───────────────────────────────────────────────────
-IMAGE_NAME="technhit-portal:production"
-PROXY_NAME="technhit_proxy"
-BLUE_NAME="technhit_blue"
-GREEN_NAME="technhit_green"
+# ── Configuration Variables (Standardized to nhit_in) ──────────────────────────
+IMAGE_NAME="nhit_in:production"
+PROXY_NAME="nhit_in_proxy"
+BLUE_NAME="nhit_in_blue"
+GREEN_NAME="nhit_in_green"
 BLUE_PORT=3001
 GREEN_PORT=3002
 PUBLIC_PORT=3000
-DOCKER_NETWORK="technhit_net"
+DOCKER_NETWORK="nhit_in_net"
 
 MAX_RETRIES=30
 RETRY_DELAY=2
 
-# State directory for persistence
+# State directory for persistence (Defaulting to /www/wwwroot/nhit.in)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-APP_DIR="${APP_DIR:-$(cd "${SCRIPT_DIR}/.." && pwd)}"
+if [ -d "/www/wwwroot/nhit.in" ]; then
+    DEFAULT_APP_DIR="/www/wwwroot/nhit.in"
+else
+    DEFAULT_APP_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+fi
+APP_DIR="${APP_DIR:-${DEFAULT_APP_DIR}}"
 STATE_FILE="${APP_DIR}/.active_slot"
 NGINX_CONF_DIR="${APP_DIR}/nginx_proxy"
 
@@ -62,7 +69,7 @@ NGINX_CONF_DIR="${APP_DIR}/nginx_proxy"
 
 print_header() {
     echo -e "${C_CYAN}─────────────────────────────────────────────────────────────${C_RESET}"
-    echo -e "${C_BOLD}🚀 NHIT Production Zero-Downtime Blue/Green Deployer${C_RESET}"
+    echo -e "${C_BOLD}🚀 NHIT.IN Production Zero-Downtime Blue/Green Deployer${C_RESET}"
     echo -e "📅 Timestamp: $(date -u +"%Y-%m-%d %H:%M:%SZ")"
     echo -e "📁 Directory: ${APP_DIR}"
     echo -e "${C_CYAN}─────────────────────────────────────────────────────────────${C_RESET}"
@@ -115,12 +122,24 @@ get_safe_port() {
     exit 1
 }
 
-# Verify network exists
+# Ensure isolated Docker network exists
 ensure_network() {
     if ! docker network inspect "${DOCKER_NETWORK}" >/dev/null 2>&1; then
         echo -e "${C_CYAN}🌐 Creating isolated internal bridge network: ${DOCKER_NETWORK}${C_RESET}"
         docker network create "${DOCKER_NETWORK}" >/dev/null
     fi
+}
+
+# Clean up any legacy "technhit" containers so ports are unblocked
+cleanup_legacy_containers() {
+    local legacy_containers=("technhit_app" "technhit_proxy" "technhit_blue" "technhit_green" "technhit_candidate")
+    for legacy in "${legacy_containers[@]}"; do
+        if docker ps -a --format '{{.Names}}' | grep -E "^${legacy}$" >/dev/null 2>&1; then
+            echo -e "${C_YELLOW}🧹 Cleaning up legacy container: ${legacy}...${C_RESET}"
+            docker stop "${legacy}" >/dev/null 2>&1 || true
+            docker rm -f "${legacy}" >/dev/null 2>&1 || true
+        fi
+    done
 }
 
 # Generate Nginx upstream configuration
@@ -129,7 +148,7 @@ generate_nginx_config() {
     mkdir -p "${NGINX_CONF_DIR}"
 
     cat <<EOF > "${NGINX_CONF_DIR}/default.conf"
-upstream active_backend {
+upstream nhit_upstream {
     server ${target_container}:3000;
     keepalive 32;
 }
@@ -145,7 +164,7 @@ server {
     gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript image/svg+xml;
 
     location / {
-        proxy_pass http://active_backend;
+        proxy_pass http://nhit_upstream;
         proxy_http_version 1.1;
 
         proxy_set_header Upgrade \$http_upgrade;
@@ -174,14 +193,10 @@ ensure_proxy() {
         return 0
     fi
 
-    # Handle migration from legacy single container if it was directly on 3000
-    if docker ps --format '{{.Names}}' | grep -E "^technhit_app$" >/dev/null 2>&1; then
-        echo -e "${C_YELLOW}🔄 Detected legacy technhit_app bound directly to port ${PUBLIC_PORT}. Migrating to proxy...${C_RESET}"
-        docker stop technhit_app >/dev/null 2>&1 || true
-        docker rm technhit_app >/dev/null 2>&1 || true
-    fi
+    # Clean legacy containers that might hold port 3000
+    cleanup_legacy_containers
 
-    echo -e "${C_CYAN}🛡️ Launching technhit_proxy (Nginx) on public port ${PUBLIC_PORT}...${C_RESET}"
+    echo -e "${C_CYAN}🛡️ Launching ${PROXY_NAME} (Nginx reverse proxy) on public port ${PUBLIC_PORT}...${C_RESET}"
     docker run -d \
         --name "${PROXY_NAME}" \
         --network "${DOCKER_NETWORK}" \
@@ -197,7 +212,7 @@ reload_proxy() {
     echo -e "${C_CYAN}⚡ Updating proxy upstream to: ${target_container}...${C_RESET}"
     generate_nginx_config "${target_container}"
     docker exec "${PROXY_NAME}" nginx -s reload >/dev/null
-    echo -e "${C_GREEN}✅ Nginx upstream reloaded in 5ms. Active traffic routed to ${target_container}.${C_RESET}"
+    echo -e "${C_GREEN}✅ Nginx upstream reloaded in < 5ms. Active traffic routed to ${target_container}.${C_RESET}"
 }
 
 # ── Main Deployment Workflow ──────────────────────────────────────────────────
@@ -207,7 +222,10 @@ deploy() {
     cd "${APP_DIR}"
     ensure_network
 
-    # Step 1: Port Collision Audit
+    # Step 1: Clean legacy containers if present
+    cleanup_legacy_containers
+
+    # Step 2: Port Collision Audit
     echo -e "\n${C_BOLD}[Step 1/6] Auditing Production Ports to Avoid Conflicts...${C_RESET}"
     for p in "${FORBIDDEN_PORTS[@]}"; do
         if is_port_in_use "$p" && [ "$p" -ne "$PUBLIC_PORT" ]; then
@@ -215,7 +233,7 @@ deploy() {
         fi
     done
 
-    # Step 2: Determine Current Active and Inactive Slots
+    # Step 3: Determine Current Active and Inactive Slots
     ACTIVE_SLOT="none"
     if [ -f "${STATE_FILE}" ]; then
         ACTIVE_SLOT=$(cat "${STATE_FILE}" | tr -d '[:space:]')
@@ -243,10 +261,10 @@ deploy() {
     echo -e "   • Active Slot:   ${C_YELLOW}${ACTIVE_SLOT}${C_RESET}"
     echo -e "   • Target Slot:   ${C_GREEN}${NEXT_SLOT}${C_RESET} (${NEXT_NAME} on Host Port ${NEXT_PORT})"
 
-    # Step 3: Git Pull & Build Image
+    # Step 4: Git Pull & Build Image
     echo -e "\n${C_BOLD}[Step 3/6] Fetching Latest Code & Building Image...${C_RESET}"
     if [ -d ".git" ]; then
-        echo -e "   📥 Running git fetch & pull..."
+        echo -e "   📥 Running git fetch & pull from origin/main..."
         git fetch origin main >/dev/null 2>&1 || true
         git pull origin main || true
     fi
@@ -254,7 +272,7 @@ deploy() {
     echo -e "   🔨 Building multi-stage Docker image: ${IMAGE_NAME}..."
     docker build -t "${IMAGE_NAME}" .
 
-    # Step 4: Launch Candidate Slot
+    # Step 5: Launch Candidate Slot
     echo -e "\n${C_BOLD}[Step 4/6] Launching Candidate Slot (${NEXT_NAME})...${C_RESET}"
     if docker ps -a --format '{{.Names}}' | grep -E "^${NEXT_NAME}$" >/dev/null 2>&1; then
         echo -e "   🧹 Cleaning existing ${NEXT_NAME} container..."
@@ -268,8 +286,8 @@ deploy() {
         --restart unless-stopped \
         "${IMAGE_NAME}" >/dev/null
 
-    # Step 5: Health Check Probe
-    echo -e "\n${C_BOLD}[Step 5/6] Probing Candidate Health Endpoint (http://localhost:${NEXT_PORT}/api/health)...${C_RESET}"
+    # Step 6: Health Check Probe
+    echo -e "\n${C_BOLD}[Step 5/6] Probing Candidate Health (http://localhost:${NEXT_PORT}/api/health)...${C_RESET}"
     HEALTHY=0
     for ((i=1; i<=MAX_RETRIES; i++)); do
         HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:${NEXT_PORT}/api/health" || true)
@@ -292,7 +310,7 @@ deploy() {
         exit 1
     fi
 
-    # Step 6: Zero-Downtime Traffic Switch
+    # Step 7: Zero-Downtime Traffic Switch
     echo -e "\n${C_BOLD}[Step 6/6] Zero-Downtime Traffic Switch on Port ${PUBLIC_PORT}...${C_RESET}"
     ensure_proxy "${NEXT_NAME}"
     reload_proxy "${NEXT_NAME}"
@@ -312,10 +330,11 @@ deploy() {
     docker image prune -f >/dev/null 2>&1 || true
 
     echo -e "\n${C_CYAN}─────────────────────────────────────────────────────────────${C_RESET}"
-    echo -e "${C_GREEN}${C_BOLD}🎉 DEPLOYMENT SUCCESSFUL!${C_RESET}"
+    echo -e "${C_GREEN}${C_BOLD}🎉 DEPLOYMENT SUCCESSFUL FOR NHIT.IN!${C_RESET}"
     echo -e "   • Public Port:      http://localhost:${PUBLIC_PORT} (Serving Live)"
     echo -e "   • Active Slot:      ${C_GREEN}${NEXT_SLOT} (${NEXT_NAME} on :${NEXT_PORT})${C_RESET}"
-    echo -e "   • Inactive Slot:    ${OLD_NAME} (Stopped standby for rollback)"
+    echo -e "   • Inactive Slot:    ${OLD_NAME} (Stopped standby for instant rollback)"
+    echo -e "   • Proxy Container:  ${PROXY_NAME}"
     echo -e "${C_CYAN}─────────────────────────────────────────────────────────────${C_RESET}"
 }
 
@@ -372,7 +391,7 @@ rollback() {
 
 status() {
     print_header
-    echo -e "${C_BOLD}📊 NHIT Deployment & Port Allocation Status:${C_RESET}\n"
+    echo -e "${C_BOLD}📊 NHIT.IN Deployment & Port Allocation Status:${C_RESET}\n"
 
     ACTIVE_SLOT="none"
     [ -f "${STATE_FILE}" ] && ACTIVE_SLOT=$(cat "${STATE_FILE}" | tr -d '[:space:]')
