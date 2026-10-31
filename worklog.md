@@ -417,3 +417,19 @@ Work Log:
 Stage Summary:
 - Faculty grid + HOD Desk on all 6 department pages now show the exact old-site people/designations/quals/experience with their real photos; broken field mapping fixed; CMS store untouched so admin editing keeps working
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 19
+Agent: main (Z.ai)
+Task: Faculty carousel — exactly 3 cards visible + smooth auto-scroll (user request)
+
+Work Log:
+- User pasted the rendered faculty carousel HTML and asked: 3 cards visible at a time, auto-scroll smoothly.
+- Root causes in DepartmentFacultyRoster: (1) cards were fixed width 280/320/340px so a 4th card sliver showed on desktop; (2) the auto-scroll interval depended on currentIndex state while onScroll updated that state mid-animation, resetting the interval every tick — stalling/jerky auto-scroll.
+- Rewrote carousel: card width w-full sm:calc(50%-12px) lg:calc(33.333%-16px) => exactly 1 card on mobile, 2 on tablet, 3 on desktop (no sliver, snap points align); auto-advance every 4s driven by refs (indexRef + pausedRef) so the interval is never reset; goTo() clamps to total-perView (perView computed live from DOM step width) and loops to 0; smooth scrollTo via card offsetLeft (gap-independent).
+- UX guards: pause on hover (resume on leave), 6s pause after touch/wheel, skip ticks when document.hidden or prefers-reduced-motion; kept prev/next buttons + NN/NN counter synced to leftmost visible card.
+- QA (agent-browser, /departments/computer-science-technology): desktop 1440 => trackWidth 1216, card 389, fullyVisible 3; scroll samples [1240,1240,1240,1653,1653,1653,1653,0,0,0] = one 413px step per 4s, loops to 0 after last full set; hover 5s => scrollLeft frozen at 0; counter 04/07 at scrollLeft 1240 (synced); mobile 390 => 1 fully visible; tablet 768 => 2; bunx tsc clean; 0 page errors. Screenshots download/faculty-carousel-{desktop,mobile}.jpg.
+
+Stage Summary:
+- Faculty carousel shows exactly 3 cards on desktop (2 tablet / 1 mobile) and auto-scrolls smoothly one card every 4s, loops, pauses on hover/touch
+- Committed locally, NOT pushed (waiting for user "push")
