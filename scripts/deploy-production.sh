@@ -2,7 +2,6 @@
 # ==============================================================================
 # NHIT.IN Production Zero-Downtime Blue/Green Deployment Script
 # ==============================================================================
-# Target Root: /www/wwwroot/nhit.in
 # Architecture:
 #   - Public Port: 3000 (Routed via lightweight Nginx reverse proxy `nhit_in_proxy`)
 #   - Slot Blue:  Port 3001 (`nhit_in_blue`)
@@ -54,13 +53,21 @@ DOCKER_NETWORK="nhit_in_net"
 MAX_RETRIES=30
 RETRY_DELAY=2
 
-# State directory for persistence (Defaulting to /www/wwwroot/nhit.in)
+# ── Dynamic Directory Auto-Detection ───────────────────────────────────────────
+# Finds the exact directory containing the Dockerfile, regardless of where script is invoked
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-if [ -d "/www/wwwroot/nhit.in" ]; then
-    DEFAULT_APP_DIR="/www/wwwroot/nhit.in"
+PARENT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+
+if [ -f "${PARENT_DIR}/Dockerfile" ]; then
+    DEFAULT_APP_DIR="${PARENT_DIR}"
+elif [ -f "${PARENT_DIR}/nhit-next/Dockerfile" ]; then
+    DEFAULT_APP_DIR="${PARENT_DIR}/nhit-next"
+elif [ -f "${PWD}/Dockerfile" ]; then
+    DEFAULT_APP_DIR="${PWD}"
 else
-    DEFAULT_APP_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+    DEFAULT_APP_DIR="${PARENT_DIR}"
 fi
+
 APP_DIR="${APP_DIR:-${DEFAULT_APP_DIR}}"
 STATE_FILE="${APP_DIR}/.active_slot"
 NGINX_CONF_DIR="${APP_DIR}/nginx_proxy"
@@ -219,6 +226,14 @@ reload_proxy() {
 
 deploy() {
     print_header
+
+    # Step 0: Ensure Dockerfile exists in APP_DIR
+    if [ ! -f "${APP_DIR}/Dockerfile" ]; then
+        echo -e "${C_RED}❌ ERROR: Dockerfile not found in ${APP_DIR}!${C_RESET}"
+        echo -e "   Please verify that you are running the script from within the repository root or scripts/ directory."
+        exit 1
+    fi
+
     cd "${APP_DIR}"
     ensure_network
 
@@ -263,14 +278,14 @@ deploy() {
 
     # Step 4: Git Pull & Build Image
     echo -e "\n${C_BOLD}[Step 3/6] Fetching Latest Code & Building Image...${C_RESET}"
-    if [ -d ".git" ]; then
+    if [ -d "${APP_DIR}/.git" ]; then
         echo -e "   📥 Running git fetch & pull from origin/main..."
-        git fetch origin main >/dev/null 2>&1 || true
-        git pull origin main || true
+        git -C "${APP_DIR}" fetch origin main >/dev/null 2>&1 || true
+        git -C "${APP_DIR}" pull origin main || true
     fi
 
     echo -e "   🔨 Building multi-stage Docker image: ${IMAGE_NAME}..."
-    docker build -t "${IMAGE_NAME}" .
+    docker build -t "${IMAGE_NAME}" -f "${APP_DIR}/Dockerfile" "${APP_DIR}"
 
     # Step 5: Launch Candidate Slot
     echo -e "\n${C_BOLD}[Step 4/6] Launching Candidate Slot (${NEXT_NAME})...${C_RESET}"
