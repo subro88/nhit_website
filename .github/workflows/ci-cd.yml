@@ -1,4 +1,4 @@
-name: NHIT Production CI/CD Pipeline
+name: NHIT Quality Gate CI
 
 on:
   push:
@@ -6,22 +6,15 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
-    inputs:
-      force_deploy:
-        description: 'Force deployment bypass (skip quality gate)'
-        required: false
-        default: 'false'
-        type: choice
-        options:
-          - 'false'
-          - 'true'
 
 concurrency:
-  group: production-deploy-${{ github.ref }}
-  cancel-in-progress: false
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  # ── Stage 1: Continuous Integration Quality Gate ──────────
+  # ── Continuous Integration Quality Gate ───────────────────
+  # Validates type safety, linting, and production compilation
+  # before any changes can be merged or deployed via the bash script.
   quality-gate:
     name: 'CI: TypeCheck, Lint & Build Verification'
     runs-on: ubuntu-latest
@@ -51,45 +44,3 @@ jobs:
         env:
           NODE_ENV: production
           NEXT_TELEMETRY_DISABLED: 1
-
-  # ── Stage 2: Continuous Deployment to Production Server ───
-  deploy-production:
-    name: 'CD: Deploy to Production (technhit_app)'
-    needs: quality-gate
-    if: (github.ref == 'refs/heads/main' && github.event_name != 'pull_request') || github.event.inputs.force_deploy == 'true'
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    environment: production
-
-    steps:
-      - name: Execute Remote Staged Deployment via SSH
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.PROD_HOST }}
-          username: ${{ secrets.PROD_USER }}
-          key: ${{ secrets.PROD_SSH_KEY }}
-          port: ${{ secrets.PROD_PORT || 22 }}
-          script_stop: true
-          command_timeout: 15m
-          script: |
-            set -e
-            APP_PATH="${{ secrets.APP_DIR || '/opt/nhit_website' }}"
-            echo "📁 Navigating to project directory: ${APP_PATH}"
-            cd "${APP_PATH}"
-            
-            echo "📥 Fetching latest code from origin/main..."
-            git fetch origin main
-            git checkout main
-            git pull origin main
-            
-            echo "🔐 Ensuring deployment script execution permissions..."
-            chmod +x scripts/deploy-production.sh
-            
-            echo "🚀 Launching zero-downtime staged container swap..."
-            ./scripts/deploy-production.sh
-
-      - name: Live Production Health Verification
-        run: |
-          echo "🌐 Testing live public health endpoint..."
-          curl -f -s -m 10 "https://nhit.in/api/health" || curl -f -s -m 10 "http://${{ secrets.PROD_HOST }}:3000/api/health" || echo "⚠️ Direct public curl check skipped — verified on host."
-
