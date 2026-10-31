@@ -92,9 +92,9 @@
     ],
     "narrative": "The Department of Computer Science & Technology at NHIT Durgapur delivers a rigorous, industry-aligned technical education designed to bridge theoretical computation and applied software engineering. Approved by AICTE and affiliated with WBSCTVESD, our curriculum immerses students in high-velocity programming sprints, relational database engineering, Linux kernel operations, and enterprise networking. Under the mentorship of certified faculty, students engage in over 60% hands-on laboratory experimentation—building real-world web platforms, cloud microservices, and hardware IoT prototypes that prepare them for immediate multinational IT placement and premier B.Tech lateral entry.",
     "hod": {
-      "name": "Shohini Das",
+      "name": "Ankita Roy",
       "desig": "Department In-Charge & Lecturer",
-      "img": "/images/faculty/shohini-das.jpg",
+      "img": "/images/faculty/ankita-roy.jpg",
       "message": "Computing is the sole engineering discipline where you can architect, build, and deploy an enterprise solution directly from your terminal. At NHIT, our mission is to build robust algorithmic foundations, clean engineering practices, and fearless problem-solving abilities so that our diploma engineers excel in modern tech ecosystems and elite B.Tech lateral entry programs."
     },
     "labs": [

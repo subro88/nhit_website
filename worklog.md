@@ -582,3 +582,19 @@ Work Log:
 Stage Summary:
 - /mandatory-disclosure now carries 100% of the official disclosure content — approvals archive 2007→2025-26, all five committees, intakes, 58-member staff register, fees, admission, full room inventory, audit reports — in a senior-UI package: sticky scroll-spy contents, print-ready statutory tables, department filter, mobile-first layout
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 29
+Agent: main (Z.ai)
+Task: /departments/computer-science-technology — "Message from the Department In-Charge will be Ankita Roy"
+
+Work Log:
+- Updated CST dept record in src/data/departments.json: hod.name "Shohini Das" -> "Ankita Roy", hod.img -> /images/faculty/ankita-roy.jpg (photo already on disk from the roster sync). Designation kept "Department In-Charge & Lecturer" — matches the official staff register (Miss Ankita Roy, Lecturer, CST, MCA, DOJ 25-01-2024) and faculty-roster.json id 12. Message text left unchanged (department-generic, user only changed the attribution).
+- Synced the same name in content/departments/computer-science-technology.mdx (unused by the page but kept consistent).
+- Shohini Das intentionally kept in the faculty grid via faculty-roster.json — she remains a Lecturer in the department; only the In-Charge attribution changed.
+- Verified page reads departments.json via departmentsData.ts (MDX not imported); SSR output shows 5x "Ankita Roy" + 0x "Shohini Das" in the HOD block (Shohini appears only in the faculty grid).
+- QA: JSON valid, bunx tsc clean; agent-browser opened the page, clicked "HOD Desk & Leadership" tab, screenshot of the section shows Ankita Roy photo + name + designation + message; agent-browser errors/console clean (info-only). Screenshot: download/cst-hod-ankita-roy.jpg
+
+Stage Summary:
+- CST "Message from the Department In-Charge" now belongs to Ankita Roy (photo, name, designation); message body and the rest of the page untouched
+- Committed locally, NOT pushed (waiting for user "push")
