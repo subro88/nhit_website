@@ -478,3 +478,25 @@ Work Log:
 Stage Summary:
 - Placement Radar hidden from home page via CMS flag (reversible from admin), everything else untouched
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 23
+Agent: main (Z.ai)
+Task: Career Journey section — "i want this section animation on scroll butter smooth user experience not satisfied right now"
+
+Work Log:
+- Diagnosed the jank sources in the old implementation: (1) pinning done in JS by swapping fixed/absolute classes on the 100vh section with transition-all -> layout thrash at every pin boundary; (2) scroll handler called setProgress/setIsPinned/setIsBottom on EVERY scroll event -> full React re-render of the whole component hundreds of times per scroll; (3) getBoundingClientRect + anime.js fired directly in the raw handler with no rAF alignment; (4) autoplay interval re-created on every stage change (deps [currentIdx]); (5) active-stage image loaded on demand -> flash on stage swap; (6) sticky header overlapped the pinned panel.
+- Rewrote src/components/journey/CareerJourney.tsx around a butter-smooth architecture:
+  * Pinning is pure CSS position:sticky (md+) — zero JS pinning, zero layout thrash. Pin offset = measured sticky-header height (useEffect measure + resize listener) passed as --jrn-pin-top CSS var; panel height calc(100svh - var(--jrn-pin-top)).
+  * Single rAF-aligned scroll engine subscribed once for the component lifetime (stable callbacks + idxRef mirror; no re-subscribe). Per-frame work = ONE compositor-only write: progress bar driven by transform: scaleX(p) via ref (no width animation, no reflow, no React state).
+  * React state updates ONLY when the stage index crosses a boundary (max 6 renders per full 350vh pass vs hundreds before).
+  * All 6 stage photos pre-rendered as stacked layers with opacity cross-fade (transition-opacity 500ms) -> stage swap never waits on a download; will-change-transform on animated card/title/bar.
+  * Autoplay: stable 5s interval (no re-creation per stage), document.hidden guard, and ANY manual interaction (wheel / touchstart / tab click / arrows) pauses it immediately.
+  * prefers-reduced-motion: flip animations skipped, smooth scroll falls back to auto.
+  * Mobile (<md): panel is NOT pinned — natural stacked section (h-auto), so nothing is cut off (old layout cut ~259px of content at 390x844); tabs/arrows/autoplay switch stages directly (fallback branch in handleScrollToStage when maxScroll<=0).
+  * Exit CTA banner moved AFTER the 350vh track (was an in-flow child trapped at the track top behind the pinned section = never visible); now revealed naturally as the sticky section releases.
+- QA (desktop 1440x900): pins flush below the 102px header (kicker badge now fully visible); scripted scroll through the whole pinned range measured 61 FPS (zero dropped frames @60Hz); stage flips 01->06 with progress bar reaching 100%; tab 01 click smooth-scrolls to exact band center; Auto-Play advanced 01->02 in 6s, wheel event paused it instantly (button back to "Auto-Play"); exit CTA visible at track end; no page errors. Mobile 390x844: position relative, content 1032px in 1080px panel (fits with room), all stages reachable via tabs. bunx tsc --noEmit clean. Screenshots: download/journey-new-start.jpg, journey-final-desktop.jpg, journey-new-end.jpg, journey-new-mobile2.jpg
+
+Stage Summary:
+- Journey scroll animation rebuilt: sticky CSS pinning + rAF engine + transform-only progress + preloaded cross-fade images = 61 FPS measured (was visibly janky), React renders cut from ~hundreds to max 6 per pass, pin no longer hides content behind the header, mobile no longer cuts 259px of content, exit CTA now actually visible, autoplay polite (pauses on interaction, respects reduced motion)
+- Committed locally, NOT pushed (waiting for user "push")
