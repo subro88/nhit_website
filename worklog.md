@@ -449,3 +449,17 @@ Work Log:
 Stage Summary:
 - Events + Projects + Faculty all share one carousel: adding 1 or 20 cards later never breaks layout; department page has one consistent card interaction pattern
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 21
+Agent: main (Z.ai)
+Task: Giant outlined "NHIT" watermark at the footer bottom (user pointed at technhit.in's TECHNHIT footer watermark)
+
+Work Log:
+- Fetched technhit.in: their watermark is a div inside footer.relative.overflow-hidden — font-display, text-[16vw]/[13vw], leading-none, custom text-stroke utility, opacity-15, absolute bottom-0 centered, pointer-events-none select-none, content wrapped relative above it.
+- Replicated for NHIT: .nhit-footer-watermark div (aria-hidden) inserted first inside #rs-footer; CSS in sections.css — absolute bottom -0.12em (slight crop), centered, Montserrat 800, 26vw mobile / 20vw md+ (4 chars need bigger vw than technhit's 8), line-height 1, transparent fill + 2px rgba(255,255,255,0.55) -webkit-text-stroke, opacity 0.1, z-index 1, pointer-events none, user-select none, white-space nowrap; footer got overflow:hidden; .container/.footer-top/.footer-bottom lifted to z-index 2 so links stay crisp.
+- QA: tsc clean; computed style verified (288px font @1440, stroke, opacity .1, pointer-events none); watermark bottom clipped 35px below footer edge (cropped look); no horizontal scroll (wmWidth 1440 = viewport); desktop + mobile screenshots — giant outlined NHIT behind footer columns/social row, all content readable. download/footer-watermark-{desktop,mobile}.jpg
+
+Stage Summary:
+- Footer now carries the giant outlined NHIT brand watermark like technhit.in; purely decorative, zero layout impact
+- Committed locally, NOT pushed (waiting for user "push")

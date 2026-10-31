@@ -38,6 +38,10 @@ export default function Footer({ brand }: { brand?: BrandData }) {
   return (
     <>
       <footer id="rs-footer" className="wp-block-group rs-footer bg3">
+        {/* Giant outlined brand watermark (decorative, non-interactive) */}
+        <div className="nhit-footer-watermark" aria-hidden="true">
+          NHIT
+        </div>
         <div className="container edu-container">
           {/* Footer Address Strip */}
           <div>
