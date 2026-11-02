@@ -7,6 +7,8 @@
 #   - Slot Blue:  Port 3001 (`nhit_in_blue`)
 #   - Slot Green: Port 3002 (`nhit_in_green`)
 #   - Zero Dropped Connections: Nginx `nginx -s reload` after candidate health pass
+#   - Persistent CMS Volumes: /admin edits & uploads persist across deploys & slots
+#   - Auto-Git Sync: Live CMS edits are auto-committed & pushed to GitHub on deploy
 #   - Conflict Protection: Scans and blocks all existing production ports
 #   - Auto-Migration: Cleans up legacy `technhit_*` containers automatically
 # ==============================================================================
@@ -137,6 +139,13 @@ ensure_network() {
     fi
 }
 
+# Ensure persistent directories exist and have proper permissions for container user
+ensure_persistent_storage() {
+    mkdir -p "${APP_DIR}/content" "${APP_DIR}/src/data" "${APP_DIR}/upload" "${APP_DIR}/cms-backups"
+    # Ensure write permissions so container non-root nextjs user (UID 1001) can save /admin edits
+    chmod -R ugo+rwX "${APP_DIR}/content" "${APP_DIR}/src/data" "${APP_DIR}/upload" "${APP_DIR}/cms-backups" 2>/dev/null || true
+}
+
 # Clean up any legacy "technhit" containers so ports are unblocked
 cleanup_legacy_containers() {
     local legacy_containers=("technhit_app" "technhit_proxy" "technhit_blue" "technhit_green" "technhit_candidate")
@@ -236,6 +245,7 @@ deploy() {
 
     cd "${APP_DIR}"
     ensure_network
+    ensure_persistent_storage
 
     # Step 1: Clean legacy containers if present
     cleanup_legacy_containers
@@ -276,9 +286,20 @@ deploy() {
     echo -e "   • Active Slot:   ${C_YELLOW}${ACTIVE_SLOT}${C_RESET}"
     echo -e "   • Target Slot:   ${C_GREEN}${NEXT_SLOT}${C_RESET} (${NEXT_NAME} on Host Port ${NEXT_PORT})"
 
-    # Step 4: Git Pull & Build Image
-    echo -e "\n${C_BOLD}[Step 3/6] Fetching Latest Code & Building Image...${C_RESET}"
+    # Step 4: Auto-commit live CMS edits & Pull Latest Code
+    echo -e "\n${C_BOLD}[Step 3/6] Preserving Live CMS Edits & Syncing Code...${C_RESET}"
     if [ -d "${APP_DIR}/.git" ]; then
+        # Check if CMS /admin has modified any data, notices, or uploaded photos on the server
+        CMS_DIFF=$(git -C "${APP_DIR}" status --porcelain content src/data upload cms-backups 2>/dev/null || true)
+        if [ -n "${CMS_DIFF}" ]; then
+            echo -e "   📝 Detected live content/image updates made via /admin panel."
+            echo -e "   💾 Auto-committing live CMS edits to git history..."
+            git -C "${APP_DIR}" add content src/data upload cms-backups 2>/dev/null || true
+            git -C "${APP_DIR}" commit -m "cms(auto): preserve content and uploads updated via web admin panel [$(date -u +"%Y-%m-%d %H:%M:%SZ")]" 2>/dev/null || true
+            echo -e "   🚀 Pushing live CMS edits back to GitHub origin/main..."
+            git -C "${APP_DIR}" push origin main 2>/dev/null || echo -e "   ⚠️ Note: Auto-push skipped (server git credentials not configured for write access; local commit preserved)."
+        fi
+
         echo -e "   📥 Running git fetch & pull from origin/main..."
         git -C "${APP_DIR}" fetch origin main >/dev/null 2>&1 || true
         git -C "${APP_DIR}" pull origin main || true
@@ -287,17 +308,26 @@ deploy() {
     echo -e "   🔨 Building multi-stage Docker image: ${IMAGE_NAME}..."
     docker build -t "${IMAGE_NAME}" -f "${APP_DIR}/Dockerfile" "${APP_DIR}"
 
-    # Step 5: Launch Candidate Slot
-    echo -e "\n${C_BOLD}[Step 4/6] Launching Candidate Slot (${NEXT_NAME})...${C_RESET}"
+    # Step 5: Launch Candidate Slot with Shared Persistent Storage Volumes
+    echo -e "\n${C_BOLD}[Step 4/6] Launching Candidate Slot (${NEXT_NAME}) with Persistent CMS Volumes...${C_RESET}"
     if docker ps -a --format '{{.Names}}' | grep -E "^${NEXT_NAME}$" >/dev/null 2>&1; then
         echo -e "   🧹 Cleaning existing ${NEXT_NAME} container..."
         docker rm -f "${NEXT_NAME}" >/dev/null 2>&1 || true
     fi
 
+    # Launch container with persistent volume mounts:
+    #   - content: notices, circulars, faculty json
+    #   - src/data: department data, homepage json, pages json
+    #   - upload: photo library uploads
+    #   - cms-backups: versioned json snapshots for rollback
     docker run -d \
         --name "${NEXT_NAME}" \
         --network "${DOCKER_NETWORK}" \
         -p "${NEXT_PORT}:3000" \
+        -v "${APP_DIR}/content:/app/content" \
+        -v "${APP_DIR}/src/data:/app/src/data" \
+        -v "${APP_DIR}/upload:/app/upload" \
+        -v "${APP_DIR}/cms-backups:/app/cms-backups" \
         --restart unless-stopped \
         "${IMAGE_NAME}" >/dev/null
 
@@ -349,6 +379,7 @@ deploy() {
     echo -e "   • Public Port:      http://localhost:${PUBLIC_PORT} (Serving Live)"
     echo -e "   • Active Slot:      ${C_GREEN}${NEXT_SLOT} (${NEXT_NAME} on :${NEXT_PORT})${C_RESET}"
     echo -e "   • Inactive Slot:    ${OLD_NAME} (Stopped standby for instant rollback)"
+    echo -e "   • Persistent Mounts: content, src/data, upload, cms-backups"
     echo -e "   • Proxy Container:  ${PROXY_NAME}"
     echo -e "${C_CYAN}─────────────────────────────────────────────────────────────${C_RESET}"
 }
