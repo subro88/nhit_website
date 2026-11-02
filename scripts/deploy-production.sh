@@ -47,9 +47,9 @@ IMAGE_NAME="nhit_in:production"
 PROXY_NAME="nhit_in_proxy"
 BLUE_NAME="nhit_in_blue"
 GREEN_NAME="nhit_in_green"
-BLUE_PORT=3001
-GREEN_PORT=3002
-PUBLIC_PORT=3000
+BLUE_PORT="${BLUE_PORT:-4001}"
+GREEN_PORT="${GREEN_PORT:-4002}"
+PUBLIC_PORT="${PUBLIC_PORT:-4000}"
 DOCKER_NETWORK="nhit_in_net"
 
 MAX_RETRIES=30
@@ -118,8 +118,8 @@ get_safe_port() {
         return 0
     fi
 
-    # Scan 3001..3020 for an unassigned, non-forbidden port
-    for test_p in {3001..3020}; do
+    # Scan 4001..4020 for an unassigned, non-forbidden port
+    for test_p in {4001..4020}; do
         if ! is_port_forbidden "$test_p" && ! is_port_in_use "$test_p"; then
             echo -e "${C_YELLOW}⚠️ Preferred port ${preferred} was busy. Assigned safe alternate: ${test_p}${C_RESET}" >&2
             echo "$test_p"
@@ -127,7 +127,7 @@ get_safe_port() {
         fi
     done
 
-    echo -e "${C_RED}❌ ERROR: No free port found in range 3001-3020!${C_RESET}" >&2
+    echo -e "${C_RED}❌ ERROR: No free port found in range 4001-4020!${C_RESET}" >&2
     exit 1
 }
 
