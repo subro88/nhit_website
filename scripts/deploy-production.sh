@@ -28,7 +28,6 @@ C_MAGENTA='\033[35m'
 # ── Production Port Safety Matrix (FORBIDDEN CONFLICT PORTS) ───────────────────
 # Ports assigned to existing production containers on the server:
 #   1025: exam_mailpit (SMTP)
-#   3000: nhit_in public entrypoint
 #   3307: erp_db (MySQL 5.7)
 #   3308: snipeit_mariadb (MariaDB 11.4.7)
 #   3309: exam_db (MySQL 5.7)
@@ -40,16 +39,16 @@ C_MAGENTA='\033[35m'
 #   8081: erp_phpmyadmin
 #   8082: erp_webserver (Nginx)
 #   8085: vlab-simulators-green
-FORBIDDEN_PORTS=(1025 3000 3307 3308 3309 6380 8000 8001 8025 8080 8081 8082 8085)
+FORBIDDEN_PORTS=(1025 3307 3308 3309 6380 8000 8001 8025 8080 8081 8082 8085)
 
 # ── Configuration Variables (Standardized to nhit_in) ──────────────────────────
 IMAGE_NAME="nhit_in:production"
 PROXY_NAME="nhit_in_proxy"
 BLUE_NAME="nhit_in_blue"
 GREEN_NAME="nhit_in_green"
-BLUE_PORT="${BLUE_PORT:-4001}"
-GREEN_PORT="${GREEN_PORT:-4002}"
-PUBLIC_PORT="${PUBLIC_PORT:-4000}"
+BLUE_PORT="${BLUE_PORT:-3001}"
+GREEN_PORT="${GREEN_PORT:-3002}"
+PUBLIC_PORT="${PUBLIC_PORT:-3000}"
 DOCKER_NETWORK="nhit_in_net"
 
 MAX_RETRIES=30
@@ -118,8 +117,8 @@ get_safe_port() {
         return 0
     fi
 
-    # Scan 4001..4020 for an unassigned, non-forbidden port
-    for test_p in {4001..4020}; do
+    # Scan 3001..3020 for an unassigned, non-forbidden port
+    for test_p in {3001..3020}; do
         if ! is_port_forbidden "$test_p" && ! is_port_in_use "$test_p"; then
             echo -e "${C_YELLOW}⚠️ Preferred port ${preferred} was busy. Assigned safe alternate: ${test_p}${C_RESET}" >&2
             echo "$test_p"
@@ -127,7 +126,7 @@ get_safe_port() {
         fi
     done
 
-    echo -e "${C_RED}❌ ERROR: No free port found in range 4001-4020!${C_RESET}" >&2
+    echo -e "${C_RED}❌ ERROR: No free port found in range 3001-3020!${C_RESET}" >&2
     exit 1
 }
 
