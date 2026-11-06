@@ -1258,3 +1258,56 @@ Import trace for requested module:
  GET /iti-courses/iti-electrician 200 in 141ms
  GET /icon.png?2b070204edd62bf0 200 in 49ms
  GET /iti-courses/iti-fitter 200 in 59ms
+ GET / 200 in 70ms
+ GET / 200 in 39ms
+ GET /iti-courses/iti-electrician 200 in 37ms
+ GET /icon.png?2b070204edd62bf0 200 in 20ms
+ GET /iti-courses/iti-electrician 200 in 51ms
+ GET / 200 in 70ms
+ ○ Compiling /admissions ...
+ ✓ Compiled /admissions in 2.2s (1109 modules)
+ GET /admissions 200 in 2379ms
+ ✓ Compiled in 754ms (1123 modules)
+ ⨯ ./src/components/layout/Footer.tsx
+Error: 
+  [31mx[0m Expression expected
+    ,-[[36;1;4m/home/z/my-project/src/components/layout/Footer.tsx[0m:41:1]
+ [2m41[0m |   };
+ [2m42[0m | 
+ [2m43[0m |   return (
+ [2m44[0m |     <>
+    : [31;1m     ^[0m
+ [2m45[0m |       {/* Footer contact strip — deliberately straddles the seam between the
+ [2m46[0m |           last page section and the footer: top half floats over the page
+ [2m47[0m |           section, bottom half over the footer (.nhit-contact-straddle CSS).
+    `----
+
+  [31mx[0m Expected ',', got '{'
+    ,-[[36;1;4m/home/z/my-project/src/components/layout/Footer.tsx[0m:46:1]
+ [2m46[0m |           last page section and the footer: top half floats over the page
+ [2m47[0m |           section, bottom half over the footer (.nhit-contact-straddle CSS).
+ [2m48[0m |           Hidden on ITI trade pages, whose CTA band replaces it. */}
+ [2m49[0m |       {showContactStraddle && (
+    : [31;1m      ^[0m
+ [2m50[0m |       <div className="nhit-contact-straddle">
+ [2m51[0m |         <div className="container edu-container">
+ [2m52[0m |           {/* Footer Address Strip */}
+    `----
+
+Caused by:
+    Syntax Error
+
+Import trace for requested module:
+./src/components/layout/Footer.tsx
+./src/app/layout.tsx
+ GET /admissions 500 in 10ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1499ms (1112 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /admissions 200 in 110ms
+ GET /_next/static/webpack/5dafbb842f00b733.webpack.hot-update.json 404 in 1661ms
+ GET /admissions 200 in 53ms
+ GET /iti-courses/iti-electrician 200 in 58ms
+ GET /iti-courses/iti-fitter 200 in 70ms
+ GET /iti-courses/iti-electrician 200 in 42ms
+ GET / 200 in 244ms
