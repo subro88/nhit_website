@@ -3471,6 +3471,12 @@
   color: var(--edu-primary);
   text-decoration: none;
 }
+/* Clear the fixed floating quickbar (bottom: 24px + two 44px buttons + 10px gap ≈ 122px) */
+@media (max-width: 767px) {
+  .footer-bottom {
+    padding-bottom: 134px;
+  }
+}
 
 
 
