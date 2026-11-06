@@ -14,7 +14,13 @@ export const SESSION_COOKIE = 'nhit_admin_session';
 const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 export const SESSION_TTL_SECONDS = Math.floor(SESSION_TTL_MS / 1000);
 
-const ROOT = process.cwd();
+/*
+ * State dir: cms-users.json + cms-secret.txt are auto-seeded here on first
+ * run. In production the container runs as "nextjs" and cannot write to the
+ * app root, so deploys point CMS_STATE_DIR at a chowned volume (see
+ * deploy-production.sh); elsewhere it falls back to the working directory.
+ */
+const ROOT = process.env.CMS_STATE_DIR || process.cwd();
 const USERS_FILE = path.join(ROOT, 'cms-users.json');
 const SECRET_FILE = path.join(ROOT, 'cms-secret.txt');
 

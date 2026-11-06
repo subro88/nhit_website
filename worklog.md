@@ -598,3 +598,23 @@ Work Log:
 Stage Summary:
 - CST "Message from the Department In-Charge" now belongs to Ankita Roy (photo, name, designation); message body and the rest of the page untouched
 - Committed locally, NOT pushed (waiting for user "push")
+
+---
+Task ID: 30
+Agent: main (Z.ai)
+Task: Production admin login "Network error" — root-caused from server diagnostics (uploaded), fixed in repo
+
+Root cause (confirmed by prod logs):
+- Proxy log: POST /api/admin/login -> 500. App log: `EACCES: permission denied, open '/app/cms-users.json'`.
+- Dockerfile final stage runs as `nextjs` (uid 1001) but `/app` is root-owned; auth auto-seeds cms-users.json + cms-secret.txt into process.cwd() on first login -> writeFileSync EACCES -> 500 (empty body -> res.json() throws -> generic "Network error" in LoginForm).
+- Secondary: Docker healthcheck `wget http://localhost:3000` fails forever (FailingStreak 24489 ~= 5.7d) — busybox wget resolves localhost to ::1 while Node binds IPv4 0.0.0.0 -> "Connection refused" inside container even though external curls pass.
+
+Fixes:
+- src/lib/auth.ts: ROOT = process.env.CMS_STATE_DIR || process.cwd() — state files can live in a chowned volume.
+- Dockerfile: mkdir /app/cms-state chown nextjs:nodejs; healthcheck now targets 127.0.0.1 (IPv4) with comment.
+- scripts/deploy-production.sh: mkdir/chown 1001:1001 ${APP_DIR}/cms-state on host + `-e CMS_STATE_DIR=/app/cms-state` + `-v ${APP_DIR}/cms-state:/app/cms-state` on candidate run — admin accounts & session secret persist across deploys.
+- LoginForm.tsx: non-JSON 5xx no longer shows generic "Network error" — falls back to "Server error (HTTP xxx)"; network failure message clarified.
+- Immediate hotfix given to user (no redeploy): `sudo docker exec -u root nhit_in_blue chown nextjs:nodejs /app` -> auto-seed succeeds on next login attempt.
+
+QA: bash -n deploy script OK; bunx tsc clean; dev login POST /api/admin/login -> 200 {"ok":true,...} after change.
+Committed locally, NOT pushed.

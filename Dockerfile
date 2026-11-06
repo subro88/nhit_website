@@ -42,12 +42,18 @@ COPY --from=builder /app/upload ./upload
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
+# CMS state (cms-users.json / cms-secret.txt) is auto-seeded here by the app;
+# must be writable by nextjs. deploy-production.sh mounts a persistent volume
+# over this path so admin accounts survive redeploys.
+RUN mkdir -p /app/cms-state && chown nextjs:nodejs /app/cms-state
+
 USER nextjs
 
 EXPOSE 3000
 
+# 127.0.0.1, not localhost: busybox wget prefers ::1, the server binds IPv4.
 HEALTHCHECK --interval=20s --timeout=5s --retries=3 --start-period=10s \
-  CMD wget -qO- http://localhost:3000/api/health || exit 1
+  CMD wget -qO- http://127.0.0.1:3000/api/health || exit 1
 
 CMD ["node", "server.js"]
 

@@ -319,14 +319,19 @@ deploy() {
     #   - src/data: department data, homepage json, pages json
     #   - upload: photo library uploads
     #   - cms-backups: versioned json snapshots for rollback
+    #   - cms-state: cms-users.json + cms-secret.txt (admin accounts persist)
+    mkdir -p "${APP_DIR}/cms-state"
+    chown 1001:1001 "${APP_DIR}/cms-state" 2>/dev/null || true
     docker run -d \
         --name "${NEXT_NAME}" \
         --network "${DOCKER_NETWORK}" \
         -p "${NEXT_PORT}:3000" \
+        -e "CMS_STATE_DIR=/app/cms-state" \
         -v "${APP_DIR}/content:/app/content" \
         -v "${APP_DIR}/src/data:/app/src/data" \
         -v "${APP_DIR}/upload:/app/upload" \
         -v "${APP_DIR}/cms-backups:/app/cms-backups" \
+        -v "${APP_DIR}/cms-state:/app/cms-state" \
         --restart unless-stopped \
         "${IMAGE_NAME}" >/dev/null
 

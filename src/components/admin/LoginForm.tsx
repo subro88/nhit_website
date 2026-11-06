@@ -21,16 +21,26 @@ export default function LoginForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
       });
-      const data = await res.json();
+      let data: { error?: string } | null = null;
+      try {
+        data = await res.json();
+      } catch {
+        /* Non-JSON body — proxy error page or bare 500. Report the status. */
+      }
       if (!res.ok) {
-        setError(data.error || 'Sign in failed');
+        setError(
+          data?.error ||
+            `Server error (HTTP ${res.status}) — please try again shortly`
+        );
         setBusy(false);
         return;
       }
       router.replace('/admin/dashboard');
       router.refresh();
     } catch {
-      setError('Network error — please try again');
+      setError(
+        'Network error — could not reach the server. Check your connection and try again.'
+      );
       setBusy(false);
     }
   }
