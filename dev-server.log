@@ -1348,3 +1348,7 @@ Import trace for requested module:
  GET /icon.png?2b070204edd62bf0 200 in 298ms
  GET /iti-courses/iti-electrician 200 in 350ms
  GET / 200 in 72ms
+ GET / 200 in 67ms
+ GET / 200 in 41ms
+ GET /icon.png?2b070204edd62bf0 200 in 25ms
+ GET /icon.png?2b070204edd62bf0 200 in 21ms
