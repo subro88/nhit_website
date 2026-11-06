@@ -1,0 +1,26 @@
+
+> nhit-web-next@1.0.0 dev
+> next dev -p 3000
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+  - Environments: .env
+
+ ✓ Starting...
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
+
+   automatically enabled Fast Refresh for 1 custom loader
+ ✓ Ready in 1376ms
+ ○ Compiling /iti-courses/iti-electrician ...
+ ✓ Compiled /iti-courses/iti-electrician in 7.1s (827 modules)
+ GET /iti-courses/iti-electrician 200 in 7408ms
+ GET / 200 in 7406ms
+ ✓ Compiled /icon.png in 175ms (472 modules)
+ GET /icon.png?2b070204edd62bf0 200 in 273ms
+ GET /iti-courses/iti-electrician 200 in 102ms
+ ✓ Compiled /iti-courses/iti-fitter in 289ms (852 modules)
+ GET /iti-courses/iti-fitter 200 in 491ms
+ GET / 200 in 51ms
