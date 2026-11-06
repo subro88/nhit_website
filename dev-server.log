@@ -1311,3 +1311,22 @@ Import trace for requested module:
  GET /iti-courses/iti-fitter 200 in 70ms
  GET /iti-courses/iti-electrician 200 in 42ms
  GET / 200 in 244ms
+ GET / 200 in 40ms
+ GET /iti-courses/iti-electrician 200 in 35ms
+ ○ Compiling /icon.png ...
+ ✓ Compiled /icon.png in 843ms (574 modules)
+ GET /icon.png?2b070204edd62bf0 200 in 951ms
+ GET / 200 in 116ms
+ GET / 200 in 37ms
+ ✓ Compiled in 1245ms (1123 modules)
+ ✓ Compiled in 1353ms (1123 modules)
+ GET /iti-courses/iti-electrician 200 in 93ms
+ GET /iti-courses/iti-electrician 200 in 65ms
+ ✓ Compiled in 921ms (1123 modules)
+ GET /iti-courses/iti-electrician 200 in 121ms
+ ○ Compiling /icon.png ...
+ ✓ Compiled /icon.png in 576ms (574 modules)
+ GET /icon.png?2b070204edd62bf0 200 in 680ms
+ GET /iti-courses/iti-electrician 200 in 159ms
+ GET /icon.png?2b070204edd62bf0 200 in 37ms
+ GET / 200 in 83ms

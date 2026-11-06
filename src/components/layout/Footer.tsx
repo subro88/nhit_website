@@ -20,11 +20,6 @@ export default function Footer({ brand }: { brand?: BrandData }) {
   const pathname = usePathname();
   if (pathname?.startsWith('/admin')) return null;
 
-  // ITI trade detail pages end with a red CTA band that already carries the
-  // campus address, helpline and apply actions — the straddling contact card
-  // would repeat it and leave a white sliver between the two red surfaces.
-  const showContactStraddle = !pathname?.startsWith('/iti-courses/iti-');
-
   const handleProspectusSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setDownloadSuccess(true);
@@ -44,9 +39,7 @@ export default function Footer({ brand }: { brand?: BrandData }) {
     <>
       {/* Footer contact strip — deliberately straddles the seam between the
           last page section and the footer: top half floats over the page
-          section, bottom half over the footer (.nhit-contact-straddle CSS).
-          Hidden on ITI trade pages, whose CTA band replaces it. */}
-      {showContactStraddle && (
+          section, bottom half over the footer (.nhit-contact-straddle CSS). */}
       <div className="nhit-contact-straddle">
         <div className="container edu-container">
           {/* Footer Address Strip */}
@@ -95,7 +88,6 @@ export default function Footer({ brand }: { brand?: BrandData }) {
           </div>
         </div>
       </div>
-      )}
 
       <footer id="rs-footer" className="wp-block-group rs-footer bg3">
         {/* Giant outlined brand watermark (decorative, non-interactive) */}

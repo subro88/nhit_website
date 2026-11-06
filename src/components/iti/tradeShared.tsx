@@ -517,88 +517,95 @@ export function CtaBand({
   brochureHref?: string;
 }) {
   return (
-    <section className="relative bg-[linear-gradient(120deg,#9E0B0F_0%,#C10A0C_45%,#ff3115_100%)] text-white overflow-hidden mt-16">
-      <div
-        className="absolute inset-0 opacity-10"
-        style={{
-          backgroundImage:
-            'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
-          backgroundSize: '36px 36px',
-        }}
-      />
-      <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-white/10 blur-2xl" />
-      <div className="absolute -left-10 -bottom-20 w-72 h-72 rounded-full bg-black/20 blur-3xl" />
+    <section className="bg-white pt-16 pb-14 md:pb-16">
+      <div className="max-w-7xl mx-auto px-5">
+        {/* Navy card — same treatment as the home-page CTA band, so the red
+            footer contact strip below contrasts instead of clashing red-on-red. */}
+        <div className="relative overflow-hidden rounded-[18px] bg-[linear-gradient(120deg,#0f172a_0%,#1e293b_60%,#0f172a_100%)] text-white shadow-xl">
+          <div className="absolute top-0 inset-x-0 h-[3px] bg-[linear-gradient(90deg,transparent,#ff3115,transparent)]" />
+          <div
+            className="absolute inset-0 opacity-10"
+            style={{
+              backgroundImage:
+                'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)',
+              backgroundSize: '36px 36px',
+            }}
+          />
+          <div className="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-white/10 blur-2xl" />
+          <div className="absolute -left-10 -bottom-20 w-72 h-72 rounded-full bg-black/20 blur-3xl" />
 
-      <div className="relative max-w-7xl mx-auto px-5 py-12 md:py-14">
-        <Reveal>
-          <div className="max-w-3xl">
-            <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] bg-white/15 border border-white/25 rounded-full px-3 py-1">
-              NCVT Admissions Open · Session 2026
-            </span>
-            <h2 className="text-2xl md:text-3xl font-black font-montserrat mt-4 leading-tight">
-              Ready to Build Your Career as {careerTitle}?
-            </h2>
-            <div className="flex items-center gap-2.5 mt-4">
-              <span className="relative flex h-2.5 w-2.5 shrink-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-50" />
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
-              </span>
-              <span className="text-xs font-black">
-                Only 20 sanctioned seats per unit
-              </span>
-              <span className="text-xs text-white/80">{eligibility}</span>
-            </div>
-            <p className="text-white/85 text-sm mt-3 leading-relaxed">
-              Apply early to lock your place. New sessions begin as per the DGT academic calendar
-              (August). Our admission cell will guide you through eligibility, counselling and
-              document verification.
-            </p>
-          </div>
-        </Reveal>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-8">
-          {steps.map((s, i) => (
-            <Reveal key={i} delay={i * 100}>
-              <div className="flex items-start gap-2.5 bg-white/10 border border-white/20 rounded-xl p-3.5 backdrop-blur-sm">
-                <span className="w-6 h-6 shrink-0 rounded-full bg-white text-[#9E0B0F] text-xs font-black flex items-center justify-center font-montserrat">
-                  {i + 1}
+          <div className="relative px-6 py-10 md:px-10 md:py-12">
+            <Reveal>
+              <div className="max-w-3xl">
+                <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] bg-white/15 border border-white/25 rounded-full px-3 py-1">
+                  NCVT Admissions Open · Session 2026
                 </span>
-                <span className="text-xs font-semibold leading-snug">{s}</span>
+                <h2 className="text-2xl md:text-3xl font-black font-montserrat mt-4 leading-tight text-white">
+                  Ready to Build Your Career as {careerTitle}?
+                </h2>
+                <div className="flex items-center gap-2.5 mt-4">
+                  <span className="relative flex h-2.5 w-2.5 shrink-0">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-50" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
+                  </span>
+                  <span className="text-xs font-black">
+                    Only 20 sanctioned seats per unit
+                  </span>
+                  <span className="text-xs text-white/80">{eligibility}</span>
+                </div>
+                <p className="text-white/85 text-sm mt-3 leading-relaxed">
+                  Apply early to lock your place. New sessions begin as per the DGT academic calendar
+                  (August). Our admission cell will guide you through eligibility, counselling and
+                  document verification.
+                </p>
               </div>
             </Reveal>
-          ))}
-        </div>
 
-        <Reveal delay={200}>
-          <div className="flex flex-wrap items-center gap-3 mt-8">
-            <Link
-              href="/admissions"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[#9E0B0F] rounded-xl text-xs font-black hover:bg-neutral-100 transition-colors shadow-lg"
-            >
-              Apply for Admission <ArrowRight className="w-4 h-4" />
-            </Link>
-            <a
-              href="tel:03432542103"
-              className="inline-flex items-center gap-2 px-6 py-3 border-2 border-white/60 text-white rounded-xl text-xs font-black hover:bg-white/10 transition-colors"
-            >
-              <PhoneCall className="w-4 h-4" /> Admission Helpline: (0343) 2542103
-            </a>
-            {brochureHref && (
-              <a
-                href={brochureHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 border-2 border-white/40 text-white/90 rounded-xl text-xs font-black hover:bg-white/10 transition-colors"
-              >
-                <Download className="w-4 h-4" /> Brochure (PDF)
-              </a>
-            )}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-8">
+              {steps.map((s, i) => (
+                <Reveal key={i} delay={i * 100}>
+                  <div className="flex items-start gap-2.5 bg-white/10 border border-white/20 rounded-xl p-3.5 backdrop-blur-sm">
+                    <span className="w-6 h-6 shrink-0 rounded-full bg-white text-[#9E0B0F] text-xs font-black flex items-center justify-center font-montserrat">
+                      {i + 1}
+                    </span>
+                    <span className="text-xs font-semibold leading-snug">{s}</span>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+
+            <Reveal delay={200}>
+              <div className="flex flex-wrap items-center gap-3 mt-8">
+                <Link
+                  href="/admissions"
+                  className="inline-flex items-center gap-2 px-6 py-3 bg-white text-[#9E0B0F] rounded-xl text-xs font-black hover:bg-neutral-100 transition-colors shadow-lg"
+                >
+                  Apply for Admission <ArrowRight className="w-4 h-4" />
+                </Link>
+                <a
+                  href="tel:03432542103"
+                  className="inline-flex items-center gap-2 px-6 py-3 border-2 border-white/60 text-white rounded-xl text-xs font-black hover:bg-white/10 transition-colors"
+                >
+                  <PhoneCall className="w-4 h-4" /> Admission Helpline: (0343) 2542103
+                </a>
+                {brochureHref && (
+                  <a
+                    href={brochureHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 border-2 border-white/40 text-white/90 rounded-xl text-xs font-black hover:bg-white/10 transition-colors"
+                  >
+                    <Download className="w-4 h-4" /> Brochure (PDF)
+                  </a>
+                )}
+              </div>
+              <p className="flex items-start gap-2 text-[11px] text-white/75 mt-5 leading-relaxed">
+                <MapPin className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+                New Horizons Institute of Technology, Near Gandhi More, Durgapur — 713208, West Bengal
+              </p>
+            </Reveal>
           </div>
-          <p className="flex items-start gap-2 text-[11px] text-white/75 mt-5 leading-relaxed">
-            <MapPin className="w-3.5 h-3.5 shrink-0 mt-0.5" />
-            New Horizons Institute of Technology, Near Gandhi More, Durgapur — 713208, West Bengal
-          </p>
-        </Reveal>
+        </div>
       </div>
     </section>
   );
