@@ -25,10 +25,7 @@ import type { ITITrade } from './tradeData';
 import { ADMISSION_STEPS } from './tradeData';
 import {
   accVars,
-  ApplyCard,
-  BrochureCard,
   CareerPath,
-  ContactCard,
   CtaBand,
   FaqRow,
   MetricStrip,
@@ -66,9 +63,7 @@ export default function TradeDetail({ trade }: { trade: ITITrade }) {
       <MetricStrip metrics={trade.metrics} />
 
       <main className="max-w-7xl mx-auto px-5 py-12 md:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* ------------------------------- main column ------------------------------- */}
-          <div className="lg:col-span-8 space-y-10">
+        <div className="space-y-10">
             {/* Overview */}
             <Reveal>
               <Card>
@@ -87,7 +82,7 @@ export default function TradeDetail({ trade }: { trade: ITITrade }) {
 
                 {/* image collage */}
                 <div className="relative mt-6 mb-10">
-                  <div className="relative h-60 md:h-80 w-full rounded-2xl overflow-hidden border border-gray-200">
+                  <div className="relative h-64 md:h-96 w-full rounded-2xl overflow-hidden border border-gray-200">
                     <Image
                       src={trade.overview.image}
                       alt={trade.overview.imageAlt}
@@ -167,7 +162,7 @@ export default function TradeDetail({ trade }: { trade: ITITrade }) {
                 <h4 className="text-xs font-black uppercase tracking-wider text-gray-900 font-montserrat mt-8 mb-3">
                   Top Career Outcomes
                 </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {trade.career.outcomes.map((o, i) => (
                     <div
                       key={i}
@@ -283,7 +278,7 @@ export default function TradeDetail({ trade }: { trade: ITITrade }) {
                   title="Government PSU & Railway Recruiters"
                   lead="NCVT certification makes graduates eligible for the biggest public-sector technician intakes in the country."
                 />
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   {trade.recruitersGov.map((p, i) => (
                     <div
                       key={i}
@@ -359,64 +354,55 @@ export default function TradeDetail({ trade }: { trade: ITITrade }) {
                 </div>
               </Card>
             </Reveal>
-          </div>
-
-          {/* ------------------------------- sidebar ------------------------------- */}
-          <div className="lg:col-span-4">
-            <div className="sticky top-20 space-y-6">
-              <ApplyCard
-                trade={`ITI ${trade.trade}`}
-                seats={20}
-                eligibility="10th standard (Madhyamik) pass with Science & Mathematics. Minimum age 14 years, no upper limit."
-              />
-
-              <Reveal delay={100}>
-                <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5">
-                  <h4 className="text-xs font-black uppercase tracking-wider text-gray-500 mb-3 font-montserrat">
-                    Other ITI Trade at NHIT
-                  </h4>
-                  <Link
-                    href={trade.otherTrade.href}
-                    className="group block rounded-xl overflow-hidden border border-gray-200 hover:border-[color:var(--acc)] hover:shadow-lg transition-all"
-                  >
-                    <div className="relative h-28 w-full">
-                      <Image
-                        src={trade.otherTrade.image}
-                        alt={trade.otherTrade.name}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        sizes="360px"
-                      />
-                    </div>
-                    <div className="p-3.5">
-                      <div className="flex items-center justify-between">
-                        <span className="font-black text-sm text-gray-900 font-montserrat">
-                          {trade.otherTrade.name}
-                        </span>
-                        <ArrowRight className="w-4 h-4 text-[color:var(--acc)] group-hover:translate-x-1 transition-transform" />
-                      </div>
-                      <p className="text-[11px] text-gray-500 mt-1">{trade.otherTrade.desc}</p>
-                      <span className="inline-block mt-2 text-[10px] font-bold px-2 py-0.5 rounded bg-[color:var(--acc-soft)] text-[color:var(--acc)]">
-                        20 Seats · 2 Years
-                      </span>
-                    </div>
-                  </Link>
+            {/* Explore the other ITI trade */}
+            <Reveal>
+              <Link
+                href={trade.otherTrade.href}
+                className="group grid grid-cols-1 md:grid-cols-5 bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden hover:shadow-xl hover:border-[color:var(--acc-soft2)] transition-all"
+              >
+                <div className="relative h-44 md:h-full md:col-span-2 overflow-hidden">
+                  <Image
+                    src={trade.otherTrade.image}
+                    alt={trade.otherTrade.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    sizes="(max-width: 768px) 100vw, 40vw"
+                  />
+                  <span className="absolute top-4 left-4 text-[10px] font-black uppercase tracking-wider bg-white/95 text-gray-900 px-3 py-1.5 rounded-full shadow">
+                    Also at NHIT
+                  </span>
                 </div>
-              </Reveal>
-
-              <Reveal delay={150}>
-                <BrochureCard href={trade.brochureUrl} />
-              </Reveal>
-
-              <Reveal delay={200}>
-                <ContactCard />
-              </Reveal>
-            </div>
+                <div className="md:col-span-3 p-6 md:p-8 flex flex-col justify-center">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[color:var(--acc)]">
+                    Explore Our Other ITI Trade
+                  </span>
+                  <h3 className="text-lg md:text-xl font-black text-gray-900 font-montserrat mt-1.5">
+                    {trade.otherTrade.name}
+                  </h3>
+                  <p className="text-sm text-gray-500 mt-2 leading-relaxed">
+                    {trade.otherTrade.desc}
+                  </p>
+                  <div className="flex flex-wrap items-center gap-3 mt-4">
+                    <span className="inline-block text-[10px] font-bold px-2.5 py-1 rounded bg-[color:var(--acc-soft)] text-[color:var(--acc)]">
+                      20 Seats · 2 Years · NCVT Certified
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 text-xs font-black text-[color:var(--acc)]">
+                      View Trade Details
+                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            </Reveal>
           </div>
-        </div>
-      </main>
+        </main>
 
-      <CtaBand trade={trade.trade} steps={ADMISSION_STEPS} />
+      <CtaBand
+        careerTitle={trade.trade === 'Electrician' ? 'an Electrician' : `a ${trade.trade}`}
+        steps={ADMISSION_STEPS}
+        eligibility="10th standard (Madhyamik) pass with Science & Mathematics. Minimum age 14 years, no upper limit."
+        brochureHref={trade.brochureUrl}
+      />
     </div>
   );
 }

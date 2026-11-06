@@ -76,7 +76,13 @@ export function useInView<T extends HTMLElement>(threshold = 0.15) {
       { threshold }
     );
     io.observe(el);
-    return () => io.disconnect();
+    // Failsafe: full-page screenshot tools render without scrolling, so the
+    // observer can stay silent — never keep content hidden for long.
+    const failsafe = setTimeout(() => setInView(true), 2600);
+    return () => {
+      io.disconnect();
+      clearTimeout(failsafe);
+    };
   }, [threshold]);
 
   return [ref, inView] as const;
@@ -113,10 +119,16 @@ export function Reveal({
             io.disconnect();
           }
         },
-        { threshold: 0.12 }
+        { threshold: 0.1, rootMargin: '0px 0px 12% 0px' }
       );
       io.observe(el);
-      return () => io.disconnect();
+      // Failsafe: screenshot tools render the page without scrolling, so the
+      // observer above never fires for them — force-reveal after 2.5s.
+      const failsafe = setTimeout(() => setHidden(false), 2500);
+      return () => {
+        io.disconnect();
+        clearTimeout(failsafe);
+      };
     }
   }, []);
 
@@ -162,7 +174,10 @@ export function CountUp({
     if (rect.top >= window.innerHeight * 0.92) {
       setVal(0);
       let raf = 0;
+      let done = false;
       const run = () => {
+        if (done) return;
+        done = true;
         const t0 = performance.now();
         const frame = (now: number) => {
           const p = Math.min((now - t0) / duration, 1);
@@ -181,9 +196,15 @@ export function CountUp({
         { threshold: 0.4 }
       );
       io.observe(el);
+      // Same failsafe as Reveal: snap to the final value if the observer
+      // never fires (e.g. non-scrolling full-page captures).
+      const failsafe = setTimeout(() => {
+        if (!done) setVal(end);
+      }, 2600);
       return () => {
         io.disconnect();
         cancelAnimationFrame(raf);
+        clearTimeout(failsafe);
       };
     }
   }, [end, duration]);
@@ -485,11 +506,15 @@ export function SemesterRow({
 /* ---------------------------------- CTA band ---------------------------------- */
 
 export function CtaBand({
-  trade,
+  careerTitle,
   steps,
+  eligibility,
+  brochureHref,
 }: {
-  trade: string;
+  careerTitle: string;
   steps: string[];
+  eligibility: string;
+  brochureHref?: string;
 }) {
   return (
     <section className="relative bg-[linear-gradient(120deg,#9E0B0F_0%,#C10A0C_45%,#ff3115_100%)] text-white overflow-hidden mt-16">
@@ -508,15 +533,25 @@ export function CtaBand({
         <Reveal>
           <div className="max-w-3xl">
             <span className="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] bg-white/15 border border-white/25 rounded-full px-3 py-1">
-              NCVT Admissions Open · Limited Seats
+              NCVT Admissions Open · Session 2026
             </span>
             <h2 className="text-2xl md:text-3xl font-black font-montserrat mt-4 leading-tight">
-              Ready to Build Your Career as a {trade}?
+              Ready to Build Your Career as {careerTitle}?
             </h2>
+            <div className="flex items-center gap-2.5 mt-4">
+              <span className="relative flex h-2.5 w-2.5 shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-50" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
+              </span>
+              <span className="text-xs font-black">
+                Only 20 sanctioned seats per unit
+              </span>
+              <span className="text-xs text-white/80">{eligibility}</span>
+            </div>
             <p className="text-white/85 text-sm mt-3 leading-relaxed">
-              Only 20 seats per trade — apply early to lock your place. New sessions begin as per the
-              DGT academic calendar (August). Our admission cell will guide you through eligibility,
-              counselling and document verification.
+              Apply early to lock your place. New sessions begin as per the DGT academic calendar
+              (August). Our admission cell will guide you through eligibility, counselling and
+              document verification.
             </p>
           </div>
         </Reveal>
@@ -548,103 +583,24 @@ export function CtaBand({
             >
               <PhoneCall className="w-4 h-4" /> Admission Helpline: (0343) 2542103
             </a>
+            {brochureHref && (
+              <a
+                href={brochureHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 border-2 border-white/40 text-white/90 rounded-xl text-xs font-black hover:bg-white/10 transition-colors"
+              >
+                <Download className="w-4 h-4" /> Brochure (PDF)
+              </a>
+            )}
           </div>
+          <p className="flex items-start gap-2 text-[11px] text-white/75 mt-5 leading-relaxed">
+            <MapPin className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+            New Horizons Institute of Technology, Near Gandhi More, Durgapur — 713208, West Bengal
+          </p>
         </Reveal>
       </div>
     </section>
   );
 }
 
-/* ---------------------------------- sidebar cards ---------------------------------- */
-
-export function ApplyCard({
-  trade,
-  seats,
-  eligibility,
-}: {
-  trade: string;
-  seats: number;
-  eligibility: string;
-}) {
-  return (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-      <div className="bg-[linear-gradient(120deg,#9E0B0F,#C10A0C_55%,#ff3115)] px-5 py-4">
-        <span className="text-[10px] font-black uppercase tracking-[0.18em] text-white/85">
-          Admissions Open · Session 2026
-        </span>
-        <h3 className="text-base font-black text-white font-montserrat mt-1">
-          Apply for {trade}
-        </h3>
-      </div>
-      <div className="p-5 text-center space-y-4">
-        <div className="flex items-center justify-center gap-2">
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[color:var(--acc)] opacity-60" />
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[color:var(--acc)]" />
-          </span>
-          <span className="text-xs font-bold text-gray-800">
-            Only <span className="text-[color:var(--acc)]">{seats} sanctioned seats</span> per unit
-          </span>
-        </div>
-        <p className="text-[11px] text-gray-500 leading-relaxed">{eligibility}</p>
-        <div className="space-y-2.5">
-          <Link
-            href="/admissions"
-            className="w-full py-2.5 px-4 bg-[#ff3115] hover:bg-[#e0260c] text-white text-xs font-black rounded-lg flex items-center justify-center gap-2 transition-colors shadow-sm"
-          >
-            Direct Admission Application <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-          <a
-            href="tel:03432542103"
-            className="w-full py-2 px-4 bg-gray-100 hover:bg-gray-200 text-gray-800 text-xs font-bold rounded-lg flex items-center justify-center gap-2 transition-colors"
-          >
-            <PhoneCall className="w-3.5 h-3.5 text-[#ff3115]" /> Call: (0343) 2542103
-          </a>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export function BrochureCard({ href }: { href: string }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group flex items-center gap-3.5 bg-[#151515] rounded-2xl p-5 border border-gray-800 hover:border-[color:var(--acc)] transition-colors"
-    >
-      <span className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-[color:var(--acc)] transition-colors">
-        <Download className="w-[18px] h-[18px] text-white" />
-      </span>
-      <span>
-        <span className="block text-xs font-black text-white font-montserrat">
-          NHIT Brochure (PDF)
-        </span>
-        <span className="block text-[10px] text-neutral-400 mt-0.5">
-          Courses, fees guide & campus facilities
-        </span>
-      </span>
-    </a>
-  );
-}
-
-export function ContactCard() {
-  return (
-    <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 space-y-3">
-      <h4 className="text-xs font-black uppercase tracking-wider text-gray-500 font-montserrat">
-        Reach the Admission Cell
-      </h4>
-      <p className="flex items-start gap-2.5 text-xs text-gray-600 leading-relaxed">
-        <MapPin className="w-4 h-4 text-[color:var(--acc)] shrink-0 mt-0.5" />
-        New Horizons Institute of Technology, Near Gandhi More, Durgapur — 713208, West Bengal
-      </p>
-      <p className="flex items-center gap-2.5 text-xs text-gray-600">
-        <PhoneCall className="w-4 h-4 text-[color:var(--acc)] shrink-0" />
-        <a href="tel:03432542103" className="font-bold hover:text-[color:var(--acc)] transition-colors">
-          (0343) 2542103
-        </a>
-      </p>
-    </div>
-  );
-}
