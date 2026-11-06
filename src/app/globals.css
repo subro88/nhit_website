@@ -177,3 +177,22 @@ h1, h2, h3, h4, h5, h6 {
   --nhit-crimson: #b45309;
   --nhit-heading: #78350f;
 }
+
+/* ITI trade pages — gentle float for photo insets */
+@keyframes trade-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+.trade-float {
+  animation: trade-float 5.5s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .trade-float {
+    animation: none;
+  }
+}
